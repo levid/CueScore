@@ -1,1 +1,1 @@
-/Users/levid/Sites/levid_com/mobile/test/Resources/ui/common/MasterView.js
+/Users/levid/Mobile/development/projects/CueScore/Resources/ui/common/MasterView.js

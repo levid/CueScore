@@ -292,6 +292,7 @@ NSArray* pickerKeySequence;
 }
 
 USE_VIEW_FOR_VERIFY_HEIGHT
+USE_VIEW_FOR_VERIFY_WIDTH
 
 
 -(void)reloadColumn:(id)column
@@ -318,6 +319,15 @@ USE_VIEW_FOR_VERIFY_HEIGHT
 
 	ENSURE_VALUE_RANGE(columnIndex,0,[columnArray count]-1);
 	[self makeViewPerformSelector:@selector(reloadColumn:) withObject:NUMINT(columnIndex) createIfNeeded:YES waitUntilDone:NO];
+}
+
+-(TiDimension)defaultAutoWidthBehavior:(id)unused
+{
+    return TiDimensionAutoSize;
+}
+-(TiDimension)defaultAutoHeightBehavior:(id)unused
+{
+    return TiDimensionAutoSize;
 }
 
 @end

@@ -26,6 +26,7 @@ extern NSString * const TI_APPLICATION_VERSION;
 extern NSString * const TI_APPLICATION_DESCRIPTION;
 extern NSString * const TI_APPLICATION_COPYRIGHT;
 extern NSString * const TI_APPLICATION_GUID;
+extern BOOL const TI_APPLICATION_ANALYTICS;
 
 @implementation AppModule
 
@@ -130,9 +131,7 @@ extern NSString * const TI_APPLICATION_GUID;
 		id type = [args objectAtIndex:0];
 		id obj = [args count] > 1 ? [args objectAtIndex:1] : nil;
 		
-#ifdef DEBUG
-		NSLog(@"[DEBUG] fire app event: %@",type);
-#endif
+		DebugLog(@"[DEBUG] Firing app event: %@",type);
 		
 		NSArray *array = [appListeners objectForKey:type];
 		
@@ -221,6 +220,31 @@ extern NSString * const TI_APPLICATION_GUID;
 	return NUMBOOL([UIDevice currentDevice].proximityMonitoringEnabled);
 }
 
+//To fire the keyboard frame change event.
+-(void)keyboardFrameChanged:(NSNotification*) notification
+{
+    if (![self _hasListeners:@"keyboardFrameChanged"])
+    {
+        return;
+    }
+    
+    NSDictionary *userInfo = [notification userInfo];
+    
+    CGRect keyboardEndFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    // window for keyboard
+    UIWindow *keyboardWindow = [[[UIApplication sharedApplication] windows] lastObject];  
+    
+    keyboardEndFrame = [keyboardWindow convertRect:keyboardEndFrame fromWindow:nil];
+    
+    NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [TiUtils rectToDictionary:keyboardEndFrame], @"keyboardFrame",
+                                nil];
+    
+    [self fireEvent:@"keyboardFrameChanged" withObject:event]; 
+    
+}
+
+
 #pragma mark Internal Memory Management
 
 -(void)didReceiveMemoryWarning:(NSNotification*)notification
@@ -285,9 +309,24 @@ extern NSString * const TI_APPLICATION_GUID;
 -(void)startup
 {
 	WARN_IF_BACKGROUND_THREAD_OBJ;	//NSNotificationCenter is not threadsafe!
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willShutdown:) name:kTiWillShutdownNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willShutdownContext:) name:kTiContextShutdownNotification object:nil];
-	[super startup];
+    NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(willShutdown:) name:kTiWillShutdownNotification object:nil];
+    [nc addObserver:self selector:@selector(willShutdownContext:) name:kTiContextShutdownNotification object:nil];
+
+
+#if __IPHONE_OS_VERSION_MIN_ALLOWED >= __IPHONE_5_0
+    if ([TiUtils isIOS5OrGreater])
+    {
+        [nc addObserver:self selector:@selector(keyboardFrameChanged:) name:UIKeyboardDidChangeFrameNotification object:nil];
+    }
+#else
+    
+    [nc addObserver:self selector:@selector(keyboardFrameChanged:) name:UIKeyboardDidShowNotification object:nil];
+    [nc addObserver:self selector:@selector(keyboardFrameChanged:) name:UIKeyboardDidHideNotification object:nil];
+
+#endif	
+    
+    [super startup];
 }
 
 -(void)shutdown:(id)sender
@@ -297,6 +336,14 @@ extern NSString * const TI_APPLICATION_GUID;
 	WARN_IF_BACKGROUND_THREAD_OBJ;	//NSNotificationCenter is not threadsafe!
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super shutdown:sender];
+}
+
+-(void)paused:(id)sender
+{
+	if ([self _hasListeners:@"paused"])
+	{
+		[self fireEvent:@"paused" withObject:nil];
+	}
 }
 
 -(void)suspend:(id)sender
@@ -358,6 +405,11 @@ extern NSString * const TI_APPLICATION_GUID;
 	return TI_APPLICATION_ID;
 }
 
+-(id)installId
+{
+    return [TiUtils appIdentifier];
+}
+
 -(id)id
 {
 	return TI_APPLICATION_ID;
@@ -416,6 +468,16 @@ extern NSString * const TI_APPLICATION_GUID;
 -(id)sessionId
 {
 	return [[TiApp app] sessionId];
+}
+
+-(id)analytics
+{
+	return NUMBOOL(TI_APPLICATION_ANALYTICS);
+}
+
+-(NSNumber*)keyboardVisible
+{
+    return NUMBOOL([[[TiApp app] controller] keyboardVisible]);
 }
 
 #if defined(USE_TI_APPIOS)

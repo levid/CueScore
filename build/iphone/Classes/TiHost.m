@@ -70,7 +70,7 @@ extern NSString * const TI_APPLICATION_ID;
 	if (self = [super init])
 	{
 		modules = [[NSMutableDictionary alloc] init];
-		contexts = [[NSMutableDictionary alloc] init];
+		contexts = TiCreateNonRetainingDictionary();
 		 
 		NSString *fn = @"app.js";
 		const char *start = getenv("TI_STARTPAGE");
@@ -171,7 +171,7 @@ extern NSString * const TI_APPLICATION_ID;
 -(void)fireEvent:(id)listener withObject:(id)obj remove:(BOOL)yn context:(id<TiEvaluator>)evaluator thisObject:(TiProxy*)thisObject_
 {
 #if DEBUG_EVENTS==1
-	NSLog(@"fireEvent: %@, object: %@",listener,obj);
+	NSLog(@"[DEBUG] fireEvent: %@, object: %@",listener,obj);
 #endif	
 	[evaluator fireEvent:listener withObject:obj remove:yn thisObject:thisObject_];
 }

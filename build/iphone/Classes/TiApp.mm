@@ -180,6 +180,16 @@ TI_INLINE void waitForMemoryPanicCleared();   //WARNING: This must never be run 
     [window makeKeyAndVisible];
 }
 
+-(BOOL)windowIsKeyWindow
+{
+    return [window isKeyWindow];
+}
+
+-(UIView *) topMostView
+{
+    UIWindow  *currentKeyWindow_ = [[UIApplication sharedApplication] keyWindow];
+    return [[currentKeyWindow_ subviews] lastObject];
+}
 -(void)attachXHRBridgeIfRequired
 {
 #ifdef USE_TI_UIWEBVIEW
@@ -204,7 +214,7 @@ TI_INLINE void waitForMemoryPanicCleared();   //WARNING: This must never be run 
 
 - (void)boot
 {
-	NSLog(@"[INFO] %@/%@ (%s.59b3a90)",TI_APPLICATION_NAME,TI_APPLICATION_VERSION,TI_VERSION_STR);
+	DebugLog(@"[INFO] %@/%@ (%s.0fd84a2)",TI_APPLICATION_NAME,TI_APPLICATION_VERSION,TI_VERSION_STR);
 	
 	sessionId = [[TiUtils createUUID] retain];
 	TITANIUM_VERSION = [[NSString stringWithCString:TI_VERSION_STR encoding:NSUTF8StringEncoding] retain];
@@ -237,7 +247,7 @@ TI_INLINE void waitForMemoryPanicCleared();   //WARNING: This must never be run 
 {
 	if ([bridge isKindOfClass:[KrollBridge class]])
 	{
-		NSLog(@"[DEBUG] application booted in %f ms", ([NSDate timeIntervalSinceReferenceDate]-started) * 1000);
+		DebugLog(@"[DEBUG] Application booted in %f ms", ([NSDate timeIntervalSinceReferenceDate]-started) * 1000);
 		fflush(stderr);
 		TiThreadPerformOnMainThread(^{[self validator];}, YES);
 	}
@@ -260,12 +270,12 @@ TI_INLINE void waitForMemoryPanicCleared();   //WARNING: This must never be run 
 	for (id key in aps) 
 	{
 		if ([dict objectForKey:key] != nil) {
-			NSLog(@"[WARN] Conflicting keys in push APS dictionary and notification dictionary `%@`, not copying to toplevel from APS", key);
+			DebugLog(@"[WARN] Conflicting keys in push APS dictionary and notification dictionary `%@`, not copying to toplevel from APS", key);
 			continue;
 		}
 		[remoteNotification setValue:[aps valueForKey:key] forKey:key];
 	}
-	NSLog(@"[WARN] Accessing APS keys from toplevel of notification is deprecated");
+	DebugLog(@"[WARN] Accessing APS keys from toplevel of notification is deprecated");
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions_
@@ -416,9 +426,9 @@ TI_INLINE void waitForMemoryPanicCleared();   //WARNING: This must never be run 
 
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {
+	[[NSNotificationCenter defaultCenter] postNotificationName:kTiPausedNotification object:self];
 	[TiUtils queueAnalytics:@"ti.background" name:@"ti.background" data:nil];
 
-	
 	if (backgroundServices==nil)
 	{
 		return;
@@ -451,10 +461,13 @@ TI_INLINE void waitForMemoryPanicCleared();   //WARNING: This must never be run 
     [sessionId release];
     sessionId = [[TiUtils createUUID] retain];
     
+    //TIMOB-3432. Ensure url is cleared when resume event is fired.
+    [launchOptions removeObjectForKey:@"url"];
+
 	[[NSNotificationCenter defaultCenter] postNotificationName:kTiResumeNotification object:self];
 	
 	[TiUtils queueAnalytics:@"ti.foreground" name:@"ti.foreground" data:nil];
-	
+    
 	if (backgroundServices==nil)
 	{
 		return;
@@ -504,7 +517,7 @@ TI_INLINE void waitForMemoryPanicCleared();   //WARNING: This must never be run 
 		[[NSUserDefaults standardUserDefaults] setObject:remoteDeviceUUID forKey:@"APNSRemoteDeviceUUID"];
 		NSDictionary *userInfo = [NSDictionary dictionaryWithObject:remoteDeviceUUID forKey:@"deviceid"];
 		[[NSNotificationCenter defaultCenter] postNotificationName:kTiRemoteDeviceUUIDNotification object:self userInfo:userInfo];
-		NSLog(@"[DEBUG] registered new device ready for remote push notifications: %@",remoteDeviceUUID);
+		DebugLog(@"[DEBUG] Registered new device for remote push notifications: %@",remoteDeviceUUID);
 	}
 	
 	if (remoteNotificationDelegate!=nil)
@@ -528,7 +541,7 @@ TI_INLINE void waitForMemoryPanicCleared();   //WARNING: This must never be run 
 {
 	if ([TI_APPLICATION_DEPLOYTYPE isEqualToString:@"production"])
 	{
-		NSLog(@"[ERROR] application received error: %@",message);
+		NSLog(@"[ERROR] Application received error: %@",message);
 		return;
 	}
 	ENSURE_UI_THREAD(showModalError,message);
@@ -542,7 +555,7 @@ TI_INLINE void waitForMemoryPanicCleared();   //WARNING: This must never be run 
 
 	if (currentModalController == modalController)
 	{
-		NSLog(@"[WARN] Trying to present a modal window that already is a modal window.");
+		DeveloperLog(@"[WARN] Trying to present a modal window that already is a modal window.");
 		return;
 	}
 	if (currentModalController == nil)
@@ -568,6 +581,14 @@ TI_INLINE void waitForMemoryPanicCleared();   //WARNING: This must never be run 
 		[windowView addSubview:rootView];
 	}
 
+	/*
+	 *	In iPad (TIMOB 7839) there is a bug in iOS where a text field having
+	 *	focus during a modal presentation can lead to an edge case.
+	 *	The new view is not attached yet, and any current view will be covered
+	 *	by the new modal controller. Because of this, there is no valid reason
+	 *	to have a text field with focus.
+	 */
+	[controller dismissKeyboard];
 
 	UINavigationController *navController = nil; //[(TiRootViewController *)controller focusedViewController];
 	if (navController==nil)

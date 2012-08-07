@@ -1,1 +1,1 @@
-/Users/levid/Sites/levid_com/mobile/test/Resources/ui/handheld/android/ApplicationWindow.js
+/Users/levid/Mobile/development/projects/CueScore/Resources/ui/handheld/android/ApplicationWindow.js

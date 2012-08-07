@@ -14,7 +14,8 @@ Titanium is licensed under the Apache Public License (Version 2). Please
 see the LICENSE file for the full license.
 
 
-
+----------------------------------
 Watch CoffeeScript Files and compile them to the js folder:
-
-coffee -c -o js --watch Resources/lib
+----------------------------------
+cd Resources
+coffee -c -o js --watch lib

@@ -33,8 +33,8 @@
 	return @"ADBannerContentSize480x32";
 }
 
-USE_VIEW_FOR_AUTO_HEIGHT
-USE_VIEW_FOR_AUTO_WIDTH
+USE_VIEW_FOR_CONTENT_HEIGHT
+USE_VIEW_FOR_CONTENT_WIDTH
 
 -(void)cancelAction:(id)args
 {
@@ -60,7 +60,7 @@ USE_VIEW_FOR_AUTO_WIDTH
     // Sanity check values
     if (!([arg isEqualToString:[TiUIiOSAdViewProxy portraitSize]] || [arg isEqualToString:[TiUIiOSAdViewProxy landscapeSize]])) {
         [self throwException:@"TiInvalidArg" 
-                   subreason:@"Invalid value for test.UI.iOS.AdView.adSize"
+                   subreason:@"Invalid value for Ti.UI.iOS.AdView.adSize"
                     location:CODELOCATION];
     }
     
