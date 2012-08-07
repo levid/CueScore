@@ -1,0 +1,15 @@
+Logfile initialized
+[INFO] logfile = /Users/levid/Mobile/development/projects/CueScore/build.log
+[DEBUG] /Users/levid/Library/Application Support/Titanium/mobilesdk/osx/2.1.1.GA/android/builder.py simulator test /Users/levid/Mobile/development/SDKs/Android /Users/levid/Mobile/development/projects/CueScore com.levid.cuescore 1 QVGA 
+[INFO] Building test for Android ... one moment
+[INFO] Titanium SDK version: 2.1.1 (07/27/12 14:01 0fd84a2)
+[DEBUG] Waiting for device to be ready ...
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[DEBUG] Device connected... (waited 25 seconds)
+[DEBUG] waited 25.122142 seconds on emulator to get ready
+[INFO] Waiting for the Android Emulator to become available
