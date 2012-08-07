@@ -1,1 +1,0 @@
-/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/ui/handheld/ios/ApplicationWindow.js

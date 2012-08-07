@@ -1,1 +1,0 @@
-/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/lib/pages/dashboardViews/listView.coffee
