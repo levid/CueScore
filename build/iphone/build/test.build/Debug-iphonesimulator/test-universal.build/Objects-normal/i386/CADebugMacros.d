@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/CADebugMacros.cpp \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/CADebugMacros.h
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/CADebugMacros.cpp \
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/CADebugMacros.h

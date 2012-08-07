@@ -1,1 +1,1 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/js/Services/Base64.js
+/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/js/Services/Base64.js

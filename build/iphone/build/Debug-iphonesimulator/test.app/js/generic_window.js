@@ -1,1 +1,1 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/js/generic_window.js
+/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/js/generic_window.js

@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/JSON/SBJsonBase.m \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/JSON/SBJsonBase.h
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/JSON/SBJsonBase.m \
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/JSON/SBJsonBase.h

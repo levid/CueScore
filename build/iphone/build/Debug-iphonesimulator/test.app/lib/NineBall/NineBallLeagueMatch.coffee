@@ -1,1 +1,1 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/lib/NineBall/NineBallLeagueMatch.coffee
+/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/lib/NineBall/NineBallLeagueMatch.coffee

@@ -1,1 +1,1 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/lib/pages/dashboardViews/listView.coffee
+/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/lib/pages/dashboardViews/listView.coffee

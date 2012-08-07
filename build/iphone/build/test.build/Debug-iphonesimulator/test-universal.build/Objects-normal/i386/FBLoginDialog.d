@@ -1,6 +1,6 @@
 dependencies: \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/FBConnect/FBLoginDialog.m \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/FBConnect/FBDialog.h \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/FBConnect/FBLoginDialog.h \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/FBConnect/Facebook.h \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/FBConnect/FBRequest.h
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/FBConnect/FBLoginDialog.m \
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/FBConnect/FBDialog.h \
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/FBConnect/FBLoginDialog.h \
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/FBConnect/Facebook.h \
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/FBConnect/FBRequest.h

@@ -1,1 +1,1 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/js/pages/toolViews/events.js
+/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/js/pages/toolViews/events.js

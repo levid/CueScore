@@ -1,1 +1,1 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/js/EightBall/EightBallRanks.js
+/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/js/EightBall/EightBallRanks.js

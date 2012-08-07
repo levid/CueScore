@@ -1,1 +1,1 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/lib/EightBall/EightBallLeagueMatch.coffee
+/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/lib/EightBall/EightBallLeagueMatch.coffee

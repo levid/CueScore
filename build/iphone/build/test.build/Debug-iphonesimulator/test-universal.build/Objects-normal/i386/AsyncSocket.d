@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/AsyncSocket.m \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/AsyncSocket.h
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/AsyncSocket.m \
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/AsyncSocket.h

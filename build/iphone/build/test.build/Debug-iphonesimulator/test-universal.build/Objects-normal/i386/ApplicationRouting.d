@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/ApplicationRouting.m \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/ApplicationRouting.h
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/ApplicationRouting.m \
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/ApplicationRouting.h

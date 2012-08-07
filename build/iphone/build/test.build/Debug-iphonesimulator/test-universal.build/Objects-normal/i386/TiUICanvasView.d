@@ -1,2 +1,2 @@
 dependencies: \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/TiUICanvasView.m
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/TiUICanvasView.m

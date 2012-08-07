@@ -1,1 +1,1 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/lib/Services/DataService.coffee
+/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/lib/Services/DataService.coffee

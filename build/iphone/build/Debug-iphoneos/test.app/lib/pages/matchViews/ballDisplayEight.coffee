@@ -1,1 +1,1 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/lib/pages/matchViews/ballDisplayEight.coffee
+/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/lib/pages/matchViews/ballDisplayEight.coffee

@@ -1,1 +1,1 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/app.js
+/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/app.js

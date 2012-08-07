@@ -1,1 +1,1 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/ui/common/DetailView.js
+/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/ui/common/DetailView.js

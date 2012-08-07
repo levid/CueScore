@@ -1,1 +1,1 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/lib/generic_window.coffee
+/Users/levid/Sites/levid_com/mobile/CueScoreCoffee/Resources/lib/generic_window.coffee

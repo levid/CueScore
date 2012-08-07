@@ -1,5 +1,5 @@
 dependencies: \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/JSON/NSString+SBJSON.m \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/JSON/NSString+SBJSON.h \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/JSON/SBJsonParser.h \
-  /Users/levid/Mobile/development/projects/CueScore/build/iphone/Classes/JSON/SBJsonBase.h
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/JSON/NSString+SBJSON.m \
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/JSON/NSString+SBJSON.h \
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/JSON/SBJsonParser.h \
+  /Users/levid/Sites/levid_com/mobile/CueScoreCoffee/build/iphone/Classes/JSON/SBJsonBase.h
