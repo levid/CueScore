@@ -1,0 +1,97 @@
+var events = function() {
+    var me = this;
+    
+    try {
+          Titanium.include('/lib/Common.js');
+		  Titanium.include('/pages/toolViews/toolsMenuView.js');
+    } catch(e) {}
+
+	this.eventsWindow = Titanium.UI.createWindow({
+		orientationModes: [Titanium.UI.PORTRAIT]
+	});
+
+	this.eventsContainer = Titanium.UI.createView({
+		backgroundColor: '#000000',
+		top: 0,
+		left: 0,
+		height: this.getPlatformHeight(),
+		width: this.getPlatformWidth()
+	});
+
+	this.eventsScrollView = Titanium.UI.createScrollView({
+        contentWidth:'auto',
+        contentHeight:'auto',
+        minZoomScale: 0,
+        maxZoomScale: 10,
+	    backgroundColor: 'transparent',
+		top: 12,
+		left: 12,
+		height: 390,
+		width: 295,
+		showPagingControl:true
+	});
+
+	this.eventsView = Titanium.UI.createView({
+		height: 243,
+		width: 243,
+		font: {fontSize:13, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+	});
+	this.comingSoon = Titanium.UI.createView({
+		backgroundImage: 'images/match/layout/overlay-comingsoon.png',
+		backgroundColor: 'transparent',
+		top: 20,
+		height: 243,
+		width: 243
+	});
+	this.eventsLabel = Titanium.UI.createLabel({
+		text: 'test test test test ',
+		top: 0,
+		left: 0,
+		color: '#ffffff',
+		height: 1500,
+		width: 285,
+		font: {fontSize:13, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+	});
+	this.eventsView.add(this.comingSoon);
+	
+	var toolbarLabel = Titanium.UI.createLabel({
+		text: 'Events',
+		color: '#ffffff',
+		shadowColor: '#000000',
+		textAlign: 'center',
+		font: {fontSize:20, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+	});
+	
+	titleBar.add(dashboardButton);
+	titleBar.add(toolbarLabel);
+	//this.eventsView.add(this.eventsLabel);
+
+/*
+	this.eventsView.addEventListener('click', function(){
+        me.eventsWindow.close();
+        me.dashboardWindow.show();
+    });
+    */
+
+	//this.eventsScrollView.add(this.eventsView);
+	this.eventsContainer.add(toolsMenuContainer);
+	this.eventsContainer.add(titleBar);  //from t
+	this.eventsContainer.add(this.eventsView);
+	this.eventsWindow.add(this.eventsContainer);
+	
+	this.dashboardButton.addEventListener('click', function(){
+	   	me.eventsWindow.close();
+		me.dashboardWindow.show();
+	});
+
+    this.showEvents = function() {
+       	if(Ti.Platform.name != 'android') {
+            Titanium.UI.iPhone.showStatusBar();
+            this.eventsWindow.open({fullscreen:false});
+        } else {
+            this.eventsWindow.open({fullscreen:true});
+        }
+    };
+    showEvents();
+    return this;
+};

@@ -1,0 +1,131 @@
+var me = this;
+
+this.statusOverlayContainer = Titanium.UI.createImageView({
+	backgroundImage: '/images/match/layout/bg-endgame.png',
+	backgroundColor: 'transparent',
+	top: 44,
+	left: 0,
+	height: (this.getPlatformHeight() - 44),
+	width: this.getPlatformWidth(),
+	visible: false
+});
+
+this.statusOverlay = Titanium.UI.createView({
+	backgroundColor: 'transparent',
+	width: 215,
+	height: 120,
+	isNinePatch: false,
+	visible: false
+});
+
+this.statusOverlayMessage = Titanium.UI.createView({
+	backgroundImage: 'images/match/layout/bg-statusmessages.png',
+	backgroundColor: 'transparent',
+	width: 226,
+	height: 30,
+	isNinePatch: false
+});
+
+this.statusMessage = Titanium.UI.createLabel({
+	text: "test",
+	color: '#ffffff',
+	width: 215,
+	textAlign: 'center',
+	font: {fontSize:13, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+});
+
+this.statusOverlayButton = Titanium.UI.createButton({
+	backgroundImage: 'images/match/buttons/btn-continue-match.png',
+	top: 80,
+	width: 166,
+	height: 39,
+	color: '#ffffff',
+	shadowColor: '#000000',
+	shadowOffset: {
+		x: 1,
+		y: 1
+	},
+	title: "",
+	font: {fontSize:15, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'},
+	isNinePatch: false,
+	visible: false
+});
+
+this.statusOverlayButton.addEventListener('click', function() {
+	me.startCurrentMatch();
+	me.fadeOutOverlayFast();
+});
+
+this.statusOverlayMessage.add(this.statusMessage);
+this.statusOverlay.add(this.statusOverlayMessage);
+this.statusOverlay.add(this.statusOverlayButton);
+this.view.add(this.statusOverlayContainer);
+this.view.add(this.statusOverlay);
+
+this.fadeOutOverlayFast = function(showOverlayCallback) {
+	if (this.statusOverlay.visible == true) {
+		this.statusOverlay.animate({
+			opacity: 0,
+			duration: 75
+		}, function(){
+			me.statusOverlay.visible = false;
+			me.statusOverlayContainer.visible = false;
+			me.statusOverlayButton.visible = false;
+			me.statusOverlay.opacity = 0;
+
+			if(showOverlayCallback != null) {
+				showOverlayCallback();
+			}
+		});
+	} else {
+		if(showOverlayCallback != null) {
+			showOverlayCallback();
+		}
+	}
+};
+
+this.showOverlay = function(message, durationSpeed, actionToDoCallback) {
+	this.fadeOutOverlayFast(function() {
+		me.statusMessage.text = message;
+		me.statusOverlay.visible = true;
+		me.statusOverlay.animate({
+			opacity: 1,
+			duration: durationSpeed
+		}, function() {
+			if(actionToDoCallback != null) {
+				if(actionToDoCallback() == false) {
+					return;
+				}
+			}
+
+			setTimeout(function() {
+				me.statusOverlay.animate({
+				opacity: 0,
+				duration: durationSpeed
+				}, function() {
+					statusOverlay.visible = false;
+					statusOverlay.opacity = 0;
+				});
+			},1000);
+		});
+	});
+};
+
+
+this.showOverlayUntilTap = function(message, buttonMessage, durationSpeed) {
+	this.fadeOutOverlayFast(function() {
+		me.statusMessage.text = message;
+		me.statusOverlayButton.title = buttonMessage;
+		me.statusOverlayContainer.visible = true;
+		me.statusOverlayButton.visible = true;
+		me.statusOverlay.visible = true;
+		me.statusOverlay.animate({
+			opacity: 1,
+			duration: 400
+		}, function() {
+			me.statusOverlay.opacity = 1;
+		});
+	});
+
+};
+

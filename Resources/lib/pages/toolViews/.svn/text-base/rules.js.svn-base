@@ -1,0 +1,97 @@
+var rules = function() {
+    var me = this;
+    
+    try {
+          Titanium.include('/lib/Common.js');
+		  Titanium.include('/pages/toolViews/toolsMenuView.js');
+    } catch(e) {}
+
+	this.rulesWindow = Titanium.UI.createWindow({
+		orientationModes: [Titanium.UI.PORTRAIT]
+	});
+
+	this.rulesContainer = Titanium.UI.createView({
+		backgroundColor: '#000000',
+		top: 0,
+		left: 0,
+		height: this.getPlatformHeight(),
+		width: this.getPlatformWidth()
+	});
+
+	this.rulesScrollView = Titanium.UI.createScrollView({
+        contentWidth:'auto',
+        contentHeight:'auto',
+        minZoomScale: 0,
+        maxZoomScale: 10,
+	    backgroundColor: 'transparent',
+		top: 12,
+		left: 12,
+		height: 390,
+		width: 295,
+		showPagingControl:true
+	});
+
+	this.rulesView = Titanium.UI.createView({
+		height: 243,
+		width: 243,
+		font: {fontSize:13, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+	});
+	this.comingSoon = Titanium.UI.createView({
+		backgroundImage: 'images/match/layout/overlay-comingsoon.png',
+		backgroundColor: 'transparent',
+		top: 20,
+		height: 243,
+		width: 243
+	});
+	this.rulesLabel = Titanium.UI.createLabel({
+		text: 'test test test test ',
+		top: 0,
+		left: 0,
+		color: '#ffffff',
+		height: 1500,
+		width: 285,
+		font: {fontSize:13, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+	});
+	this.rulesView.add(this.comingSoon);
+	
+	var toolbarLabel = Titanium.UI.createLabel({
+		text: 'Rules',
+		color: '#ffffff',
+		shadowColor: '#000000',
+		textAlign: 'center',
+		font: {fontSize:20, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+	});
+	
+	titleBar.add(dashboardButton);
+	titleBar.add(toolbarLabel);
+	//this.rulesView.add(this.rulesLabel);
+
+/*
+	this.rulesView.addEventListener('click', function(){
+        me.rulesWindow.close();
+        me.dashboardWindow.show();
+    });
+    */
+
+	//this.rulesScrollView.add(this.rulesView);
+	this.rulesContainer.add(toolsMenuContainer);
+	this.rulesContainer.add(titleBar);  //from t
+	this.rulesContainer.add(this.rulesView);
+	this.rulesWindow.add(this.rulesContainer);
+	
+	this.dashboardButton.addEventListener('click', function(){
+	   	me.rulesWindow.close();
+		me.dashboardWindow.show();
+	});
+
+    this.showRules = function() {
+       	if(Ti.Platform.name != 'android') {
+            Titanium.UI.iPhone.showStatusBar();
+            this.rulesWindow.open({fullscreen:false});
+        } else {
+            this.rulesWindow.open({fullscreen:true});
+        }
+    };
+    showRules();
+    return this;
+};

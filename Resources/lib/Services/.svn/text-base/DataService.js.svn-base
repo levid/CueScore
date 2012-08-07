@@ -1,0 +1,163 @@
+//Titanium.include('/lib/Services/Base64.js');
+
+var me = this;
+
+var DataService = {
+	email: 'i.wooten@gmail.com',
+	undoMatch: function(originalId) {
+		try{
+			var db = DataService.openDatabase();
+			var row = db.execute('SELECT ID,OriginalId,Match FROM Matches WHERE OriginalId = ' + originalId + ' OR ID = ' + originalId + ' ORDER BY ID DESC LIMIT 1 OFFSET 1');
+			
+			if(!row.isValidRow()) {
+				row.close();
+				db.close();
+				return null;
+			}
+		
+			var match = (new Function("return" + row.fieldByName('Match'))());
+			match.OriginalId = originalId; //Make FOR SURE it gets set!
+			
+			db.execute('DELETE FROM Matches WHERE OriginalId = ' + originalId + ' AND ID > ' + row.fieldByName('ID') + ' AND ID != OriginalId');
+			row.close();
+			db.close();
+			return match;
+		}catch(e) {
+			row.close();
+			db.close();
+		}
+	},
+	
+	saveMatch: function(match, setOriginalIdCallback) {
+		try{
+			var db = DataService.openDatabase();
+			if(match.OriginalId == null || match.OriginalId == 0) {
+				leagueMatch.SmallJSON = true;
+				db.execute('INSERT INTO Matches (Match, EnteredDateTime) VALUES(?, ?)', this.convertToJSONString(match), 'DATETIME(NOW)');
+				setOriginalIdCallback(db.lastInsertRowId);
+				db.execute('UPDATE Matches SET OriginalId = ' + db.lastInsertRowId + ' WHERE ID = ' + db.lastInsertRowId);
+				db.close();
+				return;
+			}
+			Ti.API.log('DB rounded OId', parseInt(match.OriginalId));
+			db.execute('INSERT INTO Matches (OriginalId, Match, EnteredDateTime) VALUES(?, ?, ?)', match.OriginalId.toString(), this.convertToJSONString(match), 'DATETIME(NOW)');
+			db.close();
+			return;
+		}catch(e) {
+			db.close();
+		}
+	},
+
+	getLeagueMatch: function(leagueMatchId) {
+		try{
+			var db = DataService.openDatabase();
+			var row = db.execute('SELECT LeagueMatch FROM LeagueMatches WHERE ID = ' + leagueMatchId);
+			
+			var leagueMatch = (new Function("return" + row.fieldByName('LeagueMatch'))());
+			leagueMatch.LeagueMatchId = leagueMatchId;
+			row.close();
+			db.close();
+			return leagueMatch;
+		}catch(e) {
+			row.close();
+			db.close();
+		}
+	},
+		
+	saveLeagueMatch: function(leagueMatch, setLeagueMatchIdCallback) {
+		try{
+			var db = DataService.openDatabase();
+			Titanium.API.log(this.convertToJSONString(leagueMatch));
+			if(leagueMatch.LeagueMatchId == null || leagueMatch.LeagueMatchId == 0) {
+				leagueMatch.SmallJSON = true;
+				db.execute('INSERT INTO LeagueMatches (LeagueMatch, EnteredDateTime) VALUES(?, ?)', this.convertToJSONString(leagueMatch), 'DATETIME(NOW)');
+				setLeagueMatchIdCallback(db.lastInsertRowId);
+				db.close();
+				return;
+			} 
+			db.execute('UPDATE LeagueMatches SET SET LeagueMatch = ' + this.convertToJSONString(leagueMatch) + ' WHERE ID = ' + leagueMatch.LeagueMatchId);
+			setLeagueMatchIdCallback(db.lastInsertRowId);
+			db.close();
+			return;
+		}catch(e) {
+			db.close();
+		}
+	},
+
+	sendSignature: function(imageData) {
+        var xhr = Titanium.Network.createHTTPClient();
+		xhr.setTimeout(9999999);
+        xhr.onload = function()
+        {
+            Ti.API.info('in utf-8 onload for POST');
+            Ti.API.info(this.responseText);
+            Ti.UI.createAlertDialog({title:'Success:', message: this.responseText}).show();
+        };
+        xhr.onerror = function(e)
+        {
+            Ti.API.info('in utf-8 error for POST');
+            Ti.API.info(e.error);
+            Ti.UI.createAlertDialog({title:'Error:', message: e.error}).show();
+        };
+        xhr.open("POST","http://cuescoreapp.com/signature/post/");
+		//xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+
+        //Ti.API.info(imageData);
+       // Ti.API.info("Image Data: " +imageData.encodeImageData);
+        xhr.send({"teamid":"new", "matchid":"new", "gametype":null, "playerid":"new", "mimetype":"png", "imagedata":imageData.data});
+		/*
+			Ti.API.info(imageData.media);
+	        Ti.API.info(imageData.media.data);
+	        xhr.send({"teamid":"new", "matchid":"new", "playerid":"new", "mimetype":"png", "imagedata":imageData.media.toBase64()});
+		*/
+	},
+
+	sendLeagueMatch: function(leagueMatch) {
+		var xhr = Titanium.Network.createHTTPClient({timeout: 9999999999999});
+		xhr.onload = function()
+		{
+			Ti.API.info('in utf-8 onload for POST');
+			Ti.API.info(this.responseText);
+			Ti.UI.createAlertDialog({title:'Success:', message: this.responseText}).show();
+		};
+		xhr.onerror = function(e)
+		{
+			Ti.API.info('in utf-8 error for POST');
+			Ti.API.info(e.error);
+			Ti.UI.createAlertDialog({title:'Error:', message: e.error}).show();
+		};
+		xhr.open("POST","http://cuescoreapp.com/leaguematch/post/");
+		xhr.send({"userid":"123", "apikey":"secret", "format":"json", "sendToEmail": DataService.email, "matchid": "new", "matchdata": this.convertToJSONString(leagueMatch), "gametype":me.leagueMatch.GameType});
+	},
+	
+	setupLocalDatabase: function() {
+		var db = DataService.openDatabase();
+//		db.execute('DROP TABLE IF EXISTS LeagueMatches');
+//		db.execute('DROP TABLE IF EXISTS Matches');
+		db.execute('CREATE TABLE IF NOT EXISTS LeagueMatches (ID INTEGER PRIMARY KEY, LeagueMatch BLOB, Sent BOOLEAN, EnteredDateTime DATETIME)');
+		db.execute('CREATE TABLE IF NOT EXISTS Matches (ID INTEGER PRIMARY KEY, OriginalId Integer, LeagueMatchId Integer, Match BLOB, EnteredDateTime DATETIME)');
+		db.execute('DELETE FROM LeagueMatches');
+		db.execute('DELETE FROM Matches');
+		db.close();
+	},
+	
+	openDatabase: function() {
+		return Titanium.Database.open('CueScore');
+	},
+	
+	convertToJSONString: function (myObject) {
+		return JSON.stringify(myObject);
+	},
+	
+	parseJSONString: function (myJSONtext, emptyObject){
+		return emptyObject.fromJSON(myJSONtext);
+	},
+	
+	var_dump: function (obj) {
+	   if(typeof obj == "object") {
+	      return "Type: "+typeof(obj)+((obj.constructor) ? "\nConstructor: "+obj.constructor : "")+"\nValue: " + obj;
+	   } else {
+	      return "Type: "+typeof(obj)+"\nValue: "+obj;
+	   }
+	}
+};

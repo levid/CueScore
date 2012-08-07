@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/levid/!svn/ver/301/trunk/mobile/CueScore/Resources/pages/matchViews
+END
+overlays.js
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/levid/!svn/ver/294/trunk/mobile/CueScore/Resources/pages/matchViews/overlays.js
+END
+rackOfBallsEight.js
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/levid/!svn/ver/295/trunk/mobile/CueScore/Resources/pages/matchViews/rackOfBallsEight.js
+END
+statusOverlay.js
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/levid/!svn/ver/227/trunk/mobile/CueScore/Resources/pages/matchViews/statusOverlay.js
+END
+header.js
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/levid/!svn/ver/272/trunk/mobile/CueScore/Resources/pages/matchViews/header.js
+END
+ballDisplayNine.js
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/levid/!svn/ver/242/trunk/mobile/CueScore/Resources/pages/matchViews/ballDisplayNine.js
+END
+ballSelector.js
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/levid/!svn/ver/289/trunk/mobile/CueScore/Resources/pages/matchViews/ballSelector.js
+END
+signatureView-iPhone.js
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/levid/!svn/ver/284/trunk/mobile/CueScore/Resources/pages/matchViews/signatureView-iPhone.js
+END
+signatureView.js
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/levid/!svn/ver/267/trunk/mobile/CueScore/Resources/pages/matchViews/signatureView.js
+END
+questionsOverlay.js
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/levid/!svn/ver/301/trunk/mobile/CueScore/Resources/pages/matchViews/questionsOverlay.js
+END
+rackOfBallsNine.js
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/levid/!svn/ver/242/trunk/mobile/CueScore/Resources/pages/matchViews/rackOfBallsNine.js
+END
+startingOverlay.js
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/levid/!svn/ver/223/trunk/mobile/CueScore/Resources/pages/matchViews/startingOverlay.js
+END
+footer.js
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/levid/!svn/ver/285/trunk/mobile/CueScore/Resources/pages/matchViews/footer.js
+END
+ballDisplayEight.js
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/levid/!svn/ver/246/trunk/mobile/CueScore/Resources/pages/matchViews/ballDisplayEight.js
+END

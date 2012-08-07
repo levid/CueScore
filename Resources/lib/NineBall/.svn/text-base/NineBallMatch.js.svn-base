@@ -1,0 +1,223 @@
+function NineBallMatch(player1, player2, player1Rank, player2Rank, player1Number, player2Number, player1TeamNumber, player2TeamNumber) {
+	this.PlayerOne = new NineBallPlayer(player1, player1Rank, player1Number, player1TeamNumber);
+	this.PlayerTwo = new NineBallPlayer(player2, player2Rank, player2Number, player2TeamNumber);
+	this.CompletedGames = [];
+	this.Ended = false;
+	this.OriginalId = 0;
+	this.LeagueMatchId = 0;
+	this.PlayerNumberWinning = 0;
+	this.SuddenDeath = false;
+	this.Forfeit = false;
+	var me = this; //need this for callback
+	
+	this.getNewGame = function() {
+		return new NineBallGame(function() {
+			return me.PlayerOne;
+		}, function() {
+			return me.PlayerTwo;
+		}, function() {
+			me.Ended = true;
+		});
+	};
+				
+	this.CurrentGame = this.getNewGame();
+
+	this.scoreNumberedBall = function(ballNumber) {
+		this.CurrentGame.scoreBall(ballNumber);
+		if(this.isPlayerOneWinning() == true) {
+			this.PlayerNumberWinning = 1;
+		} else {
+			this.PlayerNumberWinning = 2;
+		}
+		this.checkForWin();
+	};
+	
+	this.shotMissed = function() {
+		this.CurrentGame.nextPlayerIsUp();
+	};
+	
+	this.hitDeadBall = function(ballNumber) {
+		this.CurrentGame.hitDeadBall(ballNumber);
+		this.checkForWin();
+	};
+	
+	this.hitSafety = function() {
+		this.CurrentGame.hitSafety();
+	};
+	
+	this.checkForWin = function() {};
+
+	this.startNewGame = function() {
+		if(this.CurrentGame.Ended == true) {	
+			this.CompletedGames.push(me.CurrentGame);
+			this.CurrentGame = me.getNewGame();	
+		}
+	};
+
+    this.setSuddenDeathMode = function() {
+        this.SuddenDeath = true;
+        this.PlayerOne.GamesNeededToWin = 1;
+        this.PlayerTwo.GamesNeededToWin = 1;
+    };
+
+	this.getPlayerOneScore = function() {
+		return this.PlayerOne.Score;
+	};
+
+	this.getLosingPlayer = function() {
+		return (this.isPlayerOneWinning() == true) ? this.PlayerTwo : this.PlayerOne;
+	};
+	
+	this.getWinningPlayer = function() {
+		return (this.isPlayerOneWinning() == true) ? this.PlayerOne : this.PlayerTwo;
+	};
+	
+	this.getLosingPlayersMatchPoints = function() {
+		losingScore = new NineBallRanks().getLosingPlayersMatchPoints(this.getLosingPlayer().Rank, this.getLosingPlayer().Score);
+		return losingScore;
+	};
+	
+	this.getWinningPlayersMatchPoints = function() {
+		winningScore = new NineBallRanks().getWinningPlayersMatchPoints(this.getLosingPlayer().Rank, this.getLosingPlayer().Score);
+		return winningScore;
+	};
+	
+	this.getPlayerOneMatchPoints = function() {
+		if(this.isPlayerOneWinning() == true && this.isPlayerTwoWinning() == false) {
+			return new NineBallRanks().getWinningPlayersMatchPoints(this.getLosingPlayer().Rank, this.getLosingPlayer().Score);
+		}
+		return new NineBallRanks().getLosingPlayersMatchPoints(this.getLosingPlayer().Rank, this.getLosingPlayer().Score);
+	};
+	
+	this.getPlayerTwoMatchPoints = function() {
+		if(this.isPlayerOneWinning() == false && this.isPlayerTwoWinning() == true) {
+			return new NineBallRanks().getWinningPlayersMatchPoints(this.getLosingPlayer().Rank, this.getLosingPlayer().Score);
+		}
+		return new NineBallRanks().getLosingPlayersMatchPoints(this.getLosingPlayer().Rank, this.getLosingPlayer().Score);
+	};
+	
+	this.getMatchPoints = function() {
+		if(this.isPlayerOneWinning() == true) {
+			return new NineBallRanks().getWinningPlayersMatchPoints(this.PlayerTwo.Rank, this.PlayerTwo.Score) + "-" + new NineBallRanks().getLosingPlayersMatchPoints(this.PlayerTwo.Rank, this.PlayerTwo.Score);
+		} else if(this.isPlayerTwoWinning() == true) {
+			return new NineBallRanks().getLosingPlayersMatchPoints(this.PlayerOne.Rank, this.PlayerOne.Score) + "-" + new NineBallRanks().getWinningPlayersMatchPoints(this.PlayerOne.Rank, this.PlayerOne.Score);
+		}
+		return "Tied";
+	};
+	
+	this.isPlayerOneWinning = function() {
+		if((this.PlayerOne.getRatioScore() > this.PlayerTwo.getRatioScore()) || (this.PlayerOne.getRatioScore() == this.PlayerTwo.getRatioScore() && this.PlayerNumberWinning == 1)) {
+			return true;	
+		}
+		return false;
+	};
+	
+	this.isPlayerTwoWinning = function() {
+		if((this.PlayerOne.getRatioScore() < this.PlayerTwo.getRatioScore()) || (this.PlayerOne.getRatioScore() == this.PlayerTwo.getRatioScore() && this.PlayerNumberWinning == 2)) {
+			return true;	
+		}
+		return false;
+	};
+	
+	this.getMatchPointsByTeamNumber = function(teamNumber){
+		if(this.PlayerOne.TeamNumber == teamNumber) {
+			return this.getPlayerOneMatchPoints();
+		} else if(this.PlayerTwo.TeamNumber == teamNumber) {
+            return this.getPlayerTwoMatchPoints()
+		}
+		return 0;
+	};
+	
+	this.getTotalInnings = function() {
+		var totalInnings = this.CurrentGame.NumberOfInnings;
+		if(this.CompletedGames.length > 0) {
+			for(i=0;i<=(this.CompletedGames.length - 1);i++) {
+				
+				totalInnings += this.CompletedGames[i].NumberOfInnings;
+			}	
+		}		
+		return totalInnings.toString();
+	};
+	
+	this.getTotalDeadBalls = function() {
+		var totalDeadBalls = this.CurrentGame.getDeadBalls();
+		if(this.CompletedGames.length > 0) {
+			for(i=0;i<=(this.CompletedGames.length - 1);i++) {
+				totalDeadBalls += this.CompletedGames[i].getDeadBalls();
+			}	
+		}		
+		return totalDeadBalls.toString();
+	};
+	
+	this.getTotalSafeties = function() {
+		return (this.PlayerOne.getSafeties() + " to " + this.PlayerTwo.getSafeties());
+	};
+	
+	this.getCurrentGameNumber = function() {
+		return (this.CompletedGames.length + 1).toString();
+	};
+	
+	this.toJSON = function() {
+		return {
+			PlayerOne: this.PlayerOne.toJSON(),
+			PlayerTwo: this.PlayerTwo.toJSON(),
+			PlayerOneMatchPointsEarned: this.getPlayerOneMatchPoints(),
+			PlayerTwoMatchPointsEarned: this.getPlayerTwoMatchPoints(),
+			CurrentGame: this.CurrentGame.toJSON(),
+			CompletedGames: this.completedGamesToJSON(),
+			SuddenDeath: this.SuddenDeath,
+			Forfeit: this.Forfeit,
+			Ended: this.Ended,
+			OriginalId: this.OriginalId,
+			LeagueMatchId: this.LeagueMatchId
+		};
+	};
+	
+	this.completedGamesToJSON = function() {
+		var arrayToReturn = [];
+		for(var i = 0; i <= this.CompletedGames.length - 1; i++){
+			arrayToReturn[i] = this.CompletedGames[i].toJSON();
+		};
+		return arrayToReturn;
+	};
+	
+	this.fromJSON = function(json) {
+		this.PlayerOneMatchPointsEarned = json.PlayerOneMatchPointsEarned;
+		this.PlayerTwoMatchPointsEarned = json.PlayerTwoMatchPointsEarned;
+		this.PlayerOne = this.playerFromJSON(json.PlayerOne);
+		this.PlayerTwo = this.playerFromJSON(json.PlayerTwo);
+		this.CompletedGames = this.completedGamesFromJSON(json.CompletedGames);
+		this.SuddenDeath = json.SuddenDeath;
+		this.Forfeit = json.Forfeit;
+		this.Ended = json.Ended;
+		this.OriginalId = json.OriginalId;
+		this.LeagueMatchId = json.LeagueMatchId;
+			
+		var currentGame = this.getNewGame();
+		currentGame.fromJSON((new function(){
+			return json.CurrentGame;
+		}));
+		this.CurrentGame = currentGame;
+	};
+	
+	this.playerFromJSON = function(json) {
+		var player = new NineBallPlayer();
+		player.fromJSON((new function(){
+			return json;
+		}));
+		return player;
+	};
+	
+	this.completedGamesFromJSON = function(json) {
+		var arrayToReturn = [];
+		for(var i = 0; i <= json.length - 1; i++){
+			var completedGame = this.getNewGame();
+			completedGame.fromJSON((new function(){
+			return json[i];
+		}));
+			arrayToReturn.push(completedGame);
+		};
+		return arrayToReturn;
+	};
+};
+

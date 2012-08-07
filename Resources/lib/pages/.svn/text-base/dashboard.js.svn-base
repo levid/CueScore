@@ -1,0 +1,169 @@
+Titanium.include('/lib/Common.js');
+Titanium.include('/pages/matchSetup.js');
+Titanium.include('/pages/match.js');
+Titanium.include('/pages/toolViews/teams.js');
+Titanium.include('/pages/toolViews/activity.js');
+Titanium.include('/pages/toolViews/profile.js');
+Titanium.include('/pages/toolViews/news.js');
+Titanium.include('/pages/toolViews/events.js');
+Titanium.include('/pages/toolViews/live.js');
+Titanium.include('/pages/toolViews/rules.js');
+Titanium.include('/pages/toolViews/settings.js');
+
+var dashboardWindow = Titanium.UI.createWindow({
+    orientationModes: [Titanium.UI.PORTRAIT],
+    exitOnClose: true
+});
+
+var dashboardView = Titanium.UI.createView({
+    backgroundColor: 'transparent',
+    top: 0,
+    isNinePatch: false
+});
+
+var displayType = 'grid';
+
+Titanium.include('/pages/dashboardViews/dashboardCommonView.js');
+Titanium.include('/pages/dashboardViews/gridView.js');
+Titanium.include('/pages/dashboardViews/listView.js');
+
+function isGrid() {
+    return (displayType == 'grid');
+}
+function isList() {
+    return (displayType == 'list');
+}
+function showGrid() {
+    displayType = 'grid';
+    gridView.visible = true;
+    listView.visible = false;
+}
+function showList() {
+    displayType = 'list';
+    gridView.visible = false;
+    listView.visible = true;
+}
+
+dashboardContainer.add(gridView);
+dashboardView.add(dashboardContainer); //from dashboardCommonView
+dashboardView.add(titleBar);  //from dashboardCommonView
+dashboardWindow.add(dashboardView);
+
+/*
+	var testLabel = Titanium.UI.createLabel({
+		text: 'Test this rotate thing.',
+		color: '#ffffff',
+		height: 40,
+		width: 295,
+		top: 0,
+		textAlign: 'center',
+		font: {fontSize:20, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+	});
+	
+dashboardWindow.add(testLabel);
+*/
+
+Titanium.UI.setBackgroundColor('#000000');
+
+if(Ti.Platform.name != 'android') {
+    Titanium.UI.iPhone.showStatusBar();
+    dashboardWindow.open({fullscreen:false});
+} else {
+    dashboardWindow.open({fullscreen:true});
+}
+
+
+//var icons = [{title: 'Play', iconimage: 'images/match/buttons/btn-dashboard-play-large.png', inactiveiconimage: '', listimage: 'images/match/layout/icon-dashboard-play-small.png', active: true,
+//closure: function(){
+//	if(icons[0].window == null) {
+//		icons[0].window = matchSetup();
+//	} else {
+//		icons[0].window.showMatchSetup();
+//	}
+//	dashboardWindow.hide();
+//}, window: null},
+//{title: 'Teams', iconimage: 'images/match/buttons/btn-dashboard-leagues-large.png', inactiveiconimage: 'images/match/buttons/btn-dashboard-leagues-large-inactive.png', listimage: 'images/match/layout/icon-dashboard-leagues-small.png', active: true,
+//closure: function(){
+//	if(icons[1].window == null) {
+//		icons[1].window = play();
+//	} else {
+//		icons[1].window.showMatch();
+//	}
+//	dashboardWindow.hide();
+//}, window: null},
+//{title: 'Activity', iconimage: 'images/match/buttons/btn-dashboard-activity-large.png', inactiveiconimage: 'images/match/buttons/btn-dashboard-activity-large-inactive.png', listimage: 'images/match/layout/icon-dashboard-activity-small.png', active: false, closure: function(){}},
+//{title: 'Profile', iconimage: 'images/match/buttons/btn-dashboard-profile-large.png', inactiveiconimage: 'images/match/buttons/btn-dashboard-profile-large-inactive.png', listimage: 'images/match/layout/icon-dashboard-profile-small.png', active: false, closure: function(){}},
+//{title: 'News', iconimage: 'images/match/buttons/btn-dashboard-news-large.png', inactiveiconimage: 'images/match/buttons/btn-dashboard-news-large-inactive.png', listimage: 'images/match/layout/icon-dashboard-news-small.png', active: false, closure: function(){}},
+//{title: 'Events', iconimage: 'images/match/buttons/btn-dashboard-events-large.png', inactiveiconimage: 'images/match/buttons/btn-dashboard-events-large-inactive.png', listimage: 'images/match/layout/icon-dashboard-events-small.png', active: false, closure: function(){}},
+//{title: 'Live', iconimage: 'images/match/buttons/btn-dashboard-live-large.png', inactiveiconimage: 'images/match/buttons/btn-dashboard-live-large-inactive.png', listimage: 'images/match/layout/icon-dashboard-live-small.png', active: false, closure: function(){}},
+//{title: 'Rules', iconimage: 'images/match/buttons/btn-dashboard-rules-large.png', inactiveiconimage: 'images/match/buttons/btn-dashboard-rules-large-inactive.png', listimage: 'images/match/layout/icon-dashboard-rules-small.png', active: true,
+//closure: function(){
+//	if(icons[7].window == null) {
+//		icons[7].window = rules();
+//	} else {
+//		icons[7].window.showRules();
+//	}
+//	dashboardWindow.hide();
+//}},
+//{title: 'Settings', iconimage: 'images/match/buttons/btn-dashboard-settings-large.png', inactiveiconimage: 'images/match/buttons/btn-dashboard-settings-large-inactive.png', listimage: 'images/match/layout/icon-dashboard-settings-small.png', active: false, closure: function(){Titanium.API.info("test closure");}}];
+
+// ---------------------------------------------------------------
+// Create custom loading indicator
+// ---------------------------------------------------------------
+
+/*
+var indWin = null;
+var actInd = null;
+function showIndicator(title) {
+    indicatorShowing = true;
+
+    // window container
+    indWin = Titanium.UI.createWindow({
+  		width: 150,
+		height: 150
+    });
+
+    // black view
+    var indView = Titanium.UI.createView({
+		width: 150,
+		height: 150,
+        backgroundColor:'#000',
+        borderRadius:10,
+        opacity:0.7
+    });
+    indWin.add(indView);
+
+    // loading indicator
+    actInd = Titanium.UI.createImageView({
+        top: 20,
+        duration: 300,
+        defaultImage: 'images/dashboard/loading/loading1.png',
+        images: ['images/dashboard/loading/loading1.png','images/dashboard/loading/loading2.png','images/dashboard/loading/loading3.png','images/dashboard/loading/loading4.png','images/dashboard/loading/loading5.png'],
+        height:88,
+        width:88
+    });
+    indWin.add(actInd);
+
+    // message
+    var message = Titanium.UI.createLabel({
+        text:title,
+        color:'#fff',
+        font:{fontSize:20,fontWeight:'bold'},
+		top: 110,
+		left: 30
+    });
+    indWin.add(message);
+    actInd.start();
+    indWin.open();
+};
+
+function hideIndicator() {
+    actInd.stop();
+    indWin.close({opacity:0,duration:500});
+    indicatorShowing = false;
+};
+
+function stopIndicator() {
+    actInd.stop();
+};
+*/

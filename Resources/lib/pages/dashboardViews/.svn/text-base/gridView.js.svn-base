@@ -1,0 +1,512 @@
+//'#B6F1B1'
+var playWindowHolder = null;
+var teamsWindowHolder = null;
+var activityWindowHolder = null;
+var profileWindowHolder = null;
+var newsWindowHolder = null;
+var eventsWindowHolder = null;
+var liveWindowHolder = null;
+var rulesWindowHolder = null;
+var settingsWindowHolder = null;
+
+var gridView = Titanium.UI.createView({
+	top: 12,
+	left: 12,
+	height: 390,
+	width: 295,
+	isNinePatch: false
+});
+var playIconContainer = Titanium.UI.createView({
+    left: 13,
+    top: 16,
+    height: 102,
+    width: 82
+});
+var playIconBackground = Titanium.UI.createView({
+    backgroundImage: 'images/match/layout/bg-dashboard-buttons-gridview.png',
+    top: 0,
+    left: 0,
+    height: 83,
+    width: 82
+});
+var playIcon = Titanium.UI.createView({
+    backgroundImage: 'images/match/buttons/btn-dashboard-play-large.png',
+    top: 5,
+    left: 6,
+    height: 71,
+    width: 70
+});
+var playIconLabel = Titanium.UI.createLabel({
+    color: '#ffffff',
+    backgroundColor: 'transparent',
+    text: 'Play',
+    top: 80,
+    height: 20,
+    width: 82,
+    textAlign: 'center',
+    font: {fontSize:14, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+});
+playIcon.addEventListener('click', function(){
+	/*
+	if(playWindowHolder == null) {
+	    showIndicator("Loading...");
+//	    try{
+//           playWindowHolder = play();
+//	    }catch(e) {
+//	      // message.text = "Error";
+//	       stopIndicator();
+//	       Ti.API.info(e);
+//	    }
+	     playWindowHolder = play();
+	} else {
+		playWindowHolder.showMatch();
+	}
+	dashboardWindow.hide();
+	*/
+	if(playWindowHolder == null) {
+	   // showIndicator("Loading Teams");
+		/*
+	    try{
+           playWindowHolder = play();
+	    }catch(e) {
+	       stopIndicator();
+	       Ti.API.info(e);
+	    }
+	    */
+	    //playWindowHolder = play();
+		playWindowHolder = matchSetup();
+	} else {
+		playWindowHolder.showMatchSetup();
+	}
+	dashboardWindow.hide();
+});
+playIconBackground.add(playIcon);
+playIconContainer.add(playIconBackground);
+playIconContainer.add(playIconLabel);
+
+
+var teamsIconContainer = Titanium.UI.createView({
+    left: 108,
+    top: 16,
+    height: 102,
+    width: 82
+});
+var teamsIconBackground = Titanium.UI.createView({
+    backgroundImage: 'images/match/layout/bg-dashboard-buttons-gridview.png',
+    top: 0,
+    left: 0,
+    height: 83,
+    width: 82
+});
+var teamsIcon = Titanium.UI.createView({
+    backgroundImage: 'images/match/buttons/btn-dashboard-leagues-large.png',
+    top: 5,
+    left: 6,
+    height: 71,
+    width: 70
+});
+var teamsIconLabel = Titanium.UI.createLabel({
+    color: '#ffffff',
+    backgroundColor: 'transparent',
+    text: 'Teams',
+    top: 80,
+    height: 20,
+    width: 82,
+    textAlign: 'center',
+    font: {fontSize:14, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+});
+teamsIcon.addEventListener('click', function(){
+	if(teamsWindowHolder == null) {
+	    //showIndicator("Loading Activity");
+		/*
+	    try{
+           playWindowHolder = play();
+	    }catch(e) {
+	       stopIndicator();
+	       Ti.API.info(e);
+	    }
+	    */
+		teamsWindowHolder = teams();
+	} else {
+		teamsWindowHolder.showTeams();
+	}
+	dashboardWindow.hide();
+});
+teamsIconBackground.add(teamsIcon);
+teamsIconContainer.add(teamsIconBackground);
+teamsIconContainer.add(teamsIconLabel);
+
+
+var activityIconContainer = Titanium.UI.createView({
+    left: 203,
+    top: 16,
+    height: 102,
+    width: 82
+});
+var activityIconBackground = Titanium.UI.createView({
+    backgroundImage: 'images/match/layout/bg-dashboard-buttons-gridview.png',
+    top: 0,
+    left: 0,
+    height: 83,
+    width: 82
+});
+var activityIcon = Titanium.UI.createView({
+    backgroundImage: 'images/match/buttons/btn-dashboard-activity-large.png',
+    top: 5,
+    left: 6,
+    height: 71,
+    width: 70
+});
+var activityIconLabel = Titanium.UI.createLabel({
+    color: '#ffffff',
+    backgroundColor: 'transparent',
+    text: 'Activity',
+    top: 80,
+    height: 20,
+    width: 82,
+    textAlign: 'center',
+    font: {fontSize:14, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+});
+activityIcon.addEventListener('click', function(){
+	if(activityWindowHolder == null) {
+	    //showIndicator("Loading Activity");
+		/*
+	    try{
+           playWindowHolder = play();
+	    }catch(e) {
+	       stopIndicator();
+	       Ti.API.info(e);
+	    }
+	    */
+		activityWindowHolder = activity();
+	} else {
+		activityWindowHolder.showActivity();
+	}
+	dashboardWindow.hide();
+});
+activityIconBackground.add(activityIcon);
+activityIconContainer.add(activityIconBackground);
+activityIconContainer.add(activityIconLabel);
+
+var profileIconContainer = Titanium.UI.createView({
+    left: 13,
+    top: 137,
+    height: 102,
+    width: 82
+});
+var profileIconBackground = Titanium.UI.createView({
+    backgroundImage: 'images/match/layout/bg-dashboard-buttons-gridview.png',
+    top: 0,
+    left: 0,
+    height: 83,
+    width: 82
+});
+var profileIcon = Titanium.UI.createView({
+    backgroundImage: 'images/match/buttons/btn-dashboard-profile-large.png',
+    top: 5,
+    left: 6,
+    height: 71,
+    width: 70
+});
+var profileIconLabel = Titanium.UI.createLabel({
+    color: '#ffffff',
+    backgroundColor: 'transparent',
+    text: 'Profile',
+    top: 80,
+    height: 20,
+    width: 82,
+    textAlign: 'center',
+    font: {fontSize:14, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+});
+profileIcon.addEventListener('click', function(){
+	if(profileWindowHolder == null) {
+	    //showIndicator("Loading Profile");
+		/*
+	    try{
+           playWindowHolder = play();
+	    }catch(e) {
+	       stopIndicator();
+	       Ti.API.info(e);
+	    }
+	    */
+		profileWindowHolder = profile();
+	} else {
+		profileWindowHolder.showProfile();
+	}
+	dashboardWindow.hide();
+});
+profileIconBackground.add(profileIcon);
+profileIconContainer.add(profileIconBackground);
+profileIconContainer.add(profileIconLabel);
+
+
+var newsIconContainer = Titanium.UI.createView({
+    left: 108,
+    top: 137,
+    height: 102,
+    width: 82
+});
+var newsIconBackground = Titanium.UI.createView({
+    backgroundImage: 'images/match/layout/bg-dashboard-buttons-gridview.png',
+    top: 0,
+    left: 0,
+    height: 83,
+    width: 82
+});
+var newsIcon = Titanium.UI.createView({
+    backgroundImage: 'images/match/buttons/btn-dashboard-news-large.png',
+    top: 5,
+    left: 6,
+    height: 71,
+    width: 70
+});
+var newsIconLabel = Titanium.UI.createLabel({
+    color: '#ffffff',
+    backgroundColor: 'transparent',
+    text: 'News',
+    top: 80,
+    height: 20,
+    width: 82,
+    textAlign: 'center',
+    font: {fontSize:14, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+});
+newsIcon.addEventListener('click', function(){
+	if(newsWindowHolder == null) {
+	    //showIndicator("Loading News");
+		/*
+	    try{
+           playWindowHolder = play();
+	    }catch(e) {
+	       stopIndicator();
+	       Ti.API.info(e);
+	    }
+	    */
+		newsWindowHolder = news();
+	} else {
+		newsWindowHolder.showNews();
+	}
+	dashboardWindow.hide();
+});
+newsIconBackground.add(newsIcon);
+newsIconContainer.add(newsIconBackground);
+newsIconContainer.add(newsIconLabel);
+
+var eventsIconContainer = Titanium.UI.createView({
+    left: 203,
+    top: 137,
+    height: 102,
+    width: 82
+});
+var eventsIconBackground = Titanium.UI.createView({
+    backgroundImage: 'images/match/layout/bg-dashboard-buttons-gridview.png',
+    top: 0,
+    left: 0,
+    height: 83,
+    width: 82
+});
+var eventsIcon = Titanium.UI.createView({
+    backgroundImage: 'images/match/buttons/btn-dashboard-events-large.png',
+    top: 5,
+    left: 6,
+    height: 71,
+    width: 70
+});
+var eventsIconLabel = Titanium.UI.createLabel({
+    color: '#ffffff',
+    backgroundColor: 'transparent',
+    text: 'Events',
+    top: 80,
+    height: 20,
+    width: 82,
+    textAlign: 'center',
+    font: {fontSize:14, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+});
+eventsIcon.addEventListener('click', function(){
+	if(eventsWindowHolder == null) {
+	    //showIndicator("Loading Events");
+		/*
+	    try{
+           playWindowHolder = play();
+	    }catch(e) {
+	       stopIndicator();
+	       Ti.API.info(e);
+	    }
+	    */
+		eventsWindowHolder = events();
+	} else {
+		eventsWindowHolder.showEvents();
+	}
+	dashboardWindow.hide();
+});
+eventsIconBackground.add(eventsIcon);
+eventsIconContainer.add(eventsIconBackground);
+eventsIconContainer.add(eventsIconLabel);
+
+var liveIconContainer = Titanium.UI.createView({
+    left: 13,
+    top: 255,
+    height: 102,
+    width: 82
+});
+var liveIconBackground = Titanium.UI.createView({
+    backgroundImage: 'images/match/layout/bg-dashboard-buttons-gridview.png',
+    top: 0,
+    left: 0,
+    height: 83,
+    width: 82
+});
+var liveIcon = Titanium.UI.createView({
+    backgroundImage: 'images/match/buttons/btn-dashboard-live-large.png',
+    top: 5,
+    left: 6,
+    height: 71,
+    width: 70
+});
+var liveIconLabel = Titanium.UI.createLabel({
+    color: '#ffffff',
+    backgroundColor: 'transparent',
+    text: 'Live',
+    top: 80,
+    height: 20,
+    width: 82,
+    textAlign: 'center',
+    font: {fontSize:14, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+});
+liveIcon.addEventListener('click', function(){
+	if(liveWindowHolder == null) {
+	    //showIndicator("Loading Live Scoring");
+		/*
+	    try{
+           playWindowHolder = play();
+	    }catch(e) {
+	       stopIndicator();
+	       Ti.API.info(e);
+	    }
+	    */
+		liveWindowHolder = live();
+	} else {
+		liveWindowHolder.showLive();
+	}
+	dashboardWindow.hide();
+});
+liveIconBackground.add(liveIcon);
+liveIconContainer.add(liveIconBackground);
+liveIconContainer.add(liveIconLabel);
+
+var rulesIconContainer = Titanium.UI.createView({
+    left: 108,
+    top: 255,
+    height: 102,
+    width: 82
+});
+var rulesIconBackground = Titanium.UI.createView({
+    backgroundImage: 'images/match/layout/bg-dashboard-buttons-gridview.png',
+    top: 0,
+    left: 0,
+    height: 83,
+    width: 82
+});
+var rulesIcon = Titanium.UI.createView({
+    backgroundImage: 'images/match/buttons/btn-dashboard-rules-large.png',
+    top: 5,
+    left: 6,
+    height: 71,
+    width: 70
+});
+var rulesIconLabel = Titanium.UI.createLabel({
+    color: '#ffffff',
+    backgroundColor: 'transparent',
+    text: 'Rules',
+    top: 80,
+    height: 20,
+    width: 82,
+    textAlign: 'center',
+    font: {fontSize:14, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+});
+rulesIcon.addEventListener('click', function(){
+	if(rulesWindowHolder == null) {
+	    //showIndicator("Loading News");
+		/*
+	    try{
+           playWindowHolder = play();
+	    }catch(e) {
+	       stopIndicator();
+	       Ti.API.info(e);
+	    }
+	    */
+		rulesWindowHolder = rules();
+	} else {
+		rulesWindowHolder.showRules();
+	}
+	dashboardWindow.hide();
+});
+
+rulesIconBackground.add(rulesIcon);
+rulesIconContainer.add(rulesIconBackground);
+rulesIconContainer.add(rulesIconLabel);
+
+var settingsIconContainer = Titanium.UI.createView({
+    left: 203,
+    top: 255,
+    height: 102,
+    width: 82
+});
+var settingsIconBackground = Titanium.UI.createView({
+    backgroundImage: 'images/match/layout/bg-dashboard-buttons-gridview.png',
+    top: 0,
+    left: 0,
+    height: 83,
+    width: 82
+});
+var settingsIcon = Titanium.UI.createView({
+    backgroundImage: 'images/match/buttons/btn-dashboard-settings-large.png',
+    top: 5,
+    left: 6,
+    height: 71,
+    width: 70
+});
+var settingsIconLabel = Titanium.UI.createLabel({
+    color: '#ffffff',
+    backgroundColor: 'transparent',
+    text: 'Settings',
+    top: 80,
+    height: 20,
+    width: 82,
+    textAlign: 'center',
+    font: {fontSize:14, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+});
+settingsIcon.addEventListener('click', function(){
+	if(settingsWindowHolder == null) {
+	    //showIndicator("Loading Settings");
+		/*
+	    try{
+           playWindowHolder = play();
+	    }catch(e) {
+	       stopIndicator();
+	       Ti.API.info(e);
+	    }
+	    */
+		settingsWindowHolder = settings();
+	} else {
+		settingsWindowHolder.showSettings();
+	}
+	dashboardWindow.hide();
+});
+settingsIconBackground.add(settingsIcon);
+settingsIconContainer.add(settingsIconBackground);
+settingsIconContainer.add(settingsIconLabel);
+
+gridView.add(playIconContainer);
+gridView.add(teamsIconContainer);
+gridView.add(activityIconContainer);
+gridView.add(profileIconContainer);
+gridView.add(newsIconContainer);
+gridView.add(eventsIconContainer);
+gridView.add(liveIconContainer);
+gridView.add(rulesIconContainer);
+gridView.add(settingsIconContainer);
+//    iconLabel.animate({
+//        opacity: .6
+//    })
+//    iconLabel.opacity = .6;
+

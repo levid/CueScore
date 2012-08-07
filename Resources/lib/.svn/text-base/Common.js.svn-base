@@ -1,0 +1,20 @@
+Array.prototype.exists = function(search){
+  for (var i = 0; i < this.length; i++) {
+  	if (this[i] == search) {
+  		return true;
+  	}
+  }
+  return false;
+};
+
+this.getPlatformWidth = function() {
+	return Ti.Platform.displayCaps.platformWidth;
+};
+
+this.getPlatformHeight = function() {
+	return Ti.Platform.displayCaps.platformHeight - 22;
+};
+
+function getScoreRatio(playerScore, playerBallCount) {
+	return playerScore / playerBallCount;
+};

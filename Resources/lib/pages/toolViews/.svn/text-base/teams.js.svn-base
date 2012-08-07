@@ -1,0 +1,97 @@
+var teams = function() {
+    var me = this;
+    
+    try {
+          Titanium.include('/lib/Common.js');
+		  Titanium.include('/pages/toolViews/toolsMenuView.js');
+    } catch(e) {}
+
+	this.teamsWindow = Titanium.UI.createWindow({
+		orientationModes: [Titanium.UI.PORTRAIT]
+	});
+
+	this.teamsContainer = Titanium.UI.createView({
+		backgroundColor: '#000000',
+		top: 0,
+		left: 0,
+		height: this.getPlatformHeight(),
+		width: this.getPlatformWidth()
+	});
+
+	this.teamsScrollView = Titanium.UI.createScrollView({
+        contentWidth:'auto',
+        contentHeight:'auto',
+        minZoomScale: 0,
+        maxZoomScale: 10,
+	    backgroundColor: 'transparent',
+		top: 12,
+		left: 12,
+		height: 390,
+		width: 295,
+		showPagingControl:true
+	});
+
+	this.teamsView = Titanium.UI.createView({
+		height: 243,
+		width: 243,
+		font: {fontSize:13, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+	});
+	this.comingSoon = Titanium.UI.createView({
+		backgroundImage: 'images/match/layout/overlay-comingsoon.png',
+		backgroundColor: 'transparent',
+		top: 20,
+		height: 243,
+		width: 243
+	});
+	this.teamsLabel = Titanium.UI.createLabel({
+		text: 'test test test test ',
+		top: 0,
+		left: 0,
+		color: '#ffffff',
+		height: 1500,
+		width: 285,
+		font: {fontSize:13, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+	});
+	this.teamsView.add(this.comingSoon);
+	
+	var toolbarLabel = Titanium.UI.createLabel({
+		text: 'Teams',
+		color: '#ffffff',
+		shadowColor: '#000000',
+		textAlign: 'center',
+		font: {fontSize:20, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+	});
+	
+	titleBar.add(dashboardButton);
+	titleBar.add(toolbarLabel);
+	//this.teamsView.add(this.teamsLabel);
+
+/*
+	this.teamsView.addEventListener('click', function(){
+        me.teamsWindow.close();
+        me.dashboardWindow.show();
+    });
+    */
+
+	//this.teamsScrollView.add(this.teamsView);
+	this.teamsContainer.add(toolsMenuContainer);
+	this.teamsContainer.add(titleBar);  //from t
+	this.teamsContainer.add(this.teamsView);
+	this.teamsWindow.add(this.teamsContainer);
+	
+	this.dashboardButton.addEventListener('click', function(){
+	   	me.teamsWindow.close();
+		me.dashboardWindow.show();
+	});
+
+    this.showTeams = function() {
+       	if(Ti.Platform.name != 'android') {
+            Titanium.UI.iPhone.showStatusBar();
+            this.teamsWindow.open({fullscreen:false});
+        } else {
+            this.teamsWindow.open({fullscreen:true});
+        }
+    };
+    showTeams();
+    return this;
+};

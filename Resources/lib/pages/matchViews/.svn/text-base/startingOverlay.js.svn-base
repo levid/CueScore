@@ -1,0 +1,90 @@
+this.startMatchOverlayContainer = Titanium.UI.createView({
+	//backgroundImage: (Ti.Platform.name != 'android') ? 'images/match/layout/bg-menus-iphone.png' : 'images/match/layout/bg-menus-android.png',
+	backgroundColor: '#ffffff',
+	top: 44,
+	left: 0,
+	height: (this.getPlatformHeight() - 44),
+	width: this.getPlatformWidth()
+});
+this.startMatchOverlayContainer.visible = true;
+this.view.add(this.startMatchOverlayContainer);
+//
+//this.whoIsBreakingLabel = Titanium.UI.createLabel({
+//	text: 'Who Breaks First?',
+//	color: '#ffffff',
+//	height: 40,
+//	width: 300,
+//	top: 18,
+//	textAlign: 'center',
+//	font: {fontSize:25, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+//});
+//
+//this.startMatchTable = Titanium.UI.createView({
+//	backgroundColor: '#ffffff',
+//	height: 150,
+//	width: 266,
+//	top: 0
+//});
+//
+//this.playerOneStartNameLabel = Titanium.UI.createLabel({
+//	text: '',
+//	color: '#ffffff',
+//	top: 3,
+//	left: 10,
+//	height: 20,
+//	width: 60,
+//	textAlign: 'left',
+//	font: {fontSize:15, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+//});
+//this.startMatchTable.add(this.playerOneStartNameLabel);
+//this.playerTwoStartNameLabel = Titanium.UI.createLabel({
+//	text: '',
+//	color: '#ffffff',
+//	top: 3,
+//	right: 10,
+//	height: 20,
+//	width: 65,
+//	textAlign: 'left',
+//	font: {fontSize:15, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+//});
+//this.startMatchTable.add(this.playerTwoStartNameLabel);
+//
+//this.matchPointsNeededToWinView = Titanium.UI.createView({
+//	backgroundImage: 'images/match/layout/bg-matchresults-smalltitles.png',
+//	height: 30,
+//	width: 110,
+//	top: 82
+//});
+//this.matchPointsNeededToWinLabel = Titanium.UI.createLabel({
+//	text: 'Points to Win',
+//	color: '#ffffff',
+//	top: 5,
+//	left: 0,
+//	height: 20,
+//	width: 110,
+//	textAlign: 'center',
+//	font: {fontSize:13, fontWeight: 'bold', fontFamily:'HelveticaNeue-Bold'}
+//});
+//this.matchPointsNeededToWinView.add(this.matchPointsNeededToWinLabel);
+//this.startMatchTable.add(this.matchPointsView);
+//
+//this.startMatchTable.add(this.playerOneStartNameLabel);
+//this.startMatchTable.add(this.playerTwoStartNameLabel);
+//this.startMatchTable.add(this.matchPointsView);
+//this.startMatchTable.add(this.matchPlayerOnePoints);
+//this.startMatchTable.add(this.matchPlayerTwoPoints);
+//
+//this.startMatchOverlayContainer.add(this.whoIsBreakingLabel);
+//this.startMatchOverlayContainer.add(this.startMatchTable);
+//this.view.add(this.startMatchOverlayContainer);
+//
+this.showStartMatchOverlay = function() {
+//	this.playerOneStartNameLabel.text = this.currentMatch.PlayerOne.getFirstNameWithInitials();
+//	this.playerTwoStartNameLabel.text = this.currentMatch.PlayerTwo.getFirstNameWithInitials();
+
+//	this.startMatchOverlayContainer.visible = true;
+};
+//
+//this.hideFinishedOverlay = function() {
+//	this.startMatchOverlayContainer.visible = false;
+//};
