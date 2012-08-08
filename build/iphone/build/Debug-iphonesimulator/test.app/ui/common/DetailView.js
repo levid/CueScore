@@ -1,1 +1,0 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/ui/common/DetailView.js

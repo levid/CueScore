@@ -1,1 +1,0 @@
-/Users/levid/Mobile/development/projects/CueScore/Resources/lib/pages/matchViews/footer.coffee
