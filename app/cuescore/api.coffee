@@ -11,7 +11,7 @@ class CueScore.API
       uri += "#{ key }=#{ escape(value) }&"
 
     uri
-  
+
   request: (path, options, authenticated=true) ->
     options.method  ?= 'GET'
     options.query   ?= {}
@@ -32,12 +32,12 @@ class CueScore.API
     uri = @requestURI(path, options.query)
     xhr.open(options.method, uri)
     xhr.setRequestHeader 'Authorization', 'Basic ' + Ti.Utils.base64encode(@login+':'+@password) if authenticated
-    
+
     message = "Executing "
     message += if authenticated then "Authenticated " else "Unauthenticated "
     message += "#{options.method} #{uri}"
     Ti.API.debug(message) if options.debug
-    
+
     if options.body?
       xhr.setRequestHeader('Accept', 'application/json')
       xhr.setRequestHeader('Content-Type', 'application/json')
@@ -66,3 +66,20 @@ class CueScore.API
     @request path, options, authenticated
 
 # Add your API endpoints below
+
+  # Authenticate the user
+  authenticate: (options) ->
+    Ti.API.debug "CueScore.API.authenticate" @get '/me', options
+
+  # Logout the user
+  logout: (options) ->
+    Ti.API.debug "CueScore.API.logout" @delete '/logout', options
+
+  # Forgot password
+  forgotPassword: (email, options) -> Ti.API.debug "CueScore.API.forgotPassword" options.query = {}
+    options.query.email = email
+    @post '/passwords', options, false
+
+  # Convenience method to get current user info
+  me: (options) ->
+    Ti.API.debug "CueScore.API.me" @authenticate options

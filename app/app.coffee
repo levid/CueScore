@@ -16,6 +16,15 @@ CueScore =
   Views:
     Settings: {}
     Sample: {}
+    Play: {}
+    Teams: {}
+    Activity: {}
+    Profile: {}
+    News: {}
+    Events: {}
+    Live: {}
+    Rules: {}
+    Settings: {}
 
 # Include your libraries like:
 # Ti.include('vendor/date.js')
@@ -23,11 +32,11 @@ CueScore =
 # Ti.include('vendor/backbone.js')
 
 Ti.include('cuescore.js')
-Ti.include("js/pages/dashboard.js")
 
 # Alias, so you could do $.App.init() below. If you have an API class,
 # make sure to either use the full app name or declare the below at the top
 # and use $.API for the class name. Uncomment to use.
 # $ = HelloTi
 
+CueScore.App.init()
 CueScore.App.initTabGroup()
