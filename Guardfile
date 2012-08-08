@@ -9,7 +9,7 @@ group 'coffee' do
   guard 'shell' do
     watch(%r{app/(.+\.coffee)}) do
       puts 'compiling coffeescript'
-      `coffee -p --bare src > Resources/hello_ti.js`
+      `coffee -p --bare src > Resources/cuescore.js`
     end
   end
 end

@@ -9,7 +9,7 @@
     </deployment-targets>
     <sdk-version>2.1.1.GA</sdk-version>
     <id>com.levid.cuescore</id>
-    <name>test</name>
+    <name>cuescore</name>
     <version>1.0</version>
     <publisher>levid</publisher>
     <url>http://www.levid.com</url>

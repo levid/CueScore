@@ -12,6 +12,7 @@
 #   app/dailyfocus/controllers/**/*.coffee
 #   app/dailyfocus/views/**/*.coffee
 #
+
 app/cuescore/app.coffee
 app/cuescore/models/**/*.coffee
 app/cuescore/helpers/*.coffee

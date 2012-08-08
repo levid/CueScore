@@ -1,7 +1,7 @@
 CueScore.App =
 
   init: ->
-    Ti.include("js/pages/dashboard.js")
+    console "test"
 
   initTabGroup: ->
     CueScore.App.tabGroup = Ti.UI.createTabGroup()

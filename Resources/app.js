@@ -13,12 +13,20 @@ CueScore = {
   Helpers: {},
   Views: {
     Settings: {},
-    Sample: {}
+    Sample: {},
+    Play: {},
+    Teams: {},
+    Activity: {},
+    Profile: {},
+    News: {},
+    Events: {},
+    Live: {},
+    Rules: {}
   }
 };
 
 Ti.include('cuescore.js');
 
-Ti.include("js/pages/dashboard.js");
+Ti.include('js/pages/dashboard.js');
 
 CueScore.App.initTabGroup();
