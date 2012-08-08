@@ -1,9 +1,24 @@
-var root = {};
-// Ti.include('js/generic_window.js');
-// Ti.include('js/main.js');
+var CueScore, console, root;
 
-var console = {
-  log: function(str) { return Ti.API.info(str); }
+root = {};
+
+console = {
+  log: function(str) {
+    return Ti.API.info(str);
+  }
 };
 
-Ti.include('/js/pages/dashboard.js');
+CueScore = {
+  Models: {},
+  Helpers: {},
+  Views: {
+    Settings: {},
+    Sample: {}
+  }
+};
+
+Ti.include('cuescore.js');
+
+Ti.include("js/pages/dashboard.js");
+
+CueScore.App.initTabGroup();

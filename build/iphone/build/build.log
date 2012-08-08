@@ -5,7 +5,7 @@ reporting an issue to help us understand your environment, build settings
 and aid in debugging. Please attach this log to any issue that you report.
 ================================================================================
 
-Starting build at 08/07/12 16:26
+Starting build at 08/07/12 17:22
 
 Build details:
 
@@ -53,26 +53,58 @@ Generated the following stylecode code:
 	<dict>
 		<key>classes</key>
 		<dict>
+<key>app</key>
+<dict>
+</dict>
 </dict>
 
 		<key>classes_density</key>
 		<dict>
+<key>app</key>
+<dict>
+</dict>
 </dict>
 
 		<key>ids</key>
 		<dict>
+<key>app</key>
+<dict>
+<key>sampleLabel</key>
+<dict>
+<key>color</key>
+<string>#000</string>
+<key>font</key>
+<dict>
+<key>fontFamily</key>
+<string>Monospace</string>
+<key>fontSize</key>
+<string>12</string>
+</dict>
+<key>height</key>
+<string>10</string>
+</dict>
+</dict>
 </dict>
 
 		<key>ids_density</key>
 		<dict>
+<key>app</key>
+<dict>
+</dict>
 </dict>
 
 		<key>tags</key>
 		<dict>
+<key>app</key>
+<dict>
+</dict>
 </dict>
 
 		<key>tags_density</key>
 		<dict>
+<key>app</key>
+<dict>
+</dict>
 </dict>
 
 	</dict>

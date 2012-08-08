@@ -4,26 +4,58 @@
 	<dict>
 		<key>classes</key>
 		<dict>
+<key>app</key>
+<dict>
+</dict>
 </dict>
 
 		<key>classes_density</key>
 		<dict>
+<key>app</key>
+<dict>
+</dict>
 </dict>
 
 		<key>ids</key>
 		<dict>
+<key>app</key>
+<dict>
+<key>sampleLabel</key>
+<dict>
+<key>color</key>
+<string>#000</string>
+<key>font</key>
+<dict>
+<key>fontFamily</key>
+<string>Monospace</string>
+<key>fontSize</key>
+<string>12</string>
+</dict>
+<key>height</key>
+<string>10</string>
+</dict>
+</dict>
 </dict>
 
 		<key>ids_density</key>
 		<dict>
+<key>app</key>
+<dict>
+</dict>
 </dict>
 
 		<key>tags</key>
 		<dict>
+<key>app</key>
+<dict>
+</dict>
 </dict>
 
 		<key>tags_density</key>
 		<dict>
+<key>app</key>
+<dict>
+</dict>
 </dict>
 
 	</dict>
