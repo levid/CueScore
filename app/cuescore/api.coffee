@@ -1,12 +1,12 @@
-class CueScore.API
+class $CS.API
 
   constructor: (@login, @password) ->
 
   requestURI: (path, query={}) ->
     # NOTE: Setup your own API endpoint, as below
-    CueScore.API_ENDPOINT = "http://hello_ti.com/api"
+    $CS.API_ENDPOINT = "http://localhost:3009"
 
-    uri = "#{CueScore.API_ENDPOINT}#{path}.json?"
+    uri = "#{$CS.API_ENDPOINT}#{path}.json?"
     for own key, value of query
       uri += "#{ key }=#{ escape(value) }&"
 
@@ -65,21 +65,22 @@ class CueScore.API
     options.method = 'DELETE'
     @request path, options, authenticated
 
-# Add your API endpoints below
+  # Add your API endpoints below
 
   # Authenticate the user
   authenticate: (options) ->
-    Ti.API.debug "CueScore.API.authenticate" @get '/me', options
+    Ti.API.debug "$CS.API.authenticate" @get '/me', options
 
   # Logout the user
   logout: (options) ->
-    Ti.API.debug "CueScore.API.logout" @delete '/logout', options
+    Ti.API.debug "$CS.API.logout" @delete '/logout', options
 
   # Forgot password
-  forgotPassword: (email, options) -> Ti.API.debug "CueScore.API.forgotPassword" options.query = {}
+  forgotPassword: (email, options) -> Ti.API.debug "$CS.API.forgotPassword" options.query = {}
     options.query.email = email
     @post '/passwords', options, false
 
   # Convenience method to get current user info
   me: (options) ->
-    Ti.API.debug "CueScore.API.me" @authenticate options
+    Ti.API.debug "$CS.API.me" @authenticate options
+    

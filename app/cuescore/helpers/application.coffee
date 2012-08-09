@@ -1,4 +1,4 @@
-CueScore.Helpers.Application =
+$CS.Helpers.Application =
   
   createOrientiationModes: ->
     modes = [

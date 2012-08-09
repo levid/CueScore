@@ -1,43 +1,62 @@
-CueScore.App =
+$CS.App =
 
   init: ->
-    console "test"
-
+    console.log "test"
+    
+    gameModel = new $CS.Models.Game
+    
+    # dashboardController = new $CS.Controllers.DashboardController
+    # dashboardController.open()
+    
+    postsController = new $CS.Controllers.PostsController
+    
   initTabGroup: ->
-    CueScore.App.tabGroup = Ti.UI.createTabGroup()
+    $CS.App.tabGroup = Ti.UI.createTabGroup()
 
     # Sample Tab
-    sampleWindow = CueScore.Views.Sample.createMainWindow
+    sampleWindow = $CS.Views.Sample.createMainWindow
       title:            'Sample'
       id:               'sampleWindow'
-      orientationModes: CueScore.Helpers.Application.createOrientiationModes
-    CueScore.App.sampleTab = Ti.UI.createTab
+      orientationModes: $CS.Helpers.Application.createOrientiationModes
+
+    $CS.App.sampleTab = Ti.UI.createTab
       id:               'sampleTab'
       className:        'tabElement'
       title:            'Sample'
       window:           sampleWindow
 
     # Bottom Tab Loader
-    CueScore.App.tabGroup.addTab CueScore.App.sampleTab
+    $CS.App.tabGroup.addTab $CS.App.sampleTab
 
     # Settings Tab
-    settingsWindow = CueScore.Views.Settings.createMainWindow
+    settingsWindow = $CS.Views.Settings.createMainWindow
       title:            'Settings'
       id:               'settingsWindow'
-      orientationModes: CueScore.Helpers.Application.createOrientiationModes
+      orientationModes: $CS.Helpers.Application.createOrientiationModes
 
-    CueScore.App.settingsTab = Ti.UI.createTab
+    $CS.App.settingsTab = Ti.UI.createTab
       id:               'settingsTab'
       className:        'tabElement'
       title:            'Settings'
       window:           settingsWindow
 
-    # Bottom Tab Loader
-    CueScore.App.tabGroup.addTab CueScore.App.settingsTab
+    # Login Window
+    loginWindow = $CS.Views.Login.createLoginWindow
+      title:            'Login'
+      id:               'loginWindow'
+      orientationModes: $CS.Helpers.Application.createOrientiationModes
+      
+    $CS.App.loginWindow = loginWindow
+    
 
-    CueScore.App.tabGroup.addEventListener 'focus', (e) ->
-      CueScore.App.currentTab = e.tab
-      Ti.API.info(CueScore.App.currentTab)
+    # Bottom Tab Loader
+    $CS.App.tabGroup.addTab $CS.App.settingsTab
+
+    $CS.App.tabGroup.addEventListener 'focus', (e) ->
+      $CS.App.currentTab = e.tab
+      Ti.API.info($CS.App.currentTab)
 
     # Open Tabs
-    CueScore.App.tabGroup.open()
+    $CS.App.tabGroup.open()
+    # $CS.App.loginWindow.open()
+    

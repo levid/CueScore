@@ -1,3 +1,3 @@
-CueScore.Views.Sample.createMainWindow = (options) ->
+$CS.Views.Sample.createMainWindow = (options) ->
   window  = Ti.UI.createWindow(options)
   window

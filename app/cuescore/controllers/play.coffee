@@ -1,4 +1,4 @@
-CueScore.Views.Play.create9BallGameView = (options) ->
+$CS.Views.Play.create9BallGameView = (options) ->
   view = Ti.UI.createView (options)
   view
   #   helloMethod: (params) ->
