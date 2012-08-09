@@ -1,10 +1,13 @@
-class $CS.API
+class API
 
-  constructor: (@login, @password) ->
+  constructor: (login, password) ->
+    @login    = login
+    @password = password
+   
+    $CS.API_ENDPOINT = "http://localhost:3009"
 
   requestURI: (path, query={}) ->
     # NOTE: Setup your own API endpoint, as below
-    $CS.API_ENDPOINT = "http://localhost:3009"
 
     uri = "#{$CS.API_ENDPOINT}#{path}.json?"
     for own key, value of query
@@ -29,6 +32,7 @@ class $CS.API
             options.success(data)
         catch exception
           options.error(exception)
+          
     uri = @requestURI(path, options.query)
     xhr.open(options.method, uri)
     xhr.setRequestHeader 'Authorization', 'Basic ' + Ti.Utils.base64encode(@login+':'+@password) if authenticated
@@ -69,18 +73,24 @@ class $CS.API
 
   # Authenticate the user
   authenticate: (options) ->
-    Ti.API.debug "$CS.API.authenticate" @get '/me', options
+    Ti.API.debug "$CS.API.authenticate" 
+    @get '/me', options
 
   # Logout the user
   logout: (options) ->
-    Ti.API.debug "$CS.API.logout" @delete '/logout', options
+    Ti.API.debug "$CS.API.logout" 
+    @delete '/logout', options
 
   # Forgot password
-  forgotPassword: (email, options) -> Ti.API.debug "$CS.API.forgotPassword" options.query = {}
+  forgotPassword: (email, options) -> 
+    Ti.API.debug "$CS.API.forgotPassword" 
+    options.query = {}
     options.query.email = email
     @post '/passwords', options, false
 
   # Convenience method to get current user info
   me: (options) ->
-    Ti.API.debug "$CS.API.me" @authenticate options
+    Ti.API.debug "$CS.API.me" 
+    @authenticate options
     
+$CS.API = new API

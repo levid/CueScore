@@ -14,7 +14,7 @@ class DashboardController
       title:            'Dashboard'
       id:               'dashboardWindow'
       orientationModes: $CS.Helpers.Application.createOrientiationModes
-      exitOnClose: true
+      # exitOnClose: true
 
     @dashboardView = $CS.Views.Dashboard.createMainView
       id: 'dashboardView'

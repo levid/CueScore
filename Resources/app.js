@@ -27,6 +27,7 @@ every = function(ms, cb) {
 };
 
 CueScore = {
+  API: {},
   Controllers: {
     DashboardController: {}
   },

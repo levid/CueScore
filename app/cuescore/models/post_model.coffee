@@ -1,5 +1,5 @@
 class Post extends Backbone.Model
-  url: "http://localhost:3009/posts"
+  url: "#{$CS.API_ENDPOINT}/posts"
 
   toParams: ->
     # assuming you've stored an instance of the previous QueryStringBuilder class...
@@ -9,7 +9,7 @@ class Post extends Backbone.Model
     { post: @attributes }
 
 class Posts extends Backbone.Collection
-  url: "http://localhost:3009/posts"
+  url: "#{$CS.API_ENDPOINT}/posts"
   model: Post
 
 $CS.Models.Post = Post

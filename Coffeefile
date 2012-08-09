@@ -14,6 +14,8 @@
 #
 
 app/cuescore/app.coffee
+app/cuescore/api.coffee
+app/cuescore/utils/*.coffee
 app/cuescore/models/**/*.coffee
 app/cuescore/helpers/*.coffee
 app/cuescore/controllers/**/*.coffee

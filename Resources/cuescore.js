@@ -1,5 +1,5 @@
 (function() {
-  var DashboardController, Post, PostViewController, Posts, PostsController, PostsViewController,
+  var API, DashboardController, Post, PostViewController, Posts, PostsController, PostsViewController,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -52,6 +52,149 @@
     }
   };
 
+  API = (function() {
+
+    function API(login, password) {
+      this.login = login;
+      this.password = password;
+      $CS.API_ENDPOINT = "http://localhost:3009";
+    }
+
+    API.prototype.requestURI = function(path, query) {
+      var key, uri, value;
+      if (query == null) {
+        query = {};
+      }
+      uri = "" + $CS.API_ENDPOINT + path + ".json?";
+      for (key in query) {
+        if (!__hasProp.call(query, key)) continue;
+        value = query[key];
+        uri += "" + key + "=" + (escape(value)) + "&";
+      }
+      return uri;
+    };
+
+    API.prototype.request = function(path, options, authenticated) {
+      var data, message, uri, xhr, _ref, _ref1, _ref2, _ref3;
+      if (authenticated == null) {
+        authenticated = true;
+      }
+      if ((_ref = options.method) == null) {
+        options.method = 'GET';
+      }
+      if ((_ref1 = options.query) == null) {
+        options.query = {};
+      }
+      if ((_ref2 = options.success) == null) {
+        options.success = function() {
+          return Ti.API.info;
+        };
+      }
+      if ((_ref3 = options.error) == null) {
+        options.error = function() {
+          return Ti.API.error;
+        };
+      }
+      xhr = Ti.Network.createHTTPClient();
+      xhr.onreadystatechange = function(e) {
+        var data;
+        if (this.readyState === 4) {
+          try {
+            data = JSON.parse(this.responseText);
+            if (data.error != null) {
+              return options.error(data);
+            } else {
+              return options.success(data);
+            }
+          } catch (exception) {
+            return options.error(exception);
+          }
+        }
+      };
+      uri = this.requestURI(path, options.query);
+      xhr.open(options.method, uri);
+      if (authenticated) {
+        xhr.setRequestHeader('Authorization', 'Basic ' + Ti.Utils.base64encode(this.login + ':' + this.password));
+      }
+      message = "Executing ";
+      message += authenticated ? "Authenticated " : "Unauthenticated ";
+      message += "" + options.method + " " + uri;
+      if (options.debug) {
+        Ti.API.debug(message);
+      }
+      if (options.body != null) {
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        data = JSON.stringify(options.body);
+        if (options.debug) {
+          Ti.API.debug(data);
+        }
+        return xhr.send(data);
+      } else {
+        return xhr.send();
+      }
+    };
+
+    API.prototype.get = function(path, options, authenticated) {
+      if (authenticated == null) {
+        authenticated = true;
+      }
+      options.method = 'GET';
+      return this.request(path, options, authenticated);
+    };
+
+    API.prototype.post = function(path, options, authenticated) {
+      if (authenticated == null) {
+        authenticated = true;
+      }
+      options.method = 'POST';
+      return this.request(path, options, authenticated);
+    };
+
+    API.prototype.put = function(path, options, authenticated) {
+      if (authenticated == null) {
+        authenticated = true;
+      }
+      options.method = 'PUT';
+      return this.request(path, options, authenticated);
+    };
+
+    API.prototype["delete"] = function(path, options, authenticated) {
+      if (authenticated == null) {
+        authenticated = true;
+      }
+      options.method = 'DELETE';
+      return this.request(path, options, authenticated);
+    };
+
+    API.prototype.authenticate = function(options) {
+      Ti.API.debug("$CS.API.authenticate");
+      return this.get('/me', options);
+    };
+
+    API.prototype.logout = function(options) {
+      Ti.API.debug("$CS.API.logout");
+      return this["delete"]('/logout', options);
+    };
+
+    API.prototype.forgotPassword = function(email, options) {
+      Ti.API.debug("$CS.API.forgotPassword");
+      options.query = {};
+      options.query.email = email;
+      return this.post('/passwords', options, false);
+    };
+
+    API.prototype.me = function(options) {
+      Ti.API.debug("$CS.API.me");
+      return this.authenticate(options);
+    };
+
+    return API;
+
+  })();
+
+  $CS.API = new API;
+
   $CS.Models.Game = (function() {
 
     function Game(owner, course, playingFor, scoringFormat) {
@@ -86,7 +229,7 @@
       return Post.__super__.constructor.apply(this, arguments);
     }
 
-    Post.prototype.url = "http://localhost:3009/posts";
+    Post.prototype.url = "" + $CS.API_ENDPOINT + "/posts";
 
     Post.prototype.toParams = function() {
       return $CS.Utils.QueryStringBuilder.stringify(this.attributes, "post");
@@ -110,7 +253,7 @@
       return Posts.__super__.constructor.apply(this, arguments);
     }
 
-    Posts.prototype.url = "http://localhost:3009/posts";
+    Posts.prototype.url = "" + $CS.API_ENDPOINT + "/posts";
 
     Posts.prototype.model = Post;
 
@@ -151,8 +294,7 @@
       this.dashboardWindow = $CS.Views.Dashboard.createMainWindow({
         title: 'Dashboard',
         id: 'dashboardWindow',
-        orientationModes: $CS.Helpers.Application.createOrientiationModes,
-        exitOnClose: true
+        orientationModes: $CS.Helpers.Application.createOrientiationModes
       });
       this.dashboardView = $CS.Views.Dashboard.createMainView({
         id: 'dashboardView'
@@ -360,8 +502,7 @@
         title: 'Posts',
         id: 'postsWindow',
         top: 0,
-        orientationModes: $CS.Helpers.Application.createOrientiationModes,
-        exitOnClose: true
+        orientationModes: $CS.Helpers.Application.createOrientiationModes
       });
       this.data = [
         {

@@ -9,7 +9,7 @@ class PostsViewController
       id:               'postsWindow'
       top:               0
       orientationModes: $CS.Helpers.Application.createOrientiationModes
-      exitOnClose:      true
+      # exitOnClose:      true
     
     @data = [
       title: "Row 1"

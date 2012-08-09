@@ -21,6 +21,7 @@ every = (ms, cb) -> setInterval cb, ms
 
 # CueScore
 CueScore =
+  API: {}
   Controllers: 
     DashboardController: {}
   Models:
