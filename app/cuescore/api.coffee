@@ -8,11 +8,9 @@ class API
 
   requestURI: (path, query={}) ->
     # NOTE: Setup your own API endpoint, as below
-
     uri = "#{$CS.API_ENDPOINT}#{path}.json?"
     for own key, value of query
       uri += "#{ key }=#{ escape(value) }&"
-
     uri
 
   request: (path, options, authenticated=true) ->
@@ -68,8 +66,6 @@ class API
   delete: (path, options, authenticated=true) ->
     options.method = 'DELETE'
     @request path, options, authenticated
-
-  # Add your API endpoints below
 
   # Authenticate the user
   authenticate: (options) ->
