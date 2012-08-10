@@ -1,5 +1,5 @@
 (function() {
-  var API, AppSync, DashboardController, Player, Post, PostViewController, Posts, PostsController, PostsViewController, Template, after, console, every, player, say,
+  var API, AppSync, DashboardController, EightBall, Game, League, Match, Player, Post, PostViewController, Posts, PostsController, PostsViewController, Template, after, console, every, player, say,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -480,31 +480,211 @@
 
   })(Template);
 
-  $CS.Models.Game = (function() {
+  Game = (function(_super) {
 
-    function Game(owner, course, playingFor, scoringFormat) {
-      this.owner = owner;
-      this.course = course;
-      this.playingFor = playingFor != null ? playingFor : 'brag';
-      this.scoringFormat = scoringFormat != null ? scoringFormat : 'low_net';
-      console.log("game model");
+    __extends(Game, _super);
+
+    function Game() {
+      return Game.__super__.constructor.apply(this, arguments);
     }
 
-    Game.prototype.serialize = function() {};
+    Game.prototype.defaults = {
+      name: "Fetus",
+      age: 0,
+      children: []
+    };
 
-    Game.prototype.deserialize = function(data) {};
+    Game.prototype.initialize = function() {
+      console.log("Welcome to this world");
+      return this.bind("change:name", function() {
+        var name;
+        name = this.get("name");
+        return console.log("Changed my name to " + name);
+      });
+    };
 
-    Game.prototype.save = function() {};
-
-    Game.prototype.resume = function() {};
-
-    Game.prototype.dataForSubmit = function() {};
-
-    Game.prototype.submit = function(error) {};
+    Game.prototype.replaceNameAttr = function(name) {
+      return this.set({
+        name: name
+      });
+    };
 
     return Game;
 
-  })();
+  })(Backbone.Model);
+
+  $CS.Models.Game = Game;
+
+  EightBall = (function(_super) {
+
+    __extends(EightBall, _super);
+
+    function EightBall() {
+      return EightBall.__super__.constructor.apply(this, arguments);
+    }
+
+    EightBall.prototype.defaults = {
+      stripes: 1,
+      solids: 2,
+      innings: 0,
+      match_ended_callback: typeof callback !== "undefined" && callback !== null,
+      number_of_innings: 0,
+      ended: false,
+      balls_hit_in: {
+        stripes: [],
+        solids: []
+      },
+      last_ball_hit_in: null,
+      on_break: true,
+      breaking_player_still_shooting: true,
+      scratch_on_eight: false,
+      early_eight: false,
+      player: [
+        {
+          one: {
+            eight_on_snap: false,
+            break_and_run: false,
+            timeouts_taken: 0,
+            callback: typeof addToPlayerOne !== "undefined" && addToPlayerOne !== null,
+            ball_type: null,
+            has_won: false,
+            score: []
+          },
+          two: {
+            eight_on_snap: false,
+            break_and_run: false,
+            timeouts_taken: 0,
+            callback: typeof addToPlayerOne !== "undefined" && addToPlayerOne !== null,
+            ball_type: null,
+            has_won: false,
+            score: []
+          }
+        }
+      ]
+    };
+
+    EightBall.prototype.initialize = function(addToPlayerOne, addToPlayerTwo, callback) {
+      console.log("Welcome to this world");
+      return this.bind("change:name", function() {
+        var name;
+        name = this.get("name");
+        return console.log("Changed my name to " + name);
+      });
+    };
+
+    EightBall.prototype.replaceNameAttr = function(name) {
+      return this.set({
+        name: name
+      });
+    };
+
+    EightBall.prototype.getCurrentlyUpPlayer = function() {
+      if (this.player['one'].callback().isCurrentlyUp === true) {
+        return this.player['one'].callback();
+      }
+      return this.player['two'].callback();
+    };
+
+    EightBall.prototype.getWinningPlayerName = function() {
+      if (this.player['one'].has_won === true) {
+        return this.player['one'].callback().getFirstNameWithInitials();
+      } else {
+        if (this.player['two'].has_won === true) {
+          return this.player['two'].callback().getFirstNameWithInitials();
+        }
+      }
+    };
+
+    EightBall.prototype.hitSafety = function() {
+      this.getCurrentlyUpPlayer().addOneToSafeties();
+      return this.nextPlayerIsUp();
+    };
+
+    EightBall.prototype.setPlayerWon = function(playerNum) {
+      if (playerNum === 1) {
+        this.player['one'].has_won = true;
+        return this.playerp['one'].callback().games_won += 1;
+      } else if (playerNum === 2) {
+        this.player['two'].has_won = true;
+        return this.player['two'].callback().games_won += 1;
+      }
+    };
+
+    return EightBall;
+
+  })(Game);
+
+  $CS.Models.Game.EightBall = EightBall;
+
+  League = (function(_super) {
+
+    __extends(League, _super);
+
+    function League() {
+      return League.__super__.constructor.apply(this, arguments);
+    }
+
+    League.prototype.defaults = {
+      name: "Fetus",
+      age: 0,
+      children: []
+    };
+
+    League.prototype.initialize = function() {
+      console.log("Welcome to this world");
+      return this.bind("change:name", function() {
+        var name;
+        name = this.get("name");
+        return console.log("Changed my name to " + name);
+      });
+    };
+
+    League.prototype.replaceNameAttr = function(name) {
+      return this.set({
+        name: name
+      });
+    };
+
+    return League;
+
+  })(Backbone.Model);
+
+  $CS.Models.League = League;
+
+  Match = (function(_super) {
+
+    __extends(Match, _super);
+
+    function Match() {
+      return Match.__super__.constructor.apply(this, arguments);
+    }
+
+    Match.prototype.defaults = {
+      name: "Fetus",
+      age: 0,
+      children: []
+    };
+
+    Match.prototype.initialize = function() {
+      console.log("Welcome to this world");
+      return this.bind("change:name", function() {
+        var name;
+        name = this.get("name");
+        return console.log("Changed my name to " + name);
+      });
+    };
+
+    Match.prototype.replaceNameAttr = function(name) {
+      return this.set({
+        name: name
+      });
+    };
+
+    return Match;
+
+  })(Backbone.Model);
+
+  $CS.Models.Match = Match;
 
   Player = (function(_super) {
 

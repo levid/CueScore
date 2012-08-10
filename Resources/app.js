@@ -9,6 +9,12 @@ CueScore = root.CueScore = {
     DashboardController: {}
   },
   Models: {
+    Format: {
+      EightBall: {
+        Game: {},
+        Match: {}
+      }
+    },
     Game: {}
   },
   Helpers: {},

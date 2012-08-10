@@ -1,4 +1,4 @@
-class Game extends Backbone.Model
+class League extends Backbone.Model
   defaults:
     name: "Fetus"
     age: 0
@@ -21,4 +21,4 @@ class Game extends Backbone.Model
 # 
 # player.replaceNameAttr "Stewie Griffin" # This triggers a change and will alert()
 
-$CS.Models.Game = Game
+$CS.Models.League = League
