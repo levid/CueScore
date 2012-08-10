@@ -8,6 +8,9 @@ $CS.App =
     # dashboardController = new $CS.Controllers.DashboardController
     # dashboardController.open()
     
+    # main = new $CS.Window.Main().render()
+    # main.open()
+
     postsController = new $CS.Controllers.PostsController
     
   initTabGroup: ->

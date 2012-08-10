@@ -138,17 +138,17 @@ end
 
 def build(options={})
   return "Broken" unless compile
-  # options[:device] ||= 'iphone'
-  # if options[:device] == 'android'
-  # sdk = ANDROID_SDK_VERSION
-  # builder = "#{TI_ANDROID_DIR}/builder.py"
-  # elsif options[:device].match /^i/
-  # sdk = IPHONE_SDK_VERSION
-  # builder = "#{TI_IPHONE_DIR}/builder.py"
-  # end
-  # puts "Building with Titanium... (DEVICE_TYPE: #{options[:device]})".blue
-  # sh %Q{bash -c "#{builder} run #{PROJECT_ROOT}/ #{sdk} #{APP_ID} #{APP_NAME} #{options[:device]} " \
-# | perl -pe 's/^\\[DEBUG\\].*$/\\e[35m$&\\e[0m/g;s/^\\[INFO\\].*$/\\e[36m$&\\e[0m/g;s/^\\[WARN\\].*$/\\e[33m$&\\e[0m/g;s/^\\[ERROR\\].*$/\\e[31m$&\\e[0m/g;'}
+  options[:device] ||= 'iphone'
+  if options[:device] == 'android'
+  sdk = ANDROID_SDK_VERSION
+  builder = "#{TI_ANDROID_DIR}/builder.py"
+  elsif options[:device].match /^i/
+  sdk = IPHONE_SDK_VERSION
+  builder = "#{TI_IPHONE_DIR}/builder.py"
+  end
+  puts "Building with Titanium... (DEVICE_TYPE: #{options[:device]})".blue
+  sh %Q{bash -c "#{builder} run #{PROJECT_ROOT}/ #{sdk} #{APP_ID} #{APP_NAME} #{options[:device]} " \
+| perl -pe 's/^\\[DEBUG\\].*$/\\e[35m$&\\e[0m/g;s/^\\[INFO\\].*$/\\e[36m$&\\e[0m/g;s/^\\[WARN\\].*$/\\e[33m$&\\e[0m/g;s/^\\[ERROR\\].*$/\\e[31m$&\\e[0m/g;'}
 end
 
 begin

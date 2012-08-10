@@ -1,33 +1,10 @@
-var $CS, CueScore, after, console, every, root, say;
+var $CS, CueScore, root;
 
-root = {};
+root = this;
 
-console = {
-  log: function(str) {
-    return Ti.API.info(str);
-  },
-  warn: function(str) {
-    return Ti.API.warn(str);
-  },
-  error: function(str) {
-    return Ti.API.error(str);
-  }
-};
-
-say = function(msg) {
-  return alert(msg);
-};
-
-after = function(ms, cb) {
-  return setTimeout(cb, ms);
-};
-
-every = function(ms, cb) {
-  return setInterval(cb, ms);
-};
-
-CueScore = {
+CueScore = root.CueScore = {
   API: {},
+  App: {},
   Controllers: {
     DashboardController: {}
   },
@@ -53,10 +30,13 @@ CueScore = {
   },
   Utils: {
     QueryStringBuilder: {}
-  }
+  },
+  Window: {}
 };
 
 $CS = CueScore;
+
+Ti.include('vendor/tiquery/tiquery.js');
 
 Ti.include('vendor/underscore/underscore-min.js');
 
