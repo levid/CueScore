@@ -4,8 +4,13 @@ class League extends Backbone.Model
     age: 0
     children: []
 
-  initialize: ->
-    console.log "Welcome to this world"
+  initialize: (options = {}) ->
+    @name      = options.name
+    @age       = options.age
+    @children  = options.children
+    
+    console.log this.attributes
+    
     @bind "change:name", ->
       name = @get("name") # 'Stewie Griffin'
       console.log "Changed my name to " + name

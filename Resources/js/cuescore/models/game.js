@@ -20,8 +20,14 @@
       children: []
     };
 
-    Game.prototype.initialize = function() {
-      console.log("Welcome to this world");
+    Game.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      this.name = options.name;
+      this.age = options.age;
+      this.children = options.children;
+      console.log(this.attributes);
       return this.bind("change:name", function() {
         var name;
         name = this.get("name");
