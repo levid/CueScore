@@ -13,10 +13,12 @@ class Player extends Backbone.Model
   replaceNameAttr: (name) ->
     @set name: name
 
-player = new Player(
-  name: "Thomas"
-  age: 67
-  children: ["Ryan"]
-)
+# player = new Player(
+  # name: "Thomas"
+  # age: 67
+  # children: ["Ryan"]
+# )
+# 
+# player.replaceNameAttr "Stewie Griffin" # This triggers a change and will alert()
 
-player.replaceNameAttr "Stewie Griffin" # This triggers a change and will alert()
+$CS.Models.Player = Player

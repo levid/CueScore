@@ -15,7 +15,18 @@ CueScore = root.CueScore = {
         Match: {}
       }
     },
-    Game: {}
+    Game: {},
+    League: {},
+    Match: {
+      Type: {
+        LeagueMatch: {},
+        PracticeMatch: {},
+        TournamentMatch: {}
+      }
+    },
+    Player: {},
+    Rank: {},
+    Team: {}
   },
   Helpers: {},
   Views: {
