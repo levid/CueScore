@@ -1,4 +1,4 @@
-class EightBall extends Rank
+class EightBall extends $CS.Models.Rank
   defaults:
     games_to_win: []
 

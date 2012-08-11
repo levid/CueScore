@@ -1,4 +1,4 @@
-class PracticeMatch extends Type
+class PracticeMatch extends $CS.Models.Match.Type
   defaults: {}
 
   initialize: () ->

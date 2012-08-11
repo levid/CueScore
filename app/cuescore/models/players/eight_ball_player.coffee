@@ -1,4 +1,4 @@
-class EightBall extends Player
+class EightBall extends $CS.Models.Player
   defaults:
     name: null
     rank: null

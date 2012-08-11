@@ -1,4 +1,4 @@
-class Type extends Match
+class Type extends $CS.Models.Match
   defaults: {}
 
   initialize: () ->

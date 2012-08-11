@@ -1,4 +1,4 @@
-class NineBall extends Player
+class NineBall extends $CS.Models.Player
   defaults: {}
   
   initialize: (name, rank, number, teamNumber) ->

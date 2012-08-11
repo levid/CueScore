@@ -1,4 +1,4 @@
-class EightBall extends Game
+class EightBall extends $CS.Models.Match
   defaults:
     player: [
       one: {}
@@ -205,5 +205,5 @@ class EightBall extends Game
       i++
     arrayToReturn
     
-$CS.Models.Game.EightBall = EightBall
+$CS.Models.Match.EightBall = EightBall
 

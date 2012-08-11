@@ -1,4 +1,4 @@
-class LeagueMatch extends Type
+class LeagueMatch extends $CS.Models.Match.Type
   defaults:
     game_type: null
     match: [

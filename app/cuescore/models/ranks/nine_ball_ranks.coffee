@@ -1,4 +1,4 @@
-class NineBall extends Rank
+class NineBall extends $CS.Models.Rank
   defaults:
     ball_counts:
       1: 14

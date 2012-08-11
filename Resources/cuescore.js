@@ -1,15 +1,16 @@
 (function() {
-  var API, AppSync, DashboardController, EightBall, Game, League, LeagueMatch, Match, NineBall, Player, Post, PostViewController, Posts, PostsController, PostsViewController, PracticeMatch, Rank, Team, Template, TournamentMatch, Type, after, console, every, say,
+  var API, AppSync, DashboardController, EightBall, Game, League, LeagueMatch, Match, NineBall, Player, Post, PostViewController, Posts, PostsController, PostsViewController, PracticeMatch, QueryStringBuilder, Rank, Team, Template, TournamentMatch, Type, after, console, every, say,
     __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   $CS.App = {
     init: function() {
-      var gameModel, postsController;
+      var dashboardController, gameModel;
       console.log("test");
       gameModel = new $CS.Models.Game;
-      return postsController = new $CS.Controllers.PostsController;
+      dashboardController = new $CS.Controllers.DashboardController;
+      return dashboardController.open();
     },
     initTabGroup: function() {
       var loginWindow, sampleWindow, settingsWindow;
@@ -54,6 +55,8 @@
 
   API = (function() {
 
+    API.name = 'API';
+
     function API(login, password) {
       this.login = login;
       this.password = password;
@@ -75,22 +78,22 @@
     };
 
     API.prototype.request = function(path, options, authenticated) {
-      var data, message, uri, xhr, _ref, _ref1, _ref2, _ref3;
+      var data, message, uri, xhr;
       if (authenticated == null) {
         authenticated = true;
       }
-      if ((_ref = options.method) == null) {
+      if (options.method == null) {
         options.method = 'GET';
       }
-      if ((_ref1 = options.query) == null) {
+      if (options.query == null) {
         options.query = {};
       }
-      if ((_ref2 = options.success) == null) {
+      if (options.success == null) {
         options.success = function() {
           return Ti.API.info;
         };
       }
-      if ((_ref3 = options.error) == null) {
+      if (options.error == null) {
         options.error = function() {
           return Ti.API.error;
         };
@@ -196,6 +199,8 @@
   $CS.API = new API;
 
   AppSync = (function() {
+
+    AppSync.name = 'AppSync';
 
     function AppSync(ip, port) {
       this.ip = ip != null ? ip : 'localhost';
@@ -318,11 +323,98 @@
     return setInterval(cb, ms);
   };
 
+  QueryStringBuilder = (function() {
+
+    QueryStringBuilder.name = 'QueryStringBuilder';
+
+    function QueryStringBuilder() {}
+
+    QueryStringBuilder.prototype.stringify = function(obj, prefix, accum) {
+      if (accum == null) {
+        accum = {};
+      }
+      if (_.isArray(obj)) {
+        this.stringifyArray(obj, prefix, accum);
+      } else if (_.isString(obj) || _.isNumber(obj) || _.isDate(obj) || ("" + obj) === "[object TiBlob]") {
+        this.stringifyString(obj, prefix, accum);
+      } else if (_.isBoolean(obj)) {
+        this.stringifyBoolean(obj, prefix, accum);
+      } else if (obj != null) {
+        if (obj.attributes != null) {
+          this.stringifyObject(obj.attributes, prefix, accum);
+        } else {
+          this.stringifyObject(obj, prefix, accum);
+        }
+      } else {
+        return prefix;
+      }
+      return accum;
+    };
+
+    QueryStringBuilder.prototype.stringifyBoolean = function(bool, prefix, accum) {
+      if (!prefix) {
+        throw new TypeError("Stringify expects an object");
+      }
+      return accum[prefix] = bool ? 1 : 0;
+    };
+
+    QueryStringBuilder.prototype.stringifyString = function(str, prefix, accum) {
+      if (!prefix) {
+        throw new TypeError("Stringify expects an object");
+      }
+      return accum[prefix] = str;
+    };
+
+    QueryStringBuilder.prototype.stringifyArray = function(arr, prefix, accum) {
+      var i, item, _i, _len, _results;
+      if (!prefix) {
+        throw new TypeError("Stringify expects an object");
+      }
+      i = 0;
+      _results = [];
+      for (_i = 0, _len = arr.length; _i < _len; _i++) {
+        item = arr[_i];
+        _results.push(this.stringify(item, "" + prefix + "[" + (i++) + "]", accum));
+      }
+      return _results;
+    };
+
+    QueryStringBuilder.prototype.stringifyObject = function(obj, prefix, accum) {
+      var key, new_key, new_prefix, value, _results;
+      _results = [];
+      for (key in obj) {
+        value = obj[key];
+        if (key.match(/_preview$/)) {
+          continue;
+        }
+        new_key = key;
+        if (_.isArray(value)) {
+          new_key = "" + key + "_attributes";
+        }
+        new_prefix = '';
+        if (prefix) {
+          new_prefix = "" + prefix + "[" + (encodeURIComponent(new_key)) + "]";
+        } else {
+          new_prefix = encodeURIComponent(new_key);
+        }
+        _results.push(this.stringify(value, new_prefix, accum));
+      }
+      return _results;
+    };
+
+    return QueryStringBuilder;
+
+  })();
+
+  $CS.Utils.QueryStringBuilder = QueryStringBuilder;
+
   Backbone.setDomLibrary(TiQuery);
 
   Template = (function(_super) {
 
     __extends(Template, _super);
+
+    Template.name = 'Template';
 
     function Template(options) {
       this._configure(options || {});
@@ -339,6 +431,8 @@
   $CS.Window.Main = (function(_super) {
 
     __extends(Main, _super);
+
+    Main.name = 'Main';
 
     function Main() {
       return Main.__super__.constructor.apply(this, arguments);
@@ -412,6 +506,8 @@
 
     __extends(Second, _super);
 
+    Second.name = 'Second';
+
     function Second() {
       return Second.__super__.constructor.apply(this, arguments);
     }
@@ -484,6 +580,8 @@
 
     __extends(Game, _super);
 
+    Game.name = 'Game';
+
     function Game() {
       return Game.__super__.constructor.apply(this, arguments);
     }
@@ -519,6 +617,8 @@
     var getCurrentPlayerRemainingTimeouts;
 
     __extends(EightBall, _super);
+
+    EightBall.name = 'EightBall';
 
     function EightBall() {
       return EightBall.__super__.constructor.apply(this, arguments);
@@ -913,13 +1013,15 @@
 
     return EightBall;
 
-  })(Game);
+  })($CS.Models.Game);
 
   $CS.Models.Game.EightBall = EightBall;
 
   NineBall = (function(_super) {
 
     __extends(NineBall, _super);
+
+    NineBall.name = 'NineBall';
 
     function NineBall() {
       return NineBall.__super__.constructor.apply(this, arguments);
@@ -933,13 +1035,15 @@
 
     return NineBall;
 
-  })(Game);
+  })($CS.Models.Game);
 
   $CS.Models.Game.NineBall = NineBall;
 
   League = (function(_super) {
 
     __extends(League, _super);
+
+    League.name = 'League';
 
     function League() {
       return League.__super__.constructor.apply(this, arguments);
@@ -976,6 +1080,8 @@
 
     __extends(Match, _super);
 
+    Match.name = 'Match';
+
     function Match() {
       return Match.__super__.constructor.apply(this, arguments);
     }
@@ -1010,6 +1116,8 @@
   EightBall = (function(_super) {
 
     __extends(EightBall, _super);
+
+    EightBall.name = 'EightBall';
 
     function EightBall() {
       return EightBall.__super__.constructor.apply(this, arguments);
@@ -1274,13 +1382,15 @@
 
     return EightBall;
 
-  })(Game);
+  })($CS.Models.Match);
 
-  $CS.Models.Game.EightBall = EightBall;
+  $CS.Models.Match.EightBall = EightBall;
 
   Type = (function(_super) {
 
     __extends(Type, _super);
+
+    Type.name = 'Type';
 
     function Type() {
       return Type.__super__.constructor.apply(this, arguments);
@@ -1294,13 +1404,15 @@
 
     return Type;
 
-  })(Match);
+  })($CS.Models.Match);
 
   $CS.Models.Match.Type = Type;
 
   LeagueMatch = (function(_super) {
 
     __extends(LeagueMatch, _super);
+
+    LeagueMatch.name = 'LeagueMatch';
 
     function LeagueMatch() {
       return LeagueMatch.__super__.constructor.apply(this, arguments);
@@ -1523,13 +1635,15 @@
 
     return LeagueMatch;
 
-  })(Type);
+  })($CS.Models.Match.Type);
 
   $CS.Models.Match.Type.LeagueMatch = LeagueMatch;
 
   PracticeMatch = (function(_super) {
 
     __extends(PracticeMatch, _super);
+
+    PracticeMatch.name = 'PracticeMatch';
 
     function PracticeMatch() {
       return PracticeMatch.__super__.constructor.apply(this, arguments);
@@ -1543,13 +1657,15 @@
 
     return PracticeMatch;
 
-  })(Type);
+  })($CS.Models.Match.Type);
 
   $CS.Models.Match.Type.PracticeMatch = PracticeMatch;
 
   TournamentMatch = (function(_super) {
 
     __extends(TournamentMatch, _super);
+
+    TournamentMatch.name = 'TournamentMatch';
 
     function TournamentMatch() {
       return TournamentMatch.__super__.constructor.apply(this, arguments);
@@ -1563,13 +1679,15 @@
 
     return TournamentMatch;
 
-  })(Type);
+  })($CS.Models.Match.Type);
 
   $CS.Models.Match.Type.TournamentMatch = TournamentMatch;
 
   Player = (function(_super) {
 
     __extends(Player, _super);
+
+    Player.name = 'Player';
 
     function Player() {
       return Player.__super__.constructor.apply(this, arguments);
@@ -1605,6 +1723,8 @@
   EightBall = (function(_super) {
 
     __extends(EightBall, _super);
+
+    EightBall.name = 'EightBall';
 
     function EightBall() {
       return EightBall.__super__.constructor.apply(this, arguments);
@@ -1725,13 +1845,15 @@
 
     return EightBall;
 
-  })(Player);
+  })($CS.Models.Player);
 
   $CS.Models.Player.EightBall = EightBall;
 
   NineBall = (function(_super) {
 
     __extends(NineBall, _super);
+
+    NineBall.name = 'NineBall';
 
     function NineBall() {
       return NineBall.__super__.constructor.apply(this, arguments);
@@ -1745,13 +1867,15 @@
 
     return NineBall;
 
-  })(Player);
+  })($CS.Models.Player);
 
   $CS.Models.Player.NineBall = NineBall;
 
   Post = (function(_super) {
 
     __extends(Post, _super);
+
+    Post.name = 'Post';
 
     function Post() {
       return Post.__super__.constructor.apply(this, arguments);
@@ -1777,6 +1901,8 @@
 
     __extends(Posts, _super);
 
+    Posts.name = 'Posts';
+
     function Posts() {
       return Posts.__super__.constructor.apply(this, arguments);
     }
@@ -1796,6 +1922,8 @@
   Rank = (function(_super) {
 
     __extends(Rank, _super);
+
+    Rank.name = 'Rank';
 
     function Rank() {
       return Rank.__super__.constructor.apply(this, arguments);
@@ -1831,6 +1959,8 @@
   EightBall = (function(_super) {
 
     __extends(EightBall, _super);
+
+    EightBall.name = 'EightBall';
 
     function EightBall() {
       return EightBall.__super__.constructor.apply(this, arguments);
@@ -1907,13 +2037,15 @@
 
     return EightBall;
 
-  })(Rank);
+  })($CS.Models.Rank);
 
   $CS.Models.Rank.EightBall = EightBall;
 
   NineBall = (function(_super) {
 
     __extends(NineBall, _super);
+
+    NineBall.name = 'NineBall';
 
     function NineBall() {
       return NineBall.__super__.constructor.apply(this, arguments);
@@ -2344,13 +2476,15 @@
 
     return NineBall;
 
-  })(Rank);
+  })($CS.Models.Rank);
 
   $CS.Models.Rank.NineBall = NineBall;
 
   Team = (function(_super) {
 
     __extends(Team, _super);
+
+    Team.name = 'Team';
 
     function Team() {
       return Team.__super__.constructor.apply(this, arguments);
@@ -2394,6 +2528,8 @@
   DashboardController = (function() {
     var isGrid, isList, showGrid, showList,
       _this = this;
+
+    DashboardController.name = 'DashboardController';
 
     DashboardController.prototype.opts = {};
 
@@ -2496,6 +2632,8 @@
 
   PostsController = (function() {
 
+    PostsController.name = 'PostsController';
+
     PostsController.prototype.opts = {};
 
     function PostsController(options) {
@@ -2565,6 +2703,8 @@
 
   PostViewController = (function() {
 
+    PostViewController.name = 'PostViewController';
+
     function PostViewController(post) {
       var data;
       this.post = post;
@@ -2612,6 +2752,8 @@
   $CS.Views.PostView = PostViewController;
 
   PostsViewController = (function() {
+
+    PostsViewController.name = 'PostsViewController';
 
     function PostsViewController() {
       var _this = this;

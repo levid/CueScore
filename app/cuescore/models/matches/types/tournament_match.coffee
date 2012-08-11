@@ -1,4 +1,4 @@
-class TournamentMatch extends Type
+class TournamentMatch extends $CS.Models.Match.Type
   defaults: {}
 
   initialize: () ->

@@ -5,13 +5,13 @@ $CS.App =
     
     gameModel = new $CS.Models.Game
     
-    # dashboardController = new $CS.Controllers.DashboardController
-    # dashboardController.open()
+    dashboardController = new $CS.Controllers.DashboardController
+    dashboardController.open()
     
     # main = new $CS.Window.Main().render()
     # main.open()
 
-    postsController = new $CS.Controllers.PostsController
+    # postsController = new $CS.Controllers.PostsController
     
   initTabGroup: ->
     $CS.App.tabGroup = Ti.UI.createTabGroup()

@@ -1,4 +1,4 @@
-class EightBall extends Game
+class EightBall extends $CS.Models.Game
   defaults:
     stripes: 1
     solids: 2

@@ -1,4 +1,4 @@
-class NineBall extends Game
+class NineBall extends $CS.Models.Game
   defaults: {}
   
   initialize: (addToPlayerOne, addToPlayerTwo, callback) ->

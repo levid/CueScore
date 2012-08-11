@@ -54,18 +54,18 @@ $CS = CueScore
 # Ti.include('vendor/date.js')
 # Ti.include('vendor/underscore.js')
 # Ti.include('vendor/backbone.js')
-Ti.include('vendor/tiquery/tiquery.js')
-Ti.include('vendor/underscore/underscore-min.js')
-Ti.include('vendor/backbone/backbone-min.js')
-Ti.include('vendor/backbone/backbone.sync.js')
-Ti.include('js/utils/query_string_builder.js')
+Ti?.include('vendor/tiquery/tiquery.js')
+Ti?.include('vendor/underscore/underscore-min.js')
+Ti?.include('vendor/backbone/backbone-min.js')
+Ti?.include('vendor/backbone/backbone.sync.js')
+Ti?.include('js/cuescore/utils/query_string_builder.js')
 
 # Include main app
-Ti.include('cuescore.js')
+Ti?.include('cuescore.js')
 
 # Initialize App
 # $CS.App.initTabGroup()
-$CS.App.init()
+$CS.App.init?()
 
 # window = $.Views.Login.createLoginWindow()
 # window.open()
