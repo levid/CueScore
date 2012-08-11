@@ -9,30 +9,75 @@
     player.two = void 0;
     matchCallback = void 0;
     beforeEach(function() {
-      var player_one_callback, player_two_callback;
+      var options;
       matchCallback = jasmine.createSpy();
-      player.one = new $CS.Models.Player.EightBall("Isaac Wooten", 1, "123", "123");
-      player.two = new $CS.Models.Player.EightBall("James Armstead", 1, "1", "1");
+      player.one = new $CS.Models.Player.EightBall(options = {
+        name: "Isaac Wooten",
+        rank: 1,
+        playerNumber: "123",
+        teamNumber: "123"
+      });
+      player.two = new $CS.Models.Player.EightBall(options = {
+        name: "James Armstead",
+        rank: 1,
+        playerNumber: "1",
+        teamNumber: "1"
+      });
       player.one.timeouts_allowed = 2;
       player.two.timeouts_allowed = 2;
       player.one.currently_up = true;
-      player_one_callback = function() {
-        return player.one;
-      };
-      player_two_callback = function() {
-        return player.two;
-      };
-      return game = new $CS.Models.Game.EightBall('test', player_one_callback, player_two_callback, matchCallback);
+      return game = new $CS.Models.Game.EightBall(options = {
+        addToPlayerOne: function() {
+          return player.one;
+        },
+        addToPlayerTwo: function() {
+          return player.two;
+        },
+        callback: matchCallback
+      });
     });
     afterEach(function() {
-      var player_one_callback, player_two_callback;
-      matchCallback = void 0;
-      player = {};
-      player.one = void 0;
-      player.two = void 0;
-      player_one_callback = void 0;
-      player_two_callback = void 0;
-      return game = void 0;
+      var BreakingPlayerStillShooting, EarlyEight, Ended, LastBallHitIn, NumberOfInnings, OnBreak, PlayerOneBallType, PlayerOneBreakAndRun, PlayerOneEightBall, PlayerOneEightOnSnap, PlayerOneTimeoutsTaken, PlayerOneWon, PlayerTwoBallType, PlayerTwoBreakAndRun, PlayerTwoEightBall, PlayerTwoEightOnSnap, PlayerTwoTimeoutsTaken, PlayerTwoWon, ScratchOnEight, SolidBallsHitIn, StripedBallsHitIn;
+      game.number_of_innings = 0;
+      game.player.one.eight_on_snap = false;
+      game.player.one.break_and_run = false;
+      game.player.two.eight_on_snap = false;
+      game.player.two.break_and_run = false;
+      game.player.one.ball_type = null;
+      game.player.two.ball_type = null;
+      game.player.one.eight_ball = [];
+      game.player.two.eight_ball = [];
+      game.player.one.has_won = false;
+      game.player.two.has_won = false;
+      game.ended = false;
+      game.balls_hit_in.stripes = [];
+      game.balls_hit_in.solids = [];
+      game.last_ball_hit_in = null;
+      game.on_break = true;
+      game.breaking_player_still_shooting = true;
+      game.player.one.callback().currently_up = true;
+      game.player.two.callback().currently_up = false;
+      BreakingPlayerStillShooting = true;
+      EarlyEight = false;
+      Ended = false;
+      LastBallHitIn = null;
+      NumberOfInnings = 0;
+      OnBreak = true;
+      PlayerOneBallType = null;
+      PlayerOneBreakAndRun = false;
+      PlayerOneEightBall = [];
+      PlayerOneEightOnSnap = false;
+      PlayerOneTimeoutsTaken = 0;
+      PlayerOneWon = false;
+      PlayerTwoBallType = null;
+      PlayerTwoBreakAndRun = false;
+      PlayerTwoEightBall = [];
+      PlayerTwoEightOnSnap = false;
+      PlayerTwoTimeoutsTaken = 0;
+      PlayerTwoWon = false;
+      ScratchOnEight = false;
+      SolidBallsHitIn = [];
+      return StripedBallsHitIn = [];
     });
     describe("Scoring", function() {
       it("should be able to take a ball number 1-7 and 9-15 and score it correctly", function() {
@@ -51,10 +96,6 @@
         return expect(game.ended).toEqual(true);
       });
       it("should only allow each ball to be scored one time", function() {
-        game.balls_hit_in.solids = [];
-        game.balls_hit_in.stripes = [];
-        game.player.one.eight_ball = [];
-        game.player.two.eight_ball = [];
         expect(game.getBallsHitIn().length).toEqual(0);
         game.scoreBall(1);
         expect(game.getBallsHitIn().length).toEqual(1);
@@ -94,14 +135,6 @@
         return expect(game.ended).toBeTruthy();
       });
       it("should know the match has completed when the 8 his hit in", function() {
-        player.one = new $CS.Models.Player.EightBall("Isaac Wooten", 1, "123", "123");
-        player.two = new $CS.Models.Player.EightBall("James Armstead", 1, "1", "1");
-        player.one.currently_up = true;
-        game = new $CS.Models.Game.EightBall(function() {
-          return player.one;
-        }, function() {
-          return player.two;
-        }, function() {});
         expect(game.ended).toEqual(false);
         game.scoreBall(8);
         return expect(game.ended).toEqual(true);
@@ -157,8 +190,8 @@
     });
     it("should be able to end the break if no balls were hit in", function() {
       game.nextPlayerIsUp();
-      expect(game.OnBreak).toEqual(false);
-      return expect(game.BreakingPlayerStillHitting).toEqual(false);
+      expect(game.on_break).toEqual(false);
+      return expect(game.breaking_player_still_shooting).toEqual(false);
     });
     it("should be able to change who is currently_up", function() {
       game.nextPlayerIsUp();
@@ -471,7 +504,7 @@
           PlayerOneBreakAndRun: false,
           PlayerOneEightBall: [],
           PlayerOneEightOnSnap: false,
-          PlayerOneTimeoutsTaken: 0,
+          PlayerOneTimeoutsTaken: 2,
           PlayerOneWon: false,
           PlayerTwoBallType: null,
           PlayerTwoBreakAndRun: false,
@@ -485,8 +518,6 @@
         });
       });
       it("should be able to take a filled up Game and turn it into a JSON object", function() {
-        game.player.one.balls_hit_in = 2;
-        game.player.two.balls_hit_in = 13;
         game.number_of_innings = 2;
         game.player.one.eight_on_snap = true;
         game.player.one.break_and_run = false;
@@ -517,7 +548,7 @@
           PlayerOneBreakAndRun: false,
           PlayerOneEightBall: [],
           PlayerOneEightOnSnap: true,
-          PlayerOneTimeoutsTaken: 1,
+          PlayerOneTimeoutsTaken: 2,
           PlayerOneWon: true,
           PlayerTwoBallType: 2,
           PlayerTwoBreakAndRun: true,

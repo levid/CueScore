@@ -13,15 +13,15 @@ class EightBall extends $CS.Models.Player
     games_needed_to_win: 0
     is_captain: false
 
-  initialize: (name, rank, number, teamNumber) ->
+  initialize: (options) ->
     _.extend @, @defaults
     
-    @name             = name || []
-    @rank             = rank || null
-    @number           = number || null
-    @team_number      = teamNumber || null
+    @name             = options.name || null
+    @rank             = options.rank || null
+    @number           = options.playerNumber || null
+    @team_number      = options.teamNumber || null
     
-    @timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(rank?)
+    @timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(@rank)
     
   # Getters
   

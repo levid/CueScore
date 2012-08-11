@@ -34,11 +34,8 @@
         one: {
           eight_ball: [],
           eight_on_snap: false,
-          eight_on_snaps: null,
           break_and_run: false,
-          break_and_runs: null,
           timeouts_taken: 0,
-          timeouts_allowed: null,
           callback: function() {},
           ball_type: null,
           has_won: false,
@@ -47,11 +44,8 @@
         two: {
           eight_ball: [],
           eight_on_snap: false,
-          eight_on_snaps: null,
           break_and_run: false,
-          break_and_runs: null,
           timeouts_taken: 0,
-          timeouts_allowed: null,
           callback: function() {},
           ball_type: null,
           has_won: false,
@@ -60,15 +54,15 @@
       }
     };
 
-    EightBall.prototype.initialize = function(str, addToPlayerOne, addToPlayerTwo, callback) {
+    EightBall.prototype.initialize = function(options) {
       _.extend(this, this.defaults);
-      this.player.one.callback = addToPlayerOne;
-      this.player.two.callback = addToPlayerTwo;
-      return this.match_ended_callback = callback;
+      this.player.one.callback = options.addToPlayerOne;
+      this.player.two.callback = options.addToPlayerTwo;
+      return this.match_ended_callback = options.callback;
     };
 
     EightBall.prototype.getCurrentlyUpPlayer = function() {
-      if (this.player.one.callback().isCurrentlyUp === true) {
+      if (this.player.one.callback().currently_up === true) {
         return this.player.one.callback();
       }
       return this.player.two.callback();
@@ -180,14 +174,8 @@
       }
     };
 
-    EightBall.prototype.replaceNameAttr = function(name) {
-      return this.set({
-        name: name
-      });
-    };
-
     EightBall.prototype.hitSafety = function() {
-      this.getCurrentlyUpPlayer().addToSafeties();
+      this.getCurrentlyUpPlayer().addToSafeties(1);
       return this.nextPlayerIsUp();
     };
 
@@ -204,6 +192,10 @@
         this.player.one.callback().currently_up = true;
       }
       return this.match_ended_callback();
+    };
+
+    EightBall.prototype.shotMissed = function() {
+      return this.nextPlayerIsUp();
     };
 
     EightBall.prototype.addToNumberOfInnings = function(num) {
@@ -396,7 +388,7 @@
       this.player.one.has_won = gameJSON.PlayerOneWon;
       this.player.two.has_won = gameJSON.PlayerTwoWon;
       this.number_of_innings = gameJSON.NumberOfInnings;
-      this.breaking_player_still_shooting = gameJSON.BreakingPlayerStillHitting;
+      this.breaking_player_still_shooting = gameJSON.BreakingPlayerStillShooting;
       this.balls_hit_in.solids = gameJSON.SolidBallsHitIn;
       this.balls_hit_in.stripes = gameJSON.StripedBallsHitIn;
       this.last_ball_hit_in = gameJSON.LastBallHitIn;

@@ -18,11 +18,8 @@ class EightBall extends $CS.Models.Game
       one:
         eight_ball: []
         eight_on_snap: false
-        eight_on_snaps: null
         break_and_run: false
-        break_and_runs: null
         timeouts_taken: 0
-        timeouts_allowed: null
         callback: ->
         ball_type: null
         has_won: false
@@ -30,30 +27,26 @@ class EightBall extends $CS.Models.Game
       two:
         eight_ball: []
         eight_on_snap: false
-        eight_on_snaps: null
         break_and_run: false
-        break_and_runs: null
         timeouts_taken: 0
-        timeouts_allowed: null
         callback: ->
         ball_type: null
         has_won: false
         score: []
 
-  initialize: (str, addToPlayerOne, addToPlayerTwo, callback) ->
+  initialize: (options) ->
     _.extend @, @defaults
     
-    @player.one.callback = addToPlayerOne
-    @player.two.callback = addToPlayerTwo
+    @player.one.callback = options.addToPlayerOne
+    @player.two.callback = options.addToPlayerTwo
     # @player.one.callback().timeouts_taken = 0;
     # @player.two.callback().timeouts_taken = 0;
-  
-    @match_ended_callback = callback
+    @match_ended_callback = options.callback
 
   # Getters
   
   getCurrentlyUpPlayer: ->
-    return @player.one.callback() if @player.one.callback().isCurrentlyUp is true
+    return @player.one.callback() if @player.one.callback().currently_up is true
     @player.two.callback()
   
   getWinningPlayerName: ->
@@ -83,7 +76,7 @@ class EightBall extends $CS.Models.Game
 
   getCurrentPlayerRemainingTimeouts: ->
     return (@player.one.callback().timeouts_allowed - @player.one.timeouts_taken).toString()  if @player.one.callback().currently_up is true
-    (@player.two.callback().timeouts_allowed - @player.two.timeouts_taken).toString()
+    return (@player.two.callback().timeouts_allowed - @player.two.timeouts_taken).toString()
     
   # Setters
   
@@ -130,12 +123,9 @@ class EightBall extends $CS.Models.Game
       @checkForWinner()
       
   # Methods
-  
-  replaceNameAttr: (name) ->
-    @set name: name
-    
+
   hitSafety: ->
-    @getCurrentlyUpPlayer().addToSafeties()
+    @getCurrentlyUpPlayer().addToSafeties(1)
     @nextPlayerIsUp()
 
   hitScratchOnEight: ->
@@ -152,6 +142,9 @@ class EightBall extends $CS.Models.Game
       @player.one.callback().currently_up = true
       
     @match_ended_callback()
+  
+  shotMissed: ->
+    @nextPlayerIsUp()
 
   addToNumberOfInnings: (num) ->
     @number_of_innings += num
@@ -265,6 +258,7 @@ class EightBall extends $CS.Models.Game
         @addToNumberOfInnings(1)
         
         unless @player.two.ball_type?
+          
           if @balls_hit_in.solids.length is 0 and @balls_hit_in.stripes.length > 0
             @player.one.ball_type = @solids
             @player.two.ball_type = @stripes
@@ -317,7 +311,7 @@ class EightBall extends $CS.Models.Game
     @player.one.has_won             = gameJSON.PlayerOneWon
     @player.two.has_won             = gameJSON.PlayerTwoWon
     @number_of_innings              = gameJSON.NumberOfInnings
-    @breaking_player_still_shooting = gameJSON.BreakingPlayerStillHitting
+    @breaking_player_still_shooting = gameJSON.BreakingPlayerStillShooting
     @balls_hit_in.solids            = gameJSON.SolidBallsHitIn
     @balls_hit_in.stripes           = gameJSON.StripedBallsHitIn
     @last_ball_hit_in               = gameJSON.LastBallHitIn

@@ -29,13 +29,13 @@
       is_captain: false
     };
 
-    EightBall.prototype.initialize = function(name, rank, number, teamNumber) {
+    EightBall.prototype.initialize = function(options) {
       _.extend(this, this.defaults);
-      this.name = name || [];
-      this.rank = rank || null;
-      this.number = number || null;
-      this.team_number = teamNumber || null;
-      return this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(rank != null);
+      this.name = options.name || null;
+      this.rank = options.rank || null;
+      this.number = options.playerNumber || null;
+      this.team_number = options.teamNumber || null;
+      return this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(this.rank);
     };
 
     EightBall.prototype.getGamesNeededToWin = function() {
