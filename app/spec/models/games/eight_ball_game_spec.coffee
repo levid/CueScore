@@ -143,24 +143,33 @@ describe "EightBall Game", ->
 
   describe "Player Timeouts", ->
     it "should allow the currentplayer to be able to take a timeout", ->
-      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual "2"
+      game.player.one.timeouts_taken = 0
+      game.player.two.timeouts_taken = 0
+      
+      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual 2
       game.takeTimeout()
-      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual "1"
+      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual 1
 
     it "should not allow the current player to take more time outs than given", ->
-      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual "2"
+      game.player.one.timeouts_taken = 0
+      game.player.two.timeouts_taken = 0
+    
+      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual 2
       game.takeTimeout()
       game.takeTimeout()
-      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual "0"
+      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual 0
       game.takeTimeout()
-      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual "0"
+      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual 0
 
     it "should be able to return the current player's remaining number of timeouts", ->
-      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual "2"
+      game.player.one.timeouts_taken = 0
+      game.player.two.timeouts_taken = 0
+      
+      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual 2
       game.takeTimeout()
-      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual "1"
+      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual 1
       game.takeTimeout()
-      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual "0"
+      expect(game.getCurrentPlayerRemainingTimeouts()).toEqual 0
 
 
   it "should be able to make a player win and add one to games won", ->
@@ -300,12 +309,14 @@ describe "EightBall Game", ->
     expect(player.one.break_and_runs).toEqual 1
 
   it "should able to assign a ball type after the break if only one ball type has been hit in", ->
+    game.on_break = false
     game.scoreBall(1)
     game.nextPlayerIsUp()
     expect(game.player.one.ball_type).toEqual 2
     expect(game.player.two.ball_type).toEqual 1
 
   it "should able to assign a ball type after the break if only one ball type has been hit in", ->
+    game.on_break = false
     game.scoreBall(9)
     game.nextPlayerIsUp()
     expect(game.player.one.ball_type).toEqual 1
@@ -403,7 +414,7 @@ describe "EightBall Game", ->
     game.scoreBall 14
     game.scoreBall 15
     game.scoreBall 8
-    expect(game.player.two.has_won).toEqual true
+    expect(game.player.one.has_won).toEqual true
 
   it "should return winning players name", ->
     game.scoreBall 1

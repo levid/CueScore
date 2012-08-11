@@ -150,24 +150,30 @@
     });
     describe("Player Timeouts", function() {
       it("should allow the currentplayer to be able to take a timeout", function() {
-        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual("2");
+        game.player.one.timeouts_taken = 0;
+        game.player.two.timeouts_taken = 0;
+        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(2);
         game.takeTimeout();
-        return expect(game.getCurrentPlayerRemainingTimeouts()).toEqual("1");
+        return expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(1);
       });
       it("should not allow the current player to take more time outs than given", function() {
-        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual("2");
+        game.player.one.timeouts_taken = 0;
+        game.player.two.timeouts_taken = 0;
+        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(2);
         game.takeTimeout();
         game.takeTimeout();
-        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual("0");
+        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(0);
         game.takeTimeout();
-        return expect(game.getCurrentPlayerRemainingTimeouts()).toEqual("0");
+        return expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(0);
       });
       return it("should be able to return the current player's remaining number of timeouts", function() {
-        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual("2");
+        game.player.one.timeouts_taken = 0;
+        game.player.two.timeouts_taken = 0;
+        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(2);
         game.takeTimeout();
-        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual("1");
+        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(1);
         game.takeTimeout();
-        return expect(game.getCurrentPlayerRemainingTimeouts()).toEqual("0");
+        return expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(0);
       });
     });
     it("should be able to make a player win and add one to games won", function() {
@@ -307,12 +313,14 @@
       return expect(player.one.break_and_runs).toEqual(1);
     });
     it("should able to assign a ball type after the break if only one ball type has been hit in", function() {
+      game.on_break = false;
       game.scoreBall(1);
       game.nextPlayerIsUp();
       expect(game.player.one.ball_type).toEqual(2);
       return expect(game.player.two.ball_type).toEqual(1);
     });
     it("should able to assign a ball type after the break if only one ball type has been hit in", function() {
+      game.on_break = false;
       game.scoreBall(9);
       game.nextPlayerIsUp();
       expect(game.player.one.ball_type).toEqual(1);
@@ -410,7 +418,7 @@
       game.scoreBall(14);
       game.scoreBall(15);
       game.scoreBall(8);
-      return expect(game.player.two.has_won).toEqual(true);
+      return expect(game.player.one.has_won).toEqual(true);
     });
     it("should return winning players name", function() {
       game.scoreBall(1);

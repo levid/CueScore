@@ -23,7 +23,6 @@ class EightBall extends $CS.Models.Game
         callback: ->
         ball_type: null
         has_won: false
-        score: []
       two:
         eight_ball: []
         eight_on_snap: false
@@ -32,7 +31,6 @@ class EightBall extends $CS.Models.Game
         callback: ->
         ball_type: null
         has_won: false
-        score: []
 
   initialize: (options) ->
     _.extend @, @defaults
@@ -75,8 +73,10 @@ class EightBall extends $CS.Models.Game
     @balls_hit_in.solids.concat(@balls_hit_in.stripes.concat(@player.two.eight_ball.concat(@player.one.eight_ball)))
 
   getCurrentPlayerRemainingTimeouts: ->
-    return (@player.one.callback().timeouts_allowed - @player.one.timeouts_taken).toString()  if @player.one.callback().currently_up is true
-    return (@player.two.callback().timeouts_allowed - @player.two.timeouts_taken).toString()
+    if @player.one.callback().currently_up is true
+      return (@player.one.callback().timeouts_allowed - @player.one.timeouts_taken)
+    else
+      return (@player.two.callback().timeouts_allowed - @player.two.timeouts_taken)
     
   # Setters
   
@@ -173,7 +173,8 @@ class EightBall extends $CS.Models.Game
       else
         if @player.one.callback().currently_up is true
           @player.one.eight_ball.push ballNumber
-        else @player.two.eight_ball.push ballNumber if @player.two.callback().currently_up is true
+        else 
+          @player.two.eight_ball.push ballNumber if @player.two.callback().currently_up is true
         
         if @on_break is true
           if @balls_hit_in.solids.length isnt 7 and @balls_hit_in.stripes.length isnt 7
@@ -197,7 +198,11 @@ class EightBall extends $CS.Models.Game
     @ended = true if @getBallsHitIn().indexOf(8) >= 0
     
     if @ended is true
+      
+      # Break and run
       if @breaking_player_still_shooting is true and (@balls_hit_in.solids.length is 7 or @balls_hit_in.stripes.length is 7)
+        
+        # Player 1 broke and ran out
         if @player.one.callback().currently_up is true
           @setBreakAndRunByPlayer(1)
           
@@ -207,7 +212,8 @@ class EightBall extends $CS.Models.Game
           else
             @player.one.ball_type = @stripes
             @player.two.ball_type = @solids
-            
+        
+        # Player 2 broke and ran out
         else if @player.two.callback().currently_up is true
           @setBreakAndRunByPlayer(2)
           
@@ -218,23 +224,35 @@ class EightBall extends $CS.Models.Game
             @player.one.ball_type = @solids
             @player.two.ball_type = @stripes
             
+      # Player 1 made the 8 ball (not on break)
       if @player.one.eight_ball.indexOf(8) >= 0 and @on_break is false
-        unless @getBallsHitInByPlayer(1).length is 8
+        
+        # Neither player made 8 balls so it is a loss by player 1
+        if @getBallsHitInByPlayer(1).length != 8 and @getBallsHitInByPlayer(2).length != 8
           @setPlayerWon(2)
-        else
+        # Player 1 made all 8 balls so they win the game
+        else if @getBallsHitInByPlayer(1).length == 8
           @setPlayerWon(1)
           
+      # Player 2 made the 8 ball (not on break)
       else if @player.two.eight_ball.indexOf(8) >= 0 and @on_break is false
-        unless @getBallsHitInByPlayer(1).length is 8
-          @setPlayerWon(1)
-        else
+      
+        # Neither player made 8 balls so it is a loss by player 2
+        if @getBallsHitInByPlayer(1).length != 8 and @getBallsHitInByPlayer(2).length != 8
+          @setPlayerWon(1) 
+        # Player 2 made all 8 balls so they win the game
+        else if @getBallsHitInByPlayer(2).length == 8
           @setPlayerWon(2)
           
+      # The 8 ball was made on the break
       else
+        # Player 1 made the 8 on the break
         if @player.one.callback().currently_up is true
           @setPlayerWon(1)
-        else @setPlayerWon(2) if @player.two.callback().currently_up is true
-        
+        # Player 2 made the 8 on the break
+        else if @player.two.callback().currently_up is true
+          @setPlayerWon(2) 
+
       @match_ended_callback()
 
   nextPlayerIsUp: ->

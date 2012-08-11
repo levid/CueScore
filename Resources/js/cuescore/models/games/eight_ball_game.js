@@ -38,8 +38,7 @@
           timeouts_taken: 0,
           callback: function() {},
           ball_type: null,
-          has_won: false,
-          score: []
+          has_won: false
         },
         two: {
           eight_ball: [],
@@ -48,8 +47,7 @@
           timeouts_taken: 0,
           callback: function() {},
           ball_type: null,
-          has_won: false,
-          score: []
+          has_won: false
         }
       }
     };
@@ -111,9 +109,10 @@
 
     EightBall.prototype.getCurrentPlayerRemainingTimeouts = function() {
       if (this.player.one.callback().currently_up === true) {
-        return (this.player.one.callback().timeouts_allowed - this.player.one.timeouts_taken).toString();
+        return this.player.one.callback().timeouts_allowed - this.player.one.timeouts_taken;
+      } else {
+        return this.player.two.callback().timeouts_allowed - this.player.two.timeouts_taken;
       }
-      return (this.player.two.callback().timeouts_allowed - this.player.two.timeouts_taken).toString();
     };
 
     EightBall.prototype.setPlayerWon = function(playerNum) {
@@ -289,24 +288,22 @@
           }
         }
         if (this.player.one.eight_ball.indexOf(8) >= 0 && this.on_break === false) {
-          if (this.getBallsHitInByPlayer(1).length !== 8) {
+          if (this.getBallsHitInByPlayer(1).length !== 8 && this.getBallsHitInByPlayer(2).length !== 8) {
             this.setPlayerWon(2);
-          } else {
+          } else if (this.getBallsHitInByPlayer(1).length === 8) {
             this.setPlayerWon(1);
           }
         } else if (this.player.two.eight_ball.indexOf(8) >= 0 && this.on_break === false) {
-          if (this.getBallsHitInByPlayer(1).length !== 8) {
+          if (this.getBallsHitInByPlayer(1).length !== 8 && this.getBallsHitInByPlayer(2).length !== 8) {
             this.setPlayerWon(1);
-          } else {
+          } else if (this.getBallsHitInByPlayer(2).length === 8) {
             this.setPlayerWon(2);
           }
         } else {
           if (this.player.one.callback().currently_up === true) {
             this.setPlayerWon(1);
-          } else {
-            if (this.player.two.callback().currently_up === true) {
-              this.setPlayerWon(2);
-            }
+          } else if (this.player.two.callback().currently_up === true) {
+            this.setPlayerWon(2);
           }
         }
         return this.match_ended_callback();
