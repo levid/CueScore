@@ -3,6 +3,26 @@ class EightBall extends $CS.Models.Rank
     games_to_win: []
 
   initialize: () ->
+    _.extend @, @defaults
+    @setRanks()
+    
+  # Getters
+    
+  getGamesNeedToWin: (myRank, opponentRank) ->
+    if myRank > 1 and myRank < 8 and opponentRank > 1 and opponentRank < 8
+      gamesNeeded = @games_to_win[myRank][opponentRank]
+      return gamesNeeded
+    0
+
+  getTimeouts: (rank) ->
+    if rank < 4
+      return 2
+    else return 1  if rank >= 4 and rank <= 9
+    0
+    
+  # Setters
+  
+  setRanks: () ->
     @games_to_win[2] = []
     @games_to_win[2][2] = 2
     @games_to_win[2][3] = 2
@@ -45,17 +65,5 @@ class EightBall extends $CS.Models.Rank
     @games_to_win[7][5] = 5
     @games_to_win[7][6] = 5
     @games_to_win[7][7] = 5
-    
-  getGamesNeedToWin: (myRank, opponentRank) ->
-    if myRank > 1 and myRank < 8 and opponentRank > 1 and opponentRank < 8
-      gamesNeeded = @games_to_win[myRank][opponentRank]
-      return gamesNeeded
-    0
-
-  getTimeouts: (rank) ->
-    if rank < 4
-      return 2
-    else return 1  if rank >= 4 and rank <= 9
-    0
 
 $CS.Models.Rank.EightBall = EightBall

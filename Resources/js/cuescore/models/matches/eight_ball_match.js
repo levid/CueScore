@@ -35,6 +35,7 @@
     };
 
     EightBall.prototype.initialize = function(player1, player2, player1Rank, player2Rank, player1Number, player2Number, player1TeamNumber, player2TeamNumber) {
+      _.extend(this, this.defaults);
       player['one'] = new Player('EightBall', player1, player1Rank, player1Number, player1TeamNumber);
       player['two'] = new Player('EightBall', player2, player2Rank, player2Number, player2TeamNumber);
       if ((this.player['one'].rank != null) && (this.player['two'].rank != null)) {

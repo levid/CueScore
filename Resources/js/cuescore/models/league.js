@@ -24,6 +24,7 @@
       if (options == null) {
         options = {};
       }
+      _.extend(this, this.defaults);
       this.name = options.name;
       this.age = options.age;
       this.children = options.children;

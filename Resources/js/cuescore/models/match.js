@@ -21,6 +21,7 @@
     };
 
     Match.prototype.initialize = function() {
+      _.extend(this, this.defaults);
       console.log("Welcome to this world");
       return this.bind("change:name", function() {
         var name;

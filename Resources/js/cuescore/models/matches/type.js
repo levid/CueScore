@@ -17,6 +17,7 @@
     Type.prototype.defaults = {};
 
     Type.prototype.initialize = function() {
+      _.extend(this, this.defaults);
       return console.log(this);
     };
 

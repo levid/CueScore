@@ -19,6 +19,31 @@
     };
 
     EightBall.prototype.initialize = function() {
+      _.extend(this, this.defaults);
+      return this.setRanks();
+    };
+
+    EightBall.prototype.getGamesNeedToWin = function(myRank, opponentRank) {
+      var gamesNeeded;
+      if (myRank > 1 && myRank < 8 && opponentRank > 1 && opponentRank < 8) {
+        gamesNeeded = this.games_to_win[myRank][opponentRank];
+        return gamesNeeded;
+      }
+      return 0;
+    };
+
+    EightBall.prototype.getTimeouts = function(rank) {
+      if (rank < 4) {
+        return 2;
+      } else {
+        if (rank >= 4 && rank <= 9) {
+          return 1;
+        }
+      }
+      return 0;
+    };
+
+    EightBall.prototype.setRanks = function() {
       this.games_to_win[2] = [];
       this.games_to_win[2][2] = 2;
       this.games_to_win[2][3] = 2;
@@ -61,26 +86,6 @@
       this.games_to_win[7][5] = 5;
       this.games_to_win[7][6] = 5;
       return this.games_to_win[7][7] = 5;
-    };
-
-    EightBall.prototype.getGamesNeedToWin = function(myRank, opponentRank) {
-      var gamesNeeded;
-      if (myRank > 1 && myRank < 8 && opponentRank > 1 && opponentRank < 8) {
-        gamesNeeded = this.games_to_win[myRank][opponentRank];
-        return gamesNeeded;
-      }
-      return 0;
-    };
-
-    EightBall.prototype.getTimeouts = function(rank) {
-      if (rank < 4) {
-        return 2;
-      } else {
-        if (rank >= 4 && rank <= 9) {
-          return 1;
-        }
-      }
-      return 0;
     };
 
     return EightBall;

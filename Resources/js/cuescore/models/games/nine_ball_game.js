@@ -17,6 +17,7 @@
     NineBall.prototype.defaults = {};
 
     NineBall.prototype.initialize = function(addToPlayerOne, addToPlayerTwo, callback) {
+      _.extend(this, this.defaults);
       return console.log(this);
     };
 

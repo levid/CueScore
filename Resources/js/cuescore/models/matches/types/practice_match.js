@@ -17,6 +17,7 @@
     PracticeMatch.prototype.defaults = {};
 
     PracticeMatch.prototype.initialize = function() {
+      _.extend(this, this.defaults);
       return console.log(this);
     };
 

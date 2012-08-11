@@ -12,6 +12,30 @@ class NineBall extends $CS.Models.Rank
       9: 75
 
   initialize: () ->
+    _.extend @, @defaults
+    @setRanks()
+    
+  # Getters
+    
+  getBallCount: (rank) ->
+    parseInt @ball_counts[rank], 10
+
+  getLosingPlayersMatchPoints: (loserRank, loserScore) ->
+    losingMatchPoints = @losersMatchPoints[loserRank][loserScore]
+    losingMatchPoints
+
+  getWinningPlayersMatchPoints: (loserRank, loserScore) ->
+    losingMatchPoints = @losersMatchPoints[loserRank][loserScore]
+    winningMatchPoints = 20 - @losersMatchPoints[loserRank][loserScore]
+    winningMatchPoints
+
+  getTimeouts: (rank) ->
+    if rank < 4
+      return 2
+    else return 1 if rank >= 4 and rank <= 9
+    0 
+    
+  setRanks: () ->
     @losersMatchPoints = []
     @losersMatchPoints[1] = []
     @losersMatchPoints[1][0] = 0
@@ -390,23 +414,5 @@ class NineBall extends $CS.Models.Rank
     @losersMatchPoints[9][72] = 8
     @losersMatchPoints[9][73] = 8
     @losersMatchPoints[9][74] = 8
-    
-  getBallCount: (rank) ->
-    parseInt @ball_counts[rank], 10
-
-  getLosingPlayersMatchPoints: (loserRank, loserScore) ->
-    losingMatchPoints = @losersMatchPoints[loserRank][loserScore]
-    losingMatchPoints
-
-  getWinningPlayersMatchPoints: (loserRank, loserScore) ->
-    losingMatchPoints = @losersMatchPoints[loserRank][loserScore]
-    winningMatchPoints = 20 - @losersMatchPoints[loserRank][loserScore]
-    winningMatchPoints
-
-  getTimeouts: (rank) ->
-    if rank < 4
-      return 2
-    else return 1 if rank >= 4 and rank <= 9
-    0 
 
 $CS.Models.Rank.NineBall = NineBall

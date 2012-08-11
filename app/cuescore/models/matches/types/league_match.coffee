@@ -24,13 +24,15 @@ class LeagueMatch extends $CS.Models.Match.Type
     league_match_id: 0
 
   initialize: (GameType, HomeTeamNumber, AwayTeamNumber, HomeTeamName, AwayTeamName, StartTime, TableType) ->
+    _.extend @, @defaults
+    
     @game_type        = "EightBall"
-    @home_team.number = HomeTeamNumber?
-    @home_team.name   = HomeTeamName?
-    @away_team.number = AwayTeamNumber?
-    @away_team.name   = AwayTeamName?
-    @start_time       = StartTime?
-    @table_type       = TableType?
+    @home_team.number = HomeTeamNumber || null
+    @home_team.name   = HomeTeamName || ""
+    @away_team.number = AwayTeamNumber || null
+    @away_team.name   = AwayTeamName || ""
+    @start_time       = StartTime || ""
+    @table_type       = TableType || ""
     
     DataService.saveLeagueMatch @, (id) ->
       @league_match_id = id

@@ -17,6 +17,7 @@
     TournamentMatch.prototype.defaults = {};
 
     TournamentMatch.prototype.initialize = function() {
+      _.extend(this, this.defaults);
       return console.log(this);
     };
 

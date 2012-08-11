@@ -30,11 +30,12 @@
     };
 
     EightBall.prototype.initialize = function(name, rank, number, teamNumber) {
-      this.name = name != null;
-      this.rank = rank != null;
-      this.number = number != null;
-      this.team_number = teamNumber != null;
-      return this.timeouts_allowed = $CS.Models.Rank.EightBall().getTimeouts(rank != null);
+      _.extend(this, this.defaults);
+      this.name = name || [];
+      this.rank = rank || null;
+      this.number = number || null;
+      this.team_number = teamNumber || null;
+      return this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(rank != null);
     };
 
     EightBall.prototype.getGamesNeededToWin = function() {
@@ -76,27 +77,27 @@
     };
 
     EightBall.prototype.resetPlayerRankStats = function() {
-      return this.timeouts_allowed = $CS.Models.Rank.EightBall().getTimeouts(this.rank);
+      return this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(this.rank);
     };
 
-    EightBall.prototype.addOneToGamesWon = function() {
-      return this.games_won += 1;
+    EightBall.prototype.addToGamesWon = function(num) {
+      return this.games_won += num;
     };
 
-    EightBall.prototype.addOneToSafeties = function() {
-      return this.safeties += 1;
+    EightBall.prototype.addToSafeties = function(num) {
+      return this.safeties += num;
     };
 
     EightBall.prototype.hasWon = function() {
       return this.score >= this.ball_count;
     };
 
-    EightBall.prototype.addOneToEightOnSnaps = function() {
-      return this.eight_on_snaps += 1;
+    EightBall.prototype.addToEightOnSnaps = function(num) {
+      return this.eight_on_snaps += num;
     };
 
-    EightBall.prototype.addOneToBreakAndRuns = function() {
-      return this.break_and_runs += 1;
+    EightBall.prototype.addToBreakAndRuns = function(num) {
+      return this.break_and_runs += num;
     };
 
     EightBall.prototype.toJSON = function() {

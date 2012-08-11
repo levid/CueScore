@@ -2,17 +2,17 @@
 (function() {
 
   describe("Game", function() {
-    var attributes, game;
-    game = void 0;
+    var attributes, model;
+    model = void 0;
     attributes = void 0;
     beforeEach(function() {
-      game = new $CS.Models.Game();
-      return attributes = game.attributes;
+      model = new $CS.Models.Game();
+      return attributes = model.attributes;
     });
     return describe("Constructor", function() {
       it("should be able to create a new Game", function() {
-        game.initialize();
-        return expect(game).not.toBeUndefined();
+        model.initialize();
+        return expect(model).not.toBeUndefined();
       });
       it("should contain default attributes", function() {
         expect(attributes.name).toBeDefined();
@@ -24,12 +24,12 @@
       });
       return it("should store the parameters", function() {
         var options;
-        game = new $CS.Models.Game(options = {
+        model = new $CS.Models.Game(options = {
           name: "Isaac Wooten",
           age: 1,
           children: []
         });
-        attributes = game.attributes;
+        attributes = model.attributes;
         expect(attributes.name).toEqual("Isaac Wooten");
         expect(attributes.age).toEqual(1);
         return expect(attributes.children).toEqual([]);

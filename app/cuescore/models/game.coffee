@@ -5,11 +5,11 @@ class Game extends Backbone.Model
     children: []
 
   initialize: (options = {}) ->
+    _.extend @, @defaults
+    
     @name      = options.name
     @age       = options.age
     @children  = options.children
-    
-    console.log this.attributes
     
     @bind "change:name", ->
       name = @get("name") # 'Stewie Griffin'

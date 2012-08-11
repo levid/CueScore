@@ -2,17 +2,17 @@
 (function() {
 
   describe("League", function() {
-    var attributes, league;
-    league = void 0;
+    var attributes, model;
+    model = void 0;
     attributes = void 0;
     beforeEach(function() {
-      league = new $CS.Models.League();
-      return attributes = league.attributes;
+      model = new $CS.Models.League();
+      return attributes = model.attributes;
     });
     return describe("Constructor", function() {
       it("should be able to create a new League", function() {
-        league.initialize();
-        return expect(league).not.toBeUndefined();
+        model.initialize();
+        return expect(model).not.toBeUndefined();
       });
       it("should contain default attributes", function() {
         expect(attributes.name).toBeDefined();
@@ -24,12 +24,12 @@
       });
       return it("should store the parameters", function() {
         var options;
-        league = new $CS.Models.League(options = {
+        model = new $CS.Models.League(options = {
           name: "Isaac Wooten",
           age: 1,
           children: []
         });
-        attributes = league.attributes;
+        attributes = model.attributes;
         expect(attributes.name).toEqual("Isaac Wooten");
         expect(attributes.age).toEqual(1);
         return expect(attributes.children).toEqual([]);

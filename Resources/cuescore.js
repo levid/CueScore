@@ -265,6 +265,22 @@
 
   })();
 
+  Array.prototype.contains = function(obj) {
+    var i;
+    i = this.length;
+    if ((function() {
+      var _results;
+      _results = [];
+      while (i--) {
+        _results.push(this[i] === obj);
+      }
+      return _results;
+    }).call(this)) {
+      return true;
+    }
+    return false;
+  };
+
   Ti.UI.createActivityIndicator;
 
   Ti.UI.createButton;
@@ -592,8 +608,14 @@
       children: []
     };
 
-    Game.prototype.initialize = function() {
-      console.log("Welcome to this world");
+    Game.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      _.extend(this, this.defaults);
+      this.name = options.name;
+      this.age = options.age;
+      this.children = options.children;
       return this.bind("change:name", function() {
         var name;
         name = this.get("name");
@@ -614,7 +636,6 @@
   $CS.Models.Game = Game;
 
   EightBall = (function(_super) {
-    var getCurrentPlayerRemainingTimeouts;
 
     __extends(EightBall, _super);
 
@@ -628,7 +649,7 @@
       stripes: 1,
       solids: 2,
       innings: 0,
-      match_ended_callback: {},
+      match_ended_callback: function() {},
       number_of_innings: 0,
       ended: false,
       balls_hit_in: {
@@ -640,77 +661,80 @@
       breaking_player_still_shooting: true,
       scratch_on_eight: false,
       early_eight: false,
-      player: [
-        {
-          one: {
-            eight_ball: null,
-            eight_on_snap: false,
-            break_and_run: false,
-            timeouts_taken: 0,
-            timeouts_allowed: null,
-            callback: typeof addToPlayerOne !== "undefined" && addToPlayerOne !== null,
-            ball_type: null,
-            has_won: false,
-            currently_up: false,
-            score: []
-          },
-          two: {
-            eight_ball: null,
-            eight_on_snap: false,
-            break_and_run: false,
-            timeouts_taken: 0,
-            timeouts_allowed: null,
-            callback: typeof addToPlayerOne !== "undefined" && addToPlayerOne !== null,
-            ball_type: null,
-            has_won: false,
-            currently_up: false,
-            score: []
-          }
+      player: {
+        one: {
+          eight_ball: [],
+          eight_on_snap: false,
+          eight_on_snaps: null,
+          break_and_run: false,
+          break_and_runs: null,
+          timeouts_taken: 0,
+          timeouts_allowed: null,
+          callback: function() {},
+          ball_type: null,
+          has_won: false,
+          score: []
+        },
+        two: {
+          eight_ball: [],
+          eight_on_snap: false,
+          eight_on_snaps: null,
+          break_and_run: false,
+          break_and_runs: null,
+          timeouts_taken: 0,
+          timeouts_allowed: null,
+          callback: function() {},
+          ball_type: null,
+          has_won: false,
+          score: []
         }
-      ]
+      }
     };
 
-    EightBall.prototype.initialize = function(addToPlayerOne, addToPlayerTwo, callback) {
-      return this.match_ended_callback = callback != null;
+    EightBall.prototype.initialize = function(str, addToPlayerOne, addToPlayerTwo, callback) {
+      _.extend(this, this.defaults);
+      this.player.one.callback = addToPlayerOne;
+      this.player.two.callback = addToPlayerTwo;
+      return this.match_ended_callback = callback;
     };
 
     EightBall.prototype.getCurrentlyUpPlayer = function() {
-      if (this.player['one'].callback().isCurrentlyUp === true) {
-        return this.player['one'].callback();
+      if (this.player.one.callback().isCurrentlyUp === true) {
+        return this.player.one.callback();
       }
-      return this.player['two'].callback();
+      return this.player.two.callback();
     };
 
     EightBall.prototype.getWinningPlayerName = function() {
-      if (this.player['one'].has_won === true) {
-        return this.player['one'].callback().getFirstNameWithInitials();
+      if (this.player.one.has_won === true) {
+        return this.player.one.callback().getFirstNameWithInitials();
       } else {
-        if (this.player['two'].has_won === true) {
-          return this.player['two'].callback().getFirstNameWithInitials();
+        if (this.player.two.has_won === true) {
+          return this.player.two.callback().getFirstNameWithInitials();
         }
       }
     };
 
     EightBall.prototype.getBallsHitInByPlayer = function(playerNum) {
       if (playerNum === 1) {
-        if (this.player['one'].ball_type === this.stripes) {
-          return this.balls_hit_in.stripes.concat(this.player['one'].eight_ball);
+        if (this.player.one.ball_type === this.stripes) {
+          return this.balls_hit_in.stripes.concat(this.player.one.eight_ball);
         } else {
-          if (this.player['one'].ball_type === this.solids) {
-            return this.balls_hit_in.solids.concat(this.player['one'].eight_ball);
+          if (this.player.one.ball_type === this.solids) {
+            return this.balls_hit_in.solids.concat(this.player.one.eight_ball);
           }
+          return [];
         }
-        [];
       }
       if (playerNum === 2) {
-        if (this.player['two'].ball_type === this.stripes) {
-          return this.balls_hit_in.stripes.concat(this.player['two'].eight_ball);
+        if (this.player.two.ball_type === this.stripes) {
+          return this.balls_hit_in.stripes.concat(this.player.two.eight_ball);
         } else {
-          if (this.player['two'].ball_type === this.solids) {
-            return this.balls_hit_in.solids.concat(this.player['two'].eight_ball);
+          if (this.player.two.ball_type === this.solids) {
+            return this.balls_hit_in.solids.concat(this.player.two.eight_ball);
           }
+          return [];
         }
-        return [];
       }
     };
 
@@ -719,70 +743,70 @@
     };
 
     EightBall.prototype.getBallsHitIn = function() {
-      return this.balls_hit_in.solids.concat(this.balls_hit_in.stripes.concat(this.player['two'].eight_ball.concat(this.player['one'].eight_ball)));
+      return this.balls_hit_in.solids.concat(this.balls_hit_in.stripes.concat(this.player.two.eight_ball.concat(this.player.one.eight_ball)));
     };
 
-    getCurrentPlayerRemainingTimeouts = function() {
-      if (this.player['one'].callback().currently_up === true) {
-        return (this.player['one'].callback().timeouts_allowed - this.player['one'].timeouts_taken).toString();
+    EightBall.prototype.getCurrentPlayerRemainingTimeouts = function() {
+      if (this.player.one.callback().currently_up === true) {
+        return (this.player.one.callback().timeouts_allowed - this.player.one.timeouts_taken).toString();
       }
-      return (this.player['two'].callback().timeouts_allowed - this.player['two'].timeouts_taken).toString();
+      return (this.player.two.callback().timeouts_allowed - this.player.two.timeouts_taken).toString();
     };
 
     EightBall.prototype.setPlayerWon = function(playerNum) {
       if (playerNum === 1) {
-        this.player['one'].has_won = true;
-        return this.player['one'].callback().games_won += 1;
+        this.player.one.has_won = true;
+        return this.player.one.callback().games_won += 1;
       } else if (playerNum === 2) {
-        this.player['two'].has_won = true;
-        return this.player['two'].callback().games_won += 1;
+        this.player.two.has_won = true;
+        return this.player.two.callback().games_won += 1;
       }
     };
 
     EightBall.prototype.setEightOnSnapByPlayer = function(playerNum) {
       if (playerNum === 1) {
-        if (this.player['one'].eight_on_snap !== true) {
-          this.player['one'].callback().addToEightOnSnaps(1);
+        if (this.player.one.eight_on_snap !== true) {
+          this.player.one.callback().addToEightOnSnaps(1);
         }
-        return this.player['one'].eight_on_snap = true;
+        return this.player.one.eight_on_snap = true;
       } else if (playerNum === 2) {
-        if (this.player['two'].eight_on_snap !== true) {
-          this.player['two'].callback().addToEightOnSnaps(1);
+        if (this.player.two.eight_on_snap !== true) {
+          this.player.two.callback().addToEightOnSnaps(1);
         }
-        return this.player['two'].eight_on_snap = true;
+        return this.player.two.eight_on_snap = true;
       }
     };
 
     EightBall.prototype.setBreakAndRunByPlayer = function(playerNum) {
       if (playerNum === 1) {
-        if (this.player['one'].break_and_run !== true) {
-          this.player['one'].callback().addOneToBreakAndRuns();
+        if (this.player.one.break_and_run !== true) {
+          this.player.one.callback().addToBreakAndRuns(1);
         }
-        return this.player['one'].break_and_run = true;
+        return this.player.one.break_and_run = true;
       } else if (playerNum === 2) {
-        if (this.player['two'].break_and_run !== true) {
-          this.player['two'].callback().addOneToBreakAndRuns();
+        if (this.player.two.break_and_run !== true) {
+          this.player.two.callback().addToBreakAndRuns(1);
         }
-        return this.player['two'].break_and_run = true;
+        return this.player.two.break_and_run = true;
       }
     };
 
     EightBall.prototype.setBallTypeByPlayer = function(playerNum, type) {
       if (playerNum === 1 && type === "stripes") {
-        this.player['one'].ball_type = this.stripes;
-        this.player['two'].ball_type = this.solids;
+        this.player.one.ball_type = this.stripes;
+        this.player.two.ball_type = this.solids;
         return this.checkForWinner();
       } else if (playerNum === 2 && type === "stripes") {
-        this.player['two'].ball_type = this.stripes;
-        this.player['one'].ball_type = this.solids;
+        this.player.two.ball_type = this.stripes;
+        this.player.one.ball_type = this.solids;
         return this.checkForWinner();
       } else if (playerNum === 1 && type === "solids") {
-        this.player['one'].ball_type = this.solids;
-        this.player['two'].ball_type = this.stripes;
+        this.player.one.ball_type = this.solids;
+        this.player.two.ball_type = this.stripes;
         return this.checkForWinner();
       } else if (playerNum === 2 && type === "solids") {
-        this.player['two'].ball_type = this.solids;
-        this.player['one'].ball_type = this.stripes;
+        this.player.two.ball_type = this.solids;
+        this.player.one.ball_type = this.stripes;
         return this.checkForWinner();
       }
     };
@@ -794,21 +818,21 @@
     };
 
     EightBall.prototype.hitSafety = function() {
-      this.getCurrentlyUpPlayer().addOneToSafeties();
+      this.getCurrentlyUpPlayer().addToSafeties();
       return this.nextPlayerIsUp();
     };
 
     EightBall.prototype.hitScratchOnEight = function() {
       this.scratch_on_eight = true;
       this.ended = true;
-      if (this.player['one'].callback().currently_up === true) {
-        this.player['two'].has_won = true;
-        this.player['one'].callback().currently_up = false;
-        this.player['two'].callback().currently_up = true;
+      if (this.player.one.callback().currently_up === true) {
+        this.player.two.has_won = true;
+        this.player.one.callback().currently_up = false;
+        this.player.two.callback().currently_up = true;
       } else {
-        this.player['one'].has_won = true;
-        this.player['two'].callback().currently_up = false;
-        this.player['one'].callback().currently_up = true;
+        this.player.one.has_won = true;
+        this.player.two.callback().currently_up = false;
+        this.player.one.callback().currently_up = true;
       }
       return this.match_ended_callback();
     };
@@ -819,10 +843,10 @@
 
     EightBall.prototype.takeTimeout = function() {
       if (this.getCurrentPlayerRemainingTimeouts() > 0) {
-        if (this.player['one'].callback().currently_up === true) {
-          return this.player['one'].timeouts_taken += 1;
+        if (this.player.one.callback().currently_up === true) {
+          return this.player.one.timeouts_taken += 1;
         } else {
-          return this.player['two'].timeouts_taken += 1;
+          return this.player.two.timeouts_taken += 1;
         }
       }
     };
@@ -831,82 +855,31 @@
       return this.on_break = false;
     };
 
-    EightBall.prototype.game_end = function() {
+    EightBall.prototype.end = function() {
       return this.ended = true;
     };
 
-    EightBall.prototype.checkForWinner = function() {
-      if (this.getBallsHitIn().exists(8)) {
-        this.ended = true;
-      }
-      if (this.ended === true) {
-        if (this.breakingPlayerStillHitting === true && (this.solidBallsHitIn.length === 7 || this.stripedBallsHitIn.length === 7)) {
-          if (this.player['one'].callback().currently_up === true) {
-            this.setBreakAndRunByPlayer(1);
-            if (this.balls_hit_in.solids.length === 7) {
-              this.player['one'].ball_type = this.solids;
-              this.player['two'].ball_type = this.stripes;
-            } else {
-              this.player['one'].ball_type = this.stripes;
-              this.player['two'].ball_type = this.solids;
-            }
-          } else if (this.player['two'].callback().currently_up === true) {
-            this.setBreakAndRunByPlayer(2);
-            if (this.balls_hit_in.solids.length === 7) {
-              this.player['two'].ball_type = this.solids;
-              this.player['one'].ball_type = this.stripes;
-            } else {
-              this.player['one'].ball_type = this.solids;
-              this.player['two'].ball_type = this.stripes;
-            }
-          }
-        }
-        if (this.player['one'].eightBall.exists(8) && this.on_break === false) {
-          if (this.getBallsHitInByPlayer(1).length !== 8) {
-            this.setPlayerWon(2);
-          } else {
-            this.setPlayerWon(1);
-          }
-        } else if (this.player['two'].eightBall.exists(8) && this.on_break === false) {
-          if (this.getBallsHitInByPlayer(1).length !== 8) {
-            this.setPlayerWon(1);
-          } else {
-            this.setPlayerWon(2);
-          }
-        } else {
-          if (this.player['one'].callback().currently_up === true) {
-            this.setPlayerWon(1);
-          } else {
-            if (this.player['two'].callback().currently_up === true) {
-              this.setPlayerWon(2);
-            }
-          }
-        }
-        return this.match_ended_callback();
-      }
-    };
-
     EightBall.prototype.scoreBall = function(ballNumber) {
-      if (!this.getBallsHitIn().exists(ballNumber)) {
+      if (!(this.getBallsHitIn().indexOf(ballNumber) >= 0)) {
         this.last_ball_hit_in = ballNumber;
         if (ballNumber > 0 && ballNumber < 8) {
           this.balls_hit_in.solids.push(ballNumber);
         } else if (ballNumber > 8 && ballNumber < 16) {
           this.balls_hit_in.stripes.push(ballNumber);
         } else {
-          if (this.player['one'].callback().currently_up === true) {
-            this.player['one'].eight_ball.push(ballNumber);
+          if (this.player.one.callback().currently_up === true) {
+            this.player.one.eight_ball.push(ballNumber);
           } else {
-            if (this.player['two'].callback().currently_up === true) {
-              this.player['two'].eight_ball.push(ballNumber);
+            if (this.player.two.callback().currently_up === true) {
+              this.player.two.eight_ball.push(ballNumber);
             }
           }
           if (this.on_break === true) {
             if (this.balls_hit_in.solids.length !== 7 && this.balls_hit_in.stripes.length !== 7) {
-              if (this.player['one'].callback().currently_up === true) {
+              if (this.player.one.callback().currently_up === true) {
                 this.setEightOnSnapByPlayer(1);
               } else {
-                if (this.player['two'].callback().currently_up === true) {
+                if (this.player.two.callback().currently_up === true) {
                   this.setEightOnSnapByPlayer(2);
                 }
               }
@@ -914,12 +887,12 @@
           } else {
             if (this.balls_hit_in.solids.length !== 7 && this.balls_hit_in.stripes.length !== 7) {
               this.early_eight = true;
-              if (this.player['one'].callback().currently_up === true) {
-                this.player['one'].callback().currently_up = false;
-                this.player['two'].callback().currently_up = true;
-              } else if (this.player['two'].callback().currently_up === true) {
-                this.player['one'].callback().currently_up = true;
-                this.player['two'].callback().currently_up = false;
+              if (this.player.one.callback().currently_up === true) {
+                this.player.one.callback().currently_up = false;
+                this.player.two.callback().currently_up = true;
+              } else if (this.player.two.callback().currently_up === true) {
+                this.player.one.callback().currently_up = true;
+                this.player.two.callback().currently_up = false;
               }
             }
           }
@@ -928,35 +901,86 @@
       }
     };
 
-    EightBall.prototype.nextPlayerIsUp = function() {
-      if (this.on_break !== true || ((this.player['two'].callback().currently_up === true || this.player['one'].callback().currently_up === true) && this.getBallsHitIn().length === 0)) {
-        if (this.player['one'].callback().currently_up === true) {
-          this.player['two'].callback().currently_up = true;
-          this.player['one'].callback().currently_up = false;
-          if (this.player['one'].ball_type == null) {
-            if (this.balls_hit_in.solids.length > 0 && this.balls_hit_in.stripes.length === 0) {
-              this.player['one'].ball_type = this.solids;
-              this.player['two'].ball_type = this.stripes;
-            } else if (this.balls_hit_in.solids.length === 0 && this.balls_hit_in.stripes.length > 0) {
-              this.player['one'].ball_type = this.stripes;
-              this.player['two'].ball_type = this.solids;
+    EightBall.prototype.checkForWinner = function() {
+      if (this.getBallsHitIn().indexOf(8) >= 0) {
+        this.ended = true;
+      }
+      if (this.ended === true) {
+        if (this.breaking_player_still_shooting === true && (this.balls_hit_in.solids.length === 7 || this.balls_hit_in.stripes.length === 7)) {
+          if (this.player.one.callback().currently_up === true) {
+            this.setBreakAndRunByPlayer(1);
+            if (this.balls_hit_in.solids.length === 7) {
+              this.player.one.ball_type = this.solids;
+              this.player.two.ball_type = this.stripes;
+            } else {
+              this.player.one.ball_type = this.stripes;
+              this.player.two.ball_type = this.solids;
+            }
+          } else if (this.player.two.callback().currently_up === true) {
+            this.setBreakAndRunByPlayer(2);
+            if (this.balls_hit_in.solids.length === 7) {
+              this.player.two.ball_type = this.solids;
+              this.player.one.ball_type = this.stripes;
+            } else {
+              this.player.one.ball_type = this.solids;
+              this.player.two.ball_type = this.stripes;
             }
           }
-        } else if (this.PlayerTwoCallback().CurrentlyUp === true) {
-          this.player['two'].callback().currently_up = false;
-          this.player['one'].callback().currently_up = true;
+        }
+        if (this.player.one.eight_ball.indexOf(8) >= 0 && this.on_break === false) {
+          if (this.getBallsHitInByPlayer(1).length !== 8) {
+            this.setPlayerWon(2);
+          } else {
+            this.setPlayerWon(1);
+          }
+        } else if (this.player.two.eight_ball.indexOf(8) >= 0 && this.on_break === false) {
+          if (this.getBallsHitInByPlayer(1).length !== 8) {
+            this.setPlayerWon(1);
+          } else {
+            this.setPlayerWon(2);
+          }
+        } else {
+          if (this.player.one.callback().currently_up === true) {
+            this.setPlayerWon(1);
+          } else {
+            if (this.player.two.callback().currently_up === true) {
+              this.setPlayerWon(2);
+            }
+          }
+        }
+        return this.match_ended_callback();
+      }
+    };
+
+    EightBall.prototype.nextPlayerIsUp = function() {
+      if (this.on_break !== true || ((this.player.two.callback().currently_up === true || this.player.one.callback().currently_up === true) && this.getBallsHitIn().length === 0)) {
+        if (this.player.one.callback().currently_up === true) {
+          this.player.two.callback().currently_up = true;
+          this.player.one.callback().currently_up = false;
+          if (this.player.one.ball_type == null) {
+            if (this.balls_hit_in.solids.length > 0 && this.balls_hit_in.stripes.length === 0) {
+              this.player.one.ball_type = this.solids;
+              this.player.two.ball_type = this.stripes;
+            } else if (this.balls_hit_in.solids.length === 0 && this.balls_hit_in.stripes.length > 0) {
+              this.player.one.ball_type = this.stripes;
+              this.player.two.ball_type = this.solids;
+            }
+          }
+        } else if (this.player.two.callback().currently_up === true) {
+          this.player.two.callback().currently_up = false;
+          this.player.one.callback().currently_up = true;
           this.addToNumberOfInnings(1);
-          if (this.player['two'].ball_type == null) {
+          if (this.player.two.ball_type == null) {
             if (this.balls_hit_in.solids.length === 0 && this.balls_hit_in.stripes.length > 0) {
-              this.player['one'].ball_type = this.solids;
-              this.player['two'].ball_type = this.stripes;
+              this.player.one.ball_type = this.solids;
+              this.player.two.ball_type = this.stripes;
             } else if (this.balls_hit_in.solids.length > 0 && this.balls_hit_in.stripes.length === 0) {
-              this.player['one'].ball_type = this.stripes;
-              this.player['two'].ball_type = this.solids;
+              this.player.one.ball_type = this.stripes;
+              this.player.two.ball_type = this.solids;
             }
           }
         } else {
-          this.player['one'].callback().currently_up = true;
+          this.player.one.callback().currently_up = true;
         }
         this.breaking_player_still_shooting = false;
       }
@@ -965,18 +989,18 @@
 
     EightBall.prototype.toJSON = function() {
       return {
-        PlayerOneTimeoutsTaken: this.player['one'].timeouts_taken,
-        PlayerTwoTimeoutsTaken: this.player['two'].timeouts_taken,
-        PlayerOneEightOnSnap: this.player['one'].eight_on_snap,
-        PlayerOneBreakAndRun: this.player['one'].break_and_run,
-        PlayerTwoEightOnSnap: this.player['two'].eight_on_snap,
-        PlayerTwoBreakAndRun: this.player['two'].break_and_run,
-        PlayerOneBallType: this.player['one'].ball_type,
-        PlayerTwoBallType: this.player['two'].ball_type,
-        PlayerOneEightBall: this.player['one'].eight_ball,
-        PlayerTwoEightBall: this.player['two'].eight_ball,
-        PlayerOneWon: this.player['one'].has_won,
-        PlayerTwoWon: this.player['two'].has_won,
+        PlayerOneTimeoutsTaken: this.player.one.timeouts_taken,
+        PlayerTwoTimeoutsTaken: this.player.two.timeouts_taken,
+        PlayerOneEightOnSnap: this.player.one.eight_on_snap,
+        PlayerOneBreakAndRun: this.player.one.break_and_run,
+        PlayerTwoEightOnSnap: this.player.two.eight_on_snap,
+        PlayerTwoBreakAndRun: this.player.two.break_and_run,
+        PlayerOneBallType: this.player.one.ball_type,
+        PlayerTwoBallType: this.player.two.ball_type,
+        PlayerOneEightBall: this.player.one.eight_ball,
+        PlayerTwoEightBall: this.player.two.eight_ball,
+        PlayerOneWon: this.player.one.has_won,
+        PlayerTwoWon: this.player.two.has_won,
         NumberOfInnings: this.number_of_innings,
         EarlyEight: this.early_eight,
         ScratchOnEight: this.scratch_on_eight,
@@ -990,19 +1014,19 @@
     };
 
     EightBall.prototype.fromJSON = function(gameJSON) {
-      this.player['one'].timeouts_taken = gameJSON.PlayerOneTimeoutsTaken;
-      this.player['two'].timeouts_taken = gameJSON.PlayerTwoTimeoutsTaken;
-      this.player['one'].eight_on_snap = gameJSON.PlayerOneEightOnSnap;
-      this.player['one'].break_and_run = gameJSON.PlayerOneBreakAndRun;
-      this.player['two'].eight_on_snap = gameJSON.PlayerTwoEightOnSnap;
-      this.player['two'].break_and_run = gameJSON.PlayerTwoBreakAndRun;
-      this.player['one'].ball_type = gameJSON.PlayerOneBallType;
-      this.player['two'].ball_type = gameJSON.PlayerTwoBallType;
-      this.player['one'].eight_ball = gameJSON.PlayerOneEightBall;
-      this.player['two'].eight_ball = gameJSON.PlayerTwoEightBall;
-      this.player['one'].has_won = gameJSON.PlayerOneWon;
-      this.player['two'].has_won = gameJSON.PlayerTwoWon;
-      this.number_of_innints = gameJSON.NumberOfInnings;
+      this.player.one.timeouts_taken = gameJSON.PlayerOneTimeoutsTaken;
+      this.player.two.timeouts_taken = gameJSON.PlayerTwoTimeoutsTaken;
+      this.player.one.eight_on_snap = gameJSON.PlayerOneEightOnSnap;
+      this.player.one.break_and_run = gameJSON.PlayerOneBreakAndRun;
+      this.player.two.eight_on_snap = gameJSON.PlayerTwoEightOnSnap;
+      this.player.two.break_and_run = gameJSON.PlayerTwoBreakAndRun;
+      this.player.one.ball_type = gameJSON.PlayerOneBallType;
+      this.player.two.ball_type = gameJSON.PlayerTwoBallType;
+      this.player.one.eight_ball = gameJSON.PlayerOneEightBall;
+      this.player.two.eight_ball = gameJSON.PlayerTwoEightBall;
+      this.player.one.has_won = gameJSON.PlayerOneWon;
+      this.player.two.has_won = gameJSON.PlayerTwoWon;
+      this.number_of_innings = gameJSON.NumberOfInnings;
       this.breaking_player_still_shooting = gameJSON.BreakingPlayerStillHitting;
       this.balls_hit_in.solids = gameJSON.SolidBallsHitIn;
       this.balls_hit_in.stripes = gameJSON.StripedBallsHitIn;
@@ -1030,6 +1054,7 @@
     NineBall.prototype.defaults = {};
 
     NineBall.prototype.initialize = function(addToPlayerOne, addToPlayerTwo, callback) {
+      _.extend(this, this.defaults);
       return console.log(this);
     };
 
@@ -1055,8 +1080,15 @@
       children: []
     };
 
-    League.prototype.initialize = function() {
-      console.log("Welcome to this world");
+    League.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      _.extend(this, this.defaults);
+      this.name = options.name;
+      this.age = options.age;
+      this.children = options.children;
+      console.log(this.attributes);
       return this.bind("change:name", function() {
         var name;
         name = this.get("name");
@@ -1093,6 +1125,7 @@
     };
 
     Match.prototype.initialize = function() {
+      _.extend(this, this.defaults);
       console.log("Welcome to this world");
       return this.bind("change:name", function() {
         var name;
@@ -1144,6 +1177,7 @@
     };
 
     EightBall.prototype.initialize = function(player1, player2, player1Rank, player2Rank, player1Number, player2Number, player1TeamNumber, player2TeamNumber) {
+      _.extend(this, this.defaults);
       player['one'] = new Player('EightBall', player1, player1Rank, player1Number, player1TeamNumber);
       player['two'] = new Player('EightBall', player2, player2Rank, player2Number, player2TeamNumber);
       if ((this.player['one'].rank != null) && (this.player['two'].rank != null)) {
@@ -1399,6 +1433,7 @@
     Type.prototype.defaults = {};
 
     Type.prototype.initialize = function() {
+      _.extend(this, this.defaults);
       return console.log(this);
     };
 
@@ -1448,13 +1483,14 @@
     };
 
     LeagueMatch.prototype.initialize = function(GameType, HomeTeamNumber, AwayTeamNumber, HomeTeamName, AwayTeamName, StartTime, TableType) {
+      _.extend(this, this.defaults);
       this.game_type = "EightBall";
-      this.home_team.number = HomeTeamNumber != null;
-      this.home_team.name = HomeTeamName != null;
-      this.away_team.number = AwayTeamNumber != null;
-      this.away_team.name = AwayTeamName != null;
-      this.start_time = StartTime != null;
-      this.table_type = TableType != null;
+      this.home_team.number = HomeTeamNumber || null;
+      this.home_team.name = HomeTeamName || "";
+      this.away_team.number = AwayTeamNumber || null;
+      this.away_team.name = AwayTeamName || "";
+      this.start_time = StartTime || "";
+      this.table_type = TableType || "";
       return DataService.saveLeagueMatch(this, function(id) {
         return this.league_match_id = id;
       });
@@ -1652,6 +1688,7 @@
     PracticeMatch.prototype.defaults = {};
 
     PracticeMatch.prototype.initialize = function() {
+      _.extend(this, this.defaults);
       return console.log(this);
     };
 
@@ -1674,6 +1711,7 @@
     TournamentMatch.prototype.defaults = {};
 
     TournamentMatch.prototype.initialize = function() {
+      _.extend(this, this.defaults);
       return console.log(this);
     };
 
@@ -1700,6 +1738,7 @@
     };
 
     Player.prototype.initialize = function() {
+      _.extend(this, this.defaults);
       console.log("Welcome to this world");
       return this.bind("change:name", function() {
         var name;
@@ -1746,11 +1785,12 @@
     };
 
     EightBall.prototype.initialize = function(name, rank, number, teamNumber) {
-      this.name = name != null;
-      this.rank = rank != null;
-      this.number = number != null;
-      this.team_number = teamNumber != null;
-      return this.timeouts_allowed = $CS.Models.Rank.EightBall().getTimeouts(rank != null);
+      _.extend(this, this.defaults);
+      this.name = name || [];
+      this.rank = rank || null;
+      this.number = number || null;
+      this.team_number = teamNumber || null;
+      return this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(rank != null);
     };
 
     EightBall.prototype.getGamesNeededToWin = function() {
@@ -1792,27 +1832,27 @@
     };
 
     EightBall.prototype.resetPlayerRankStats = function() {
-      return this.timeouts_allowed = $CS.Models.Rank.EightBall().getTimeouts(this.rank);
+      return this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(this.rank);
     };
 
-    EightBall.prototype.addOneToGamesWon = function() {
-      return this.games_won += 1;
+    EightBall.prototype.addToGamesWon = function(num) {
+      return this.games_won += num;
     };
 
-    EightBall.prototype.addOneToSafeties = function() {
-      return this.safeties += 1;
+    EightBall.prototype.addToSafeties = function(num) {
+      return this.safeties += num;
     };
 
     EightBall.prototype.hasWon = function() {
       return this.score >= this.ball_count;
     };
 
-    EightBall.prototype.addOneToEightOnSnaps = function() {
-      return this.eight_on_snaps += 1;
+    EightBall.prototype.addToEightOnSnaps = function(num) {
+      return this.eight_on_snaps += num;
     };
 
-    EightBall.prototype.addOneToBreakAndRuns = function() {
-      return this.break_and_runs += 1;
+    EightBall.prototype.addToBreakAndRuns = function(num) {
+      return this.break_and_runs += num;
     };
 
     EightBall.prototype.toJSON = function() {
@@ -1862,6 +1902,7 @@
     NineBall.prototype.defaults = {};
 
     NineBall.prototype.initialize = function(name, rank, number, teamNumber) {
+      _.extend(this, this.defaults);
       return console.log(this);
     };
 
@@ -1936,6 +1977,7 @@
     };
 
     Rank.prototype.initialize = function() {
+      _.extend(this, this.defaults);
       console.log("Welcome to this world");
       return this.bind("change:name", function() {
         var name;
@@ -1971,6 +2013,31 @@
     };
 
     EightBall.prototype.initialize = function() {
+      _.extend(this, this.defaults);
+      return this.setRanks();
+    };
+
+    EightBall.prototype.getGamesNeedToWin = function(myRank, opponentRank) {
+      var gamesNeeded;
+      if (myRank > 1 && myRank < 8 && opponentRank > 1 && opponentRank < 8) {
+        gamesNeeded = this.games_to_win[myRank][opponentRank];
+        return gamesNeeded;
+      }
+      return 0;
+    };
+
+    EightBall.prototype.getTimeouts = function(rank) {
+      if (rank < 4) {
+        return 2;
+      } else {
+        if (rank >= 4 && rank <= 9) {
+          return 1;
+        }
+      }
+      return 0;
+    };
+
+    EightBall.prototype.setRanks = function() {
       this.games_to_win[2] = [];
       this.games_to_win[2][2] = 2;
       this.games_to_win[2][3] = 2;
@@ -2015,26 +2082,6 @@
       return this.games_to_win[7][7] = 5;
     };
 
-    EightBall.prototype.getGamesNeedToWin = function(myRank, opponentRank) {
-      var gamesNeeded;
-      if (myRank > 1 && myRank < 8 && opponentRank > 1 && opponentRank < 8) {
-        gamesNeeded = this.games_to_win[myRank][opponentRank];
-        return gamesNeeded;
-      }
-      return 0;
-    };
-
-    EightBall.prototype.getTimeouts = function(rank) {
-      if (rank < 4) {
-        return 2;
-      } else {
-        if (rank >= 4 && rank <= 9) {
-          return 1;
-        }
-      }
-      return 0;
-    };
-
     return EightBall;
 
   })($CS.Models.Rank);
@@ -2066,6 +2113,39 @@
     };
 
     NineBall.prototype.initialize = function() {
+      _.extend(this, this.defaults);
+      return this.setRanks();
+    };
+
+    NineBall.prototype.getBallCount = function(rank) {
+      return parseInt(this.ball_counts[rank], 10);
+    };
+
+    NineBall.prototype.getLosingPlayersMatchPoints = function(loserRank, loserScore) {
+      var losingMatchPoints;
+      losingMatchPoints = this.losersMatchPoints[loserRank][loserScore];
+      return losingMatchPoints;
+    };
+
+    NineBall.prototype.getWinningPlayersMatchPoints = function(loserRank, loserScore) {
+      var losingMatchPoints, winningMatchPoints;
+      losingMatchPoints = this.losersMatchPoints[loserRank][loserScore];
+      winningMatchPoints = 20 - this.losersMatchPoints[loserRank][loserScore];
+      return winningMatchPoints;
+    };
+
+    NineBall.prototype.getTimeouts = function(rank) {
+      if (rank < 4) {
+        return 2;
+      } else {
+        if (rank >= 4 && rank <= 9) {
+          return 1;
+        }
+      }
+      return 0;
+    };
+
+    NineBall.prototype.setRanks = function() {
       this.losersMatchPoints = [];
       this.losersMatchPoints[1] = [];
       this.losersMatchPoints[1][0] = 0;
@@ -2446,34 +2526,6 @@
       return this.losersMatchPoints[9][74] = 8;
     };
 
-    NineBall.prototype.getBallCount = function(rank) {
-      return parseInt(this.ball_counts[rank], 10);
-    };
-
-    NineBall.prototype.getLosingPlayersMatchPoints = function(loserRank, loserScore) {
-      var losingMatchPoints;
-      losingMatchPoints = this.losersMatchPoints[loserRank][loserScore];
-      return losingMatchPoints;
-    };
-
-    NineBall.prototype.getWinningPlayersMatchPoints = function(loserRank, loserScore) {
-      var losingMatchPoints, winningMatchPoints;
-      losingMatchPoints = this.losersMatchPoints[loserRank][loserScore];
-      winningMatchPoints = 20 - this.losersMatchPoints[loserRank][loserScore];
-      return winningMatchPoints;
-    };
-
-    NineBall.prototype.getTimeouts = function(rank) {
-      if (rank < 4) {
-        return 2;
-      } else {
-        if (rank >= 4 && rank <= 9) {
-          return 1;
-        }
-      }
-      return 0;
-    };
-
     return NineBall;
 
   })($CS.Models.Rank);
@@ -2497,6 +2549,7 @@
     };
 
     Team.prototype.initialize = function() {
+      _.extend(this, this.defaults);
       console.log("Welcome to this world");
       return this.bind("change:name", function() {
         var name;

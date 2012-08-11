@@ -44,13 +44,14 @@
     };
 
     LeagueMatch.prototype.initialize = function(GameType, HomeTeamNumber, AwayTeamNumber, HomeTeamName, AwayTeamName, StartTime, TableType) {
+      _.extend(this, this.defaults);
       this.game_type = "EightBall";
-      this.home_team.number = HomeTeamNumber != null;
-      this.home_team.name = HomeTeamName != null;
-      this.away_team.number = AwayTeamNumber != null;
-      this.away_team.name = AwayTeamName != null;
-      this.start_time = StartTime != null;
-      this.table_type = TableType != null;
+      this.home_team.number = HomeTeamNumber || null;
+      this.home_team.name = HomeTeamName || "";
+      this.away_team.number = AwayTeamNumber || null;
+      this.away_team.name = AwayTeamName || "";
+      this.start_time = StartTime || "";
+      this.table_type = TableType || "";
       return DataService.saveLeagueMatch(this, function(id) {
         return this.league_match_id = id;
       });

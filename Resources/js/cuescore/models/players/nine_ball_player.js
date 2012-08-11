@@ -17,6 +17,7 @@
     NineBall.prototype.defaults = {};
 
     NineBall.prototype.initialize = function(name, rank, number, teamNumber) {
+      _.extend(this, this.defaults);
       return console.log(this);
     };
 

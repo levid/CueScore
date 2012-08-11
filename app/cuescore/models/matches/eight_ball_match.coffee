@@ -17,6 +17,8 @@ class EightBall extends $CS.Models.Match
     current_game: null
     
   initialize: (player1, player2, player1Rank, player2Rank, player1Number, player2Number, player1TeamNumber, player2TeamNumber) ->
+    _.extend @, @defaults
+    
     player['one'] = new Player('EightBall', player1, player1Rank, player1Number, player1TeamNumber)
     player['two'] = new Player('EightBall', player2, player2Rank, player2Number, player2TeamNumber)
     

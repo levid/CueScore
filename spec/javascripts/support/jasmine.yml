@@ -15,6 +15,7 @@ src_files:
     - Resources/vendor/underscore/**/*.js
     - Resources/vendor/backbone/**/*.js
     - Resources/js/cuescore/models/**/*.js
+    - Resources/js/cuescore/utils/contains.js
 
 # stylesheets
 #

@@ -5,6 +5,8 @@ class Match extends Backbone.Model
     children: []
 
   initialize: ->
+    _.extend @, @defaults
+    
     console.log "Welcome to this world"
     @bind "change:name", ->
       name = @get("name") # 'Stewie Griffin'

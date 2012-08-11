@@ -29,6 +29,39 @@
     };
 
     NineBall.prototype.initialize = function() {
+      _.extend(this, this.defaults);
+      return this.setRanks();
+    };
+
+    NineBall.prototype.getBallCount = function(rank) {
+      return parseInt(this.ball_counts[rank], 10);
+    };
+
+    NineBall.prototype.getLosingPlayersMatchPoints = function(loserRank, loserScore) {
+      var losingMatchPoints;
+      losingMatchPoints = this.losersMatchPoints[loserRank][loserScore];
+      return losingMatchPoints;
+    };
+
+    NineBall.prototype.getWinningPlayersMatchPoints = function(loserRank, loserScore) {
+      var losingMatchPoints, winningMatchPoints;
+      losingMatchPoints = this.losersMatchPoints[loserRank][loserScore];
+      winningMatchPoints = 20 - this.losersMatchPoints[loserRank][loserScore];
+      return winningMatchPoints;
+    };
+
+    NineBall.prototype.getTimeouts = function(rank) {
+      if (rank < 4) {
+        return 2;
+      } else {
+        if (rank >= 4 && rank <= 9) {
+          return 1;
+        }
+      }
+      return 0;
+    };
+
+    NineBall.prototype.setRanks = function() {
       this.losersMatchPoints = [];
       this.losersMatchPoints[1] = [];
       this.losersMatchPoints[1][0] = 0;
@@ -407,34 +440,6 @@
       this.losersMatchPoints[9][72] = 8;
       this.losersMatchPoints[9][73] = 8;
       return this.losersMatchPoints[9][74] = 8;
-    };
-
-    NineBall.prototype.getBallCount = function(rank) {
-      return parseInt(this.ball_counts[rank], 10);
-    };
-
-    NineBall.prototype.getLosingPlayersMatchPoints = function(loserRank, loserScore) {
-      var losingMatchPoints;
-      losingMatchPoints = this.losersMatchPoints[loserRank][loserScore];
-      return losingMatchPoints;
-    };
-
-    NineBall.prototype.getWinningPlayersMatchPoints = function(loserRank, loserScore) {
-      var losingMatchPoints, winningMatchPoints;
-      losingMatchPoints = this.losersMatchPoints[loserRank][loserScore];
-      winningMatchPoints = 20 - this.losersMatchPoints[loserRank][loserScore];
-      return winningMatchPoints;
-    };
-
-    NineBall.prototype.getTimeouts = function(rank) {
-      if (rank < 4) {
-        return 2;
-      } else {
-        if (rank >= 4 && rank <= 9) {
-          return 1;
-        }
-      }
-      return 0;
     };
 
     return NineBall;

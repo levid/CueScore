@@ -14,11 +14,14 @@ class EightBall extends $CS.Models.Player
     is_captain: false
 
   initialize: (name, rank, number, teamNumber) ->
-    @name             = name?
-    @rank             = rank?
-    @number           = number?
-    @team_number      = teamNumber?
-    @timeouts_allowed = $CS.Models.Rank.EightBall().getTimeouts(rank?)
+    _.extend @, @defaults
+    
+    @name             = name || []
+    @rank             = rank || null
+    @number           = number || null
+    @team_number      = teamNumber || null
+    
+    @timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(rank?)
     
   # Getters
   
@@ -52,22 +55,22 @@ class EightBall extends $CS.Models.Player
   # Setters
 
   resetPlayerRankStats: ->
-    @timeouts_allowed = $CS.Models.Rank.EightBall().getTimeouts(@rank)
+    @timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(@rank)
 
-  addOneToGamesWon: ->
-    @games_won += 1
+  addToGamesWon: (num) ->
+    @games_won += num
 
-  addOneToSafeties: ->
-    @safeties += 1
+  addToSafeties: (num) ->
+    @safeties += num
 
   hasWon: ->
     @score >= @ball_count
 
-  addOneToEightOnSnaps: ->
-    @eight_on_snaps += 1
+  addToEightOnSnaps: (num) ->
+    @eight_on_snaps += num
 
-  addOneToBreakAndRuns: ->
-    @break_and_runs += 1
+  addToBreakAndRuns: (num) ->
+    @break_and_runs += num
     
   # JSON Data
 
