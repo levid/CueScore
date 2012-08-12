@@ -13,7 +13,7 @@ class Game extends Backbone.Model
     
     @bind "change:name", ->
       name = @get("name") # 'Stewie Griffin'
-      console.log "Changed my name to " + name
+      # console.log "Changed my name to " + name
 
   replaceNameAttr: (name) ->
     @set name: name

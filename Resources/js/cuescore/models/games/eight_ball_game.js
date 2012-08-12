@@ -10,10 +10,6 @@
 
     EightBall.name = 'EightBall';
 
-    function EightBall() {
-      return EightBall.__super__.constructor.apply(this, arguments);
-    }
-
     EightBall.prototype.defaults = {
       stripes: 1,
       solids: 2,
@@ -52,12 +48,14 @@
       }
     };
 
-    EightBall.prototype.initialize = function(options) {
+    function EightBall(options) {
       _.extend(this, this.defaults);
       this.player.one.callback = options.addToPlayerOne;
       this.player.two.callback = options.addToPlayerTwo;
-      return this.match_ended_callback = options.callback;
-    };
+      this.match_ended_callback = options.callback;
+      this.player.one.callback().timeouts_taken = 0;
+      this.player.two.callback().timeouts_taken = 0;
+    }
 
     EightBall.prototype.getCurrentlyUpPlayer = function() {
       if (this.player.one.callback().currently_up === true) {

@@ -22,11 +22,9 @@
 
     Player.prototype.initialize = function() {
       _.extend(this, this.defaults);
-      console.log("Welcome to this world");
       return this.bind("change:name", function() {
         var name;
-        name = this.get("name");
-        return console.log("Changed my name to " + name);
+        return name = this.get("name");
       });
     };
 

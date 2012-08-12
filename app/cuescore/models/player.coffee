@@ -7,10 +7,9 @@ class Player extends Backbone.Model
   initialize: ->
     _.extend @, @defaults
     
-    console.log "Welcome to this world"
     @bind "change:name", ->
       name = @get("name") # 'Stewie Griffin'
-      console.log "Changed my name to " + name
+      # console.log "Changed my name to " + name
 
   replaceNameAttr: (name) ->
     @set name: name

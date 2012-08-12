@@ -10,10 +10,6 @@
 
     EightBall.name = 'EightBall';
 
-    function EightBall() {
-      return EightBall.__super__.constructor.apply(this, arguments);
-    }
-
     EightBall.prototype.defaults = {
       name: null,
       rank: null,
@@ -29,14 +25,15 @@
       is_captain: false
     };
 
-    EightBall.prototype.initialize = function(options) {
+    function EightBall(options) {
+      var _ref, _ref1, _ref2, _ref3;
       _.extend(this, this.defaults);
-      this.name = options.name || null;
-      this.rank = options.rank || null;
-      this.number = options.playerNumber || null;
-      this.team_number = options.teamNumber || null;
-      return this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(this.rank);
-    };
+      this.name = (_ref = options.name) != null ? _ref : options.name = null;
+      this.rank = (_ref1 = options.rank) != null ? _ref1 : options.rank = null;
+      this.number = (_ref2 = options.playerNumber) != null ? _ref2 : options.playerNumber = null;
+      this.team_number = (_ref3 = options.teamNumber) != null ? _ref3 : options.teamNumber = null;
+      this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(this.rank);
+    }
 
     EightBall.prototype.getGamesNeededToWin = function() {
       return this.games_needed_to_win.toString();

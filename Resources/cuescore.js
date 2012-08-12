@@ -1,5 +1,5 @@
 (function() {
-  var API, AppSync, DashboardController, EightBall, Game, League, LeagueMatch, Match, NineBall, Player, Post, PostViewController, Posts, PostsController, PostsViewController, PracticeMatch, QueryStringBuilder, Rank, Team, Template, TournamentMatch, Type, after, console, every, say,
+  var API, AppSync, DashboardController, DoubleJeopardy, Doubles, EightBall, Game, League, LeagueMatch, Masters, Match, MixedDoubles, NineBall, Player, Post, PostViewController, Posts, PostsController, PostsViewController, PracticeMatch, QueryStringBuilder, Rank, Team, Template, TournamentMatch, Type, Womens, after, console, every, say,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -665,41 +665,33 @@
         one: {
           eight_ball: [],
           eight_on_snap: false,
-          eight_on_snaps: null,
           break_and_run: false,
-          break_and_runs: null,
           timeouts_taken: 0,
-          timeouts_allowed: null,
           callback: function() {},
           ball_type: null,
-          has_won: false,
-          score: []
+          has_won: false
         },
         two: {
           eight_ball: [],
           eight_on_snap: false,
-          eight_on_snaps: null,
           break_and_run: false,
-          break_and_runs: null,
           timeouts_taken: 0,
-          timeouts_allowed: null,
           callback: function() {},
           ball_type: null,
-          has_won: false,
-          score: []
+          has_won: false
         }
       }
     };
 
-    EightBall.prototype.initialize = function(str, addToPlayerOne, addToPlayerTwo, callback) {
+    EightBall.prototype.initialize = function(options) {
       _.extend(this, this.defaults);
-      this.player.one.callback = addToPlayerOne;
-      this.player.two.callback = addToPlayerTwo;
-      return this.match_ended_callback = callback;
+      this.player.one.callback = options.addToPlayerOne;
+      this.player.two.callback = options.addToPlayerTwo;
+      return this.match_ended_callback = options.callback;
     };
 
     EightBall.prototype.getCurrentlyUpPlayer = function() {
-      if (this.player.one.callback().isCurrentlyUp === true) {
+      if (this.player.one.callback().currently_up === true) {
         return this.player.one.callback();
       }
       return this.player.two.callback();
@@ -748,9 +740,10 @@
 
     EightBall.prototype.getCurrentPlayerRemainingTimeouts = function() {
       if (this.player.one.callback().currently_up === true) {
-        return (this.player.one.callback().timeouts_allowed - this.player.one.timeouts_taken).toString();
+        return this.player.one.callback().timeouts_allowed - this.player.one.timeouts_taken;
+      } else {
+        return this.player.two.callback().timeouts_allowed - this.player.two.timeouts_taken;
       }
-      return (this.player.two.callback().timeouts_allowed - this.player.two.timeouts_taken).toString();
     };
 
     EightBall.prototype.setPlayerWon = function(playerNum) {
@@ -811,14 +804,8 @@
       }
     };
 
-    EightBall.prototype.replaceNameAttr = function(name) {
-      return this.set({
-        name: name
-      });
-    };
-
     EightBall.prototype.hitSafety = function() {
-      this.getCurrentlyUpPlayer().addToSafeties();
+      this.getCurrentlyUpPlayer().addToSafeties(1);
       return this.nextPlayerIsUp();
     };
 
@@ -835,6 +822,10 @@
         this.player.one.callback().currently_up = true;
       }
       return this.match_ended_callback();
+    };
+
+    EightBall.prototype.shotMissed = function() {
+      return this.nextPlayerIsUp();
     };
 
     EightBall.prototype.addToNumberOfInnings = function(num) {
@@ -928,24 +919,22 @@
           }
         }
         if (this.player.one.eight_ball.indexOf(8) >= 0 && this.on_break === false) {
-          if (this.getBallsHitInByPlayer(1).length !== 8) {
+          if (this.getBallsHitInByPlayer(1).length !== 8 && this.getBallsHitInByPlayer(2).length !== 8) {
             this.setPlayerWon(2);
-          } else {
+          } else if (this.getBallsHitInByPlayer(1).length === 8) {
             this.setPlayerWon(1);
           }
         } else if (this.player.two.eight_ball.indexOf(8) >= 0 && this.on_break === false) {
-          if (this.getBallsHitInByPlayer(1).length !== 8) {
+          if (this.getBallsHitInByPlayer(1).length !== 8 && this.getBallsHitInByPlayer(2).length !== 8) {
             this.setPlayerWon(1);
-          } else {
+          } else if (this.getBallsHitInByPlayer(2).length === 8) {
             this.setPlayerWon(2);
           }
         } else {
           if (this.player.one.callback().currently_up === true) {
             this.setPlayerWon(1);
-          } else {
-            if (this.player.two.callback().currently_up === true) {
-              this.setPlayerWon(2);
-            }
+          } else if (this.player.two.callback().currently_up === true) {
+            this.setPlayerWon(2);
           }
         }
         return this.match_ended_callback();
@@ -1027,7 +1016,7 @@
       this.player.one.has_won = gameJSON.PlayerOneWon;
       this.player.two.has_won = gameJSON.PlayerTwoWon;
       this.number_of_innings = gameJSON.NumberOfInnings;
-      this.breaking_player_still_shooting = gameJSON.BreakingPlayerStillHitting;
+      this.breaking_player_still_shooting = gameJSON.BreakingPlayerStillShooting;
       this.balls_hit_in.solids = gameJSON.SolidBallsHitIn;
       this.balls_hit_in.stripes = gameJSON.StripedBallsHitIn;
       this.last_ball_hit_in = gameJSON.LastBallHitIn;
@@ -1107,6 +1096,181 @@
   })(Backbone.Model);
 
   $CS.Models.League = League;
+
+  DoubleJeopardy = (function(_super) {
+
+    __extends(DoubleJeopardy, _super);
+
+    DoubleJeopardy.name = 'DoubleJeopardy';
+
+    function DoubleJeopardy() {
+      return DoubleJeopardy.__super__.constructor.apply(this, arguments);
+    }
+
+    DoubleJeopardy.prototype.defaults = {};
+
+    DoubleJeopardy.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return _.extend(this, this.defaults);
+    };
+
+    return DoubleJeopardy;
+
+  })($CS.Models.League);
+
+  $CS.Models.League.DoubleJeopardy = DoubleJeopardy;
+
+  Doubles = (function(_super) {
+
+    __extends(Doubles, _super);
+
+    Doubles.name = 'Doubles';
+
+    function Doubles() {
+      return Doubles.__super__.constructor.apply(this, arguments);
+    }
+
+    Doubles.prototype.defaults = {};
+
+    Doubles.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return _.extend(this, this.defaults);
+    };
+
+    return Doubles;
+
+  })($CS.Models.League);
+
+  $CS.Models.League.Doubles = Doubles;
+
+  EightBall = (function(_super) {
+
+    __extends(EightBall, _super);
+
+    EightBall.name = 'EightBall';
+
+    function EightBall() {
+      return EightBall.__super__.constructor.apply(this, arguments);
+    }
+
+    EightBall.prototype.defaults = {};
+
+    EightBall.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return _.extend(this, this.defaults);
+    };
+
+    return EightBall;
+
+  })($CS.Models.League);
+
+  $CS.Models.League.EightBall = EightBall;
+
+  Masters = (function(_super) {
+
+    __extends(Masters, _super);
+
+    Masters.name = 'Masters';
+
+    function Masters() {
+      return Masters.__super__.constructor.apply(this, arguments);
+    }
+
+    Masters.prototype.defaults = {};
+
+    Masters.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return _.extend(this, this.defaults);
+    };
+
+    return Masters;
+
+  })($CS.Models.League);
+
+  $CS.Models.League.Masters = Masters;
+
+  MixedDoubles = (function(_super) {
+
+    __extends(MixedDoubles, _super);
+
+    MixedDoubles.name = 'MixedDoubles';
+
+    function MixedDoubles() {
+      return MixedDoubles.__super__.constructor.apply(this, arguments);
+    }
+
+    MixedDoubles.prototype.defaults = {};
+
+    MixedDoubles.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return _.extend(this, this.defaults);
+    };
+
+    return MixedDoubles;
+
+  })($CS.Models.League);
+
+  $CS.Models.League.MixedDoubles = MixedDoubles;
+
+  NineBall = (function(_super) {
+
+    __extends(NineBall, _super);
+
+    NineBall.name = 'NineBall';
+
+    function NineBall() {
+      return NineBall.__super__.constructor.apply(this, arguments);
+    }
+
+    NineBall.prototype.defaults = {};
+
+    NineBall.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return _.extend(this, this.defaults);
+    };
+
+    return NineBall;
+
+  })($CS.Models.League);
+
+  $CS.Models.League.NineBall = NineBall;
+
+  Womens = (function(_super) {
+
+    __extends(Womens, _super);
+
+    Womens.name = 'Womens';
+
+    function Womens() {
+      return Womens.__super__.constructor.apply(this, arguments);
+    }
+
+    Womens.prototype.defaults = {};
+
+    Womens.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return _.extend(this, this.defaults);
+    };
+
+    return Womens;
+
+  })($CS.Models.League);
+
+  $CS.Models.League.Womens = Womens;
 
   Match = (function(_super) {
 
@@ -1784,13 +1948,13 @@
       is_captain: false
     };
 
-    EightBall.prototype.initialize = function(name, rank, number, teamNumber) {
+    EightBall.prototype.initialize = function(options) {
       _.extend(this, this.defaults);
-      this.name = name || [];
-      this.rank = rank || null;
-      this.number = number || null;
-      this.team_number = teamNumber || null;
-      return this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(rank != null);
+      this.name = options.name || null;
+      this.rank = options.rank || null;
+      this.number = options.playerNumber || null;
+      this.team_number = options.teamNumber || null;
+      return this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(this.rank);
     };
 
     EightBall.prototype.getGamesNeededToWin = function() {

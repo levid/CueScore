@@ -14,26 +14,10 @@
       return Team.__super__.constructor.apply(this, arguments);
     }
 
-    Team.prototype.defaults = {
-      name: "Fetus",
-      age: 0,
-      children: []
-    };
+    Team.prototype.defaults = {};
 
     Team.prototype.initialize = function() {
-      _.extend(this, this.defaults);
-      console.log("Welcome to this world");
-      return this.bind("change:name", function() {
-        var name;
-        name = this.get("name");
-        return console.log("Changed my name to " + name);
-      });
-    };
-
-    Team.prototype.replaceNameAttr = function(name) {
-      return this.set({
-        name: name
-      });
+      return _.extend(this, this.defaults);
     };
 
     return Team;

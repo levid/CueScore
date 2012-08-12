@@ -30,8 +30,7 @@
       this.children = options.children;
       return this.bind("change:name", function() {
         var name;
-        name = this.get("name");
-        return console.log("Changed my name to " + name);
+        return name = this.get("name");
       });
     };
 

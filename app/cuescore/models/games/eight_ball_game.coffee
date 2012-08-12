@@ -32,14 +32,15 @@ class EightBall extends $CS.Models.Game
         ball_type: null
         has_won: false
 
-  initialize: (options) ->
+  constructor: (options) ->
     _.extend @, @defaults
     
-    @player.one.callback = options.addToPlayerOne
-    @player.two.callback = options.addToPlayerTwo
-    # @player.one.callback().timeouts_taken = 0;
-    # @player.two.callback().timeouts_taken = 0;
+    @player.one.callback  = options.addToPlayerOne
+    @player.two.callback  = options.addToPlayerTwo
     @match_ended_callback = options.callback
+    
+    @player.one.callback().timeouts_taken = 0;
+    @player.two.callback().timeouts_taken = 0;
 
   # Getters
   

@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Total coverage report</title>
+<style>
+    body {
+        margin: 0;
+        padding: 18px 10px;
+        font: 0.8125em Verdana, sans-serif;
+    }
+
+    h1 {
+        font-size: 1.2em;
+        margin: 0;
+        padding-left: 10px;
+        padding-bottom: 5px;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    .stats {
+        width: 100%;
+    }
+
+    .stats-header th {
+        color: white;
+    }
+
+    .stats-header th {
+        text-align: right;
+    }
+
+    .stats-header th:first-child {
+        text-align: left;
+    }
+
+    .stats td.statements,
+    .stats td.executed,
+    .stats td.coverage {
+        text-align: right;
+    }
+
+    .stats > thead th,
+    .stats > thead td,
+    .stats > tbody > tr > td {
+        padding: 4px 10px;
+    }
+
+    .stats > thead th {
+        font-size: 0.85em;
+    }
+
+    .stats > thead > tr:first-child th {
+        background-color: #758691;
+    }
+
+    .stats > thead th:first-child,
+    .stats > thead td:first-child,
+    .stats > tbody > tr > td:first-child {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+
+    .stats > thead th:last-child,
+    .stats > thead td:last-child,
+    .stats > tbody > tr > td:last-child {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+
+    .stats > tbody > tr:nth-child(4n + 1) {
+        background-color: #e7e8e9;
+    }
+
+    .stats > tbody > tr:nth-child(2n + 1) {
+        cursor: pointer;
+    }
+
+    .stats > tbody > tr:nth-child(2n + 1):hover {
+        background-color: #b1c7d4;
+    }
+
+    .stats tr.no-statements {
+        opacity: 0.6;
+    }
+
+    a, a:hover, a:visited, a:active {
+        color: black;
+        text-decoration: none;
+    }
+
+    .bar-container {
+        padding: 2px;
+        padding-right: 8px;
+        width: 15%;
+    }
+
+    .bar {
+        background-color: #DDD;
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 8px 8px 8px 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.5);
+        height: 7px;
+        padding: 1px;
+        position: relative;
+        width: 100%;
+    }
+
+    .bar > span {
+        background-color: #AEDB4B;
+        border-radius: 6px 6px 6px 6px;
+        box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.2) inset, 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 -1px 0 rgba(0, 0, 0, 0.15) inset;
+        display: block;
+        height: 100%;
+    }
+
+    .bar > span:before {
+        position: absolute;
+        width: 25%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        border-right: 1px solid rgba(0,0,0,0.1);
+        content: ' ';
+    }
+    .bar > span:after {
+        position: absolute;
+        width: 25%;
+        height: 100%;
+        left: 50%;
+        top: 0;
+        border-left: 1px solid rgba(0,0,0,0.1);
+        border-right: 1px solid rgba(0,0,0,0.1);
+        content: ' ';
+    }
+
+    /* line by line coverage styles */
+
+    .line-coverage {
+        margin: 10px 0px;
+    }
+
+    .line-coverage th {
+        border-right: 1px solid #758691;
+    }
+
+    .line-coverage th div,
+    .line-coverage td div {
+        text-align: center;
+    }
+
+    .line-coverage th div {
+        margin: 0px 10px 0px 4px;
+    }
+
+    .line-coverage td div {
+        padding: 2px 6px 2px 4px;
+        margin: 0;
+    }
+
+    .line-coverage th,
+    .line-coverage td,
+    .line-coverage pre {
+        padding: 0;
+        margin: 0;
+
+        font-size: 1.05em;
+        font-weight: normal;
+        font-family: Courier New;
+    }
+
+    .line-coverage th div, 
+    .line-coverage td.times-executed div {
+        border-radius: 0 5px 5px 0;
+        color: rgba(0, 0, 0, 0.8);
+        font-size: 0.9em;
+    }
+
+    .line-coverage td pre {
+        margin-left: 8px;
+    }
+
+    .line-coverage tr.covered td.times-executed div {
+        background-color: #aedb4b;
+    }
+
+    .line-coverage tr.not-covered td.times-executed div {
+        background-color: #ff8134;
+    }
+
+    .line-coverage span.keyword {
+        color: #000080;
+        font-weight: bold;
+    }
+
+    .line-coverage span.string {
+        color: #008000;
+    }
+
+    .line-coverage span.number {
+        color: #0000ff;
+    }
+
+    .line-coverage a {
+        color: black;
+    }
+
+    .line-coverage-cell > div {
+        color: #FF8134;
+    }
+
+    .line-coverage-cell > div > a {
+        color: #FF8134;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    .stats > thead td {
+        font-weight: bold;
+    }
+
+    .footer {
+        padding-top: 5px;
+        text-align: right;
+        font-style: italic;
+        font-size: 0.85em;
+        opacity: 0.7;
+    }
+
+    .footer a {
+        text-decoration: underline;
+    }
+</style>
+<script type="text/javascript">
+    (function () {
+        var reservedKeywords = [
+            "break",
+            "case",
+            "catch",
+            "continue",
+            "debugger",
+            "default",
+            "delete",
+            "do",
+            "else",
+            "false",
+            "finally",
+            "for",
+            "function",
+            "if",
+            "in",
+            "instanceof",
+            "new",
+            "null",
+            "return",
+            "switch",
+            "this",
+            "true",
+            "throw",
+            "try",
+            "typeof",
+            "var",
+            "void",
+            "while",
+            "with"
+        ];
+
+        String.prototype.reverse = function () {
+            return this.split('').reverse().join('');
+        };
+
+        var reservedKeywordsPattern = new RegExp('\\b(' + reservedKeywords.join('|') + ')\\b', 'g');
+        var jsStringPattern = /('(?!\\').*'|"(?!\\").*")/g;
+        var jsNumberPattern = /\b(\d+(?:\.\d+)?)\b/g;
+
+        function el(type) {
+            return document.createElement(type);
+        }
+
+        function withText(node, text) {
+            node.innerHTML = text;
+            return node;
+        }
+
+        function maybeAppendMissedLines(id, frag, missed, data) {
+            if (missed.length === 0) {
+                return;
+            }
+
+            var rangeAnchors = [];
+            var range;
+
+            for (var i = 0, len = missed.length; i < len; i++) {
+                var start = missed[i];
+                var end = start;
+
+                range = [start];
+
+                for (var j = i + 1; j < len; j++) {
+                    var missedLineNr = missed[j];
+                    var consecutive = false;
+
+                    // consecutive missed lines
+                    if (missedLineNr === end + 1) {
+                        consecutive = true;
+                    } else {
+                        // let's check if all lines in between are not executable
+                        var dataIdx = end;
+
+                        while (dataIdx < missedLineNr) {
+                            if (data[dataIdx][0] > -1) {
+                                if (data[dataIdx][0] === 0) {
+                                    missedLineNr = dataIdx + 1;
+                                    consecutive = true;
+                                }
+
+                                break;
+                            }
+
+                            dataIdx++;
+                        }
+                    }
+
+                    if (consecutive) {
+                        end = missedLineNr;
+                        i = j;
+                    }
+                }
+
+                range[1] = end;
+
+                var rangeStr = start === end ? start : start + '-' + end;
+                rangeAnchors.push('<a href="' + '#' + id + '-' + start + '">' + rangeStr + '</a>');
+            }
+
+            frag.appendChild(withText(el('div'), 'Missed lines: ' + rangeAnchors.join(', ')));
+        }
+
+        function createSourceTable(id, dataEl) {
+            var d = document;
+
+            var data = eval(dataEl.innerHTML);
+            var td = dataEl.parentNode;
+            td.removeChild(dataEl);
+
+            var frag = d.createDocumentFragment();
+
+            var table = el('table');
+            table.className = 'line-coverage';
+
+            var missed = [];
+
+            for (var i = 0, len = data.length; i < len; i++) {
+                var tr = el('tr');
+                var record = data[i];
+
+                var timesExecuted = record[0];
+                var src = record[1];
+                var executable = timesExecuted > -1;
+                var lineNr = i + 1;
+
+                if (timesExecuted === 0) {
+                    missed.push(lineNr);
+                }
+
+                tr.className = !executable ? 'not-executable' : timesExecuted > 0 ? 'covered' : 'not-covered';
+                table.appendChild(tr);
+
+                var lineNrNode = el('th');
+
+                var anchor = el('a');
+                anchor.setAttribute('name', id + '-' + lineNr);
+                anchor.appendChild(withText(el('div'), lineNr));
+
+                lineNrNode.appendChild(anchor);
+                tr.appendChild(lineNrNode);
+
+                var timesExecutedNode = el('td');
+                timesExecutedNode.className = 'times-executed';
+                timesExecutedNode.appendChild(withText(el('div'), executable ? (timesExecuted || '!') : '&nbsp;'));
+                tr.appendChild(timesExecutedNode);
+
+                var srcNode = el('td');
+
+                var styledSrc = src
+                    .reverse().replace(jsStringPattern, '>naps/<$1>"gnirts"=ssalc naps<').reverse()
+                    .replace(jsNumberPattern, '<span class="number">$1</span>')
+                    .replace(reservedKeywordsPattern, '<span class="keyword">$1</span>');
+
+                srcNode.appendChild(withText(el('pre'), styledSrc));
+
+                tr.appendChild(srcNode);
+            }
+
+            maybeAppendMissedLines(id, frag, missed, data);
+            frag.appendChild(table);
+
+            td.appendChild(frag.cloneNode(true));
+        }
+
+        window.__coverage_toggleSection = function (hash) {
+            var d = document;
+            var id = hash.indexOf('-') > -1 ? hash.substring(0, hash.indexOf('-')) : hash;
+
+            var srcRow = d.getElementById('__src_' + id);
+            if (!srcRow) {
+                return;
+            }
+
+            var dataEl = d.getElementById('__data_' + id);
+
+            if (dataEl) {
+                createSourceTable(id, dataEl);
+            }
+
+            var show = srcRow.style.display === 'none';
+
+            if (show) {
+                srcRow.style.display = '';
+                window.location.hash = "#" + hash;
+            } else {
+                srcRow.style.display = 'none';
+                window.location.hash = '#closed';
+            }
+        }
+
+        window.onload = function () {
+            if (window.location.hash) {
+                __coverage_toggleSection(window.location.hash.substr(1));
+            }
+        };
+
+    })();
+</script>
+</head>
+<body>
+    <h1>Total coverage report</h1>
+    <table class="stats">
+        <thead>
+            <tr class="stats-header">
+                <th>File</th>
+                <th>Statements</th>
+                <th>Executed</th>
+                <th>Coverage</th>
+                <th></th>
+            </tr>
+            <tr class="stats-header ">
+                <td>Total</td>
+                <td class="statements">1988</td>
+                <td class="executed">1625</td>
+                <td class="coverage">
+                        81&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 81%; background-color: rgb(191, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr  onclick="__coverage_toggleSection('7d17825269d97f40ab56f6f712ecc401'); return false;">
+                <td><a href="#">target/jasmine/src/matches/types/<strong>league_match.js</strong></a></td>
+                <td class="statements">133</td>
+                <td class="executed">23</td>
+                <td class="coverage">
+                        17&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 17%; background-color: rgb(219, 123, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_7d17825269d97f40ab56f6f712ecc401" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_7d17825269d97f40ab56f6f712ecc401">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var LeagueMatch,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[13,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  LeagueMatch = (function(_super) {'],[-1,''],[1,'    __extends(LeagueMatch, _super);'],[-1,''],[1,'    LeagueMatch.name = \'LeagueMatch\';'],[-1,''],[1,'    function LeagueMatch() {'],[0,'      return LeagueMatch.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    LeagueMatch.prototype.defaults = {'],[-1,'      game_type: null,'],[-1,'      match: ['],[-1,'        {'],[-1,'          one: null,'],[-1,'          two: null,'],[-1,'          three: null,'],[-1,'          four: null,'],[-1,'          five: null'],[-1,'        }'],[-1,'      ],'],[-1,'      team_number: \&quot;\&quot;,'],[-1,'      home_team: {'],[-1,'        number: null,'],[-1,'        name: null,'],[-1,'        signed: false'],[-1,'      },'],[-1,'      away_team: {'],[-1,'        number: null,'],[-1,'        name: null,'],[-1,'        signed: false'],[-1,'      },'],[-1,'      start_time: null,'],[-1,'      end_time: \&quot;\&quot;,'],[-1,'      table_type: null,'],[-1,'      small_json: false,'],[-1,'      league_match_id: 0'],[-1,'    };'],[-1,''],[1,'    LeagueMatch.prototype.initialize = function(GameType, HomeTeamNumber, AwayTeamNumber, HomeTeamName, AwayTeamName, StartTime, TableType) {'],[0,'      _.extend(this, this.defaults);'],[0,'      this.game_type = \&quot;EightBall\&quot;;'],[0,'      this.home_team.number = HomeTeamNumber || null;'],[0,'      this.home_team.name = HomeTeamName || \&quot;\&quot;;'],[0,'      this.away_team.number = AwayTeamNumber || null;'],[0,'      this.away_team.name = AwayTeamName || \&quot;\&quot;;'],[0,'      this.start_time = StartTime || \&quot;\&quot;;'],[0,'      this.table_type = TableType || \&quot;\&quot;;'],[0,'      return DataService.saveLeagueMatch(this, function(id) {'],[0,'        return this.league_match_id = id;'],[-1,'      });'],[-1,'    };'],[-1,''],[1,'    LeagueMatch.prototype.getHomeTeamScore = function() {'],[0,'      var totalScore;'],[0,'      totalScore = 0;'],[0,'      totalScore = this.match[\'one\'].getMatchPointsByTeamNumber(this.home_team.number);'],[0,'      totalScore += this.match[\'two\'].getMatchPointsByTeamNumber(this.home_team.number);'],[0,'      totalScore += this.match[\'three\'].getMatchPointsByTeamNumber(this.home_team.number);'],[0,'      totalScore += this.match[\'four\'].getMatchPointsByTeamNumber(this.home_team.number);'],[0,'      totalScore += this.match[\'five\'].getMatchPointsByTeamNumber(this.home_team.number);'],[0,'      return totalScore;'],[-1,'    };'],[-1,''],[1,'    LeagueMatch.prototype.getAwayTeamScore = function() {'],[0,'      var totalScore;'],[0,'      totalScore = this.match[\'one\'].getMatchPointsByTeamNumber(this.away_team.number);'],[0,'      totalScore += this.match[\'two\'].getMatchPointsByTeamNumber(this.away_team.number);'],[0,'      totalScore += this.match[\'three\'].getMatchPointsByTeamNumber(this.away_team.number);'],[0,'      totalScore += this.match[\'four\'].getMatchPointsByTeamNumber(this.away_team.number);'],[0,'      totalScore += this.match[\'five\'].getMatchPointsByTeamNumber(this.away_team.number);'],[0,'      return totalScore;'],[-1,'    };'],[-1,''],[1,'    LeagueMatch.prototype.setMatch = function(matchData, matchNum) {'],[0,'      var matchNumString;'],[0,'      matchNumString = null;'],[0,'      if (matchNum === 1) {'],[0,'        matchNumString = \&quot;one\&quot;;'],[0,'      } else if (matchNum === 2) {'],[0,'        matchNumString = \&quot;two\&quot;;'],[0,'      } else if (matchNum === 3) {'],[0,'        matchNumString = \&quot;three\&quot;;'],[0,'      } else if (matchNum === 4) {'],[0,'        matchNumString = \&quot;four\&quot;;'],[0,'      } else if (matchNum === 5) {'],[0,'        matchNumString = \&quot;five\&quot;;'],[-1,'      }'],[0,'      this.match[matchNumString] = match;'],[0,'      this.match[matchNumString].league_match_id = this.league_match_id;'],[0,'      if (!(this.match[matchNumString].original_id != null) || this.match[matchNumString].original_id === 0) {'],[0,'        return DataService.saveMatch(this.match[matchNumString], function(id) {'],[0,'          return this.match[matchNumString].original_id = id;'],[-1,'        });'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    LeagueMatch.prototype.getMatchPointsByTeam = function(team) {'],[0,'      var awayScore, homeScore, name, names, _fn, _fn1, _i, _j, _len, _len1,'],[-1,'        _this = this;'],[0,'      if (team === \&quot;home\&quot;) {'],[0,'        homeScore = 0;'],[0,'        names = [\'one\', \'two\', \'three\', \'four\', \'five\'];'],[0,'        _fn = function(name) {'],[0,'          if (_this.match[name].player_one.team_number = _this.home_team.number) {'],[0,'            return homeScore += _this.match[name].getMatchPointsByPlayer(1);'],[-1,'          } else {'],[0,'            return homeScore += _this.match[name].getMatchPointsByPlayer(2);'],[-1,'          }'],[-1,'        };'],[0,'        for (_i = 0, _len = names.length; _i &lt; _len; _i++) {'],[0,'          name = names[_i];'],[0,'          _fn(name);'],[-1,'        }'],[0,'        return homeScore;'],[0,'      } else if (team === \&quot;away\&quot;) {'],[0,'        awayScore = 0;'],[0,'        names = [\'one\', \'two\', \'three\', \'four\', \'five\'];'],[0,'        _fn1 = function(name) {'],[0,'          if (_this.match[name].player_one.team_number === _this.away_team.number) {'],[0,'            return awayScore += _this.match[name].getMatchPointsByPlayer(1);'],[-1,'          } else {'],[0,'            return awayScore += _this.match[name].getMatchPointsByPlayer(2);'],[-1,'          }'],[-1,'        };'],[0,'        for (_j = 0, _len1 = names.length; _j &lt; _len1; _j++) {'],[0,'          name = names[_j];'],[0,'          _fn1(name);'],[-1,'        }'],[0,'        return awayScore;'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    LeagueMatch.prototype.isHomeTeamWinning = function() {'],[0,'      if (this.getMatchPointsByTeam(\'home\') &gt; this.getMatchPointsByTeam(\'away\')) {'],[0,'        return true;'],[-1,'      }'],[0,'      return false;'],[-1,'    };'],[-1,''],[1,'    LeagueMatch.prototype.isAwayTeamWinning = function() {'],[0,'      if (this.getMatchPointsByTeam(\'home\') &lt; this.getMatchPointsByTeam(\'away\')) {'],[0,'        return true;'],[-1,'      }'],[0,'      return false;'],[-1,'    };'],[-1,''],[1,'    LeagueMatch.prototype.getWinningTeamNumber = function() {'],[0,'      if (this.getMatchPointsByTeam(\'home\') &lt; this.getMatchPointsByTeam(\'away\')) {'],[0,'        return this.away_team.number;'],[-1,'      }'],[0,'      return this.home_team.number;'],[-1,'    };'],[-1,''],[1,'    LeagueMatch.prototype.toJSON = function() {'],[0,'      if (this.small_json === true) {'],[0,'        return this.toSmallJSON();'],[-1,'      }'],[0,'      return {'],[-1,'        match_one: this.match[\'one\'].toJSON(),'],[-1,'        match_two: this.match[\'two\'].toJSON(),'],[-1,'        match_three: this.match[\'three\'].toJSON(),'],[-1,'        match_four: this.match[\'four\'].toJSON(),'],[-1,'        match_five: this.match[\'five\'].toJSON(),'],[-1,'        team_number: this.team_number,'],[-1,'        home_team_number: this.home_team.number,'],[-1,'        away_team_number: this.away_team.number,'],[-1,'        start_time: this.start_time,'],[-1,'        end_time: this.end_time,'],[-1,'        table_type: this.table_type,'],[-1,'        league_match_id: this.league_match_id'],[-1,'      };'],[-1,'    };'],[-1,''],[1,'    LeagueMatch.prototype.fromJSON = function(jsonLeagueMatch) {'],[0,'      var matchFive, matchFour, matchOne, matchThree, matchTwo;'],[0,'      matchOne = new $CS.Models.Match.Type.LeagueMatch(\'EightBall\');'],[0,'      matchTwo = new $CS.Models.Match.Type.LeagueMatch(\'EightBall\');'],[0,'      matchThree = new $CS.Models.Match.Type.LeagueMatch(\'EightBall\');'],[0,'      matchFour = new $CS.Models.Match.Type.LeagueMatch(\'EightBall\');'],[0,'      matchFive = new $CS.Models.Match.Type.LeagueMatch(\'EightBall\');'],[0,'      matchOne.fromJSON(jsonLeagueMatch.match_one);'],[0,'      matchTwo.fromJSON(jsonLeagueMatch.match_two);'],[0,'      matchThree.fromJSON(jsonLeagueMatch.match_three);'],[0,'      matchFour.fromJSON(jsonLeagueMatch.match_four);'],[0,'      matchFive.fromJSON(jsonLeagueMatch.match_five);'],[0,'      this.match[\'one\'] = matchOne;'],[0,'      this.match[\'two\'] = matchTwo;'],[0,'      this.match[\'three\'] = matchThree;'],[0,'      this.match[\'four\'] = matchFour;'],[0,'      this.match[\'five\'] = matchFive;'],[0,'      this.team_number = jsonLeagueMatch.TeamNumber;'],[0,'      this.home_team.number = jsonLeagueMatch.HomeTeamNumber;'],[0,'      this.away_team.number = jsonLeagueMatch.AwayTeamNumber;'],[0,'      this.start_time = jsonLeagueMatch.StartTime;'],[0,'      this.end_time = jsonLeagueMatch.EndTime;'],[0,'      this.table_type = jsonLeagueMatch.TableType;'],[0,'      return this.league_match_id = jsonLeagueMatch.LeagueMatchId;'],[-1,'    };'],[-1,''],[1,'    LeagueMatch.prototype.toSmallJSON = function() {'],[0,'      return {'],[-1,'        team_number: this.team_number,'],[-1,'        home_team_number: this.home_team.number,'],[-1,'        away_team_number: this.away_team.number,'],[-1,'        start_time: this.start_time,'],[-1,'        end_time: this.end_time,'],[-1,'        table_type: this.table_type,'],[-1,'        league_match_id: this.league_match_id'],[-1,'      };'],[-1,'    };'],[-1,''],[1,'    LeagueMatch.prototype.fromSmallJSON = function(jsonLeagueMatch) {'],[0,'      this.team_number = jsonLeagueMatch.team_number;'],[0,'      this.home_team.number = jsonLeagueMatch.home_team_number;'],[0,'      this.away_team.number = jsonLeagueMatch.away_team_number;'],[0,'      this.start_time = jsonLeagueMatch.start_time;'],[0,'      this.end_time = jsonLeagueMatch.end_time;'],[0,'      this.table_type = jsonLeagueMatch.table_type;'],[0,'      return this.league_match_id = jsonLeagueMatch.league_match_id;'],[-1,'    };'],[-1,''],[1,'    LeagueMatch.prototype.ended = function() {'],[0,'      return this.match[\'one\'].ended &amp;&amp; this.match[\'two\'].ended &amp;&amp; this.match[\'three\'].ended &amp;&amp; this.match[\'four\'].ended &amp;&amp; this.match[\'five\'].ended;'],[-1,'    };'],[-1,''],[1,'    return LeagueMatch;'],[-1,''],[-1,'  })($CS.Models.Match.Type);'],[-1,''],[1,'  $CS.Models.Match.Type.LeagueMatch = LeagueMatch;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('62727613be7d8297d8d1084d5bc6dcde'); return false;">
+                <td><a href="#">target/jasmine/src/matches/<strong>eight_ball_match.js</strong></a></td>
+                <td class="statements">159</td>
+                <td class="executed">34</td>
+                <td class="coverage">
+                        21&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 21%; background-color: rgb(219, 135, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_62727613be7d8297d8d1084d5bc6dcde" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_62727613be7d8297d8d1084d5bc6dcde">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var EightBall,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[11,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  EightBall = (function(_super) {'],[-1,''],[1,'    __extends(EightBall, _super);'],[-1,''],[1,'    EightBall.name = \'EightBall\';'],[-1,''],[1,'    function EightBall() {'],[0,'      return EightBall.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    EightBall.prototype.defaults = {'],[-1,'      player: ['],[-1,'        {'],[-1,'          one: {},'],[-1,'          two: {}'],[-1,'        }'],[-1,'      ],'],[-1,'      completed_games: [],'],[-1,'      ended: false,'],[-1,'      original_id: 0,'],[-1,'      league_match_id: 0,'],[-1,'      player_number_winning: 0,'],[-1,'      player_one_won: false,'],[-1,'      player_two_won: false,'],[-1,'      are_players_switching: false,'],[-1,'      sudden_death: false,'],[-1,'      forfeit: false,'],[-1,'      current_game: null'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.initialize = function(player1, player2, player1Rank, player2Rank, player1Number, player2Number, player1TeamNumber, player2TeamNumber) {'],[0,'      _.extend(this, this.defaults);'],[0,'      player[\'one\'] = new Player(\'EightBall\', player1, player1Rank, player1Number, player1TeamNumber);'],[0,'      player[\'two\'] = new Player(\'EightBall\', player2, player2Rank, player2Number, player2TeamNumber);'],[0,'      if ((this.player[\'one\'].rank != null) &amp;&amp; (this.player[\'two\'].rank != null)) {'],[0,'        this.player[\'one\'].games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(player1Rank, player2Rank);'],[0,'        this.player[\'two\'].games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(player2Rank, player1Rank);'],[-1,'      }'],[0,'      return this.current_game = this.getNewGame();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getNewGame = function() {'],[0,'      return new $CS.Models.Game.EightBall(function() {'],[0,'        return this.player[\'one\'];'],[-1,'      }, function() {'],[0,'        return this.player[\'two\'];'],[-1,'      }, function() {'],[0,'        if (this.getRemainingGamesNeededToWinByPlayer(1) === 0) {'],[0,'          this.player_one_won = true;'],[0,'          return this.ended = true;'],[0,'        } else if (this.getRemainingGamesNeededToWinByPlayer(2) === 0) {'],[0,'          this.player_two_won = true;'],[0,'          return this.ended = true;'],[-1,'        }'],[-1,'      });'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getTotalInnings = function() {'],[0,'      var i, totalInnings;'],[0,'      totalInnings = this.current_game.number_of_innings;'],[0,'      if (this.completed_games.length &gt; 0) {'],[0,'        i = 0;'],[0,'        while (i &lt;= (this.completed_games.length - 1)) {'],[0,'          totalInnings += this.completed_games[i].number_of_innings;'],[0,'          i++;'],[-1,'        }'],[-1,'      }'],[0,'      return totalInnings.toString();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getTotalSafeties = function() {'],[0,'      return this.player[\'one\'].getSafeties() + \&quot; to \&quot; + this.player[\'two\'].getSafeties();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getCurrentGameNumber = function() {'],[0,'      return (this.completed_games.length + 1).toString();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getMatchPointsByTeamNumber = function(teamNumber) {'],[0,'      if (this.player[\'one\'].team_number === teamNumber) {'],[0,'        return this.getMatchPointsByPlayer(1);'],[-1,'      } else {'],[0,'        if (this.player[\'two\'].team_number === teamNumber) {'],[0,'          return this.getMatchPointsByPlayer(2);'],[-1,'        }'],[-1,'      }'],[0,'      return 0;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getWinningPlayer = function() {'],[0,'      if ((this.getGamesWonByPlayer(1) \/ this.player[\'one\'].games_needed_to_win) &gt; (this.getGamesWonByPlayer(2) \/ this.player[\'two\'].games_needed_to_win)) {'],[0,'        return this.player[\'one\'];'],[-1,'      }'],[0,'      return this.player[\'two\'];'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getRemainingGamesNeededToWinByPlayer = function(playerNum) {'],[0,'      if (playerNum === 1) {'],[0,'        return (this.player[\'one\'].games_needed_to_win - this.getGamesWonByPlayer(1)).toString();'],[0,'      } else if (playerNum === 2) {'],[0,'        return (this.player[\'two\'].games_needed_to_win - this.getGamesWonByPlayer(2)).toString();'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getGamesWonByPlayer = function(playerNum) {'],[0,'      var gamesWon, i;'],[0,'      i = 0;'],[0,'      if (playerNum === 1) {'],[0,'        gamesWon = (this.current_game.player[\'one\'].has_won === true ? 1 : 0);'],[0,'        while (i &lt;= (this.completed_games.length - 1)) {'],[0,'          if (this.completed_games[i].player[\'one\'].has_won === true) {'],[0,'            gamesWon = gamesWon + 1;'],[-1,'          }'],[0,'          i++;'],[-1,'        }'],[0,'      } else if (playerNum === 2) {'],[0,'        gamesWon = (this.current_game.player[\'two\'].has_won === true ? 1 : 0);'],[0,'        while (i &lt;= (this.CompletedGames.length - 1)) {'],[0,'          if (this.CompletedGames[i].player[\'two\'].has_won === true) {'],[0,'            gamesWon = gamesWon + 1;'],[-1,'          }'],[0,'          i++;'],[-1,'        }'],[-1,'      }'],[0,'      return gamesWon;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getMatchPointsByPlayer = function(playerNum) {'],[0,'      if ((this.getGamesWonByPlayer(1) \/ this.player[\'one\'].games_needed_to_win) &gt; (this.getGamesWonByPlayer(2) \/ this.player[\'two\'].games_needed_to_win)) {'],[0,'        return 1;'],[-1,'      }'],[0,'      return 0;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getMatchPoints = function() {'],[0,'      if (this.getMatchPointsByPlayer(1) === this.getMatchPointsByPlayer(2)) {'],[0,'        return \&quot;TIE\&quot;;'],[-1,'      }'],[0,'      return this.getMatchPointsByPlayer(1) + \&quot;-\&quot; + this.getMatchPointsByPlayer(2);'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.setSuddenDeathMode = function() {'],[0,'      this.sudden_death = true;'],[0,'      this.player[\'one\'].games_needed_to_win = 1;'],[0,'      return this.player[\'two\'].games_needed_to_win = 1;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.scoreNumberedBall = function(ballNumber) {'],[0,'      this.are_players_switching = false;'],[0,'      this.current_game.scoreBall(ballNumber);'],[0,'      if (this.isPlayerWinning(1) === true) {'],[0,'        this.player_number_winning = 1;'],[-1,'      } else {'],[0,'        this.player_number_winning = 2;'],[-1,'      }'],[0,'      return this.checkForWin();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.shotMissed = function() {'],[0,'      this.current_game.nextPlayerIsUp();'],[0,'      if (this.current_game.breaking_player_still_shooting === false) {'],[0,'        return this.are_players_switching = true;'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.hitSafety = function() {'],[0,'      return this.current_game.hitSafety();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.checkForWin = function() {};'],[-1,''],[1,'    EightBall.prototype.startNewGame = function() {'],[0,'      if (this.current_game.ended === true) {'],[0,'        this.completed_games.push(this.current_game);'],[0,'        return this.current_game = this.getNewGame();'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.resetPlayerRankStats = function() {'],[0,'      this.player[\'one\'].games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(this.player[\'one\'].rank, this.player[\'two\'].rank);'],[0,'      this.player[\'two\'].games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(this.player[\'two\'].rank, this.player[\'one\'].rank);'],[0,'      this.player[\'one\'].resetPlayerRankStats();'],[0,'      return this.player[\'two\'].resetPlayerRankStats();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.isPlayerWinning = function(playerNum) {'],[0,'      if (playerNum === 1) {'],[0,'        if ((this.getGamesWonByPlayer(1) \/ this.player[\'one\'].games_needed_to_win) &gt; (this.getGamesWonByPlayer(2) \/ this.player[\'two\'].games_needed_to_win)) {'],[0,'          return true;'],[-1,'        }'],[0,'        return false;'],[0,'      } else if (playerNum === 2) {'],[0,'        if ((this.getGamesWonByPlayer(1) \/ this.player[\'one\'].games_needed_to_win) &lt; (this.getGamesWonByPlayer(2) \/ this.player[\'two\'].games_needed_to_win)) {'],[0,'          return true;'],[-1,'        }'],[0,'        return false;'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.toJSON = function() {'],[0,'      return {'],[-1,'        player_one: this.player[\'one\'].toJSON(),'],[-1,'        player_two: this.player[\'two\'].toJSON(),'],[-1,'        player_one_games_won: this.getGamesWonByPlayer(1),'],[-1,'        player_two_games_won: this.getGamesWonByPlayer(2),'],[-1,'        current_game: this.current_game.toJSON(),'],[-1,'        completed_games: this.completedGamesToJSON(),'],[-1,'        sudden_death: this.sudden_death,'],[-1,'        forfeit: this.forfeit,'],[-1,'        ended: this.ended,'],[-1,'        original_id: this.original_id,'],[-1,'        league_match_id: this.league_match_id'],[-1,'      };'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.completedGamesToJSON = function() {'],[0,'      var arrayToReturn, i;'],[0,'      arrayToReturn = [];'],[0,'      i = 0;'],[0,'      while (i &lt;= this.completed_games.length - 1) {'],[0,'        arrayToReturn[i] = this.completed_games[i].toJSON();'],[0,'        i++;'],[-1,'      }'],[0,'      return arrayToReturn;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.fromJSON = function(json) {'],[0,'      var currentGame;'],[0,'      this.player[\'one\'] = this.playerFromJSON(json.player_one);'],[0,'      this.player[\'two\'] = this.playerFromJSON(json.player_two);'],[0,'      this.resetPlayerRankStats();'],[0,'      this.completed_games = this.completedGamesFromJSON(json.completed_games);'],[0,'      this.sudden_death = json.sudden_death;'],[0,'      this.forfeit = json.forfeit;'],[0,'      this.ended = json.ended;'],[0,'      this.original_id = json.original_id;'],[0,'      this.league_match_id = json.league_match_id;'],[0,'      currentGame = this.getNewGame();'],[0,'      currentGame.fromJSON(new function() {'],[0,'        return json.current_game;'],[-1,'      });'],[0,'      return this.current_game = currentGame;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.playerFromJSON = function(json) {'],[0,'      var player;'],[0,'      player = new EightBallPlayer();'],[0,'      player.fromJSON(new function() {'],[0,'        return json;'],[-1,'      });'],[0,'      return player;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.completedGamesFromJSON = function(json) {'],[0,'      var arrayToReturn, completedGame, i;'],[0,'      arrayToReturn = [];'],[0,'      i = 0;'],[0,'      while (i &lt;= json.length - 1) {'],[0,'        completedGame = this.getNewGame();'],[0,'        completedGame.fromJSON(new function() {'],[0,'          return json[i];'],[-1,'        });'],[0,'        arrayToReturn.push(completedGame);'],[0,'        i++;'],[-1,'      }'],[0,'      return arrayToReturn;'],[-1,'    };'],[-1,''],[1,'    return EightBall;'],[-1,''],[-1,'  })($CS.Models.Match);'],[-1,''],[1,'  $CS.Models.Match.EightBall = EightBall;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('bd2a2aa68034ace515e23ff0f048a0ce'); return false;">
+                <td><a href="#">Resources/<strong>app.js</strong></a></td>
+                <td class="statements">18</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        61&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 61%; background-color: rgb(209, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_bd2a2aa68034ace515e23ff0f048a0ce" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_bd2a2aa68034ace515e23ff0f048a0ce">[[1,'var $CS, CueScore, root, _base;'],[-1,''],[1,'root = this;'],[-1,''],[1,'CueScore = root.CueScore = {'],[-1,'  API: {},'],[-1,'  App: {},'],[-1,'  Controllers: {'],[-1,'    DashboardController: {}'],[-1,'  },'],[-1,'  Models: {'],[-1,'    Format: {'],[-1,'      EightBall: {'],[-1,'        Game: {},'],[-1,'        Match: {}'],[-1,'      }'],[-1,'    },'],[-1,'    Game: {},'],[-1,'    League: {'],[-1,'      Doubles: {},'],[-1,'      MixedDoubles: {},'],[-1,'      DoubleJeopardy: {},'],[-1,'      Womens: {},'],[-1,'      Masters: {},'],[-1,'      EightBall: {},'],[-1,'      NineBall: {}'],[-1,'    },'],[-1,'    Match: {'],[-1,'      Type: {'],[-1,'        LeagueMatch: {},'],[-1,'        PracticeMatch: {},'],[-1,'        TournamentMatch: {}'],[-1,'      }'],[-1,'    },'],[-1,'    Player: {},'],[-1,'    Rank: {},'],[-1,'    Team: {}'],[-1,'  },'],[-1,'  Helpers: {},'],[-1,'  Views: {'],[-1,'    Dashboard: {},'],[-1,'    Settings: {},'],[-1,'    Sample: {},'],[-1,'    Play: {},'],[-1,'    Teams: {},'],[-1,'    Activity: {},'],[-1,'    Profile: {},'],[-1,'    News: {},'],[-1,'    Events: {},'],[-1,'    Login: {},'],[-1,'    Live: {},'],[-1,'    Rules: {},'],[-1,'    PostView: {},'],[-1,'    PostsView: {}'],[-1,'  },'],[-1,'  Utils: {'],[-1,'    QueryStringBuilder: {}'],[-1,'  },'],[-1,'  Window: {}'],[-1,'};'],[-1,''],[1,'$CS = CueScore;'],[-1,''],[1,'if (typeof Ti !== \&quot;undefined\&quot; &amp;&amp; Ti !== null) {'],[0,'  Ti.include(\'vendor\/tiquery\/tiquery.js\');'],[-1,'}'],[-1,''],[1,'if (typeof Ti !== \&quot;undefined\&quot; &amp;&amp; Ti !== null) {'],[0,'  Ti.include(\'vendor\/underscore\/underscore-min.js\');'],[-1,'}'],[-1,''],[1,'if (typeof Ti !== \&quot;undefined\&quot; &amp;&amp; Ti !== null) {'],[0,'  Ti.include(\'vendor\/backbone\/backbone-min.js\');'],[-1,'}'],[-1,''],[1,'if (typeof Ti !== \&quot;undefined\&quot; &amp;&amp; Ti !== null) {'],[0,'  Ti.include(\'vendor\/backbone\/backbone.sync.js\');'],[-1,'}'],[-1,''],[1,'if (typeof Ti !== \&quot;undefined\&quot; &amp;&amp; Ti !== null) {'],[0,'  Ti.include(\'js\/cuescore\/utils\/query_string_builder.js\');'],[-1,'}'],[-1,''],[1,'if (typeof Ti !== \&quot;undefined\&quot; &amp;&amp; Ti !== null) {'],[0,'  Ti.include(\'cuescore.js\');'],[-1,'}'],[-1,''],[1,'if (typeof (_base = $CS.App).init === \&quot;function\&quot;) {'],[0,'  _base.init();'],[-1,'}']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('9e2a663e1d4ecfa4879941b44c2b8f24'); return false;">
+                <td><a href="#">target/jasmine/src/players/<strong>eight_ball_player.js</strong></a></td>
+                <td class="statements">63</td>
+                <td class="executed">41</td>
+                <td class="coverage">
+                        65&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 65%; background-color: rgb(205, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_9e2a663e1d4ecfa4879941b44c2b8f24" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_9e2a663e1d4ecfa4879941b44c2b8f24">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var EightBall,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[11,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  EightBall = (function(_super) {'],[-1,''],[1,'    __extends(EightBall, _super);'],[-1,''],[1,'    EightBall.name = \'EightBall\';'],[-1,''],[1,'    EightBall.prototype.defaults = {'],[-1,'      name: null,'],[-1,'      rank: null,'],[-1,'      number: null,'],[-1,'      team_number: null,'],[-1,'      games_won: 0,'],[-1,'      safeties: 0,'],[-1,'      currently_up: false,'],[-1,'      eight_on_snaps: 0,'],[-1,'      break_and_runs: 0,'],[-1,'      timeouts_allowed: null,'],[-1,'      games_needed_to_win: 0,'],[-1,'      is_captain: false'],[-1,'    };'],[-1,''],[1,'    function EightBall(options) {'],[122,'      var _ref, _ref1, _ref2, _ref3;'],[122,'      _.extend(this, this.defaults);'],[122,'      this.name = (_ref = options.name) != null ? _ref : options.name = null;'],[122,'      this.rank = (_ref1 = options.rank) != null ? _ref1 : options.rank = null;'],[122,'      this.number = (_ref2 = options.playerNumber) != null ? _ref2 : options.playerNumber = null;'],[122,'      this.team_number = (_ref3 = options.teamNumber) != null ? _ref3 : options.teamNumber = null;'],[122,'      this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(this.rank);'],[-1,'    }'],[-1,''],[1,'    EightBall.prototype.getGamesNeededToWin = function() {'],[0,'      return this.games_needed_to_win.toString();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getRemainingBallCount = function() {'],[0,'      return (this.ball_count - this.score).toString();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getFirstNameWithInitials = function() {'],[1,'      var nameToReturn, spaceIndex;'],[1,'      spaceIndex = this.name.indexOf(\&quot; \&quot;);'],[1,'      if (spaceIndex === -1) {'],[0,'        return this.name;'],[-1,'      }'],[1,'      nameToReturn = this.name.substr(0, spaceIndex);'],[1,'      return nameToReturn + \&quot; \&quot; + this.name[spaceIndex + 1] + \&quot;.\&quot;;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getSafeties = function() {'],[0,'      return this.safeties.toString();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getGamesWon = function() {'],[0,'      return this.games_won.toString();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getRatioScore = function() {'],[0,'      return this.score \/ this.ball_count;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getEightOnSnaps = function() {'],[0,'      return this.eight_on_snaps.toString();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getBreakAndRuns = function() {'],[0,'      return this.break_and_runs.toString();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.resetPlayerRankStats = function() {'],[0,'      return this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(this.rank);'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.addToGamesWon = function(num) {'],[0,'      return this.games_won += num;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.addToSafeties = function(num) {'],[3,'      return this.safeties += num;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.hasWon = function() {'],[0,'      return this.score &gt;= this.ball_count;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.addToEightOnSnaps = function(num) {'],[6,'      return this.eight_on_snaps += num;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.addToBreakAndRuns = function(num) {'],[6,'      return this.break_and_runs += num;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.toJSON = function() {'],[0,'      return {'],[-1,'        name: this.name,'],[-1,'        rank: this.rank,'],[-1,'        games_needed_to_win: this.games_needed_to_win,'],[-1,'        number: this.number,'],[-1,'        team_number: this.team_number,'],[-1,'        games_won: this.games_won,'],[-1,'        safeties: this.safeties,'],[-1,'        eight_on_snaps: this.eight_on_snaps,'],[-1,'        break_and_runs: this.break_and_runs,'],[-1,'        currently_up: this.currently_up'],[-1,'      };'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.fromJSON = function(playerJSON) {'],[0,'      this.name = playerJSON.name;'],[0,'      this.tank = playerJSON.rank;'],[0,'      this.number = playerJSON.number;'],[0,'      this.team_number = playerJSON.team_number;'],[0,'      this.games_won = playerJSON.games_won;'],[0,'      this.safeties = playerJSON.safeties;'],[0,'      this.eight_on_snaps = playerJSON.eight_on_snaps;'],[0,'      this.break_and_runs = playerJSON.break_and_runs;'],[0,'      this.currently_up = playerJSON.currently_up;'],[0,'      return this.resetPlayerRankStats();'],[-1,'    };'],[-1,''],[1,'    return EightBall;'],[-1,''],[-1,'  })($CS.Models.Player);'],[-1,''],[1,'  $CS.Models.Player.EightBall = EightBall;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('d7f165b29d97c59dbd2eaa6b7641388e'); return false;">
+                <td><a href="#">target/jasmine/src/<strong>player.js</strong></a></td>
+                <td class="statements">18</td>
+                <td class="executed">12</td>
+                <td class="coverage">
+                        66&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 66%; background-color: rgb(204, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_d7f165b29d97c59dbd2eaa6b7641388e" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_d7f165b29d97c59dbd2eaa6b7641388e">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var Player,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[9,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  Player = (function(_super) {'],[-1,''],[1,'    __extends(Player, _super);'],[-1,''],[1,'    Player.name = \'Player\';'],[-1,''],[1,'    function Player() {'],[0,'      return Player.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    Player.prototype.defaults = {'],[-1,'      name: \&quot;Fetus\&quot;,'],[-1,'      age: 0,'],[-1,'      children: []'],[-1,'    };'],[-1,''],[1,'    Player.prototype.initialize = function() {'],[0,'      _.extend(this, this.defaults);'],[0,'      return this.bind(\&quot;change:name\&quot;, function() {'],[0,'        var name;'],[0,'        return name = this.get(\&quot;name\&quot;);'],[-1,'      });'],[-1,'    };'],[-1,''],[1,'    Player.prototype.replaceNameAttr = function(name) {'],[0,'      return this.set({'],[-1,'        name: name'],[-1,'      });'],[-1,'    };'],[-1,''],[1,'    return Player;'],[-1,''],[-1,'  })(Backbone.Model);'],[-1,''],[1,'  $CS.Models.Player = Player;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('366dd46621602888705b6a475a17be4f'); return false;">
+                <td><a href="#">target/jasmine/src/leagues/<strong>double_jeopardy_league.js</strong></a></td>
+                <td class="statements">15</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        73&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 73%; background-color: rgb(198, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_366dd46621602888705b6a475a17be4f" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_366dd46621602888705b6a475a17be4f">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var DoubleJeopardy,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[11,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  DoubleJeopardy = (function(_super) {'],[-1,''],[1,'    __extends(DoubleJeopardy, _super);'],[-1,''],[1,'    DoubleJeopardy.name = \'DoubleJeopardy\';'],[-1,''],[1,'    function DoubleJeopardy() {'],[0,'      return DoubleJeopardy.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    DoubleJeopardy.prototype.defaults = {};'],[-1,''],[1,'    DoubleJeopardy.prototype.initialize = function(options) {'],[0,'      if (options == null) {'],[0,'        options = {};'],[-1,'      }'],[0,'      return _.extend(this, this.defaults);'],[-1,'    };'],[-1,''],[1,'    return DoubleJeopardy;'],[-1,''],[-1,'  })($CS.Models.League);'],[-1,''],[1,'  $CS.Models.League.DoubleJeopardy = DoubleJeopardy;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('ec41351ef4336d0b20c77c94f2d56d25'); return false;">
+                <td><a href="#">target/jasmine/src/leagues/<strong>doubles_league.js</strong></a></td>
+                <td class="statements">15</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        73&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 73%; background-color: rgb(198, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_ec41351ef4336d0b20c77c94f2d56d25" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_ec41351ef4336d0b20c77c94f2d56d25">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var Doubles,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[13,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  Doubles = (function(_super) {'],[-1,''],[1,'    __extends(Doubles, _super);'],[-1,''],[1,'    Doubles.name = \'Doubles\';'],[-1,''],[1,'    function Doubles() {'],[0,'      return Doubles.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    Doubles.prototype.defaults = {};'],[-1,''],[1,'    Doubles.prototype.initialize = function(options) {'],[0,'      if (options == null) {'],[0,'        options = {};'],[-1,'      }'],[0,'      return _.extend(this, this.defaults);'],[-1,'    };'],[-1,''],[1,'    return Doubles;'],[-1,''],[-1,'  })($CS.Models.League);'],[-1,''],[1,'  $CS.Models.League.Doubles = Doubles;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('66e7974f5f7087601ee8db9cd0f4deab'); return false;">
+                <td><a href="#">target/jasmine/src/leagues/<strong>eight_ball_league.js</strong></a></td>
+                <td class="statements">15</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        73&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 73%; background-color: rgb(198, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_66e7974f5f7087601ee8db9cd0f4deab" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_66e7974f5f7087601ee8db9cd0f4deab">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var EightBall,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[15,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  EightBall = (function(_super) {'],[-1,''],[1,'    __extends(EightBall, _super);'],[-1,''],[1,'    EightBall.name = \'EightBall\';'],[-1,''],[1,'    function EightBall() {'],[0,'      return EightBall.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    EightBall.prototype.defaults = {};'],[-1,''],[1,'    EightBall.prototype.initialize = function(options) {'],[0,'      if (options == null) {'],[0,'        options = {};'],[-1,'      }'],[0,'      return _.extend(this, this.defaults);'],[-1,'    };'],[-1,''],[1,'    return EightBall;'],[-1,''],[-1,'  })($CS.Models.League);'],[-1,''],[1,'  $CS.Models.League.EightBall = EightBall;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('3bbbdebb2c670bff263d180d7e286e9b'); return false;">
+                <td><a href="#">target/jasmine/src/leagues/<strong>masters_league.js</strong></a></td>
+                <td class="statements">15</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        73&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 73%; background-color: rgb(198, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_3bbbdebb2c670bff263d180d7e286e9b" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_3bbbdebb2c670bff263d180d7e286e9b">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var Masters,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[17,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  Masters = (function(_super) {'],[-1,''],[1,'    __extends(Masters, _super);'],[-1,''],[1,'    Masters.name = \'Masters\';'],[-1,''],[1,'    function Masters() {'],[0,'      return Masters.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    Masters.prototype.defaults = {};'],[-1,''],[1,'    Masters.prototype.initialize = function(options) {'],[0,'      if (options == null) {'],[0,'        options = {};'],[-1,'      }'],[0,'      return _.extend(this, this.defaults);'],[-1,'    };'],[-1,''],[1,'    return Masters;'],[-1,''],[-1,'  })($CS.Models.League);'],[-1,''],[1,'  $CS.Models.League.Masters = Masters;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('161d0250fc0aa04da14901890d70f118'); return false;">
+                <td><a href="#">target/jasmine/src/leagues/<strong>mixed_doubles_league.js</strong></a></td>
+                <td class="statements">15</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        73&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 73%; background-color: rgb(198, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_161d0250fc0aa04da14901890d70f118" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_161d0250fc0aa04da14901890d70f118">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var MixedDoubles,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[19,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  MixedDoubles = (function(_super) {'],[-1,''],[1,'    __extends(MixedDoubles, _super);'],[-1,''],[1,'    MixedDoubles.name = \'MixedDoubles\';'],[-1,''],[1,'    function MixedDoubles() {'],[0,'      return MixedDoubles.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    MixedDoubles.prototype.defaults = {};'],[-1,''],[1,'    MixedDoubles.prototype.initialize = function(options) {'],[0,'      if (options == null) {'],[0,'        options = {};'],[-1,'      }'],[0,'      return _.extend(this, this.defaults);'],[-1,'    };'],[-1,''],[1,'    return MixedDoubles;'],[-1,''],[-1,'  })($CS.Models.League);'],[-1,''],[1,'  $CS.Models.League.MixedDoubles = MixedDoubles;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('c39b1ff3213716f621d33544b4725ab4'); return false;">
+                <td><a href="#">target/jasmine/src/leagues/<strong>nine_ball_league.js</strong></a></td>
+                <td class="statements">15</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        73&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 73%; background-color: rgb(198, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_c39b1ff3213716f621d33544b4725ab4" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_c39b1ff3213716f621d33544b4725ab4">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var NineBall,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[21,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  NineBall = (function(_super) {'],[-1,''],[1,'    __extends(NineBall, _super);'],[-1,''],[1,'    NineBall.name = \'NineBall\';'],[-1,''],[1,'    function NineBall() {'],[0,'      return NineBall.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    NineBall.prototype.defaults = {};'],[-1,''],[1,'    NineBall.prototype.initialize = function(options) {'],[0,'      if (options == null) {'],[0,'        options = {};'],[-1,'      }'],[0,'      return _.extend(this, this.defaults);'],[-1,'    };'],[-1,''],[1,'    return NineBall;'],[-1,''],[-1,'  })($CS.Models.League);'],[-1,''],[1,'  $CS.Models.League.NineBall = NineBall;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('cdfc7f240109066b20f2ebc1fd25bf6b'); return false;">
+                <td><a href="#">target/jasmine/src/leagues/<strong>womens_league.js</strong></a></td>
+                <td class="statements">15</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        73&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 73%; background-color: rgb(198, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_cdfc7f240109066b20f2ebc1fd25bf6b" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_cdfc7f240109066b20f2ebc1fd25bf6b">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var Womens,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[23,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  Womens = (function(_super) {'],[-1,''],[1,'    __extends(Womens, _super);'],[-1,''],[1,'    Womens.name = \'Womens\';'],[-1,''],[1,'    function Womens() {'],[0,'      return Womens.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    Womens.prototype.defaults = {};'],[-1,''],[1,'    Womens.prototype.initialize = function(options) {'],[0,'      if (options == null) {'],[0,'        options = {};'],[-1,'      }'],[0,'      return _.extend(this, this.defaults);'],[-1,'    };'],[-1,''],[1,'    return Womens;'],[-1,''],[-1,'  })($CS.Models.League);'],[-1,''],[1,'  $CS.Models.League.Womens = Womens;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('e088702047b2f36944f16353b0301d72'); return false;">
+                <td><a href="#">target/jasmine/src/games/<strong>nine_ball_game.js</strong></a></td>
+                <td class="statements">14</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        78&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 78%; background-color: rgb(193, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_e088702047b2f36944f16353b0301d72" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_e088702047b2f36944f16353b0301d72">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var NineBall,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[13,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  NineBall = (function(_super) {'],[-1,''],[1,'    __extends(NineBall, _super);'],[-1,''],[1,'    NineBall.name = \'NineBall\';'],[-1,''],[1,'    function NineBall() {'],[0,'      return NineBall.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    NineBall.prototype.defaults = {};'],[-1,''],[1,'    NineBall.prototype.initialize = function(addToPlayerOne, addToPlayerTwo, callback) {'],[0,'      _.extend(this, this.defaults);'],[0,'      return console.log(this);'],[-1,'    };'],[-1,''],[1,'    return NineBall;'],[-1,''],[-1,'  })($CS.Models.Game);'],[-1,''],[1,'  $CS.Models.Game.NineBall = NineBall;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('9b043b4f365a1fee356e2399a0fd48cf'); return false;">
+                <td><a href="#">target/jasmine/src/matches/<strong>type.js</strong></a></td>
+                <td class="statements">14</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        78&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 78%; background-color: rgb(193, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_9b043b4f365a1fee356e2399a0fd48cf" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_9b043b4f365a1fee356e2399a0fd48cf">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var Type,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[13,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  Type = (function(_super) {'],[-1,''],[1,'    __extends(Type, _super);'],[-1,''],[1,'    Type.name = \'Type\';'],[-1,''],[1,'    function Type() {'],[0,'      return Type.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    Type.prototype.defaults = {};'],[-1,''],[1,'    Type.prototype.initialize = function() {'],[0,'      _.extend(this, this.defaults);'],[0,'      return console.log(this);'],[-1,'    };'],[-1,''],[1,'    return Type;'],[-1,''],[-1,'  })($CS.Models.Match);'],[-1,''],[1,'  $CS.Models.Match.Type = Type;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('57f6de8f3434c124008273ea20544be0'); return false;">
+                <td><a href="#">target/jasmine/src/matches/types/<strong>practice_match.js</strong></a></td>
+                <td class="statements">14</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        78&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 78%; background-color: rgb(193, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_57f6de8f3434c124008273ea20544be0" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_57f6de8f3434c124008273ea20544be0">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var PracticeMatch,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[15,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  PracticeMatch = (function(_super) {'],[-1,''],[1,'    __extends(PracticeMatch, _super);'],[-1,''],[1,'    PracticeMatch.name = \'PracticeMatch\';'],[-1,''],[1,'    function PracticeMatch() {'],[0,'      return PracticeMatch.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    PracticeMatch.prototype.defaults = {};'],[-1,''],[1,'    PracticeMatch.prototype.initialize = function() {'],[0,'      _.extend(this, this.defaults);'],[0,'      return console.log(this);'],[-1,'    };'],[-1,''],[1,'    return PracticeMatch;'],[-1,''],[-1,'  })($CS.Models.Match.Type);'],[-1,''],[1,'  $CS.Models.Match.Type.PracticeMatch = PracticeMatch;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('5427c76ab8dcf7bc8e08822910f645c9'); return false;">
+                <td><a href="#">target/jasmine/src/matches/types/<strong>tournament_match.js</strong></a></td>
+                <td class="statements">14</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        78&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 78%; background-color: rgb(193, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_5427c76ab8dcf7bc8e08822910f645c9" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_5427c76ab8dcf7bc8e08822910f645c9">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var TournamentMatch,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[17,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  TournamentMatch = (function(_super) {'],[-1,''],[1,'    __extends(TournamentMatch, _super);'],[-1,''],[1,'    TournamentMatch.name = \'TournamentMatch\';'],[-1,''],[1,'    function TournamentMatch() {'],[0,'      return TournamentMatch.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    TournamentMatch.prototype.defaults = {};'],[-1,''],[1,'    TournamentMatch.prototype.initialize = function() {'],[0,'      _.extend(this, this.defaults);'],[0,'      return console.log(this);'],[-1,'    };'],[-1,''],[1,'    return TournamentMatch;'],[-1,''],[-1,'  })($CS.Models.Match.Type);'],[-1,''],[1,'  $CS.Models.Match.Type.TournamentMatch = TournamentMatch;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('095c65244e78a388cb4ee768aae8a6cd'); return false;">
+                <td><a href="#">target/jasmine/src/players/<strong>nine_ball_player.js</strong></a></td>
+                <td class="statements">14</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        78&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 78%; background-color: rgb(193, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_095c65244e78a388cb4ee768aae8a6cd" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_095c65244e78a388cb4ee768aae8a6cd">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var NineBall,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[13,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  NineBall = (function(_super) {'],[-1,''],[1,'    __extends(NineBall, _super);'],[-1,''],[1,'    NineBall.name = \'NineBall\';'],[-1,''],[1,'    function NineBall() {'],[0,'      return NineBall.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    NineBall.prototype.defaults = {};'],[-1,''],[1,'    NineBall.prototype.initialize = function(name, rank, number, teamNumber) {'],[0,'      _.extend(this, this.defaults);'],[0,'      return console.log(this);'],[-1,'    };'],[-1,''],[1,'    return NineBall;'],[-1,''],[-1,'  })($CS.Models.Player);'],[-1,''],[1,'  $CS.Models.Player.NineBall = NineBall;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('99a7ad31570a2d84b39db1393098a5bf'); return false;">
+                <td><a href="#">target/jasmine/src/<strong>post_model.js</strong></a></td>
+                <td class="statements">24</td>
+                <td class="executed">20</td>
+                <td class="coverage">
+                        83&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 83%; background-color: rgb(189, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_99a7ad31570a2d84b39db1393098a5bf" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_99a7ad31570a2d84b39db1393098a5bf">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var Post, Posts,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[18,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  Post = (function(_super) {'],[-1,''],[1,'    __extends(Post, _super);'],[-1,''],[1,'    Post.name = \'Post\';'],[-1,''],[1,'    function Post() {'],[0,'      return Post.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    Post.prototype.url = \&quot;\&quot; + $CS.API_ENDPOINT + \&quot;\/posts\&quot;;'],[-1,''],[1,'    Post.prototype.toParams = function() {'],[0,'      return $CS.Utils.QueryStringBuilder.stringify(this.attributes, \&quot;post\&quot;);'],[-1,'    };'],[-1,''],[1,'    Post.prototype.toJSON = function() {'],[0,'      return {'],[-1,'        post: this.attributes'],[-1,'      };'],[-1,'    };'],[-1,''],[1,'    return Post;'],[-1,''],[-1,'  })(Backbone.Model);'],[-1,''],[1,'  Posts = (function(_super) {'],[-1,''],[1,'    __extends(Posts, _super);'],[-1,''],[1,'    Posts.name = \'Posts\';'],[-1,''],[1,'    function Posts() {'],[0,'      return Posts.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    Posts.prototype.url = \&quot;\&quot; + $CS.API_ENDPOINT + \&quot;\/posts\&quot;;'],[-1,''],[1,'    Posts.prototype.model = Post;'],[-1,''],[1,'    return Posts;'],[-1,''],[-1,'  })(Backbone.Collection);'],[-1,''],[1,'  $CS.Models.Post = Post;'],[-1,''],[1,'  $CS.Models.Posts = Posts;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('e827f881cbd1e6b2e029c9331890653d'); return false;">
+                <td><a href="#">target/jasmine/src/<strong>match.js</strong></a></td>
+                <td class="statements">13</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        84&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 84%; background-color: rgb(188, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_e827f881cbd1e6b2e029c9331890653d" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_e827f881cbd1e6b2e029c9331890653d">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var Match,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[9,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  Match = (function(_super) {'],[-1,''],[1,'    __extends(Match, _super);'],[-1,''],[1,'    Match.name = \'Match\';'],[-1,''],[1,'    function Match() {'],[0,'      return Match.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    Match.prototype.defaults = {};'],[-1,''],[1,'    Match.prototype.initialize = function() {'],[0,'      return _.extend(this, this.defaults);'],[-1,'    };'],[-1,''],[1,'    return Match;'],[-1,''],[-1,'  })(Backbone.Model);'],[-1,''],[1,'  $CS.Models.Match = Match;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('1f2c9324e1c8a61d717c22b2ebbed240'); return false;">
+                <td><a href="#">target/jasmine/src/<strong>team.js</strong></a></td>
+                <td class="statements">13</td>
+                <td class="executed">11</td>
+                <td class="coverage">
+                        84&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 84%; background-color: rgb(188, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_1f2c9324e1c8a61d717c22b2ebbed240" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_1f2c9324e1c8a61d717c22b2ebbed240">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var Team,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[9,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  Team = (function(_super) {'],[-1,''],[1,'    __extends(Team, _super);'],[-1,''],[1,'    Team.name = \'Team\';'],[-1,''],[1,'    function Team() {'],[0,'      return Team.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    Team.prototype.defaults = {};'],[-1,''],[1,'    Team.prototype.initialize = function() {'],[0,'      return _.extend(this, this.defaults);'],[-1,'    };'],[-1,''],[1,'    return Team;'],[-1,''],[-1,'  })(Backbone.Model);'],[-1,''],[1,'  $CS.Models.Team = Team;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('47f7836b9bcbeb0264965c491f16c9c1'); return false;">
+                <td><a href="#">target/jasmine/src/<strong>game.js</strong></a></td>
+                <td class="statements">23</td>
+                <td class="executed">20</td>
+                <td class="coverage">
+                        86&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 86%; background-color: rgb(186, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_47f7836b9bcbeb0264965c491f16c9c1" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_47f7836b9bcbeb0264965c491f16c9c1">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var Game,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[9,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  Game = (function(_super) {'],[-1,''],[1,'    __extends(Game, _super);'],[-1,''],[1,'    Game.name = \'Game\';'],[-1,''],[1,'    function Game() {'],[4,'      return Game.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    Game.prototype.defaults = {'],[-1,'      name: \&quot;Fetus\&quot;,'],[-1,'      age: 0,'],[-1,'      children: []'],[-1,'    };'],[-1,''],[1,'    Game.prototype.initialize = function(options) {'],[5,'      if (options == null) {'],[4,'        options = {};'],[-1,'      }'],[5,'      _.extend(this, this.defaults);'],[5,'      this.name = options.name;'],[5,'      this.age = options.age;'],[5,'      this.children = options.children;'],[5,'      return this.bind(\&quot;change:name\&quot;, function() {'],[0,'        var name;'],[0,'        return name = this.get(\&quot;name\&quot;);'],[-1,'      });'],[-1,'    };'],[-1,''],[1,'    Game.prototype.replaceNameAttr = function(name) {'],[0,'      return this.set({'],[-1,'        name: name'],[-1,'      });'],[-1,'    };'],[-1,''],[1,'    return Game;'],[-1,''],[-1,'  })(Backbone.Model);'],[-1,''],[1,'  $CS.Models.Game = Game;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('1c4bd524411358969db57c44496d1236'); return false;">
+                <td><a href="#">target/jasmine/src/<strong>league.js</strong></a></td>
+                <td class="statements">23</td>
+                <td class="executed">20</td>
+                <td class="coverage">
+                        86&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 86%; background-color: rgb(186, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_1c4bd524411358969db57c44496d1236" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_1c4bd524411358969db57c44496d1236">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var League,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[9,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  League = (function(_super) {'],[-1,''],[1,'    __extends(League, _super);'],[-1,''],[1,'    League.name = \'League\';'],[-1,''],[1,'    function League() {'],[4,'      return League.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    League.prototype.defaults = {'],[-1,'      name: \&quot;Fetus\&quot;,'],[-1,'      age: 0,'],[-1,'      children: []'],[-1,'    };'],[-1,''],[1,'    League.prototype.initialize = function(options) {'],[5,'      if (options == null) {'],[4,'        options = {};'],[-1,'      }'],[5,'      _.extend(this, this.defaults);'],[5,'      this.name = options.name;'],[5,'      this.age = options.age;'],[5,'      this.children = options.children;'],[5,'      return this.bind(\&quot;change:name\&quot;, function() {'],[0,'        var name;'],[0,'        return name = this.get(\&quot;name\&quot;);'],[-1,'      });'],[-1,'    };'],[-1,''],[1,'    League.prototype.replaceNameAttr = function(name) {'],[0,'      return this.set({'],[-1,'        name: name'],[-1,'      });'],[-1,'    };'],[-1,''],[1,'    return League;'],[-1,''],[-1,'  })(Backbone.Model);'],[-1,''],[1,'  $CS.Models.League = League;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('8398e4a69fe7cd3073ce60f2aa00fde0'); return false;">
+                <td><a href="#">target/jasmine/src/games/<strong>eight_ball_game.js</strong></a></td>
+                <td class="statements">223</td>
+                <td class="executed">198</td>
+                <td class="coverage">
+                        88&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 88%; background-color: rgb(184, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_8398e4a69fe7cd3073ce60f2aa00fde0" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_8398e4a69fe7cd3073ce60f2aa00fde0">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var EightBall,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[11,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  EightBall = (function(_super) {'],[-1,''],[1,'    __extends(EightBall, _super);'],[-1,''],[1,'    EightBall.name = \'EightBall\';'],[-1,''],[1,'    EightBall.prototype.defaults = {'],[-1,'      stripes: 1,'],[-1,'      solids: 2,'],[-1,'      innings: 0,'],[-1,'      match_ended_callback: function() {},'],[-1,'      number_of_innings: 0,'],[-1,'      ended: false,'],[-1,'      balls_hit_in: {'],[-1,'        stripes: [],'],[-1,'        solids: []'],[-1,'      },'],[-1,'      last_ball_hit_in: null,'],[-1,'      on_break: true,'],[-1,'      breaking_player_still_shooting: true,'],[-1,'      scratch_on_eight: false,'],[-1,'      early_eight: false,'],[-1,'      player: {'],[-1,'        one: {'],[-1,'          eight_ball: [],'],[-1,'          eight_on_snap: false,'],[-1,'          break_and_run: false,'],[-1,'          timeouts_taken: 0,'],[-1,'          callback: function() {},'],[-1,'          ball_type: null,'],[-1,'          has_won: false'],[-1,'        },'],[-1,'        two: {'],[-1,'          eight_ball: [],'],[-1,'          eight_on_snap: false,'],[-1,'          break_and_run: false,'],[-1,'          timeouts_taken: 0,'],[-1,'          callback: function() {},'],[-1,'          ball_type: null,'],[-1,'          has_won: false'],[-1,'        }'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    function EightBall(options) {'],[61,'      _.extend(this, this.defaults);'],[61,'      this.player.one.callback = options.addToPlayerOne;'],[61,'      this.player.two.callback = options.addToPlayerTwo;'],[61,'      this.match_ended_callback = options.callback;'],[61,'      this.player.one.callback().timeouts_taken = 0;'],[61,'      this.player.two.callback().timeouts_taken = 0;'],[-1,'    }'],[-1,''],[1,'    EightBall.prototype.getCurrentlyUpPlayer = function() {'],[4,'      if (this.player.one.callback().currently_up === true) {'],[2,'        return this.player.one.callback();'],[-1,'      }'],[2,'      return this.player.two.callback();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getWinningPlayerName = function() {'],[1,'      if (this.player.one.has_won === true) {'],[1,'        return this.player.one.callback().getFirstNameWithInitials();'],[-1,'      } else {'],[0,'        if (this.player.two.has_won === true) {'],[0,'          return this.player.two.callback().getFirstNameWithInitials();'],[-1,'        }'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getBallsHitInByPlayer = function(playerNum) {'],[20,'      if (playerNum === 1) {'],[11,'        if (this.player.one.ball_type === this.stripes) {'],[1,'          return this.balls_hit_in.stripes.concat(this.player.one.eight_ball);'],[-1,'        } else {'],[10,'          if (this.player.one.ball_type === this.solids) {'],[7,'            return this.balls_hit_in.solids.concat(this.player.one.eight_ball);'],[-1,'          }'],[3,'          return [];'],[-1,'        }'],[-1,'      }'],[9,'      if (playerNum === 2) {'],[9,'        if (this.player.two.ball_type === this.stripes) {'],[5,'          return this.balls_hit_in.stripes.concat(this.player.two.eight_ball);'],[-1,'        } else {'],[4,'          if (this.player.two.ball_type === this.solids) {'],[1,'            return this.balls_hit_in.solids.concat(this.player.two.eight_ball);'],[-1,'          }'],[3,'          return [];'],[-1,'        }'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getGameScore = function() {'],[1,'      return this.getBallsHitInByPlayer(1).length + \&quot;-\&quot; + this.getBallsHitInByPlayer(2).length;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getBallsHitIn = function() {'],[207,'      return this.balls_hit_in.solids.concat(this.balls_hit_in.stripes.concat(this.player.two.eight_ball.concat(this.player.one.eight_ball)));'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getCurrentPlayerRemainingTimeouts = function() {'],[15,'      if (this.player.one.callback().currently_up === true) {'],[15,'        return this.player.one.callback().timeouts_allowed - this.player.one.timeouts_taken;'],[-1,'      } else {'],[0,'        return this.player.two.callback().timeouts_allowed - this.player.two.timeouts_taken;'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.setPlayerWon = function(playerNum) {'],[15,'      if (playerNum === 1) {'],[12,'        this.player.one.has_won = true;'],[12,'        return this.player.one.callback().games_won += 1;'],[3,'      } else if (playerNum === 2) {'],[3,'        this.player.two.has_won = true;'],[3,'        return this.player.two.callback().games_won += 1;'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.setEightOnSnapByPlayer = function(playerNum) {'],[8,'      if (playerNum === 1) {'],[6,'        if (this.player.one.eight_on_snap !== true) {'],[5,'          this.player.one.callback().addToEightOnSnaps(1);'],[-1,'        }'],[6,'        return this.player.one.eight_on_snap = true;'],[2,'      } else if (playerNum === 2) {'],[2,'        if (this.player.two.eight_on_snap !== true) {'],[1,'          this.player.two.callback().addToEightOnSnaps(1);'],[-1,'        }'],[2,'        return this.player.two.eight_on_snap = true;'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.setBreakAndRunByPlayer = function(playerNum) {'],[8,'      if (playerNum === 1) {'],[6,'        if (this.player.one.break_and_run !== true) {'],[5,'          this.player.one.callback().addToBreakAndRuns(1);'],[-1,'        }'],[6,'        return this.player.one.break_and_run = true;'],[2,'      } else if (playerNum === 2) {'],[2,'        if (this.player.two.break_and_run !== true) {'],[1,'          this.player.two.callback().addToBreakAndRuns(1);'],[-1,'        }'],[2,'        return this.player.two.break_and_run = true;'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.setBallTypeByPlayer = function(playerNum, type) {'],[5,'      if (playerNum === 1 &amp;&amp; type === \&quot;stripes\&quot;) {'],[1,'        this.player.one.ball_type = this.stripes;'],[1,'        this.player.two.ball_type = this.solids;'],[1,'        return this.checkForWinner();'],[4,'      } else if (playerNum === 2 &amp;&amp; type === \&quot;stripes\&quot;) {'],[1,'        this.player.two.ball_type = this.stripes;'],[1,'        this.player.one.ball_type = this.solids;'],[1,'        return this.checkForWinner();'],[3,'      } else if (playerNum === 1 &amp;&amp; type === \&quot;solids\&quot;) {'],[1,'        this.player.one.ball_type = this.solids;'],[1,'        this.player.two.ball_type = this.stripes;'],[1,'        return this.checkForWinner();'],[2,'      } else if (playerNum === 2 &amp;&amp; type === \&quot;solids\&quot;) {'],[2,'        this.player.two.ball_type = this.solids;'],[2,'        this.player.one.ball_type = this.stripes;'],[2,'        return this.checkForWinner();'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.hitSafety = function() {'],[3,'      this.getCurrentlyUpPlayer().addToSafeties(1);'],[3,'      return this.nextPlayerIsUp();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.hitScratchOnEight = function() {'],[1,'      this.scratch_on_eight = true;'],[1,'      this.ended = true;'],[1,'      if (this.player.one.callback().currently_up === true) {'],[1,'        this.player.two.has_won = true;'],[1,'        this.player.one.callback().currently_up = false;'],[1,'        this.player.two.callback().currently_up = true;'],[-1,'      } else {'],[0,'        this.player.one.has_won = true;'],[0,'        this.player.two.callback().currently_up = false;'],[0,'        this.player.one.callback().currently_up = true;'],[-1,'      }'],[1,'      return this.match_ended_callback();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.shotMissed = function() {'],[1,'      return this.nextPlayerIsUp();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.addToNumberOfInnings = function(num) {'],[5,'      return this.number_of_innings += num;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.takeTimeout = function() {'],[7,'      if (this.getCurrentPlayerRemainingTimeouts() &gt; 0) {'],[5,'        if (this.player.one.callback().currently_up === true) {'],[5,'          return this.player.one.timeouts_taken += 1;'],[-1,'        } else {'],[0,'          return this.player.two.timeouts_taken += 1;'],[-1,'        }'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.breakIsOver = function() {'],[6,'      return this.on_break = false;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.end = function() {'],[1,'      return this.ended = true;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.scoreBall = function(ballNumber) {'],[91,'      if (!(this.getBallsHitIn().indexOf(ballNumber) &gt;= 0)) {'],[90,'        this.last_ball_hit_in = ballNumber;'],[90,'        if (ballNumber &gt; 0 &amp;&amp; ballNumber &lt; 8) {'],[51,'          this.balls_hit_in.solids.push(ballNumber);'],[39,'        } else if (ballNumber &gt; 8 &amp;&amp; ballNumber &lt; 16) {'],[26,'          this.balls_hit_in.stripes.push(ballNumber);'],[-1,'        } else {'],[13,'          if (this.player.one.callback().currently_up === true) {'],[9,'            this.player.one.eight_ball.push(ballNumber);'],[-1,'          } else {'],[4,'            if (this.player.two.callback().currently_up === true) {'],[4,'              this.player.two.eight_ball.push(ballNumber);'],[-1,'            }'],[-1,'          }'],[13,'          if (this.on_break === true) {'],[7,'            if (this.balls_hit_in.solids.length !== 7 &amp;&amp; this.balls_hit_in.stripes.length !== 7) {'],[4,'              if (this.player.one.callback().currently_up === true) {'],[4,'                this.setEightOnSnapByPlayer(1);'],[-1,'              } else {'],[0,'                if (this.player.two.callback().currently_up === true) {'],[0,'                  this.setEightOnSnapByPlayer(2);'],[-1,'                }'],[-1,'              }'],[-1,'            }'],[-1,'          } else {'],[6,'            if (this.balls_hit_in.solids.length !== 7 &amp;&amp; this.balls_hit_in.stripes.length !== 7) {'],[3,'              this.early_eight = true;'],[3,'              if (this.player.one.callback().currently_up === true) {'],[1,'                this.player.one.callback().currently_up = false;'],[1,'                this.player.two.callback().currently_up = true;'],[2,'              } else if (this.player.two.callback().currently_up === true) {'],[2,'                this.player.one.callback().currently_up = true;'],[2,'                this.player.two.callback().currently_up = false;'],[-1,'              }'],[-1,'            }'],[-1,'          }'],[-1,'        }'],[90,'        return this.checkForWinner();'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.checkForWinner = function() {'],[97,'      if (this.getBallsHitIn().indexOf(8) &gt;= 0) {'],[13,'        this.ended = true;'],[-1,'      }'],[97,'      if (this.ended === true) {'],[13,'        if (this.breaking_player_still_shooting === true &amp;&amp; (this.balls_hit_in.solids.length === 7 || this.balls_hit_in.stripes.length === 7)) {'],[4,'          if (this.player.one.callback().currently_up === true) {'],[4,'            this.setBreakAndRunByPlayer(1);'],[4,'            if (this.balls_hit_in.solids.length === 7) {'],[4,'              this.player.one.ball_type = this.solids;'],[4,'              this.player.two.ball_type = this.stripes;'],[-1,'            } else {'],[0,'              this.player.one.ball_type = this.stripes;'],[0,'              this.player.two.ball_type = this.solids;'],[-1,'            }'],[0,'          } else if (this.player.two.callback().currently_up === true) {'],[0,'            this.setBreakAndRunByPlayer(2);'],[0,'            if (this.balls_hit_in.solids.length === 7) {'],[0,'              this.player.two.ball_type = this.solids;'],[0,'              this.player.one.ball_type = this.stripes;'],[-1,'            } else {'],[0,'              this.player.one.ball_type = this.solids;'],[0,'              this.player.two.ball_type = this.stripes;'],[-1,'            }'],[-1,'          }'],[-1,'        }'],[13,'        if (this.player.one.eight_ball.indexOf(8) &gt;= 0 &amp;&amp; this.on_break === false) {'],[2,'          if (this.getBallsHitInByPlayer(1).length !== 8 &amp;&amp; this.getBallsHitInByPlayer(2).length !== 8) {'],[1,'            this.setPlayerWon(2);'],[1,'          } else if (this.getBallsHitInByPlayer(1).length === 8) {'],[1,'            this.setPlayerWon(1);'],[-1,'          }'],[11,'        } else if (this.player.two.eight_ball.indexOf(8) &gt;= 0 &amp;&amp; this.on_break === false) {'],[4,'          if (this.getBallsHitInByPlayer(1).length !== 8 &amp;&amp; this.getBallsHitInByPlayer(2).length !== 8) {'],[3,'            this.setPlayerWon(1);'],[1,'          } else if (this.getBallsHitInByPlayer(2).length === 8) {'],[1,'            this.setPlayerWon(2);'],[-1,'          }'],[-1,'        } else {'],[7,'          if (this.player.one.callback().currently_up === true) {'],[7,'            this.setPlayerWon(1);'],[0,'          } else if (this.player.two.callback().currently_up === true) {'],[0,'            this.setPlayerWon(2);'],[-1,'          }'],[-1,'        }'],[13,'        return this.match_ended_callback();'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.nextPlayerIsUp = function() {'],[27,'      if (this.on_break !== true || ((this.player.two.callback().currently_up === true || this.player.one.callback().currently_up === true) &amp;&amp; this.getBallsHitIn().length === 0)) {'],[20,'        if (this.player.one.callback().currently_up === true) {'],[17,'          this.player.two.callback().currently_up = true;'],[17,'          this.player.one.callback().currently_up = false;'],[17,'          if (this.player.one.ball_type == null) {'],[17,'            if (this.balls_hit_in.solids.length &gt; 0 &amp;&amp; this.balls_hit_in.stripes.length === 0) {'],[7,'              this.player.one.ball_type = this.solids;'],[7,'              this.player.two.ball_type = this.stripes;'],[10,'            } else if (this.balls_hit_in.solids.length === 0 &amp;&amp; this.balls_hit_in.stripes.length &gt; 0) {'],[1,'              this.player.one.ball_type = this.stripes;'],[1,'              this.player.two.ball_type = this.solids;'],[-1,'            }'],[-1,'          }'],[3,'        } else if (this.player.two.callback().currently_up === true) {'],[3,'          this.player.two.callback().currently_up = false;'],[3,'          this.player.one.callback().currently_up = true;'],[3,'          this.addToNumberOfInnings(1);'],[3,'          if (this.player.two.ball_type == null) {'],[3,'            if (this.balls_hit_in.solids.length === 0 &amp;&amp; this.balls_hit_in.stripes.length &gt; 0) {'],[0,'              this.player.one.ball_type = this.solids;'],[0,'              this.player.two.ball_type = this.stripes;'],[3,'            } else if (this.balls_hit_in.solids.length &gt; 0 &amp;&amp; this.balls_hit_in.stripes.length === 0) {'],[0,'              this.player.one.ball_type = this.stripes;'],[0,'              this.player.two.ball_type = this.solids;'],[-1,'            }'],[-1,'          }'],[-1,'        } else {'],[0,'          this.player.one.callback().currently_up = true;'],[-1,'        }'],[20,'        this.breaking_player_still_shooting = false;'],[-1,'      }'],[27,'      return this.on_break = false;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.toJSON = function() {'],[2,'      return {'],[-1,'        PlayerOneTimeoutsTaken: this.player.one.timeouts_taken,'],[-1,'        PlayerTwoTimeoutsTaken: this.player.two.timeouts_taken,'],[-1,'        PlayerOneEightOnSnap: this.player.one.eight_on_snap,'],[-1,'        PlayerOneBreakAndRun: this.player.one.break_and_run,'],[-1,'        PlayerTwoEightOnSnap: this.player.two.eight_on_snap,'],[-1,'        PlayerTwoBreakAndRun: this.player.two.break_and_run,'],[-1,'        PlayerOneBallType: this.player.one.ball_type,'],[-1,'        PlayerTwoBallType: this.player.two.ball_type,'],[-1,'        PlayerOneEightBall: this.player.one.eight_ball,'],[-1,'        PlayerTwoEightBall: this.player.two.eight_ball,'],[-1,'        PlayerOneWon: this.player.one.has_won,'],[-1,'        PlayerTwoWon: this.player.two.has_won,'],[-1,'        NumberOfInnings: this.number_of_innings,'],[-1,'        EarlyEight: this.early_eight,'],[-1,'        ScratchOnEight: this.scratch_on_eight,'],[-1,'        BreakingPlayerStillShooting: this.breaking_player_still_shooting,'],[-1,'        StripedBallsHitIn: this.balls_hit_in.stripes,'],[-1,'        SolidBallsHitIn: this.balls_hit_in.solids,'],[-1,'        LastBallHitIn: this.last_ball_hit_in,'],[-1,'        OnBreak: this.on_break,'],[-1,'        Ended: this.ended'],[-1,'      };'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.fromJSON = function(gameJSON) {'],[1,'      this.player.one.timeouts_taken = gameJSON.PlayerOneTimeoutsTaken;'],[1,'      this.player.two.timeouts_taken = gameJSON.PlayerTwoTimeoutsTaken;'],[1,'      this.player.one.eight_on_snap = gameJSON.PlayerOneEightOnSnap;'],[1,'      this.player.one.break_and_run = gameJSON.PlayerOneBreakAndRun;'],[1,'      this.player.two.eight_on_snap = gameJSON.PlayerTwoEightOnSnap;'],[1,'      this.player.two.break_and_run = gameJSON.PlayerTwoBreakAndRun;'],[1,'      this.player.one.ball_type = gameJSON.PlayerOneBallType;'],[1,'      this.player.two.ball_type = gameJSON.PlayerTwoBallType;'],[1,'      this.player.one.eight_ball = gameJSON.PlayerOneEightBall;'],[1,'      this.player.two.eight_ball = gameJSON.PlayerTwoEightBall;'],[1,'      this.player.one.has_won = gameJSON.PlayerOneWon;'],[1,'      this.player.two.has_won = gameJSON.PlayerTwoWon;'],[1,'      this.number_of_innings = gameJSON.NumberOfInnings;'],[1,'      this.breaking_player_still_shooting = gameJSON.BreakingPlayerStillShooting;'],[1,'      this.balls_hit_in.solids = gameJSON.SolidBallsHitIn;'],[1,'      this.balls_hit_in.stripes = gameJSON.StripedBallsHitIn;'],[1,'      this.last_ball_hit_in = gameJSON.LastBallHitIn;'],[1,'      this.on_break = gameJSON.OnBreak;'],[1,'      return this.ended = gameJSON.Ended;'],[-1,'    };'],[-1,''],[1,'    return EightBall;'],[-1,''],[-1,'  })($CS.Models.Game);'],[-1,''],[1,'  $CS.Models.Game.EightBall = EightBall;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('1130109a10d0bde61f4b3447a7aa29d6'); return false;">
+                <td><a href="#">target/jasmine/src/<strong>rank.js</strong></a></td>
+                <td class="statements">13</td>
+                <td class="executed">12</td>
+                <td class="coverage">
+                        92&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 92%; background-color: rgb(181, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_1130109a10d0bde61f4b3447a7aa29d6" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_1130109a10d0bde61f4b3447a7aa29d6">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var Rank,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[9,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  Rank = (function(_super) {'],[-1,''],[1,'    __extends(Rank, _super);'],[-1,''],[1,'    Rank.name = \'Rank\';'],[-1,''],[1,'    function Rank() {'],[126,'      return Rank.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    Rank.prototype.defaults = {};'],[-1,''],[1,'    Rank.prototype.initialize = function() {'],[0,'      return _.extend(this, this.defaults);'],[-1,'    };'],[-1,''],[1,'    return Rank;'],[-1,''],[-1,'  })(Backbone.Model);'],[-1,''],[1,'  $CS.Models.Rank = Rank;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('0bd2fde7f241a782be2db52e03158c83'); return false;">
+                <td><a href="#">target/jasmine/src/ranks/<strong>eight_ball_ranks.js</strong></a></td>
+                <td class="statements">69</td>
+                <td class="executed">67</td>
+                <td class="coverage">
+                        97&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 97%; background-color: rgb(176, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_0bd2fde7f241a782be2db52e03158c83" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_0bd2fde7f241a782be2db52e03158c83">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var EightBall,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[11,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  EightBall = (function(_super) {'],[-1,''],[1,'    __extends(EightBall, _super);'],[-1,''],[1,'    EightBall.name = \'EightBall\';'],[-1,''],[1,'    function EightBall() {'],[124,'      return EightBall.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    EightBall.prototype.defaults = {'],[-1,'      games_to_win: []'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.initialize = function() {'],[124,'      _.extend(this, this.defaults);'],[124,'      return this.setRanks();'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getGamesNeedToWin = function(myRank, opponentRank) {'],[36,'      var gamesNeeded;'],[36,'      if (myRank &gt; 1 &amp;&amp; myRank &lt; 8 &amp;&amp; opponentRank &gt; 1 &amp;&amp; opponentRank &lt; 8) {'],[36,'        gamesNeeded = this.games_to_win[myRank][opponentRank];'],[36,'        return gamesNeeded;'],[-1,'      }'],[0,'      return 0;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.getTimeouts = function(rank) {'],[128,'      if (rank &lt; 4) {'],[124,'        return 2;'],[-1,'      } else {'],[4,'        if (rank &gt;= 4 &amp;&amp; rank &lt;= 9) {'],[4,'          return 1;'],[-1,'        }'],[-1,'      }'],[0,'      return 0;'],[-1,'    };'],[-1,''],[1,'    EightBall.prototype.setRanks = function() {'],[124,'      this.games_to_win[2] = [];'],[124,'      this.games_to_win[2][2] = 2;'],[124,'      this.games_to_win[2][3] = 2;'],[124,'      this.games_to_win[2][4] = 2;'],[124,'      this.games_to_win[2][5] = 2;'],[124,'      this.games_to_win[2][6] = 2;'],[124,'      this.games_to_win[2][7] = 2;'],[124,'      this.games_to_win[3] = [];'],[124,'      this.games_to_win[3][2] = 3;'],[124,'      this.games_to_win[3][3] = 2;'],[124,'      this.games_to_win[3][4] = 2;'],[124,'      this.games_to_win[3][5] = 2;'],[124,'      this.games_to_win[3][6] = 2;'],[124,'      this.games_to_win[3][7] = 2;'],[124,'      this.games_to_win[4] = [];'],[124,'      this.games_to_win[4][2] = 4;'],[124,'      this.games_to_win[4][3] = 3;'],[124,'      this.games_to_win[4][4] = 3;'],[124,'      this.games_to_win[4][5] = 3;'],[124,'      this.games_to_win[4][6] = 3;'],[124,'      this.games_to_win[4][7] = 2;'],[124,'      this.games_to_win[5] = [];'],[124,'      this.games_to_win[5][2] = 5;'],[124,'      this.games_to_win[5][3] = 4;'],[124,'      this.games_to_win[5][4] = 4;'],[124,'      this.games_to_win[5][5] = 4;'],[124,'      this.games_to_win[5][6] = 4;'],[124,'      this.games_to_win[5][7] = 3;'],[124,'      this.games_to_win[6] = [];'],[124,'      this.games_to_win[6][2] = 6;'],[124,'      this.games_to_win[6][3] = 5;'],[124,'      this.games_to_win[6][4] = 5;'],[124,'      this.games_to_win[6][5] = 5;'],[124,'      this.games_to_win[6][6] = 5;'],[124,'      this.games_to_win[6][7] = 4;'],[124,'      this.games_to_win[7] = [];'],[124,'      this.games_to_win[7][2] = 7;'],[124,'      this.games_to_win[7][3] = 6;'],[124,'      this.games_to_win[7][4] = 5;'],[124,'      this.games_to_win[7][5] = 5;'],[124,'      this.games_to_win[7][6] = 5;'],[124,'      return this.games_to_win[7][7] = 5;'],[-1,'    };'],[-1,''],[1,'    return EightBall;'],[-1,''],[-1,'  })($CS.Models.Rank);'],[-1,''],[1,'  $CS.Models.Rank.EightBall = EightBall;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('7650db97a2ef55efed887796f9d1e415'); return false;">
+                <td><a href="#">target/jasmine/src/ranks/<strong>nine_ball_ranks.js</strong></a></td>
+                <td class="statements">410</td>
+                <td class="executed">402</td>
+                <td class="coverage">
+                        98&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 98%; background-color: rgb(175, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_7650db97a2ef55efed887796f9d1e415" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_7650db97a2ef55efed887796f9d1e415">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[1,'  var NineBall,'],[-1,'    __hasProp = {}.hasOwnProperty,'],[13,'    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };'],[-1,''],[1,'  NineBall = (function(_super) {'],[-1,''],[1,'    __extends(NineBall, _super);'],[-1,''],[1,'    NineBall.name = \'NineBall\';'],[-1,''],[1,'    function NineBall() {'],[2,'      return NineBall.__super__.constructor.apply(this, arguments);'],[-1,'    }'],[-1,''],[1,'    NineBall.prototype.defaults = {'],[-1,'      ball_counts: {'],[-1,'        1: 14,'],[-1,'        2: 19,'],[-1,'        3: 25,'],[-1,'        4: 31,'],[-1,'        5: 38,'],[-1,'        6: 46,'],[-1,'        7: 55,'],[-1,'        8: 65,'],[-1,'        9: 75'],[-1,'      }'],[-1,'    };'],[-1,''],[1,'    NineBall.prototype.initialize = function() {'],[2,'      _.extend(this, this.defaults);'],[2,'      return this.setRanks();'],[-1,'    };'],[-1,''],[1,'    NineBall.prototype.getBallCount = function(rank) {'],[9,'      return parseInt(this.ball_counts[rank], 10);'],[-1,'    };'],[-1,''],[1,'    NineBall.prototype.getLosingPlayersMatchPoints = function(loserRank, loserScore) {'],[0,'      var losingMatchPoints;'],[0,'      losingMatchPoints = this.losersMatchPoints[loserRank][loserScore];'],[0,'      return losingMatchPoints;'],[-1,'    };'],[-1,''],[1,'    NineBall.prototype.getWinningPlayersMatchPoints = function(loserRank, loserScore) {'],[0,'      var losingMatchPoints, winningMatchPoints;'],[0,'      losingMatchPoints = this.losersMatchPoints[loserRank][loserScore];'],[0,'      winningMatchPoints = 20 - this.losersMatchPoints[loserRank][loserScore];'],[0,'      return winningMatchPoints;'],[-1,'    };'],[-1,''],[1,'    NineBall.prototype.getTimeouts = function(rank) {'],[9,'      if (rank &lt; 4) {'],[3,'        return 2;'],[-1,'      } else {'],[6,'        if (rank &gt;= 4 &amp;&amp; rank &lt;= 9) {'],[6,'          return 1;'],[-1,'        }'],[-1,'      }'],[0,'      return 0;'],[-1,'    };'],[-1,''],[1,'    NineBall.prototype.setRanks = function() {'],[2,'      this.losersMatchPoints = [];'],[2,'      this.losersMatchPoints[1] = [];'],[2,'      this.losersMatchPoints[1][0] = 0;'],[2,'      this.losersMatchPoints[1][1] = 0;'],[2,'      this.losersMatchPoints[1][2] = 0;'],[2,'      this.losersMatchPoints[1][3] = 1;'],[2,'      this.losersMatchPoints[1][4] = 2;'],[2,'      this.losersMatchPoints[1][5] = 3;'],[2,'      this.losersMatchPoints[1][6] = 3;'],[2,'      this.losersMatchPoints[1][7] = 4;'],[2,'      this.losersMatchPoints[1][8] = 5;'],[2,'      this.losersMatchPoints[1][9] = 6;'],[2,'      this.losersMatchPoints[1][10] = 6;'],[2,'      this.losersMatchPoints[1][11] = 7;'],[2,'      this.losersMatchPoints[1][12] = 8;'],[2,'      this.losersMatchPoints[1][13] = 8;'],[2,'      this.losersMatchPoints[2] = [];'],[2,'      this.losersMatchPoints[2][0] = 0;'],[2,'      this.losersMatchPoints[2][1] = 0;'],[2,'      this.losersMatchPoints[2][2] = 0;'],[2,'      this.losersMatchPoints[2][3] = 0;'],[2,'      this.losersMatchPoints[2][4] = 1;'],[2,'      this.losersMatchPoints[2][5] = 1;'],[2,'      this.losersMatchPoints[2][6] = 2;'],[2,'      this.losersMatchPoints[2][7] = 2;'],[2,'      this.losersMatchPoints[2][8] = 3;'],[2,'      this.losersMatchPoints[2][9] = 4;'],[2,'      this.losersMatchPoints[2][10] = 4;'],[2,'      this.losersMatchPoints[2][11] = 5;'],[2,'      this.losersMatchPoints[2][12] = 5;'],[2,'      this.losersMatchPoints[2][13] = 6;'],[2,'      this.losersMatchPoints[2][14] = 6;'],[2,'      this.losersMatchPoints[2][15] = 7;'],[2,'      this.losersMatchPoints[2][16] = 7;'],[2,'      this.losersMatchPoints[2][17] = 8;'],[2,'      this.losersMatchPoints[2][18] = 8;'],[2,'      this.losersMatchPoints[3] = [];'],[2,'      this.losersMatchPoints[3][0] = 0;'],[2,'      this.losersMatchPoints[3][1] = 0;'],[2,'      this.losersMatchPoints[3][2] = 0;'],[2,'      this.losersMatchPoints[3][3] = 0;'],[2,'      this.losersMatchPoints[3][4] = 0;'],[2,'      this.losersMatchPoints[3][5] = 1;'],[2,'      this.losersMatchPoints[3][6] = 1;'],[2,'      this.losersMatchPoints[3][7] = 2;'],[2,'      this.losersMatchPoints[3][8] = 2;'],[2,'      this.losersMatchPoints[3][9] = 2;'],[2,'      this.losersMatchPoints[3][10] = 3;'],[2,'      this.losersMatchPoints[3][11] = 3;'],[2,'      this.losersMatchPoints[3][12] = 4;'],[2,'      this.losersMatchPoints[3][13] = 4;'],[2,'      this.losersMatchPoints[3][14] = 4;'],[2,'      this.losersMatchPoints[3][15] = 5;'],[2,'      this.losersMatchPoints[3][16] = 5;'],[2,'      this.losersMatchPoints[3][17] = 6;'],[2,'      this.losersMatchPoints[3][18] = 6;'],[2,'      this.losersMatchPoints[3][19] = 6;'],[2,'      this.losersMatchPoints[3][20] = 7;'],[2,'      this.losersMatchPoints[3][21] = 7;'],[2,'      this.losersMatchPoints[3][22] = 8;'],[2,'      this.losersMatchPoints[3][23] = 8;'],[2,'      this.losersMatchPoints[3][24] = 8;'],[2,'      this.losersMatchPoints[4] = [];'],[2,'      this.losersMatchPoints[4][0] = 0;'],[2,'      this.losersMatchPoints[4][1] = 0;'],[2,'      this.losersMatchPoints[4][2] = 0;'],[2,'      this.losersMatchPoints[4][3] = 0;'],[2,'      this.losersMatchPoints[4][4] = 0;'],[2,'      this.losersMatchPoints[4][5] = 0;'],[2,'      this.losersMatchPoints[4][6] = 1;'],[2,'      this.losersMatchPoints[4][7] = 1;'],[2,'      this.losersMatchPoints[4][8] = 1;'],[2,'      this.losersMatchPoints[4][9] = 2;'],[2,'      this.losersMatchPoints[4][10] = 2;'],[2,'      this.losersMatchPoints[4][11] = 2;'],[2,'      this.losersMatchPoints[4][12] = 3;'],[2,'      this.losersMatchPoints[4][13] = 3;'],[2,'      this.losersMatchPoints[4][14] = 3;'],[2,'      this.losersMatchPoints[4][15] = 4;'],[2,'      this.losersMatchPoints[4][16] = 4;'],[2,'      this.losersMatchPoints[4][17] = 4;'],[2,'      this.losersMatchPoints[4][18] = 4;'],[2,'      this.losersMatchPoints[4][19] = 5;'],[2,'      this.losersMatchPoints[4][20] = 5;'],[2,'      this.losersMatchPoints[4][21] = 5;'],[2,'      this.losersMatchPoints[4][22] = 6;'],[2,'      this.losersMatchPoints[4][23] = 6;'],[2,'      this.losersMatchPoints[4][24] = 6;'],[2,'      this.losersMatchPoints[4][25] = 7;'],[2,'      this.losersMatchPoints[4][26] = 7;'],[2,'      this.losersMatchPoints[4][27] = 7;'],[2,'      this.losersMatchPoints[4][28] = 8;'],[2,'      this.losersMatchPoints[4][29] = 8;'],[2,'      this.losersMatchPoints[4][30] = 8;'],[2,'      this.losersMatchPoints[5] = [];'],[2,'      this.losersMatchPoints[5][0] = 0;'],[2,'      this.losersMatchPoints[5][1] = 0;'],[2,'      this.losersMatchPoints[5][2] = 0;'],[2,'      this.losersMatchPoints[5][3] = 0;'],[2,'      this.losersMatchPoints[5][4] = 0;'],[2,'      this.losersMatchPoints[5][5] = 0;'],[2,'      this.losersMatchPoints[5][6] = 0;'],[2,'      this.losersMatchPoints[5][7] = 1;'],[2,'      this.losersMatchPoints[5][8] = 1;'],[2,'      this.losersMatchPoints[5][9] = 1;'],[2,'      this.losersMatchPoints[5][10] = 1;'],[2,'      this.losersMatchPoints[5][11] = 2;'],[2,'      this.losersMatchPoints[5][12] = 2;'],[2,'      this.losersMatchPoints[5][13] = 2;'],[2,'      this.losersMatchPoints[5][14] = 2;'],[2,'      this.losersMatchPoints[5][15] = 3;'],[2,'      this.losersMatchPoints[5][16] = 3;'],[2,'      this.losersMatchPoints[5][17] = 3;'],[2,'      this.losersMatchPoints[5][18] = 3;'],[2,'      this.losersMatchPoints[5][19] = 4;'],[2,'      this.losersMatchPoints[5][20] = 4;'],[2,'      this.losersMatchPoints[5][21] = 4;'],[2,'      this.losersMatchPoints[5][22] = 4;'],[2,'      this.losersMatchPoints[5][23] = 5;'],[2,'      this.losersMatchPoints[5][24] = 5;'],[2,'      this.losersMatchPoints[5][25] = 5;'],[2,'      this.losersMatchPoints[5][26] = 5;'],[2,'      this.losersMatchPoints[5][27] = 6;'],[2,'      this.losersMatchPoints[5][28] = 6;'],[2,'      this.losersMatchPoints[5][29] = 6;'],[2,'      this.losersMatchPoints[5][30] = 7;'],[2,'      this.losersMatchPoints[5][31] = 7;'],[2,'      this.losersMatchPoints[5][32] = 7;'],[2,'      this.losersMatchPoints[5][33] = 7;'],[2,'      this.losersMatchPoints[5][34] = 8;'],[2,'      this.losersMatchPoints[5][35] = 8;'],[2,'      this.losersMatchPoints[5][36] = 8;'],[2,'      this.losersMatchPoints[5][37] = 8;'],[2,'      this.losersMatchPoints[6] = [];'],[2,'      this.losersMatchPoints[6][0] = 0;'],[2,'      this.losersMatchPoints[6][1] = 0;'],[2,'      this.losersMatchPoints[6][2] = 0;'],[2,'      this.losersMatchPoints[6][3] = 0;'],[2,'      this.losersMatchPoints[6][4] = 0;'],[2,'      this.losersMatchPoints[6][5] = 0;'],[2,'      this.losersMatchPoints[6][6] = 0;'],[2,'      this.losersMatchPoints[6][7] = 0;'],[2,'      this.losersMatchPoints[6][8] = 0;'],[2,'      this.losersMatchPoints[6][9] = 1;'],[2,'      this.losersMatchPoints[6][10] = 1;'],[2,'      this.losersMatchPoints[6][11] = 1;'],[2,'      this.losersMatchPoints[6][12] = 1;'],[2,'      this.losersMatchPoints[6][13] = 2;'],[2,'      this.losersMatchPoints[6][14] = 2;'],[2,'      this.losersMatchPoints[6][15] = 2;'],[2,'      this.losersMatchPoints[6][16] = 2;'],[2,'      this.losersMatchPoints[6][17] = 2;'],[2,'      this.losersMatchPoints[6][18] = 3;'],[2,'      this.losersMatchPoints[6][19] = 3;'],[2,'      this.losersMatchPoints[6][20] = 3;'],[2,'      this.losersMatchPoints[6][21] = 3;'],[2,'      this.losersMatchPoints[6][22] = 3;'],[2,'      this.losersMatchPoints[6][23] = 4;'],[2,'      this.losersMatchPoints[6][24] = 4;'],[2,'      this.losersMatchPoints[6][25] = 4;'],[2,'      this.losersMatchPoints[6][26] = 4;'],[2,'      this.losersMatchPoints[6][27] = 4;'],[2,'      this.losersMatchPoints[6][28] = 5;'],[2,'      this.losersMatchPoints[6][29] = 5;'],[2,'      this.losersMatchPoints[6][30] = 5;'],[2,'      this.losersMatchPoints[6][31] = 5;'],[2,'      this.losersMatchPoints[6][32] = 6;'],[2,'      this.losersMatchPoints[6][33] = 6;'],[2,'      this.losersMatchPoints[6][34] = 6;'],[2,'      this.losersMatchPoints[6][35] = 6;'],[2,'      this.losersMatchPoints[6][36] = 6;'],[2,'      this.losersMatchPoints[6][37] = 7;'],[2,'      this.losersMatchPoints[6][38] = 7;'],[2,'      this.losersMatchPoints[6][39] = 7;'],[2,'      this.losersMatchPoints[6][40] = 7;'],[2,'      this.losersMatchPoints[6][41] = 8;'],[2,'      this.losersMatchPoints[6][42] = 8;'],[2,'      this.losersMatchPoints[6][43] = 8;'],[2,'      this.losersMatchPoints[6][44] = 8;'],[2,'      this.losersMatchPoints[6][45] = 8;'],[2,'      this.losersMatchPoints[7] = [];'],[2,'      this.losersMatchPoints[7][0] = 0;'],[2,'      this.losersMatchPoints[7][1] = 0;'],[2,'      this.losersMatchPoints[7][2] = 0;'],[2,'      this.losersMatchPoints[7][3] = 0;'],[2,'      this.losersMatchPoints[7][4] = 0;'],[2,'      this.losersMatchPoints[7][5] = 0;'],[2,'      this.losersMatchPoints[7][6] = 0;'],[2,'      this.losersMatchPoints[7][7] = 0;'],[2,'      this.losersMatchPoints[7][8] = 0;'],[2,'      this.losersMatchPoints[7][9] = 0;'],[2,'      this.losersMatchPoints[7][10] = 0;'],[2,'      this.losersMatchPoints[7][11] = 1;'],[2,'      this.losersMatchPoints[7][12] = 1;'],[2,'      this.losersMatchPoints[7][13] = 1;'],[2,'      this.losersMatchPoints[7][14] = 1;'],[2,'      this.losersMatchPoints[7][15] = 1;'],[2,'      this.losersMatchPoints[7][16] = 2;'],[2,'      this.losersMatchPoints[7][17] = 2;'],[2,'      this.losersMatchPoints[7][18] = 2;'],[2,'      this.losersMatchPoints[7][19] = 2;'],[2,'      this.losersMatchPoints[7][20] = 2;'],[2,'      this.losersMatchPoints[7][21] = 2;'],[2,'      this.losersMatchPoints[7][22] = 3;'],[2,'      this.losersMatchPoints[7][23] = 3;'],[2,'      this.losersMatchPoints[7][24] = 3;'],[2,'      this.losersMatchPoints[7][25] = 3;'],[2,'      this.losersMatchPoints[7][26] = 3;'],[2,'      this.losersMatchPoints[7][27] = 4;'],[2,'      this.losersMatchPoints[7][28] = 4;'],[2,'      this.losersMatchPoints[7][29] = 4;'],[2,'      this.losersMatchPoints[7][30] = 4;'],[2,'      this.losersMatchPoints[7][31] = 4;'],[2,'      this.losersMatchPoints[7][32] = 4;'],[2,'      this.losersMatchPoints[7][33] = 5;'],[2,'      this.losersMatchPoints[7][34] = 5;'],[2,'      this.losersMatchPoints[7][35] = 5;'],[2,'      this.losersMatchPoints[7][36] = 5;'],[2,'      this.losersMatchPoints[7][37] = 5;'],[2,'      this.losersMatchPoints[7][38] = 6;'],[2,'      this.losersMatchPoints[7][39] = 6;'],[2,'      this.losersMatchPoints[7][40] = 6;'],[2,'      this.losersMatchPoints[7][41] = 6;'],[2,'      this.losersMatchPoints[7][42] = 6;'],[2,'      this.losersMatchPoints[7][43] = 6;'],[2,'      this.losersMatchPoints[7][44] = 7;'],[2,'      this.losersMatchPoints[7][45] = 7;'],[2,'      this.losersMatchPoints[7][46] = 7;'],[2,'      this.losersMatchPoints[7][47] = 7;'],[2,'      this.losersMatchPoints[7][48] = 7;'],[2,'      this.losersMatchPoints[7][49] = 7;'],[2,'      this.losersMatchPoints[7][50] = 8;'],[2,'      this.losersMatchPoints[7][51] = 8;'],[2,'      this.losersMatchPoints[7][52] = 8;'],[2,'      this.losersMatchPoints[7][53] = 8;'],[2,'      this.losersMatchPoints[7][54] = 8;'],[2,'      this.losersMatchPoints[8] = [];'],[2,'      this.losersMatchPoints[8][0] = 0;'],[2,'      this.losersMatchPoints[8][1] = 0;'],[2,'      this.losersMatchPoints[8][2] = 0;'],[2,'      this.losersMatchPoints[8][3] = 0;'],[2,'      this.losersMatchPoints[8][4] = 0;'],[2,'      this.losersMatchPoints[8][5] = 0;'],[2,'      this.losersMatchPoints[8][6] = 0;'],[2,'      this.losersMatchPoints[8][7] = 0;'],[2,'      this.losersMatchPoints[8][8] = 0;'],[2,'      this.losersMatchPoints[8][9] = 0;'],[2,'      this.losersMatchPoints[8][10] = 0;'],[2,'      this.losersMatchPoints[8][11] = 0;'],[2,'      this.losersMatchPoints[8][12] = 0;'],[2,'      this.losersMatchPoints[8][13] = 0;'],[2,'      this.losersMatchPoints[8][14] = 1;'],[2,'      this.losersMatchPoints[8][15] = 1;'],[2,'      this.losersMatchPoints[8][16] = 1;'],[2,'      this.losersMatchPoints[8][17] = 1;'],[2,'      this.losersMatchPoints[8][18] = 1;'],[2,'      this.losersMatchPoints[8][19] = 1;'],[2,'      this.losersMatchPoints[8][20] = 2;'],[2,'      this.losersMatchPoints[8][21] = 2;'],[2,'      this.losersMatchPoints[8][22] = 2;'],[2,'      this.losersMatchPoints[8][23] = 2;'],[2,'      this.losersMatchPoints[8][24] = 2;'],[2,'      this.losersMatchPoints[8][25] = 2;'],[2,'      this.losersMatchPoints[8][26] = 2;'],[2,'      this.losersMatchPoints[8][27] = 3;'],[2,'      this.losersMatchPoints[8][28] = 3;'],[2,'      this.losersMatchPoints[8][29] = 3;'],[2,'      this.losersMatchPoints[8][30] = 3;'],[2,'      this.losersMatchPoints[8][31] = 3;'],[2,'      this.losersMatchPoints[8][32] = 3;'],[2,'      this.losersMatchPoints[8][33] = 4;'],[2,'      this.losersMatchPoints[8][34] = 4;'],[2,'      this.losersMatchPoints[8][35] = 4;'],[2,'      this.losersMatchPoints[8][36] = 4;'],[2,'      this.losersMatchPoints[8][37] = 4;'],[2,'      this.losersMatchPoints[8][38] = 4;'],[2,'      this.losersMatchPoints[8][39] = 4;'],[2,'      this.losersMatchPoints[8][40] = 5;'],[2,'      this.losersMatchPoints[8][41] = 5;'],[2,'      this.losersMatchPoints[8][42] = 5;'],[2,'      this.losersMatchPoints[8][43] = 5;'],[2,'      this.losersMatchPoints[8][44] = 5;'],[2,'      this.losersMatchPoints[8][45] = 5;'],[2,'      this.losersMatchPoints[8][46] = 6;'],[2,'      this.losersMatchPoints[8][47] = 6;'],[2,'      this.losersMatchPoints[8][48] = 6;'],[2,'      this.losersMatchPoints[8][49] = 6;'],[2,'      this.losersMatchPoints[8][50] = 6;'],[2,'      this.losersMatchPoints[8][51] = 6;'],[2,'      this.losersMatchPoints[8][52] = 6;'],[2,'      this.losersMatchPoints[8][53] = 7;'],[2,'      this.losersMatchPoints[8][54] = 7;'],[2,'      this.losersMatchPoints[8][55] = 7;'],[2,'      this.losersMatchPoints[8][56] = 7;'],[2,'      this.losersMatchPoints[8][57] = 7;'],[2,'      this.losersMatchPoints[8][58] = 7;'],[2,'      this.losersMatchPoints[8][59] = 8;'],[2,'      this.losersMatchPoints[8][60] = 8;'],[2,'      this.losersMatchPoints[8][61] = 8;'],[2,'      this.losersMatchPoints[8][62] = 8;'],[2,'      this.losersMatchPoints[8][63] = 8;'],[2,'      this.losersMatchPoints[8][64] = 8;'],[2,'      this.losersMatchPoints[9] = [];'],[2,'      this.losersMatchPoints[9][0] = 0;'],[2,'      this.losersMatchPoints[9][1] = 0;'],[2,'      this.losersMatchPoints[9][2] = 0;'],[2,'      this.losersMatchPoints[9][3] = 0;'],[2,'      this.losersMatchPoints[9][4] = 0;'],[2,'      this.losersMatchPoints[9][5] = 0;'],[2,'      this.losersMatchPoints[9][6] = 0;'],[2,'      this.losersMatchPoints[9][7] = 0;'],[2,'      this.losersMatchPoints[9][8] = 0;'],[2,'      this.losersMatchPoints[9][9] = 0;'],[2,'      this.losersMatchPoints[9][10] = 0;'],[2,'      this.losersMatchPoints[9][11] = 0;'],[2,'      this.losersMatchPoints[9][12] = 0;'],[2,'      this.losersMatchPoints[9][13] = 0;'],[2,'      this.losersMatchPoints[9][14] = 0;'],[2,'      this.losersMatchPoints[9][15] = 0;'],[2,'      this.losersMatchPoints[9][16] = 0;'],[2,'      this.losersMatchPoints[9][17] = 0;'],[2,'      this.losersMatchPoints[9][18] = 0;'],[2,'      this.losersMatchPoints[9][19] = 1;'],[2,'      this.losersMatchPoints[9][20] = 1;'],[2,'      this.losersMatchPoints[9][21] = 1;'],[2,'      this.losersMatchPoints[9][22] = 1;'],[2,'      this.losersMatchPoints[9][23] = 1;'],[2,'      this.losersMatchPoints[9][24] = 1;'],[2,'      this.losersMatchPoints[9][25] = 2;'],[2,'      this.losersMatchPoints[9][26] = 2;'],[2,'      this.losersMatchPoints[9][27] = 2;'],[2,'      this.losersMatchPoints[9][28] = 2;'],[2,'      this.losersMatchPoints[9][29] = 2;'],[2,'      this.losersMatchPoints[9][30] = 2;'],[2,'      this.losersMatchPoints[9][31] = 2;'],[2,'      this.losersMatchPoints[9][32] = 3;'],[2,'      this.losersMatchPoints[9][33] = 3;'],[2,'      this.losersMatchPoints[9][34] = 3;'],[2,'      this.losersMatchPoints[9][35] = 3;'],[2,'      this.losersMatchPoints[9][36] = 3;'],[2,'      this.losersMatchPoints[9][37] = 3;'],[2,'      this.losersMatchPoints[9][38] = 3;'],[2,'      this.losersMatchPoints[9][39] = 4;'],[2,'      this.losersMatchPoints[9][40] = 4;'],[2,'      this.losersMatchPoints[9][41] = 4;'],[2,'      this.losersMatchPoints[9][42] = 4;'],[2,'      this.losersMatchPoints[9][43] = 4;'],[2,'      this.losersMatchPoints[9][44] = 4;'],[2,'      this.losersMatchPoints[9][45] = 4;'],[2,'      this.losersMatchPoints[9][46] = 4;'],[2,'      this.losersMatchPoints[9][47] = 5;'],[2,'      this.losersMatchPoints[9][48] = 5;'],[2,'      this.losersMatchPoints[9][49] = 5;'],[2,'      this.losersMatchPoints[9][50] = 5;'],[2,'      this.losersMatchPoints[9][51] = 5;'],[2,'      this.losersMatchPoints[9][52] = 5;'],[2,'      this.losersMatchPoints[9][53] = 5;'],[2,'      this.losersMatchPoints[9][54] = 6;'],[2,'      this.losersMatchPoints[9][55] = 6;'],[2,'      this.losersMatchPoints[9][56] = 6;'],[2,'      this.losersMatchPoints[9][57] = 6;'],[2,'      this.losersMatchPoints[9][58] = 6;'],[2,'      this.losersMatchPoints[9][59] = 6;'],[2,'      this.losersMatchPoints[9][60] = 6;'],[2,'      this.losersMatchPoints[9][61] = 7;'],[2,'      this.losersMatchPoints[9][62] = 7;'],[2,'      this.losersMatchPoints[9][63] = 7;'],[2,'      this.losersMatchPoints[9][64] = 7;'],[2,'      this.losersMatchPoints[9][65] = 7;'],[2,'      this.losersMatchPoints[9][66] = 7;'],[2,'      this.losersMatchPoints[9][67] = 7;'],[2,'      this.losersMatchPoints[9][68] = 8;'],[2,'      this.losersMatchPoints[9][69] = 8;'],[2,'      this.losersMatchPoints[9][70] = 8;'],[2,'      this.losersMatchPoints[9][71] = 8;'],[2,'      this.losersMatchPoints[9][72] = 8;'],[2,'      this.losersMatchPoints[9][73] = 8;'],[2,'      return this.losersMatchPoints[9][74] = 8;'],[-1,'    };'],[-1,''],[1,'    return NineBall;'],[-1,''],[-1,'  })($CS.Models.Rank);'],[-1,''],[1,'  $CS.Models.Rank.NineBall = NineBall;'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('261393c977d0d1b0726c6662584f819a'); return false;">
+                <td><a href="#">target/jasmine/spec/<strong>game_spec.js</strong></a></td>
+                <td class="statements">26</td>
+                <td class="executed">26</td>
+                <td class="coverage">
+                        100&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 100%; background-color: rgb(174, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_261393c977d0d1b0726c6662584f819a" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_261393c977d0d1b0726c6662584f819a">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[-1,''],[1,'  describe(\&quot;Game\&quot;, function() {'],[1,'    var attributes, model;'],[1,'    model = void 0;'],[1,'    attributes = void 0;'],[1,'    beforeEach(function() {'],[3,'      model = new $CS.Models.Game();'],[3,'      return attributes = model.attributes;'],[-1,'    });'],[1,'    return describe(\&quot;Constructor\&quot;, function() {'],[1,'      it(\&quot;should be able to create a new Game\&quot;, function() {'],[1,'        model.initialize();'],[1,'        return expect(model).not.toBeUndefined();'],[-1,'      });'],[1,'      it(\&quot;should contain default attributes\&quot;, function() {'],[1,'        expect(attributes.name).toBeDefined();'],[1,'        expect(attributes.age).toBeDefined();'],[1,'        expect(attributes.children).toBeDefined();'],[1,'        expect(attributes.name).toEqual(\&quot;Fetus\&quot;);'],[1,'        expect(attributes.age).toEqual(0);'],[1,'        return expect(attributes.children).toEqual([]);'],[-1,'      });'],[1,'      return it(\&quot;should store the parameters\&quot;, function() {'],[1,'        var options;'],[1,'        model = new $CS.Models.Game(options = {'],[-1,'          name: \&quot;Isaac Wooten\&quot;,'],[-1,'          age: 1,'],[-1,'          children: []'],[-1,'        });'],[1,'        attributes = model.attributes;'],[1,'        expect(attributes.name).toEqual(\&quot;Isaac Wooten\&quot;);'],[1,'        expect(attributes.age).toEqual(1);'],[1,'        return expect(attributes.children).toEqual([]);'],[-1,'      });'],[-1,'    });'],[-1,'  });'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('4b2801e953882c6e462d718fb5a087cb'); return false;">
+                <td><a href="#">target/jasmine/spec/games/<strong>eight_ball_game_spec.js</strong></a></td>
+                <td class="statements">481</td>
+                <td class="executed">481</td>
+                <td class="coverage">
+                        100&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 100%; background-color: rgb(174, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_4b2801e953882c6e462d718fb5a087cb" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_4b2801e953882c6e462d718fb5a087cb">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[-1,''],[1,'  describe(\&quot;EightBall Game\&quot;, function() {'],[1,'    var game, matchCallback, player;'],[1,'    game = void 0;'],[1,'    player = {};'],[1,'    player.one = void 0;'],[1,'    player.two = void 0;'],[1,'    matchCallback = void 0;'],[1,'    beforeEach(function() {'],[61,'      var options;'],[61,'      matchCallback = jasmine.createSpy();'],[61,'      player.one = new $CS.Models.Player.EightBall(options = {'],[-1,'        name: \&quot;Isaac Wooten\&quot;,'],[-1,'        rank: 1,'],[-1,'        playerNumber: \&quot;123\&quot;,'],[-1,'        teamNumber: \&quot;123\&quot;'],[-1,'      });'],[61,'      player.two = new $CS.Models.Player.EightBall(options = {'],[-1,'        name: \&quot;James Armstead\&quot;,'],[-1,'        rank: 1,'],[-1,'        playerNumber: \&quot;1\&quot;,'],[-1,'        teamNumber: \&quot;1\&quot;'],[-1,'      });'],[61,'      player.one.timeouts_allowed = 2;'],[61,'      player.two.timeouts_allowed = 2;'],[61,'      player.one.currently_up = true;'],[61,'      return game = new $CS.Models.Game.EightBall(options = {'],[-1,'        addToPlayerOne: function() {'],[284,'          return player.one;'],[-1,'        },'],[-1,'        addToPlayerTwo: function() {'],[182,'          return player.two;'],[-1,'        },'],[-1,'        callback: matchCallback'],[-1,'      });'],[-1,'    });'],[1,'    afterEach(function() {'],[61,'      var BreakingPlayerStillShooting, EarlyEight, Ended, LastBallHitIn, NumberOfInnings, OnBreak, PlayerOneBallType, PlayerOneBreakAndRun, PlayerOneEightBall, PlayerOneEightOnSnap, PlayerOneTimeoutsTaken, PlayerOneWon, PlayerTwoBallType, PlayerTwoBreakAndRun, PlayerTwoEightBall, PlayerTwoEightOnSnap, PlayerTwoTimeoutsTaken, PlayerTwoWon, ScratchOnEight, SolidBallsHitIn, StripedBallsHitIn;'],[61,'      game.number_of_innings = 0;'],[61,'      game.player.one.eight_on_snap = false;'],[61,'      game.player.one.break_and_run = false;'],[61,'      game.player.two.eight_on_snap = false;'],[61,'      game.player.two.break_and_run = false;'],[61,'      game.player.one.ball_type = null;'],[61,'      game.player.two.ball_type = null;'],[61,'      game.player.one.eight_ball = [];'],[61,'      game.player.two.eight_ball = [];'],[61,'      game.player.one.has_won = false;'],[61,'      game.player.two.has_won = false;'],[61,'      game.ended = false;'],[61,'      game.balls_hit_in.stripes = [];'],[61,'      game.balls_hit_in.solids = [];'],[61,'      game.last_ball_hit_in = null;'],[61,'      game.on_break = true;'],[61,'      game.breaking_player_still_shooting = true;'],[61,'      game.player.one.callback().currently_up = true;'],[61,'      game.player.two.callback().currently_up = false;'],[61,'      BreakingPlayerStillShooting = true;'],[61,'      EarlyEight = false;'],[61,'      Ended = false;'],[61,'      LastBallHitIn = null;'],[61,'      NumberOfInnings = 0;'],[61,'      OnBreak = true;'],[61,'      PlayerOneBallType = null;'],[61,'      PlayerOneBreakAndRun = false;'],[61,'      PlayerOneEightBall = [];'],[61,'      PlayerOneEightOnSnap = false;'],[61,'      PlayerOneTimeoutsTaken = 0;'],[61,'      PlayerOneWon = false;'],[61,'      PlayerTwoBallType = null;'],[61,'      PlayerTwoBreakAndRun = false;'],[61,'      PlayerTwoEightBall = [];'],[61,'      PlayerTwoEightOnSnap = false;'],[61,'      PlayerTwoTimeoutsTaken = 0;'],[61,'      PlayerTwoWon = false;'],[61,'      ScratchOnEight = false;'],[61,'      SolidBallsHitIn = [];'],[61,'      return StripedBallsHitIn = [];'],[-1,'    });'],[1,'    describe(\&quot;Scoring\&quot;, function() {'],[1,'      it(\&quot;should be able to take a ball number 1-7 and 9-15 and score it correctly\&quot;, function() {'],[1,'        game.scoreBall(1);'],[1,'        expect(game.player.one.ball_type).toEqual(null);'],[1,'        expect(game.balls_hit_in.stripes).toEqual([]);'],[1,'        expect(game.balls_hit_in.solids).toEqual([1]);'],[1,'        game.breakIsOver();'],[1,'        game.nextPlayerIsUp();'],[1,'        game.scoreBall(9);'],[1,'        expect(game.getBallsHitInByPlayer(1)).toEqual([1]);'],[1,'        return expect(game.getBallsHitInByPlayer(2)).toEqual([9]);'],[-1,'      });'],[1,'      it(\&quot;should be able to take ball number 8 and score it correctly\&quot;, function() {'],[1,'        game.scoreBall(8);'],[1,'        return expect(game.ended).toEqual(true);'],[-1,'      });'],[1,'      it(\&quot;should only allow each ball to be scored one time\&quot;, function() {'],[1,'        expect(game.getBallsHitIn().length).toEqual(0);'],[1,'        game.scoreBall(1);'],[1,'        expect(game.getBallsHitIn().length).toEqual(1);'],[1,'        game.scoreBall(1);'],[1,'        return expect(game.getBallsHitIn().length).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should be able to get the number of balls types each player has hit in\&quot;, function() {'],[1,'        game.scoreBall(1);'],[1,'        game.breakIsOver();'],[1,'        game.nextPlayerIsUp();'],[1,'        game.scoreBall(10);'],[1,'        expect(game.getBallsHitInByPlayer(1).length).toEqual(1);'],[1,'        return expect(game.getBallsHitInByPlayer(2).length).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should be able to set a game as Scratch On 8\&quot;, function() {'],[1,'        expect(game.scratch_on_eight).toEqual(false);'],[1,'        game.hitScratchOnEight();'],[1,'        expect(game.scratch_on_eight).toEqual(true);'],[1,'        expect(game.ended).toEqual(true);'],[1,'        expect(game.player.two.has_won).toEqual(true);'],[1,'        return expect(player.two.currently_up).toEqual(true);'],[-1,'      });'],[1,'      it(\&quot;should be able to keep track if player one had 8 on snap\&quot;, function() {'],[1,'        return expect(game.player.one.eight_on_snap).toEqual(false);'],[-1,'      });'],[1,'      it(\&quot;should be able to keep track if player one had break and run\&quot;, function() {'],[1,'        return expect(game.player.one.break_and_run).toEqual(false);'],[-1,'      });'],[1,'      it(\&quot;should be able to keep track if player two had 8 on snap\&quot;, function() {'],[1,'        return expect(game.player.two.eight_on_snap).toEqual(false);'],[-1,'      });'],[1,'      it(\&quot;should be able to keep track if player one two break and run\&quot;, function() {'],[1,'        return expect(game.player.one.break_and_run).toEqual(false);'],[-1,'      });'],[1,'      it(\&quot;should know if the 8 ball is pocketed on the break and give the current player a EightOnSnap\&quot;, function() {'],[1,'        expect(game.player.one.eight_on_snap).toEqual(false);'],[1,'        game.scoreBall(8);'],[1,'        expect(game.player.one.eight_on_snap).toEqual(true);'],[1,'        return expect(player.one.eight_on_snaps).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should know if the 8 ball is not pocketed on the break and not give the current player a EightOnSnap\&quot;, function() {'],[1,'        game.scoreBall(1);'],[1,'        game.breakIsOver();'],[1,'        expect(game.player.one.eight_on_snap).toEqual(false);'],[1,'        game.scoreBall(8);'],[1,'        expect(game.player.one.eight_on_snap).toEqual(false);'],[1,'        return expect(player.one.eight_on_snaps).toEqual(0);'],[-1,'      });'],[1,'      it(\&quot;should know when a player has hit all the balls in and is still breaking and only give them a 8BR\&quot;, function() {'],[1,'        game.scoreBall(1);'],[1,'        game.scoreBall(2);'],[1,'        game.scoreBall(3);'],[1,'        game.scoreBall(4);'],[1,'        game.scoreBall(5);'],[1,'        game.scoreBall(6);'],[1,'        game.scoreBall(7);'],[1,'        game.scoreBall(8);'],[1,'        expect(game.player.one.eight_on_snap).toEqual(false);'],[1,'        expect(game.balls_hit_in.solids.length).toEqual(7);'],[1,'        expect(game.ended).toEqual(true);'],[1,'        expect(game.player.one.callback().break_and_runs).toEqual(1);'],[1,'        return expect(game.player.one.break_and_run).toEqual(true);'],[-1,'      });'],[1,'      it(\&quot;should be able to set player one to have a eight on snap and if not already true add one to that players total eight on snaps.\&quot;, function() {'],[1,'        expect(game.player.one.eight_on_snap).toEqual(false);'],[1,'        game.setEightOnSnapByPlayer(1);'],[1,'        expect(game.player.one.eight_on_snap).toEqual(true);'],[1,'        expect(player.one.eight_on_snaps).toEqual(1);'],[1,'        game.setEightOnSnapByPlayer(1);'],[1,'        return expect(player.one.eight_on_snaps).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should be able to set player two to have a eight on snap and if not already true add one to that players total eight on snaps.\&quot;, function() {'],[1,'        expect(game.player.two.eight_on_snap).toEqual(false);'],[1,'        game.setEightOnSnapByPlayer(2);'],[1,'        expect(game.player.two.eight_on_snap).toEqual(true);'],[1,'        expect(player.two.eight_on_snaps).toEqual(1);'],[1,'        game.setEightOnSnapByPlayer(2);'],[1,'        return expect(player.two.eight_on_snaps).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should be able to set player one to have a break and run and if not already true add one to that players total break and runs.\&quot;, function() {'],[1,'        expect(game.player.one.break_and_run).toEqual(false);'],[1,'        game.setBreakAndRunByPlayer(1);'],[1,'        expect(game.player.one.break_and_run).toEqual(true);'],[1,'        expect(player.one.break_and_runs).toEqual(1);'],[1,'        game.setBreakAndRunByPlayer(1);'],[1,'        return expect(player.one.break_and_runs).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should be able to tell if the game is an early eight ball\&quot;, function() {'],[1,'        game.shotMissed();'],[1,'        game.scoreBall(8);'],[1,'        return expect(game.early_eight).toEqual(true);'],[-1,'      });'],[1,'      it(\&quot;should be able to set player two to have a break and run and if not already true add one to that players total break and runs.\&quot;, function() {'],[1,'        expect(game.player.two.break_and_run).toEqual(false);'],[1,'        game.setBreakAndRunByPlayer(2);'],[1,'        expect(game.player.two.break_and_run).toEqual(true);'],[1,'        expect(player.two.break_and_runs).toEqual(1);'],[1,'        game.setBreakAndRunByPlayer(2);'],[1,'        return expect(player.two.break_and_runs).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should know when the player breaks and then continues on to all the balls in without missing one\&quot;, function() {'],[1,'        expect(game.on_break).toEqual(true);'],[1,'        game.scoreBall(1);'],[1,'        game.nextPlayerIsUp();'],[1,'        game.scoreBall(2);'],[1,'        game.scoreBall(3);'],[1,'        game.scoreBall(4);'],[1,'        game.scoreBall(5);'],[1,'        game.scoreBall(6);'],[1,'        game.scoreBall(7);'],[1,'        game.scoreBall(8);'],[1,'        expect(game.on_break).toEqual(false);'],[1,'        expect(game.breaking_player_still_shooting).toEqual(true);'],[1,'        expect(game.player.one.break_and_run).toEqual(true);'],[1,'        return expect(player.one.break_and_runs).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should able to assign a ball type after the break if only one ball type has been hit in\&quot;, function() {'],[1,'        game.on_break = false;'],[1,'        game.scoreBall(1);'],[1,'        game.nextPlayerIsUp();'],[1,'        expect(game.player.one.ball_type).toEqual(2);'],[1,'        return expect(game.player.two.ball_type).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should able to assign a ball type after the break if only one ball type has been hit in\&quot;, function() {'],[1,'        game.on_break = false;'],[1,'        game.scoreBall(9);'],[1,'        game.nextPlayerIsUp();'],[1,'        expect(game.player.one.ball_type).toEqual(1);'],[1,'        return expect(game.player.two.ball_type).toEqual(2);'],[-1,'      });'],[1,'      it(\&quot;should be able to keep track of which solid balls have been hit in\&quot;, function() {'],[1,'        expect(game.balls_hit_in.solids.length).toEqual(0);'],[1,'        game.scoreBall(1);'],[1,'        game.scoreBall(2);'],[1,'        game.scoreBall(3);'],[1,'        game.scoreBall(4);'],[1,'        expect(game.balls_hit_in.solids.length).toEqual(4);'],[1,'        expect(game.balls_hit_in.solids[0]).toEqual(1);'],[1,'        expect(game.balls_hit_in.solids[1]).toEqual(2);'],[1,'        expect(game.balls_hit_in.solids[2]).toEqual(3);'],[1,'        return expect(game.balls_hit_in.solids[3]).toEqual(4);'],[-1,'      });'],[1,'      it(\&quot;should be able to keep track of which striped balls have been hit in\&quot;, function() {'],[1,'        expect(game.balls_hit_in.stripes.length).toEqual(0);'],[1,'        game.scoreBall(9);'],[1,'        game.scoreBall(10);'],[1,'        game.scoreBall(11);'],[1,'        game.scoreBall(12);'],[1,'        expect(game.balls_hit_in.stripes.length).toEqual(4);'],[1,'        expect(game.balls_hit_in.stripes[0]).toEqual(9);'],[1,'        expect(game.balls_hit_in.stripes[1]).toEqual(10);'],[1,'        expect(game.balls_hit_in.stripes[2]).toEqual(11);'],[1,'        return expect(game.balls_hit_in.stripes[3]).toEqual(12);'],[-1,'      });'],[1,'      it(\&quot;should be able to set player one to striped balls\&quot;, function() {'],[1,'        expect(game.player.one.ball_type).toEqual(null);'],[1,'        game.setBallTypeByPlayer(1, \'stripes\');'],[1,'        expect(game.player.one.ball_type).toEqual(game.stripes);'],[1,'        return expect(game.player.two.ball_type).toEqual(game.solids);'],[-1,'      });'],[1,'      it(\&quot;should be able to set player one to solid balls\&quot;, function() {'],[1,'        expect(game.player.one.ball_type).toEqual(null);'],[1,'        game.setBallTypeByPlayer(1, \'solids\');'],[1,'        expect(game.player.one.ball_type).toEqual(game.solids);'],[1,'        return expect(game.player.two.ball_type).toEqual(game.stripes);'],[-1,'      });'],[1,'      it(\&quot;should be able to set player two to striped balls\&quot;, function() {'],[1,'        expect(game.player.one.ball_type).toEqual(null);'],[1,'        game.setBallTypeByPlayer(2, \'stripes\');'],[1,'        expect(game.player.two.ball_type).toEqual(game.stripes);'],[1,'        return expect(game.player.one.ball_type).toEqual(game.solids);'],[-1,'      });'],[1,'      it(\&quot;should be able to set player two to solid balls\&quot;, function() {'],[1,'        expect(game.player.two.ball_type).toEqual(null);'],[1,'        game.setBallTypeByPlayer(2, \'solids\');'],[1,'        expect(game.player.two.ball_type).toEqual(game.solids);'],[1,'        return expect(game.player.one.ball_type).toEqual(game.stripes);'],[-1,'      });'],[1,'      it(\&quot;should be able to find out if there is a winner if a player hits a BR and set that player to won\&quot;, function() {'],[1,'        game.scoreBall(1);'],[1,'        game.scoreBall(2);'],[1,'        game.scoreBall(3);'],[1,'        game.scoreBall(4);'],[1,'        expect(game.player.one.has_won).toEqual(false);'],[1,'        game.scoreBall(5);'],[1,'        game.scoreBall(6);'],[1,'        game.scoreBall(7);'],[1,'        game.scoreBall(8);'],[1,'        expect(game.getBallsHitInByPlayer(1).indexOf(8) &gt;= 0).toEqual(true);'],[1,'        return expect(game.player.one.has_won).toEqual(true);'],[-1,'      });'],[1,'      it(\&quot;should be able to find out if there is a winner if player two wins and set that player to won\&quot;, function() {'],[1,'        game.scoreBall(1);'],[1,'        game.breakIsOver();'],[1,'        game.nextPlayerIsUp();'],[1,'        game.checkForWinner();'],[1,'        expect(game.player.one.has_won).toEqual(false);'],[1,'        game.scoreBall(9);'],[1,'        game.scoreBall(10);'],[1,'        game.scoreBall(11);'],[1,'        game.scoreBall(12);'],[1,'        game.scoreBall(13);'],[1,'        game.scoreBall(14);'],[1,'        game.scoreBall(15);'],[1,'        game.scoreBall(8);'],[1,'        return expect(game.player.two.has_won).toEqual(true);'],[-1,'      });'],[1,'      it(\&quot;should be able to find out if there is a winner after ball type has been selected and set that player to won\&quot;, function() {'],[1,'        game.scoreBall(1);'],[1,'        game.scoreBall(10);'],[1,'        game.breakIsOver();'],[1,'        game.nextPlayerIsUp();'],[1,'        game.checkForWinner();'],[1,'        expect(game.player.one.has_won).toEqual(false);'],[1,'        game.scoreBall(9);'],[1,'        game.setBallTypeByPlayer(2, \'solids\');'],[1,'        game.scoreBall(11);'],[1,'        game.scoreBall(12);'],[1,'        game.scoreBall(13);'],[1,'        game.scoreBall(14);'],[1,'        game.scoreBall(15);'],[1,'        game.scoreBall(8);'],[1,'        return expect(game.player.one.has_won).toEqual(true);'],[-1,'      });'],[1,'      it(\&quot;should be able to return a list of all balls that have been hit in\&quot;, function() {'],[1,'        game.scoreBall(1);'],[1,'        expect(game.getBallsHitIn()).toEqual([1]);'],[1,'        game.nextPlayerIsUp();'],[1,'        game.scoreBall(2);'],[1,'        game.scoreBall(10);'],[1,'        return expect(game.getBallsHitIn()).toEqual([1, 2, 10]);'],[-1,'      });'],[1,'      it(\&quot;should be able to hit a safety\&quot;, function() {'],[1,'        game.hitSafety();'],[1,'        expect(game.player.one.callback().safeties).toEqual(1);'],[1,'        game.hitSafety();'],[1,'        return expect(game.player.two.callback().safeties).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should be able to return the game score with player one\'s score first (example 2-3)\&quot;, function() {'],[1,'        game.scoreBall(1);'],[1,'        game.scoreBall(4);'],[1,'        game.nextPlayerIsUp();'],[1,'        game.nextPlayerIsUp();'],[1,'        game.scoreBall(10);'],[1,'        game.scoreBall(11);'],[1,'        game.scoreBall(12);'],[1,'        return expect(game.getGameScore()).toEqual(\&quot;2-3\&quot;);'],[-1,'      });'],[1,'      return it(\&quot;should be able to keep track of the last ball scored\&quot;, function() {'],[1,'        expect(game.last_ball_hit_in).toEqual(null);'],[1,'        game.scoreBall(1);'],[1,'        expect(game.last_ball_hit_in).toEqual(1);'],[1,'        game.scoreBall(3);'],[1,'        expect(game.last_ball_hit_in).toEqual(3);'],[1,'        game.nextPlayerIsUp();'],[1,'        game.nextPlayerIsUp();'],[1,'        game.scoreBall(4);'],[1,'        return expect(game.last_ball_hit_in).toEqual(4);'],[-1,'      });'],[-1,'    });'],[1,'    describe(\&quot;Innings\&quot;, function() {'],[1,'      it(\&quot;should keep track of the number of innings\&quot;, function() {'],[1,'        return expect(game.number_of_innings).toEqual(0);'],[-1,'      });'],[1,'      it(\&quot;should be able to add 1 to the number of innings\&quot;, function() {'],[1,'        game.addToNumberOfInnings(1);'],[1,'        return expect(game.number_of_innings).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should be able to add 1 to the innings when player2\'s turn is over\&quot;, function() {'],[1,'        expect(game.number_of_innings).toEqual(0);'],[1,'        game.nextPlayerIsUp();'],[1,'        expect(game.number_of_innings).toEqual(0);'],[1,'        expect(player.two.currently_up).toEqual(true);'],[1,'        game.nextPlayerIsUp();'],[1,'        return expect(game.number_of_innings).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should be able to end the break if no balls were hit in\&quot;, function() {'],[1,'        game.nextPlayerIsUp();'],[1,'        expect(game.on_break).toEqual(false);'],[1,'        return expect(game.breaking_player_still_shooting).toEqual(false);'],[-1,'      });'],[1,'      it(\&quot;should be able to change who is currently_up\&quot;, function() {'],[1,'        game.nextPlayerIsUp();'],[1,'        expect(player.two.currently_up).toEqual(true);'],[1,'        game.nextPlayerIsUp();'],[1,'        return expect(player.one.currently_up).toEqual(true);'],[-1,'      });'],[1,'      it(\&quot;should be able to know if a player is still breaking(balls scored) when they use NextPlayerIsUp while breaking\&quot;, function() {'],[1,'        expect(game.on_break).toEqual(true);'],[1,'        game.scoreBall(1);'],[1,'        game.nextPlayerIsUp();'],[1,'        expect(player.two.currently_up).toEqual(false);'],[1,'        return expect(player.one.currently_up).toEqual(true);'],[-1,'      });'],[1,'      it(\&quot;should be able to know if a players turn is over(no balls scored) when they use NextPlayerIsUp while breaking\&quot;, function() {'],[1,'        expect(game.on_break).toEqual(true);'],[1,'        game.nextPlayerIsUp();'],[1,'        expect(player.two.currently_up).toEqual(true);'],[1,'        return expect(player.one.currently_up).toEqual(false);'],[-1,'      });'],[1,'      it(\&quot;should end the current players turn when they hit a safety\&quot;, function() {'],[1,'        game.hitSafety();'],[1,'        expect(game.player.one.callback().safeties).toEqual(1);'],[1,'        return expect(game.getCurrentlyUpPlayer().name).toEqual(\&quot;James Armstead\&quot;);'],[-1,'      });'],[1,'      it(\&quot;should be able to have a state of breaking\&quot;, function() {'],[1,'        return expect(game.on_break).toEqual(true);'],[-1,'      });'],[1,'      it(\&quot;should be able to have change the breaking state to false\&quot;, function() {'],[1,'        expect(game.on_break).toEqual(true);'],[1,'        game.breakIsOver();'],[1,'        return expect(game.on_break).toEqual(false);'],[-1,'      });'],[1,'      return it(\&quot;should know if the breaking player is still up\&quot;, function() {'],[1,'        expect(game.breaking_player_still_shooting).toEqual(true);'],[1,'        game.scoreBall(2);'],[1,'        game.nextPlayerIsUp();'],[1,'        game.scoreBall(3);'],[1,'        game.scoreBall(5);'],[1,'        expect(game.breaking_player_still_shooting).toEqual(true);'],[1,'        game.nextPlayerIsUp();'],[1,'        return expect(game.breaking_player_still_shooting).toEqual(false);'],[-1,'      });'],[-1,'    });'],[1,'    describe(\&quot;Game Ending\&quot;, function() {'],[1,'      it(\&quot;should be able to be ended\&quot;, function() {'],[1,'        expect(game.ended).toBeFalsy();'],[1,'        game.end();'],[1,'        return expect(game.ended).toBeTruthy();'],[-1,'      });'],[1,'      it(\&quot;should be able to make a player win and add one to games won\&quot;, function() {'],[1,'        game.setPlayerWon(1);'],[1,'        expect(game.player.one.has_won).toEqual(true);'],[1,'        expect(game.player.two.has_won).toEqual(false);'],[1,'        expect(game.player.one.callback().games_won).toEqual(1);'],[1,'        expect(game.player.two.callback().games_won).toEqual(0);'],[1,'        game.setPlayerWon(2);'],[1,'        expect(game.player.one.has_won).toEqual(true);'],[1,'        expect(game.player.two.has_won).toEqual(true);'],[1,'        expect(game.player.one.callback().games_won).toEqual(1);'],[1,'        return expect(game.player.two.callback().games_won).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should end the game and give currently player up the win if they pocket the 8 ball on break\&quot;, function() {'],[1,'        expect(game.player.one.has_won).toEqual(false);'],[1,'        game.scoreBall(8);'],[1,'        expect(game.player.one.has_won).toEqual(true);'],[1,'        return expect(game.player.two.has_won).toEqual(false);'],[-1,'      });'],[1,'      it(\&quot;should know the match has completed when the 8 his hit in\&quot;, function() {'],[1,'        expect(game.ended).toEqual(false);'],[1,'        game.scoreBall(8);'],[1,'        return expect(game.ended).toEqual(true);'],[-1,'      });'],[1,'      return it(\&quot;should end the game if a player hits the 8 ball in when it is not their last ball or on break\&quot;, function() {'],[1,'        game.scoreBall(1);'],[1,'        game.nextPlayerIsUp();'],[1,'        game.scoreBall(12);'],[1,'        game.nextPlayerIsUp();'],[1,'        game.scoreBall(8);'],[1,'        expect(game.player.two.eight_ball).toEqual([8]);'],[1,'        expect(game.ended).toEqual(true);'],[1,'        return expect(game.player.one.has_won).toEqual(true);'],[-1,'      });'],[-1,'    });'],[1,'    describe(\&quot;Player Timeouts\&quot;, function() {'],[1,'      it(\&quot;should allow the currentplayer to be able to take a timeout\&quot;, function() {'],[1,'        game.player.one.timeouts_taken = 0;'],[1,'        game.player.two.timeouts_taken = 0;'],[1,'        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(2);'],[1,'        game.takeTimeout();'],[1,'        return expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should not allow the current player to take more time outs than given\&quot;, function() {'],[1,'        game.player.one.timeouts_taken = 0;'],[1,'        game.player.two.timeouts_taken = 0;'],[1,'        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(2);'],[1,'        game.takeTimeout();'],[1,'        game.takeTimeout();'],[1,'        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(0);'],[1,'        game.takeTimeout();'],[1,'        return expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(0);'],[-1,'      });'],[1,'      return it(\&quot;should be able to return the current player\'s remaining number of timeouts\&quot;, function() {'],[1,'        game.player.one.timeouts_taken = 0;'],[1,'        game.player.two.timeouts_taken = 0;'],[1,'        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(2);'],[1,'        game.takeTimeout();'],[1,'        expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(1);'],[1,'        game.takeTimeout();'],[1,'        return expect(game.getCurrentPlayerRemainingTimeouts()).toEqual(0);'],[-1,'      });'],[-1,'    });'],[1,'    describe(\&quot;Player Information\&quot;, function() {'],[1,'      it(\&quot;should return winning players name\&quot;, function() {'],[1,'        game.scoreBall(1);'],[1,'        game.scoreBall(2);'],[1,'        game.scoreBall(3);'],[1,'        game.scoreBall(4);'],[1,'        game.scoreBall(5);'],[1,'        game.scoreBall(6);'],[1,'        game.scoreBall(7);'],[1,'        game.scoreBall(8);'],[1,'        return expect(game.getWinningPlayerName()).toEqual(\&quot;Isaac W.\&quot;);'],[-1,'      });'],[1,'      it(\&quot;should be able to return the name of player one\&quot;, function() {'],[1,'        return expect(game.player.one.callback().name).toEqual(\&quot;Isaac Wooten\&quot;);'],[-1,'      });'],[1,'      it(\&quot;should be able to return the name of player two\&quot;, function() {'],[1,'        return expect(game.player.two.callback().name).toEqual(\&quot;James Armstead\&quot;);'],[-1,'      });'],[1,'      it(\&quot;should be able to return the rank of player one\&quot;, function() {'],[1,'        return expect(game.player.one.callback().rank).toEqual(1);'],[-1,'      });'],[1,'      it(\&quot;should be able to return the rank of player two\&quot;, function() {'],[1,'        return expect(game.player.two.callback().rank).toEqual(1);'],[-1,'      });'],[1,'      return it(\&quot;should be able to return the player number of player two\&quot;, function() {'],[1,'        return expect(game.player.two.callback().number).toEqual(\'1\');'],[-1,'      });'],[-1,'    });'],[1,'    return describe(\&quot;toJSON\/fromJSON\&quot;, function() {'],[1,'      it(\&quot;should be able to take a new Game and turn it into a JSON object\&quot;, function() {'],[1,'        return expect(game.toJSON()).toEqual({'],[-1,'          BreakingPlayerStillShooting: true,'],[-1,'          EarlyEight: false,'],[-1,'          Ended: false,'],[-1,'          LastBallHitIn: null,'],[-1,'          NumberOfInnings: 0,'],[-1,'          OnBreak: true,'],[-1,'          PlayerOneBallType: null,'],[-1,'          PlayerOneBreakAndRun: false,'],[-1,'          PlayerOneEightBall: [],'],[-1,'          PlayerOneEightOnSnap: false,'],[-1,'          PlayerOneTimeoutsTaken: 2,'],[-1,'          PlayerOneWon: false,'],[-1,'          PlayerTwoBallType: null,'],[-1,'          PlayerTwoBreakAndRun: false,'],[-1,'          PlayerTwoEightBall: [],'],[-1,'          PlayerTwoEightOnSnap: false,'],[-1,'          PlayerTwoTimeoutsTaken: 0,'],[-1,'          PlayerTwoWon: false,'],[-1,'          ScratchOnEight: false,'],[-1,'          SolidBallsHitIn: [],'],[-1,'          StripedBallsHitIn: []'],[-1,'        });'],[-1,'      });'],[1,'      it(\&quot;should be able to take a filled up Game and turn it into a JSON object\&quot;, function() {'],[1,'        game.number_of_innings = 2;'],[1,'        game.player.one.eight_on_snap = true;'],[1,'        game.player.one.break_and_run = false;'],[1,'        game.player.two.eight_on_snap = true;'],[1,'        game.player.two.break_and_run = true;'],[1,'        game.player.one.ball_type = 1;'],[1,'        game.player.two.ball_type = 2;'],[1,'        game.player.one.eight_ball = [];'],[1,'        game.player.two.eight_ball = [8];'],[1,'        game.player.one.has_won = true;'],[1,'        game.player.two.has_won = false;'],[1,'        game.ended = true;'],[1,'        game.balls_hit_in.stripes = [1, 2];'],[1,'        game.balls_hit_in.solids = [9, 10];'],[1,'        game.last_ball_hit_in = 1;'],[1,'        game.on_break = false;'],[1,'        game.breaking_player_still_shooting = false;'],[1,'        game.player.one.callback().currently_up = true;'],[1,'        game.takeTimeout();'],[1,'        return expect(game.toJSON()).toEqual({'],[-1,'          BreakingPlayerStillShooting: false,'],[-1,'          EarlyEight: false,'],[-1,'          Ended: true,'],[-1,'          LastBallHitIn: 1,'],[-1,'          NumberOfInnings: 2,'],[-1,'          OnBreak: false,'],[-1,'          PlayerOneBallType: 1,'],[-1,'          PlayerOneBreakAndRun: false,'],[-1,'          PlayerOneEightBall: [],'],[-1,'          PlayerOneEightOnSnap: true,'],[-1,'          PlayerOneTimeoutsTaken: 2,'],[-1,'          PlayerOneWon: true,'],[-1,'          PlayerTwoBallType: 2,'],[-1,'          PlayerTwoBreakAndRun: true,'],[-1,'          PlayerTwoEightBall: [8],'],[-1,'          PlayerTwoEightOnSnap: true,'],[-1,'          PlayerTwoTimeoutsTaken: 0,'],[-1,'          PlayerTwoWon: false,'],[-1,'          ScratchOnEight: false,'],[-1,'          SolidBallsHitIn: [9, 10],'],[-1,'          StripedBallsHitIn: [1, 2]'],[-1,'        });'],[-1,'      });'],[1,'      return it(\&quot;should be able to take a Game JSON and fill a Game object with it\&quot;, function() {'],[1,'        game.fromJSON({'],[-1,'          BreakingPlayerStillShooting: false,'],[-1,'          EarlyEight: false,'],[-1,'          Ended: true,'],[-1,'          LastBallHitIn: [2],'],[-1,'          NumberOfInnings: 2,'],[-1,'          OnBreak: false,'],[-1,'          PlayerOneBallType: 1,'],[-1,'          PlayerOneBreakAndRun: false,'],[-1,'          PlayerOneEightBall: [],'],[-1,'          PlayerOneEightOnSnap: true,'],[-1,'          PlayerOneTimeoutsTaken: 1,'],[-1,'          PlayerOneWon: true,'],[-1,'          PlayerTwoBallType: 2,'],[-1,'          PlayerTwoBreakAndRun: true,'],[-1,'          PlayerTwoEightBall: [8],'],[-1,'          PlayerTwoEightOnSnap: true,'],[-1,'          PlayerTwoTimeoutsTaken: 0,'],[-1,'          PlayerTwoWon: false,'],[-1,'          ScratchOnEight: false,'],[-1,'          SolidBallsHitIn: [10],'],[-1,'          StripedBallsHitIn: [2]'],[-1,'        });'],[1,'        expect(game.number_of_innings).toEqual(2);'],[1,'        expect(game.player.one.timeouts_taken).toEqual(1);'],[1,'        expect(game.player.two.timeouts_taken).toEqual(0);'],[1,'        expect(game.player.one.eight_on_snap).toEqual(true);'],[1,'        expect(game.player.one.break_and_run).toEqual(false);'],[1,'        expect(game.player.two.eight_on_snap).toEqual(true);'],[1,'        expect(game.player.two.break_and_run).toEqual(true);'],[1,'        expect(game.player.one.ball_type).toEqual(1);'],[1,'        expect(game.player.two.ball_type).toEqual(2);'],[1,'        expect(game.player.one.eight_ball).toEqual([]);'],[1,'        expect(game.player.two.eight_ball).toEqual([8]);'],[1,'        expect(game.player.one.has_won).toEqual(true);'],[1,'        expect(game.player.two.has_won).toEqual(false);'],[1,'        expect(game.ended).toEqual(true);'],[1,'        expect(game.balls_hit_in.stripes).toEqual([2]);'],[1,'        expect(game.balls_hit_in.solids).toEqual([10]);'],[1,'        expect(game.last_ball_hit_in).toEqual([2]);'],[1,'        expect(game.on_break).toEqual(false);'],[1,'        game.addToNumberOfInnings(1);'],[1,'        return expect(game.number_of_innings).toEqual(3);'],[-1,'      });'],[-1,'    });'],[-1,'  });'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('ba950ff1a412cd96014575d341922aef'); return false;">
+                <td><a href="#">target/jasmine/spec/<strong>league_spec.js</strong></a></td>
+                <td class="statements">26</td>
+                <td class="executed">26</td>
+                <td class="coverage">
+                        100&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 100%; background-color: rgb(174, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_ba950ff1a412cd96014575d341922aef" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_ba950ff1a412cd96014575d341922aef">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[-1,''],[1,'  describe(\&quot;League\&quot;, function() {'],[1,'    var attributes, model;'],[1,'    model = void 0;'],[1,'    attributes = void 0;'],[1,'    beforeEach(function() {'],[3,'      model = new $CS.Models.League();'],[3,'      return attributes = model.attributes;'],[-1,'    });'],[1,'    return describe(\&quot;Constructor\&quot;, function() {'],[1,'      it(\&quot;should be able to create a new League\&quot;, function() {'],[1,'        model.initialize();'],[1,'        return expect(model).not.toBeUndefined();'],[-1,'      });'],[1,'      it(\&quot;should contain default attributes\&quot;, function() {'],[1,'        expect(attributes.name).toBeDefined();'],[1,'        expect(attributes.age).toBeDefined();'],[1,'        expect(attributes.children).toBeDefined();'],[1,'        expect(attributes.name).toEqual(\&quot;Fetus\&quot;);'],[1,'        expect(attributes.age).toEqual(0);'],[1,'        return expect(attributes.children).toEqual([]);'],[-1,'      });'],[1,'      return it(\&quot;should store the parameters\&quot;, function() {'],[1,'        var options;'],[1,'        model = new $CS.Models.League(options = {'],[-1,'          name: \&quot;Isaac Wooten\&quot;,'],[-1,'          age: 1,'],[-1,'          children: []'],[-1,'        });'],[1,'        attributes = model.attributes;'],[1,'        expect(attributes.name).toEqual(\&quot;Isaac Wooten\&quot;);'],[1,'        expect(attributes.age).toEqual(1);'],[1,'        return expect(attributes.children).toEqual([]);'],[-1,'      });'],[-1,'    });'],[-1,'  });'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('d94ca9381ad5adf2027871fc9f495d3b'); return false;">
+                <td><a href="#">target/jasmine/spec/ranks/<strong>eight_ball_ranks_spec.js</strong></a></td>
+                <td class="statements">51</td>
+                <td class="executed">51</td>
+                <td class="coverage">
+                        100&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 100%; background-color: rgb(174, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_d94ca9381ad5adf2027871fc9f495d3b" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_d94ca9381ad5adf2027871fc9f495d3b">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[-1,''],[1,'  describe(\&quot;EightBall Rank\&quot;, function() {'],[1,'    var model;'],[1,'    model = void 0;'],[1,'    beforeEach(function() {'],[2,'      return model = new $CS.Models.Rank.EightBall();'],[-1,'    });'],[1,'    describe(\&quot;get games needed to win\&quot;, function() {'],[1,'      return it(\&quot;should return the correct games needed to win for each model\&quot;, function() {'],[1,'        expect(model.getGamesNeedToWin(2, 2)).toEqual(2);'],[1,'        expect(model.getGamesNeedToWin(3, 2)).toEqual(3);'],[1,'        expect(model.getGamesNeedToWin(4, 2)).toEqual(4);'],[1,'        expect(model.getGamesNeedToWin(5, 2)).toEqual(5);'],[1,'        expect(model.getGamesNeedToWin(6, 2)).toEqual(6);'],[1,'        expect(model.getGamesNeedToWin(7, 2)).toEqual(7);'],[1,'        expect(model.getGamesNeedToWin(2, 3)).toEqual(2);'],[1,'        expect(model.getGamesNeedToWin(3, 3)).toEqual(2);'],[1,'        expect(model.getGamesNeedToWin(4, 3)).toEqual(3);'],[1,'        expect(model.getGamesNeedToWin(5, 3)).toEqual(4);'],[1,'        expect(model.getGamesNeedToWin(6, 3)).toEqual(5);'],[1,'        expect(model.getGamesNeedToWin(7, 3)).toEqual(6);'],[1,'        expect(model.getGamesNeedToWin(2, 4)).toEqual(2);'],[1,'        expect(model.getGamesNeedToWin(3, 4)).toEqual(2);'],[1,'        expect(model.getGamesNeedToWin(4, 4)).toEqual(3);'],[1,'        expect(model.getGamesNeedToWin(5, 4)).toEqual(4);'],[1,'        expect(model.getGamesNeedToWin(6, 4)).toEqual(5);'],[1,'        expect(model.getGamesNeedToWin(7, 4)).toEqual(5);'],[1,'        expect(model.getGamesNeedToWin(2, 5)).toEqual(2);'],[1,'        expect(model.getGamesNeedToWin(3, 5)).toEqual(2);'],[1,'        expect(model.getGamesNeedToWin(4, 5)).toEqual(3);'],[1,'        expect(model.getGamesNeedToWin(5, 5)).toEqual(4);'],[1,'        expect(model.getGamesNeedToWin(6, 5)).toEqual(5);'],[1,'        expect(model.getGamesNeedToWin(7, 5)).toEqual(5);'],[1,'        expect(model.getGamesNeedToWin(2, 6)).toEqual(2);'],[1,'        expect(model.getGamesNeedToWin(3, 6)).toEqual(2);'],[1,'        expect(model.getGamesNeedToWin(4, 6)).toEqual(3);'],[1,'        expect(model.getGamesNeedToWin(5, 6)).toEqual(4);'],[1,'        expect(model.getGamesNeedToWin(6, 6)).toEqual(5);'],[1,'        expect(model.getGamesNeedToWin(7, 6)).toEqual(5);'],[1,'        expect(model.getGamesNeedToWin(2, 7)).toEqual(2);'],[1,'        expect(model.getGamesNeedToWin(3, 7)).toEqual(2);'],[1,'        expect(model.getGamesNeedToWin(4, 7)).toEqual(2);'],[1,'        expect(model.getGamesNeedToWin(5, 7)).toEqual(3);'],[1,'        expect(model.getGamesNeedToWin(6, 7)).toEqual(4);'],[1,'        return expect(model.getGamesNeedToWin(7, 7)).toEqual(5);'],[-1,'      });'],[-1,'    });'],[1,'    return it(\&quot;should be able to return the number of timeouts based on model\&quot;, function() {'],[1,'      expect(model.getTimeouts(2)).toEqual(2);'],[1,'      expect(model.getTimeouts(3)).toEqual(2);'],[1,'      expect(model.getTimeouts(4)).toEqual(1);'],[1,'      expect(model.getTimeouts(5)).toEqual(1);'],[1,'      expect(model.getTimeouts(6)).toEqual(1);'],[1,'      return expect(model.getTimeouts(7)).toEqual(1);'],[-1,'    });'],[-1,'  });'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr><tr  onclick="__coverage_toggleSection('9c4413d12b2a0b0505ed56eb313cb42a'); return false;">
+                <td><a href="#">target/jasmine/spec/ranks/<strong>nine_ball_ranks_spec.js</strong></a></td>
+                <td class="statements">27</td>
+                <td class="executed">27</td>
+                <td class="coverage">
+                        100&thinsp;%
+                </td>
+                <td class="bar-container">
+                        <div class="bar">
+                            <span style="width: 100%; background-color: rgb(174, 219, 75);"></span>
+                        </div>
+                </td>
+            </tr>
+            <tr id="__src_9c4413d12b2a0b0505ed56eb313cb42a" style="display: none;">
+                <td class="line-coverage-cell" colspan="5"><p id="__data_9c4413d12b2a0b0505ed56eb313cb42a">[[-1,'\/\/ Generated by CoffeeScript 1.3.1'],[1,'(function() {'],[-1,''],[1,'  describe(\&quot;NineBall Rank\&quot;, function() {'],[1,'    var model;'],[1,'    model = void 0;'],[1,'    beforeEach(function() {'],[2,'      return model = new $CS.Models.Rank.NineBall();'],[-1,'    });'],[1,'    describe(\&quot;getBallCounts\&quot;, function() {'],[1,'      return it(\&quot;should return the correct Ball Counts for each model\&quot;, function() {'],[1,'        expect(model.getBallCount(1)).toEqual(14);'],[1,'        expect(model.getBallCount(2)).toEqual(19);'],[1,'        expect(model.getBallCount(3)).toEqual(25);'],[1,'        expect(model.getBallCount(4)).toEqual(31);'],[1,'        expect(model.getBallCount(5)).toEqual(38);'],[1,'        expect(model.getBallCount(6)).toEqual(46);'],[1,'        expect(model.getBallCount(7)).toEqual(55);'],[1,'        expect(model.getBallCount(8)).toEqual(65);'],[1,'        return expect(model.getBallCount(9)).toEqual(75);'],[-1,'      });'],[-1,'    });'],[1,'    return it(\&quot;should be able to return the number of timeouts based on model\&quot;, function() {'],[1,'      expect(model.getTimeouts(1)).toEqual(2);'],[1,'      expect(model.getTimeouts(2)).toEqual(2);'],[1,'      expect(model.getTimeouts(3)).toEqual(2);'],[1,'      expect(model.getTimeouts(4)).toEqual(1);'],[1,'      expect(model.getTimeouts(5)).toEqual(1);'],[1,'      expect(model.getTimeouts(6)).toEqual(1);'],[1,'      expect(model.getTimeouts(7)).toEqual(1);'],[1,'      expect(model.getTimeouts(8)).toEqual(1);'],[1,'      return expect(model.getTimeouts(9)).toEqual(1);'],[-1,'    });'],[-1,'  });'],[-1,''],[-1,'}).call(this);']]</p></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="footer">Generated using <a href="http://timurstrekalov.github.com/saga/">Saga</a> version 1.1.2</div>
+</body>
+</html>

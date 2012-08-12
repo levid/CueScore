@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.acme</groupId>
+  <artifactId>cuescore</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>A Jasmine Project</name>
+  <url>http://github.com/searls/jasmine-maven-plugin</url>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.github.searls</groupId>
+        <artifactId>jasmine-maven-plugin</artifactId>
+        <version>1.2.0.0</version>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <preloadSources>
+            <source>Resources/app.js</source>
+            <source>Resources/vendor/underscore/underscore-min.js</source>
+            <source>Resources/vendor/backbone/backbone-min.js</source>
+            <source>Resources/js/cuescore/utils/contains.js</source>
+          </preloadSources>
+          <jsSrcDir>Resources/js/cuescore/models/</jsSrcDir>
+          <jsTestSrcDir>spec/javascripts/libs/models/</jsTestSrcDir>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.1</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>com.github.timurstrekalov</groupId>
+        <artifactId>saga-maven-plugin</artifactId>
+        <version>1.1.2</version>
+        <executions>
+            <execution>
+                <phase>verify</phase>
+                <goals>
+                    <goal>coverage</goal>
+                </goals>
+            </execution>
+        </executions>
+        <configuration>
+            <baseDir>target/jasmine</baseDir>
+            <outputDir>target/coverage</outputDir>
+            <includes>
+              **/SpecRunner.html
+            </includes>
+            <noInstrumentPatterns>
+              <pattern>.+/backbone-min\.js</pattern>
+              <pattern>.+/underscore-min\.js</pattern>
+              <pattern>.+/contains\.js</pattern>
+            </noInstrumentPatterns>
+        </configuration>
+      </plugin>
+      
+    </plugins>
+  </build>
+</project>

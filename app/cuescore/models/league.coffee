@@ -11,11 +11,9 @@ class League extends Backbone.Model
     @age       = options.age
     @children  = options.children
     
-    console.log this.attributes
-    
     @bind "change:name", ->
       name = @get("name") # 'Stewie Griffin'
-      console.log "Changed my name to " + name
+      # console.log "Changed my name to " + name
 
   replaceNameAttr: (name) ->
     @set name: name

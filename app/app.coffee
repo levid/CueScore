@@ -16,7 +16,14 @@ CueScore = root.CueScore =
         Game: {}
         Match: {}
     Game: {}
-    League: {}
+    League:
+      Doubles: {}
+      MixedDoubles: {}
+      DoubleJeopardy: {}
+      Womens: {}
+      Masters: {}
+      EightBall: {}
+      NineBall: {}
     Match: 
       Type:
         LeagueMatch: {}
