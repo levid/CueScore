@@ -14,8 +14,108 @@
 
     function Player(name, rank, number, teamNumber) {
       _.extend(this, this.defaults);
-      console.log(this);
+      this.Name = name;
+      this.Rank = rank;
+      this.Number = number;
+      this.TeamNumber = teamNumber;
+      this.BallCount = new NineBallRanks().getBallCount(rank).toString();
+      this.Score = 0;
+      this.Safeties = 0;
+      this.CurrentlyUp = false;
+      this.NineOnSnaps = 0;
+      this.BreakAndRuns = 0;
+      this.TimeoutsTaken = 0;
+      this.TimeoutsAllowed = new NineBallRanks().getTimeouts(rank);
+      this.IsCaptain = false;
     }
+
+    Player.prototype.resetPlayerRankStats = function() {
+      this.BallCount = new NineBallRanks().getBallCount(this.Rank).toString();
+      return this.TimeoutsAllowed = new NineBallRanks().getTimeouts(this.Rank);
+    };
+
+    Player.prototype.addToScore = function(addToScore) {
+      return this.Score += addToScore;
+    };
+
+    Player.prototype.addOneToSafeties = function() {
+      return this.Safeties += 1;
+    };
+
+    Player.prototype.hasWon = function() {
+      return this.Score >= this.BallCount;
+    };
+
+    Player.prototype.addOneToNineOnSnaps = function() {
+      return this.NineOnSnaps += 1;
+    };
+
+    Player.prototype.addOneToBreakAndRuns = function() {
+      return this.BreakAndRuns += 1;
+    };
+
+    Player.prototype.getRemainingBallCount = function() {
+      return (this.BallCount - this.Score).toString();
+    };
+
+    Player.prototype.getFirstNameWithInitials = function() {
+      var nameToReturn, spaceIndex;
+      spaceIndex = this.Name.indexOf(" ");
+      if (spaceIndex === -1) {
+        return this.Name;
+      }
+      nameToReturn = this.Name.substr(0, spaceIndex);
+      return nameToReturn + " " + this.Name[spaceIndex + 1] + ".";
+    };
+
+    Player.prototype.getSafeties = function() {
+      return this.Safeties.toString();
+    };
+
+    Player.prototype.getScore = function() {
+      return this.Score.toString();
+    };
+
+    Player.prototype.getRatioScore = function() {
+      return this.Score / this.BallCount;
+    };
+
+    Player.prototype.getNineOnSnaps = function() {
+      return this.NineOnSnaps.toString();
+    };
+
+    Player.prototype.getBreakAndRuns = function() {
+      return this.BreakAndRuns.toString();
+    };
+
+    Player.prototype.toJSON = function() {
+      return {
+        Name: this.Name,
+        Rank: this.Rank,
+        BallCount: this.BallCount,
+        Number: this.Number,
+        TeamNumber: this.TeamNumber,
+        Score: this.Score,
+        Safeties: this.Safeties,
+        NineOnSnaps: this.NineOnSnaps,
+        BreakAndRuns: this.BreakAndRuns,
+        CurrentlyUp: this.CurrentlyUp
+      };
+    };
+
+    Player.prototype.fromJSON = function(playerJSON) {
+      this.Name = playerJSON.Name;
+      this.Rank = playerJSON.Rank;
+      this.BallCount = playerJSON.BallCount;
+      this.Number = playerJSON.Number;
+      this.TeamNumber = playerJSON.TeamNumber;
+      this.Score = playerJSON.Score;
+      this.Safeties = playerJSON.Safeties;
+      this.NineOnSnaps = playerJSON.NineOnSnaps;
+      this.BreakAndRuns = playerJSON.BreakAndRuns;
+      this.CurrentlyUp = playerJSON.CurrentlyUp;
+      return this.resetPlayerRankStats();
+    };
 
     return Player;
 

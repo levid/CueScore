@@ -69,12 +69,12 @@
           return _this.player.two;
         },
         callback: function() {
-          if (this.getRemainingGamesNeededToWinByPlayer(1) === 0) {
-            this.player_one_won = true;
-            return this.ended = true;
-          } else if (this.getRemainingGamesNeededToWinByPlayer(2) === 0) {
-            this.player_two_won = true;
-            return this.ended = true;
+          if (_this.getRemainingGamesNeededToWinByPlayer(1) === 0) {
+            _this.player_one_won = true;
+            return _this.ended = true;
+          } else if (_this.getRemainingGamesNeededToWinByPlayer(2) === 0) {
+            _this.player_two_won = true;
+            return _this.ended = true;
           }
         }
       });
@@ -94,11 +94,11 @@
     };
 
     Match.prototype.getTotalSafeties = function() {
-      return this.player.one.getSafeties() + " to " + this.player.two.getSafeties();
+      return this.player.one.getSafeties() + "to" + this.player.two.getSafeties();
     };
 
     Match.prototype.getCurrentGameNumber = function() {
-      return (this.completed_games.length + 1).toString();
+      return this.completed_games.length + 1;
     };
 
     Match.prototype.getMatchPointsByTeamNumber = function(teamNumber) {
@@ -121,9 +121,9 @@
 
     Match.prototype.getRemainingGamesNeededToWinByPlayer = function(playerNum) {
       if (playerNum === 1) {
-        return (this.player.one.games_needed_to_win - this.getGamesWonByPlayer(1)).toString();
+        return this.player.one.games_needed_to_win - this.getGamesWonByPlayer(1);
       } else if (playerNum === 2) {
-        return (this.player.two.games_needed_to_win - this.getGamesWonByPlayer(2)).toString();
+        return this.player.two.games_needed_to_win - this.getGamesWonByPlayer(2);
       }
     };
 
@@ -140,8 +140,8 @@
         }
       } else if (playerNum === 2) {
         gamesWon = (this.current_game.player['two'].has_won === true ? 1 : 0);
-        while (i <= (this.CompletedGames.length - 1)) {
-          if (this.CompletedGames[i].player['two'].has_won === true) {
+        while (i <= (this.completed_games.length - 1)) {
+          if (this.completed_games[i].player['two'].has_won === true) {
             gamesWon = gamesWon + 1;
           }
           i++;
@@ -160,8 +160,9 @@
     Match.prototype.getMatchPoints = function() {
       if (this.getMatchPointsByPlayer(1) === this.getMatchPointsByPlayer(2)) {
         return "TIE";
+      } else {
+        return this.getMatchPointsByPlayer(1) + "-" + this.getMatchPointsByPlayer(2);
       }
-      return this.getMatchPointsByPlayer(1) + "-" + this.getMatchPointsByPlayer(2);
     };
 
     Match.prototype.setSuddenDeathMode = function() {
@@ -202,8 +203,8 @@
     };
 
     Match.prototype.resetPlayerRankStats = function() {
-      this.player.one.games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(this.player.one.rank, this.player.two.rank);
-      this.player.two.games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(this.player.two.rank, this.player.one.rank);
+      this.player.one.games_needed_to_win = new $CS.Models.EightBall.Ranks().getGamesNeedToWin(this.player.one.rank, this.player.two.rank);
+      this.player.two.games_needed_to_win = new $CS.Models.EightBall.Ranks().getGamesNeedToWin(this.player.two.rank, this.player.one.rank);
       this.player.one.resetPlayerRankStats();
       return this.player.two.resetPlayerRankStats();
     };
@@ -224,10 +225,12 @@
 
     Match.prototype.toJSON = function() {
       return {
-        player_one: this.player.one.toJSON(),
-        player_two: this.player.two.toJSON(),
-        player_one_games_won: this.getGamesWonByPlayer(1),
-        player_two_games_won: this.getGamesWonByPlayer(2),
+        player: {
+          one: this.player.one.toJSON(),
+          two: this.player.two.toJSON()
+        },
+        player_one_won: this.getGamesWonByPlayer(1),
+        player_two_won: this.getGamesWonByPlayer(2),
         current_game: this.current_game.toJSON(),
         completed_games: this.completedGamesToJSON(),
         sudden_death: this.sudden_death,
@@ -251,8 +254,8 @@
 
     Match.prototype.fromJSON = function(json) {
       var currentGame;
-      this.player.one = this.playerFromJSON(json.player_one);
-      this.player.two = this.playerFromJSON(json.player_two);
+      this.player.one = this.playerFromJSON(json.player.one);
+      this.player.two = this.playerFromJSON(json.player.two);
       this.resetPlayerRankStats();
       this.completed_games = this.completedGamesFromJSON(json.completed_games);
       this.sudden_death = json.sudden_death;
@@ -269,7 +272,7 @@
 
     Match.prototype.playerFromJSON = function(json) {
       var player;
-      player = new EightBallPlayer();
+      player = new $CS.Models.EightBall.Player();
       player.fromJSON(new function() {
         return json;
       });

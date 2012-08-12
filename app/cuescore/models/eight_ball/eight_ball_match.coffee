@@ -151,7 +151,7 @@ class Match extends $CS.Models.EightBall
     @current_game.hitSafety()
     
   checkForWin: ->
-    
+
   startNewGame: ->
     if @current_game.ended is true
       @completed_games.push @current_game

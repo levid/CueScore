@@ -337,50 +337,50 @@
 
     Game.prototype.toJSON = function() {
       return {
-        PlayerOneTimeoutsTaken: this.player.one.timeouts_taken,
-        PlayerTwoTimeoutsTaken: this.player.two.timeouts_taken,
-        PlayerOneEightOnSnap: this.player.one.eight_on_snap,
-        PlayerOneBreakAndRun: this.player.one.break_and_run,
-        PlayerTwoEightOnSnap: this.player.two.eight_on_snap,
-        PlayerTwoBreakAndRun: this.player.two.break_and_run,
-        PlayerOneBallType: this.player.one.ball_type,
-        PlayerTwoBallType: this.player.two.ball_type,
-        PlayerOneEightBall: this.player.one.eight_ball,
-        PlayerTwoEightBall: this.player.two.eight_ball,
-        PlayerOneWon: this.player.one.has_won,
-        PlayerTwoWon: this.player.two.has_won,
-        NumberOfInnings: this.number_of_innings,
-        EarlyEight: this.early_eight,
-        ScratchOnEight: this.scratch_on_eight,
-        BreakingPlayerStillShooting: this.breaking_player_still_shooting,
-        StripedBallsHitIn: this.balls_hit_in.stripes,
-        SolidBallsHitIn: this.balls_hit_in.solids,
-        LastBallHitIn: this.last_ball_hit_in,
-        OnBreak: this.on_break,
-        Ended: this.ended
+        player_one_timeouts_taken: this.player.one.timeouts_taken,
+        player_two_timeouts_taken: this.player.two.timeouts_taken,
+        player_one_eight_on_snap: this.player.one.eight_on_snap,
+        player_one_break_and_run: this.player.one.break_and_run,
+        player_two_eight_on_snap: this.player.two.eight_on_snap,
+        player_two_break_and_run: this.player.two.break_and_run,
+        player_one_ball_type: this.player.one.ball_type,
+        player_two_ball_type: this.player.two.ball_type,
+        player_one_eight_ball: this.player.one.eight_ball,
+        player_two_eight_ball: this.player.two.eight_ball,
+        player_one_won: this.player.one.has_won,
+        player_two_won: this.player.two.has_won,
+        number_of_innings: this.number_of_innings,
+        early_eight: this.early_eight,
+        scratch_on_eight: this.scratch_on_eight,
+        breaking_player_still_shooting: this.breaking_player_still_shooting,
+        striped_balls_hit_in: this.balls_hit_in.stripes,
+        solid_balls_hit_in: this.balls_hit_in.solids,
+        last_ball_hit_in: this.last_ball_hit_in,
+        on_break: this.on_break,
+        ended: this.ended
       };
     };
 
     Game.prototype.fromJSON = function(gameJSON) {
-      this.player.one.timeouts_taken = gameJSON.PlayerOneTimeoutsTaken;
-      this.player.two.timeouts_taken = gameJSON.PlayerTwoTimeoutsTaken;
-      this.player.one.eight_on_snap = gameJSON.PlayerOneEightOnSnap;
-      this.player.one.break_and_run = gameJSON.PlayerOneBreakAndRun;
-      this.player.two.eight_on_snap = gameJSON.PlayerTwoEightOnSnap;
-      this.player.two.break_and_run = gameJSON.PlayerTwoBreakAndRun;
-      this.player.one.ball_type = gameJSON.PlayerOneBallType;
-      this.player.two.ball_type = gameJSON.PlayerTwoBallType;
-      this.player.one.eight_ball = gameJSON.PlayerOneEightBall;
-      this.player.two.eight_ball = gameJSON.PlayerTwoEightBall;
-      this.player.one.has_won = gameJSON.PlayerOneWon;
-      this.player.two.has_won = gameJSON.PlayerTwoWon;
-      this.number_of_innings = gameJSON.NumberOfInnings;
-      this.breaking_player_still_shooting = gameJSON.BreakingPlayerStillShooting;
-      this.balls_hit_in.solids = gameJSON.SolidBallsHitIn;
-      this.balls_hit_in.stripes = gameJSON.StripedBallsHitIn;
-      this.last_ball_hit_in = gameJSON.LastBallHitIn;
-      this.on_break = gameJSON.OnBreak;
-      return this.ended = gameJSON.Ended;
+      this.player.one.timeouts_taken = gameJSON.player_one_timeouts_taken;
+      this.player.two.timeouts_taken = gameJSON.player_two_timeouts_taken;
+      this.player.one.eight_on_snap = gameJSON.player_one_eight_on_snap;
+      this.player.one.break_and_run = gameJSON.player_one_break_and_run;
+      this.player.two.eight_on_snap = gameJSON.player_two_eight_on_snap;
+      this.player.two.break_and_run = gameJSON.player_two_break_and_run;
+      this.player.one.ball_type = gameJSON.player_one_ball_type;
+      this.player.two.ball_type = gameJSON.player_two_ball_type;
+      this.player.one.eight_ball = gameJSON.player_one_eight_ball;
+      this.player.two.eight_ball = gameJSON.player_two_eight_ball;
+      this.player.one.has_won = gameJSON.player_one_won;
+      this.player.two.has_won = gameJSON.player_two_won;
+      this.number_of_innings = gameJSON.number_of_innings;
+      this.breaking_player_still_shooting = gameJSON.breaking_player_still_shooting;
+      this.balls_hit_in.solids = gameJSON.solid_balls_hit_in;
+      this.balls_hit_in.stripes = gameJSON.striped_balls_hit_in;
+      this.last_ball_hit_in = gameJSON.last_ball_hit_in;
+      this.on_break = gameJSON.on_break;
+      return this.ended = gameJSON.ended;
     };
 
     return Game;
