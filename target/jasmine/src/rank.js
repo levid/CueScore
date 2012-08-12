@@ -10,15 +10,11 @@
 
     Rank.name = 'Rank';
 
-    function Rank() {
-      return Rank.__super__.constructor.apply(this, arguments);
-    }
-
     Rank.prototype.defaults = {};
 
-    Rank.prototype.initialize = function() {
-      return _.extend(this, this.defaults);
-    };
+    function Rank() {
+      _.extend(this, this.defaults);
+    }
 
     return Rank;
 

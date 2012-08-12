@@ -10,17 +10,13 @@
 
     Game.name = 'Game';
 
-    function Game() {
-      return Game.__super__.constructor.apply(this, arguments);
-    }
-
     Game.prototype.defaults = {
       name: "Fetus",
       age: 0,
       children: []
     };
 
-    Game.prototype.initialize = function(options) {
+    function Game(options) {
       if (options == null) {
         options = {};
       }
@@ -28,11 +24,11 @@
       this.name = options.name;
       this.age = options.age;
       this.children = options.children;
-      return this.bind("change:name", function() {
+      this.bind("change:name", function() {
         var name;
         return name = this.get("name");
       });
-    };
+    }
 
     Game.prototype.replaceNameAttr = function(name) {
       return this.set({

@@ -10,17 +10,13 @@
 
     League.name = 'League';
 
-    function League() {
-      return League.__super__.constructor.apply(this, arguments);
-    }
-
     League.prototype.defaults = {
       name: "Fetus",
       age: 0,
       children: []
     };
 
-    League.prototype.initialize = function(options) {
+    function League(options) {
       if (options == null) {
         options = {};
       }
@@ -28,11 +24,11 @@
       this.name = options.name;
       this.age = options.age;
       this.children = options.children;
-      return this.bind("change:name", function() {
+      this.bind("change:name", function() {
         var name;
         return name = this.get("name");
       });
-    };
+    }
 
     League.prototype.replaceNameAttr = function(name) {
       return this.set({

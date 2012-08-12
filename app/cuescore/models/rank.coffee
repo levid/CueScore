@@ -1,6 +1,7 @@
 class Rank extends Backbone.Model
   defaults: {}
 
-  initialize: ->
+  constructor: ->
     _.extend @, @defaults
+    
 $CS.Models.Rank = Rank

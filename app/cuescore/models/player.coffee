@@ -4,7 +4,7 @@ class Player extends Backbone.Model
     age: 0
     children: []
 
-  initialize: ->
+  constructor: ->
     _.extend @, @defaults
     
     @bind "change:name", ->

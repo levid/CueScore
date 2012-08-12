@@ -1,5 +1,5 @@
 (function() {
-  var API, AppSync, DashboardController, DoubleJeopardy, Doubles, EightBall, Game, League, LeagueMatch, Masters, Match, MixedDoubles, NineBall, Player, Post, PostViewController, Posts, PostsController, PostsViewController, PracticeMatch, QueryStringBuilder, Rank, Team, Template, TournamentMatch, Type, Womens, after, console, every, say,
+  var API, AppSync, DashboardController, DoubleJeopardy, Doubles, Game, League, LeagueMatch, Masters, Match, MixedDoubles, Player, Post, PostViewController, Posts, PostsController, PostsViewController, PracticeMatch, QueryStringBuilder, Rank, Ranks, Team, Template, TournamentMatch, Womens, after, console, every, say,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -598,54 +598,7 @@
 
     Game.name = 'Game';
 
-    function Game() {
-      return Game.__super__.constructor.apply(this, arguments);
-    }
-
     Game.prototype.defaults = {
-      name: "Fetus",
-      age: 0,
-      children: []
-    };
-
-    Game.prototype.initialize = function(options) {
-      if (options == null) {
-        options = {};
-      }
-      _.extend(this, this.defaults);
-      this.name = options.name;
-      this.age = options.age;
-      this.children = options.children;
-      return this.bind("change:name", function() {
-        var name;
-        name = this.get("name");
-        return console.log("Changed my name to " + name);
-      });
-    };
-
-    Game.prototype.replaceNameAttr = function(name) {
-      return this.set({
-        name: name
-      });
-    };
-
-    return Game;
-
-  })(Backbone.Model);
-
-  $CS.Models.Game = Game;
-
-  EightBall = (function(_super) {
-
-    __extends(EightBall, _super);
-
-    EightBall.name = 'EightBall';
-
-    function EightBall() {
-      return EightBall.__super__.constructor.apply(this, arguments);
-    }
-
-    EightBall.prototype.defaults = {
       stripes: 1,
       solids: 2,
       innings: 0,
@@ -683,31 +636,35 @@
       }
     };
 
-    EightBall.prototype.initialize = function(options) {
+    function Game(options) {
       _.extend(this, this.defaults);
       this.player.one.callback = options.addToPlayerOne;
       this.player.two.callback = options.addToPlayerTwo;
-      return this.match_ended_callback = options.callback;
-    };
+      this.match_ended_callback = options.callback;
+      this.player.one.callback().timeouts_taken = 0;
+      this.player.two.callback().timeouts_taken = 0;
+    }
 
-    EightBall.prototype.getCurrentlyUpPlayer = function() {
+    Game.prototype.getCurrentlyUpPlayer = function() {
       if (this.player.one.callback().currently_up === true) {
         return this.player.one.callback();
       }
       return this.player.two.callback();
     };
 
-    EightBall.prototype.getWinningPlayerName = function() {
+    Game.prototype.getWinningPlayer = function() {
       if (this.player.one.has_won === true) {
-        return this.player.one.callback().getFirstNameWithInitials();
-      } else {
-        if (this.player.two.has_won === true) {
-          return this.player.two.callback().getFirstNameWithInitials();
-        }
+        return this.player.one;
+      } else if (this.player.two.has_won === true) {
+        return this.player.two;
       }
     };
 
-    EightBall.prototype.getBallsHitInByPlayer = function(playerNum) {
+    Game.prototype.getWinningPlayerName = function() {
+      return this.getWinningPlayer().callback().getFirstNameWithInitials();
+    };
+
+    Game.prototype.getBallsHitInByPlayer = function(playerNum) {
       if (playerNum === 1) {
         if (this.player.one.ball_type === this.stripes) {
           return this.balls_hit_in.stripes.concat(this.player.one.eight_ball);
@@ -730,15 +687,15 @@
       }
     };
 
-    EightBall.prototype.getGameScore = function() {
+    Game.prototype.getGameScore = function() {
       return this.getBallsHitInByPlayer(1).length + "-" + this.getBallsHitInByPlayer(2).length;
     };
 
-    EightBall.prototype.getBallsHitIn = function() {
+    Game.prototype.getBallsHitIn = function() {
       return this.balls_hit_in.solids.concat(this.balls_hit_in.stripes.concat(this.player.two.eight_ball.concat(this.player.one.eight_ball)));
     };
 
-    EightBall.prototype.getCurrentPlayerRemainingTimeouts = function() {
+    Game.prototype.getCurrentPlayerRemainingTimeouts = function() {
       if (this.player.one.callback().currently_up === true) {
         return this.player.one.callback().timeouts_allowed - this.player.one.timeouts_taken;
       } else {
@@ -746,7 +703,7 @@
       }
     };
 
-    EightBall.prototype.setPlayerWon = function(playerNum) {
+    Game.prototype.setPlayerWon = function(playerNum) {
       if (playerNum === 1) {
         this.player.one.has_won = true;
         return this.player.one.callback().games_won += 1;
@@ -756,7 +713,7 @@
       }
     };
 
-    EightBall.prototype.setEightOnSnapByPlayer = function(playerNum) {
+    Game.prototype.setEightOnSnapByPlayer = function(playerNum) {
       if (playerNum === 1) {
         if (this.player.one.eight_on_snap !== true) {
           this.player.one.callback().addToEightOnSnaps(1);
@@ -770,7 +727,7 @@
       }
     };
 
-    EightBall.prototype.setBreakAndRunByPlayer = function(playerNum) {
+    Game.prototype.setBreakAndRunByPlayer = function(playerNum) {
       if (playerNum === 1) {
         if (this.player.one.break_and_run !== true) {
           this.player.one.callback().addToBreakAndRuns(1);
@@ -784,7 +741,7 @@
       }
     };
 
-    EightBall.prototype.setBallTypeByPlayer = function(playerNum, type) {
+    Game.prototype.setBallTypeByPlayer = function(playerNum, type) {
       if (playerNum === 1 && type === "stripes") {
         this.player.one.ball_type = this.stripes;
         this.player.two.ball_type = this.solids;
@@ -804,12 +761,12 @@
       }
     };
 
-    EightBall.prototype.hitSafety = function() {
+    Game.prototype.hitSafety = function() {
       this.getCurrentlyUpPlayer().addToSafeties(1);
       return this.nextPlayerIsUp();
     };
 
-    EightBall.prototype.hitScratchOnEight = function() {
+    Game.prototype.hitScratchOnEight = function() {
       this.scratch_on_eight = true;
       this.ended = true;
       if (this.player.one.callback().currently_up === true) {
@@ -824,15 +781,15 @@
       return this.match_ended_callback();
     };
 
-    EightBall.prototype.shotMissed = function() {
+    Game.prototype.shotMissed = function() {
       return this.nextPlayerIsUp();
     };
 
-    EightBall.prototype.addToNumberOfInnings = function(num) {
+    Game.prototype.addToNumberOfInnings = function(num) {
       return this.number_of_innings += num;
     };
 
-    EightBall.prototype.takeTimeout = function() {
+    Game.prototype.takeTimeout = function() {
       if (this.getCurrentPlayerRemainingTimeouts() > 0) {
         if (this.player.one.callback().currently_up === true) {
           return this.player.one.timeouts_taken += 1;
@@ -842,15 +799,15 @@
       }
     };
 
-    EightBall.prototype.breakIsOver = function() {
+    Game.prototype.breakIsOver = function() {
       return this.on_break = false;
     };
 
-    EightBall.prototype.end = function() {
+    Game.prototype.end = function() {
       return this.ended = true;
     };
 
-    EightBall.prototype.scoreBall = function(ballNumber) {
+    Game.prototype.scoreBall = function(ballNumber) {
       if (!(this.getBallsHitIn().indexOf(ballNumber) >= 0)) {
         this.last_ball_hit_in = ballNumber;
         if (ballNumber > 0 && ballNumber < 8) {
@@ -892,7 +849,7 @@
       }
     };
 
-    EightBall.prototype.checkForWinner = function() {
+    Game.prototype.checkForWinner = function() {
       if (this.getBallsHitIn().indexOf(8) >= 0) {
         this.ended = true;
       }
@@ -900,22 +857,12 @@
         if (this.breaking_player_still_shooting === true && (this.balls_hit_in.solids.length === 7 || this.balls_hit_in.stripes.length === 7)) {
           if (this.player.one.callback().currently_up === true) {
             this.setBreakAndRunByPlayer(1);
-            if (this.balls_hit_in.solids.length === 7) {
-              this.player.one.ball_type = this.solids;
-              this.player.two.ball_type = this.stripes;
-            } else {
-              this.player.one.ball_type = this.stripes;
-              this.player.two.ball_type = this.solids;
-            }
+            this.player.one.ball_type = this.solids;
+            this.player.two.ball_type = this.stripes;
           } else if (this.player.two.callback().currently_up === true) {
             this.setBreakAndRunByPlayer(2);
-            if (this.balls_hit_in.solids.length === 7) {
-              this.player.two.ball_type = this.solids;
-              this.player.one.ball_type = this.stripes;
-            } else {
-              this.player.one.ball_type = this.solids;
-              this.player.two.ball_type = this.stripes;
-            }
+            this.player.two.ball_type = this.solids;
+            this.player.one.ball_type = this.stripes;
           }
         }
         if (this.player.one.eight_ball.indexOf(8) >= 0 && this.on_break === false) {
@@ -941,7 +888,7 @@
       }
     };
 
-    EightBall.prototype.nextPlayerIsUp = function() {
+    Game.prototype.nextPlayerIsUp = function() {
       if (this.on_break !== true || ((this.player.two.callback().currently_up === true || this.player.one.callback().currently_up === true) && this.getBallsHitIn().length === 0)) {
         if (this.player.one.callback().currently_up === true) {
           this.player.two.callback().currently_up = true;
@@ -976,7 +923,7 @@
       return this.on_break = false;
     };
 
-    EightBall.prototype.toJSON = function() {
+    Game.prototype.toJSON = function() {
       return {
         PlayerOneTimeoutsTaken: this.player.one.timeouts_taken,
         PlayerTwoTimeoutsTaken: this.player.two.timeouts_taken,
@@ -1002,7 +949,7 @@
       };
     };
 
-    EightBall.prototype.fromJSON = function(gameJSON) {
+    Game.prototype.fromJSON = function(gameJSON) {
       this.player.one.timeouts_taken = gameJSON.PlayerOneTimeoutsTaken;
       this.player.two.timeouts_taken = gameJSON.PlayerTwoTimeoutsTaken;
       this.player.one.eight_on_snap = gameJSON.PlayerOneEightOnSnap;
@@ -1024,34 +971,11 @@
       return this.ended = gameJSON.Ended;
     };
 
-    return EightBall;
+    return Game;
 
-  })($CS.Models.Game);
+  })($CS.Models.EightBall);
 
-  $CS.Models.Game.EightBall = EightBall;
-
-  NineBall = (function(_super) {
-
-    __extends(NineBall, _super);
-
-    NineBall.name = 'NineBall';
-
-    function NineBall() {
-      return NineBall.__super__.constructor.apply(this, arguments);
-    }
-
-    NineBall.prototype.defaults = {};
-
-    NineBall.prototype.initialize = function(addToPlayerOne, addToPlayerTwo, callback) {
-      _.extend(this, this.defaults);
-      return console.log(this);
-    };
-
-    return NineBall;
-
-  })($CS.Models.Game);
-
-  $CS.Models.Game.NineBall = NineBall;
+  $CS.Models.EightBall.Game = Game;
 
   League = (function(_super) {
 
@@ -1059,563 +983,26 @@
 
     League.name = 'League';
 
-    function League() {
-      return League.__super__.constructor.apply(this, arguments);
-    }
+    League.prototype.defaults = {};
 
-    League.prototype.defaults = {
-      name: "Fetus",
-      age: 0,
-      children: []
-    };
-
-    League.prototype.initialize = function(options) {
+    function League(options) {
       if (options == null) {
         options = {};
       }
       _.extend(this, this.defaults);
-      this.name = options.name;
-      this.age = options.age;
-      this.children = options.children;
-      console.log(this.attributes);
-      return this.bind("change:name", function() {
-        var name;
-        name = this.get("name");
-        return console.log("Changed my name to " + name);
-      });
-    };
-
-    League.prototype.replaceNameAttr = function(name) {
-      return this.set({
-        name: name
-      });
-    };
+    }
 
     return League;
 
-  })(Backbone.Model);
+  })($CS.Models.EightBall);
 
-  $CS.Models.League = League;
-
-  DoubleJeopardy = (function(_super) {
-
-    __extends(DoubleJeopardy, _super);
-
-    DoubleJeopardy.name = 'DoubleJeopardy';
-
-    function DoubleJeopardy() {
-      return DoubleJeopardy.__super__.constructor.apply(this, arguments);
-    }
-
-    DoubleJeopardy.prototype.defaults = {};
-
-    DoubleJeopardy.prototype.initialize = function(options) {
-      if (options == null) {
-        options = {};
-      }
-      return _.extend(this, this.defaults);
-    };
-
-    return DoubleJeopardy;
-
-  })($CS.Models.League);
-
-  $CS.Models.League.DoubleJeopardy = DoubleJeopardy;
-
-  Doubles = (function(_super) {
-
-    __extends(Doubles, _super);
-
-    Doubles.name = 'Doubles';
-
-    function Doubles() {
-      return Doubles.__super__.constructor.apply(this, arguments);
-    }
-
-    Doubles.prototype.defaults = {};
-
-    Doubles.prototype.initialize = function(options) {
-      if (options == null) {
-        options = {};
-      }
-      return _.extend(this, this.defaults);
-    };
-
-    return Doubles;
-
-  })($CS.Models.League);
-
-  $CS.Models.League.Doubles = Doubles;
-
-  EightBall = (function(_super) {
-
-    __extends(EightBall, _super);
-
-    EightBall.name = 'EightBall';
-
-    function EightBall() {
-      return EightBall.__super__.constructor.apply(this, arguments);
-    }
-
-    EightBall.prototype.defaults = {};
-
-    EightBall.prototype.initialize = function(options) {
-      if (options == null) {
-        options = {};
-      }
-      return _.extend(this, this.defaults);
-    };
-
-    return EightBall;
-
-  })($CS.Models.League);
-
-  $CS.Models.League.EightBall = EightBall;
-
-  Masters = (function(_super) {
-
-    __extends(Masters, _super);
-
-    Masters.name = 'Masters';
-
-    function Masters() {
-      return Masters.__super__.constructor.apply(this, arguments);
-    }
-
-    Masters.prototype.defaults = {};
-
-    Masters.prototype.initialize = function(options) {
-      if (options == null) {
-        options = {};
-      }
-      return _.extend(this, this.defaults);
-    };
-
-    return Masters;
-
-  })($CS.Models.League);
-
-  $CS.Models.League.Masters = Masters;
-
-  MixedDoubles = (function(_super) {
-
-    __extends(MixedDoubles, _super);
-
-    MixedDoubles.name = 'MixedDoubles';
-
-    function MixedDoubles() {
-      return MixedDoubles.__super__.constructor.apply(this, arguments);
-    }
-
-    MixedDoubles.prototype.defaults = {};
-
-    MixedDoubles.prototype.initialize = function(options) {
-      if (options == null) {
-        options = {};
-      }
-      return _.extend(this, this.defaults);
-    };
-
-    return MixedDoubles;
-
-  })($CS.Models.League);
-
-  $CS.Models.League.MixedDoubles = MixedDoubles;
-
-  NineBall = (function(_super) {
-
-    __extends(NineBall, _super);
-
-    NineBall.name = 'NineBall';
-
-    function NineBall() {
-      return NineBall.__super__.constructor.apply(this, arguments);
-    }
-
-    NineBall.prototype.defaults = {};
-
-    NineBall.prototype.initialize = function(options) {
-      if (options == null) {
-        options = {};
-      }
-      return _.extend(this, this.defaults);
-    };
-
-    return NineBall;
-
-  })($CS.Models.League);
-
-  $CS.Models.League.NineBall = NineBall;
-
-  Womens = (function(_super) {
-
-    __extends(Womens, _super);
-
-    Womens.name = 'Womens';
-
-    function Womens() {
-      return Womens.__super__.constructor.apply(this, arguments);
-    }
-
-    Womens.prototype.defaults = {};
-
-    Womens.prototype.initialize = function(options) {
-      if (options == null) {
-        options = {};
-      }
-      return _.extend(this, this.defaults);
-    };
-
-    return Womens;
-
-  })($CS.Models.League);
-
-  $CS.Models.League.Womens = Womens;
-
-  Match = (function(_super) {
-
-    __extends(Match, _super);
-
-    Match.name = 'Match';
-
-    function Match() {
-      return Match.__super__.constructor.apply(this, arguments);
-    }
-
-    Match.prototype.defaults = {
-      name: "Fetus",
-      age: 0,
-      children: []
-    };
-
-    Match.prototype.initialize = function() {
-      _.extend(this, this.defaults);
-      console.log("Welcome to this world");
-      return this.bind("change:name", function() {
-        var name;
-        name = this.get("name");
-        return console.log("Changed my name to " + name);
-      });
-    };
-
-    Match.prototype.replaceNameAttr = function(name) {
-      return this.set({
-        name: name
-      });
-    };
-
-    return Match;
-
-  })(Backbone.Model);
-
-  $CS.Models.Match = Match;
-
-  EightBall = (function(_super) {
-
-    __extends(EightBall, _super);
-
-    EightBall.name = 'EightBall';
-
-    function EightBall() {
-      return EightBall.__super__.constructor.apply(this, arguments);
-    }
-
-    EightBall.prototype.defaults = {
-      player: [
-        {
-          one: {},
-          two: {}
-        }
-      ],
-      completed_games: [],
-      ended: false,
-      original_id: 0,
-      league_match_id: 0,
-      player_number_winning: 0,
-      player_one_won: false,
-      player_two_won: false,
-      are_players_switching: false,
-      sudden_death: false,
-      forfeit: false,
-      current_game: null
-    };
-
-    EightBall.prototype.initialize = function(player1, player2, player1Rank, player2Rank, player1Number, player2Number, player1TeamNumber, player2TeamNumber) {
-      _.extend(this, this.defaults);
-      player['one'] = new Player('EightBall', player1, player1Rank, player1Number, player1TeamNumber);
-      player['two'] = new Player('EightBall', player2, player2Rank, player2Number, player2TeamNumber);
-      if ((this.player['one'].rank != null) && (this.player['two'].rank != null)) {
-        this.player['one'].games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(player1Rank, player2Rank);
-        this.player['two'].games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(player2Rank, player1Rank);
-      }
-      return this.current_game = this.getNewGame();
-    };
-
-    EightBall.prototype.getNewGame = function() {
-      return new $CS.Models.Game.EightBall(function() {
-        return this.player['one'];
-      }, function() {
-        return this.player['two'];
-      }, function() {
-        if (this.getRemainingGamesNeededToWinByPlayer(1) === 0) {
-          this.player_one_won = true;
-          return this.ended = true;
-        } else if (this.getRemainingGamesNeededToWinByPlayer(2) === 0) {
-          this.player_two_won = true;
-          return this.ended = true;
-        }
-      });
-    };
-
-    EightBall.prototype.getTotalInnings = function() {
-      var i, totalInnings;
-      totalInnings = this.current_game.number_of_innings;
-      if (this.completed_games.length > 0) {
-        i = 0;
-        while (i <= (this.completed_games.length - 1)) {
-          totalInnings += this.completed_games[i].number_of_innings;
-          i++;
-        }
-      }
-      return totalInnings.toString();
-    };
-
-    EightBall.prototype.getTotalSafeties = function() {
-      return this.player['one'].getSafeties() + " to " + this.player['two'].getSafeties();
-    };
-
-    EightBall.prototype.getCurrentGameNumber = function() {
-      return (this.completed_games.length + 1).toString();
-    };
-
-    EightBall.prototype.getMatchPointsByTeamNumber = function(teamNumber) {
-      if (this.player['one'].team_number === teamNumber) {
-        return this.getMatchPointsByPlayer(1);
-      } else {
-        if (this.player['two'].team_number === teamNumber) {
-          return this.getMatchPointsByPlayer(2);
-        }
-      }
-      return 0;
-    };
-
-    EightBall.prototype.getWinningPlayer = function() {
-      if ((this.getGamesWonByPlayer(1) / this.player['one'].games_needed_to_win) > (this.getGamesWonByPlayer(2) / this.player['two'].games_needed_to_win)) {
-        return this.player['one'];
-      }
-      return this.player['two'];
-    };
-
-    EightBall.prototype.getRemainingGamesNeededToWinByPlayer = function(playerNum) {
-      if (playerNum === 1) {
-        return (this.player['one'].games_needed_to_win - this.getGamesWonByPlayer(1)).toString();
-      } else if (playerNum === 2) {
-        return (this.player['two'].games_needed_to_win - this.getGamesWonByPlayer(2)).toString();
-      }
-    };
-
-    EightBall.prototype.getGamesWonByPlayer = function(playerNum) {
-      var gamesWon, i;
-      i = 0;
-      if (playerNum === 1) {
-        gamesWon = (this.current_game.player['one'].has_won === true ? 1 : 0);
-        while (i <= (this.completed_games.length - 1)) {
-          if (this.completed_games[i].player['one'].has_won === true) {
-            gamesWon = gamesWon + 1;
-          }
-          i++;
-        }
-      } else if (playerNum === 2) {
-        gamesWon = (this.current_game.player['two'].has_won === true ? 1 : 0);
-        while (i <= (this.CompletedGames.length - 1)) {
-          if (this.CompletedGames[i].player['two'].has_won === true) {
-            gamesWon = gamesWon + 1;
-          }
-          i++;
-        }
-      }
-      return gamesWon;
-    };
-
-    EightBall.prototype.getMatchPointsByPlayer = function(playerNum) {
-      if ((this.getGamesWonByPlayer(1) / this.player['one'].games_needed_to_win) > (this.getGamesWonByPlayer(2) / this.player['two'].games_needed_to_win)) {
-        return 1;
-      }
-      return 0;
-    };
-
-    EightBall.prototype.getMatchPoints = function() {
-      if (this.getMatchPointsByPlayer(1) === this.getMatchPointsByPlayer(2)) {
-        return "TIE";
-      }
-      return this.getMatchPointsByPlayer(1) + "-" + this.getMatchPointsByPlayer(2);
-    };
-
-    EightBall.prototype.setSuddenDeathMode = function() {
-      this.sudden_death = true;
-      this.player['one'].games_needed_to_win = 1;
-      return this.player['two'].games_needed_to_win = 1;
-    };
-
-    EightBall.prototype.scoreNumberedBall = function(ballNumber) {
-      this.are_players_switching = false;
-      this.current_game.scoreBall(ballNumber);
-      if (this.isPlayerWinning(1) === true) {
-        this.player_number_winning = 1;
-      } else {
-        this.player_number_winning = 2;
-      }
-      return this.checkForWin();
-    };
-
-    EightBall.prototype.shotMissed = function() {
-      this.current_game.nextPlayerIsUp();
-      if (this.current_game.breaking_player_still_shooting === false) {
-        return this.are_players_switching = true;
-      }
-    };
-
-    EightBall.prototype.hitSafety = function() {
-      return this.current_game.hitSafety();
-    };
-
-    EightBall.prototype.checkForWin = function() {};
-
-    EightBall.prototype.startNewGame = function() {
-      if (this.current_game.ended === true) {
-        this.completed_games.push(this.current_game);
-        return this.current_game = this.getNewGame();
-      }
-    };
-
-    EightBall.prototype.resetPlayerRankStats = function() {
-      this.player['one'].games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(this.player['one'].rank, this.player['two'].rank);
-      this.player['two'].games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(this.player['two'].rank, this.player['one'].rank);
-      this.player['one'].resetPlayerRankStats();
-      return this.player['two'].resetPlayerRankStats();
-    };
-
-    EightBall.prototype.isPlayerWinning = function(playerNum) {
-      if (playerNum === 1) {
-        if ((this.getGamesWonByPlayer(1) / this.player['one'].games_needed_to_win) > (this.getGamesWonByPlayer(2) / this.player['two'].games_needed_to_win)) {
-          return true;
-        }
-        return false;
-      } else if (playerNum === 2) {
-        if ((this.getGamesWonByPlayer(1) / this.player['one'].games_needed_to_win) < (this.getGamesWonByPlayer(2) / this.player['two'].games_needed_to_win)) {
-          return true;
-        }
-        return false;
-      }
-    };
-
-    EightBall.prototype.toJSON = function() {
-      return {
-        player_one: this.player['one'].toJSON(),
-        player_two: this.player['two'].toJSON(),
-        player_one_games_won: this.getGamesWonByPlayer(1),
-        player_two_games_won: this.getGamesWonByPlayer(2),
-        current_game: this.current_game.toJSON(),
-        completed_games: this.completedGamesToJSON(),
-        sudden_death: this.sudden_death,
-        forfeit: this.forfeit,
-        ended: this.ended,
-        original_id: this.original_id,
-        league_match_id: this.league_match_id
-      };
-    };
-
-    EightBall.prototype.completedGamesToJSON = function() {
-      var arrayToReturn, i;
-      arrayToReturn = [];
-      i = 0;
-      while (i <= this.completed_games.length - 1) {
-        arrayToReturn[i] = this.completed_games[i].toJSON();
-        i++;
-      }
-      return arrayToReturn;
-    };
-
-    EightBall.prototype.fromJSON = function(json) {
-      var currentGame;
-      this.player['one'] = this.playerFromJSON(json.player_one);
-      this.player['two'] = this.playerFromJSON(json.player_two);
-      this.resetPlayerRankStats();
-      this.completed_games = this.completedGamesFromJSON(json.completed_games);
-      this.sudden_death = json.sudden_death;
-      this.forfeit = json.forfeit;
-      this.ended = json.ended;
-      this.original_id = json.original_id;
-      this.league_match_id = json.league_match_id;
-      currentGame = this.getNewGame();
-      currentGame.fromJSON(new function() {
-        return json.current_game;
-      });
-      return this.current_game = currentGame;
-    };
-
-    EightBall.prototype.playerFromJSON = function(json) {
-      var player;
-      player = new EightBallPlayer();
-      player.fromJSON(new function() {
-        return json;
-      });
-      return player;
-    };
-
-    EightBall.prototype.completedGamesFromJSON = function(json) {
-      var arrayToReturn, completedGame, i;
-      arrayToReturn = [];
-      i = 0;
-      while (i <= json.length - 1) {
-        completedGame = this.getNewGame();
-        completedGame.fromJSON(new function() {
-          return json[i];
-        });
-        arrayToReturn.push(completedGame);
-        i++;
-      }
-      return arrayToReturn;
-    };
-
-    return EightBall;
-
-  })($CS.Models.Match);
-
-  $CS.Models.Match.EightBall = EightBall;
-
-  Type = (function(_super) {
-
-    __extends(Type, _super);
-
-    Type.name = 'Type';
-
-    function Type() {
-      return Type.__super__.constructor.apply(this, arguments);
-    }
-
-    Type.prototype.defaults = {};
-
-    Type.prototype.initialize = function() {
-      _.extend(this, this.defaults);
-      return console.log(this);
-    };
-
-    return Type;
-
-  })($CS.Models.Match);
-
-  $CS.Models.Match.Type = Type;
+  $CS.Models.EightBall.League = League;
 
   LeagueMatch = (function(_super) {
 
     __extends(LeagueMatch, _super);
 
     LeagueMatch.name = 'LeagueMatch';
-
-    function LeagueMatch() {
-      return LeagueMatch.__super__.constructor.apply(this, arguments);
-    }
 
     LeagueMatch.prototype.defaults = {
       game_type: null,
@@ -1646,7 +1033,7 @@
       league_match_id: 0
     };
 
-    LeagueMatch.prototype.initialize = function(GameType, HomeTeamNumber, AwayTeamNumber, HomeTeamName, AwayTeamName, StartTime, TableType) {
+    function LeagueMatch(GameType, HomeTeamNumber, AwayTeamNumber, HomeTeamName, AwayTeamName, StartTime, TableType) {
       _.extend(this, this.defaults);
       this.game_type = "EightBall";
       this.home_team.number = HomeTeamNumber || null;
@@ -1655,10 +1042,10 @@
       this.away_team.name = AwayTeamName || "";
       this.start_time = StartTime || "";
       this.table_type = TableType || "";
-      return DataService.saveLeagueMatch(this, function(id) {
+      DataService.saveLeagueMatch(this, function(id) {
         return this.league_match_id = id;
       });
-    };
+    }
 
     LeagueMatch.prototype.getHomeTeamScore = function() {
       var totalScore;
@@ -1835,55 +1222,279 @@
 
     return LeagueMatch;
 
-  })($CS.Models.Match.Type);
+  })($CS.Models.EightBall);
 
-  $CS.Models.Match.Type.LeagueMatch = LeagueMatch;
+  $CS.Models.EightBall.LeagueMatch = LeagueMatch;
 
-  PracticeMatch = (function(_super) {
+  Match = (function(_super) {
 
-    __extends(PracticeMatch, _super);
+    __extends(Match, _super);
 
-    PracticeMatch.name = 'PracticeMatch';
+    Match.name = 'Match';
 
-    function PracticeMatch() {
-      return PracticeMatch.__super__.constructor.apply(this, arguments);
-    }
-
-    PracticeMatch.prototype.defaults = {};
-
-    PracticeMatch.prototype.initialize = function() {
-      _.extend(this, this.defaults);
-      return console.log(this);
+    Match.prototype.defaults = {
+      player: [
+        {
+          one: {},
+          two: {}
+        }
+      ],
+      completed_games: [],
+      ended: false,
+      original_id: 0,
+      league_match_id: 0,
+      player_number_winning: 0,
+      player_one_won: false,
+      player_two_won: false,
+      are_players_switching: false,
+      sudden_death: false,
+      forfeit: false,
+      current_game: null
     };
 
-    return PracticeMatch;
-
-  })($CS.Models.Match.Type);
-
-  $CS.Models.Match.Type.PracticeMatch = PracticeMatch;
-
-  TournamentMatch = (function(_super) {
-
-    __extends(TournamentMatch, _super);
-
-    TournamentMatch.name = 'TournamentMatch';
-
-    function TournamentMatch() {
-      return TournamentMatch.__super__.constructor.apply(this, arguments);
+    function Match(player1, player2, player1Rank, player2Rank, player1Number, player2Number, player1TeamNumber, player2TeamNumber) {
+      _.extend(this, this.defaults);
+      player['one'] = new Player('EightBall', player1, player1Rank, player1Number, player1TeamNumber);
+      player['two'] = new Player('EightBall', player2, player2Rank, player2Number, player2TeamNumber);
+      if ((this.player['one'].rank != null) && (this.player['two'].rank != null)) {
+        this.player['one'].games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(player1Rank, player2Rank);
+        this.player['two'].games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(player2Rank, player1Rank);
+      }
+      this.current_game = this.getNewGame();
     }
 
-    TournamentMatch.prototype.defaults = {};
-
-    TournamentMatch.prototype.initialize = function() {
-      _.extend(this, this.defaults);
-      return console.log(this);
+    Match.prototype.getNewGame = function() {
+      return new $CS.Models.Game.EightBall(function() {
+        return this.player['one'];
+      }, function() {
+        return this.player['two'];
+      }, function() {
+        if (this.getRemainingGamesNeededToWinByPlayer(1) === 0) {
+          this.player_one_won = true;
+          return this.ended = true;
+        } else if (this.getRemainingGamesNeededToWinByPlayer(2) === 0) {
+          this.player_two_won = true;
+          return this.ended = true;
+        }
+      });
     };
 
-    return TournamentMatch;
+    Match.prototype.getTotalInnings = function() {
+      var i, totalInnings;
+      totalInnings = this.current_game.number_of_innings;
+      if (this.completed_games.length > 0) {
+        i = 0;
+        while (i <= (this.completed_games.length - 1)) {
+          totalInnings += this.completed_games[i].number_of_innings;
+          i++;
+        }
+      }
+      return totalInnings.toString();
+    };
 
-  })($CS.Models.Match.Type);
+    Match.prototype.getTotalSafeties = function() {
+      return this.player['one'].getSafeties() + " to " + this.player['two'].getSafeties();
+    };
 
-  $CS.Models.Match.Type.TournamentMatch = TournamentMatch;
+    Match.prototype.getCurrentGameNumber = function() {
+      return (this.completed_games.length + 1).toString();
+    };
+
+    Match.prototype.getMatchPointsByTeamNumber = function(teamNumber) {
+      if (this.player['one'].team_number === teamNumber) {
+        return this.getMatchPointsByPlayer(1);
+      } else {
+        if (this.player['two'].team_number === teamNumber) {
+          return this.getMatchPointsByPlayer(2);
+        }
+      }
+      return 0;
+    };
+
+    Match.prototype.getWinningPlayer = function() {
+      if ((this.getGamesWonByPlayer(1) / this.player['one'].games_needed_to_win) > (this.getGamesWonByPlayer(2) / this.player['two'].games_needed_to_win)) {
+        return this.player['one'];
+      }
+      return this.player['two'];
+    };
+
+    Match.prototype.getRemainingGamesNeededToWinByPlayer = function(playerNum) {
+      if (playerNum === 1) {
+        return (this.player['one'].games_needed_to_win - this.getGamesWonByPlayer(1)).toString();
+      } else if (playerNum === 2) {
+        return (this.player['two'].games_needed_to_win - this.getGamesWonByPlayer(2)).toString();
+      }
+    };
+
+    Match.prototype.getGamesWonByPlayer = function(playerNum) {
+      var gamesWon, i;
+      i = 0;
+      if (playerNum === 1) {
+        gamesWon = (this.current_game.player['one'].has_won === true ? 1 : 0);
+        while (i <= (this.completed_games.length - 1)) {
+          if (this.completed_games[i].player['one'].has_won === true) {
+            gamesWon = gamesWon + 1;
+          }
+          i++;
+        }
+      } else if (playerNum === 2) {
+        gamesWon = (this.current_game.player['two'].has_won === true ? 1 : 0);
+        while (i <= (this.CompletedGames.length - 1)) {
+          if (this.CompletedGames[i].player['two'].has_won === true) {
+            gamesWon = gamesWon + 1;
+          }
+          i++;
+        }
+      }
+      return gamesWon;
+    };
+
+    Match.prototype.getMatchPointsByPlayer = function(playerNum) {
+      if ((this.getGamesWonByPlayer(1) / this.player['one'].games_needed_to_win) > (this.getGamesWonByPlayer(2) / this.player['two'].games_needed_to_win)) {
+        return 1;
+      }
+      return 0;
+    };
+
+    Match.prototype.getMatchPoints = function() {
+      if (this.getMatchPointsByPlayer(1) === this.getMatchPointsByPlayer(2)) {
+        return "TIE";
+      }
+      return this.getMatchPointsByPlayer(1) + "-" + this.getMatchPointsByPlayer(2);
+    };
+
+    Match.prototype.setSuddenDeathMode = function() {
+      this.sudden_death = true;
+      this.player['one'].games_needed_to_win = 1;
+      return this.player['two'].games_needed_to_win = 1;
+    };
+
+    Match.prototype.scoreNumberedBall = function(ballNumber) {
+      this.are_players_switching = false;
+      this.current_game.scoreBall(ballNumber);
+      if (this.isPlayerWinning(1) === true) {
+        this.player_number_winning = 1;
+      } else {
+        this.player_number_winning = 2;
+      }
+      return this.checkForWin();
+    };
+
+    Match.prototype.shotMissed = function() {
+      this.current_game.nextPlayerIsUp();
+      if (this.current_game.breaking_player_still_shooting === false) {
+        return this.are_players_switching = true;
+      }
+    };
+
+    Match.prototype.hitSafety = function() {
+      return this.current_game.hitSafety();
+    };
+
+    Match.prototype.checkForWin = function() {};
+
+    Match.prototype.startNewGame = function() {
+      if (this.current_game.ended === true) {
+        this.completed_games.push(this.current_game);
+        return this.current_game = this.getNewGame();
+      }
+    };
+
+    Match.prototype.resetPlayerRankStats = function() {
+      this.player['one'].games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(this.player['one'].rank, this.player['two'].rank);
+      this.player['two'].games_needed_to_win = new $CS.Models.Ranks.EightBall().getGamesNeedToWin(this.player['two'].rank, this.player['one'].rank);
+      this.player['one'].resetPlayerRankStats();
+      return this.player['two'].resetPlayerRankStats();
+    };
+
+    Match.prototype.isPlayerWinning = function(playerNum) {
+      if (playerNum === 1) {
+        if ((this.getGamesWonByPlayer(1) / this.player['one'].games_needed_to_win) > (this.getGamesWonByPlayer(2) / this.player['two'].games_needed_to_win)) {
+          return true;
+        }
+        return false;
+      } else if (playerNum === 2) {
+        if ((this.getGamesWonByPlayer(1) / this.player['one'].games_needed_to_win) < (this.getGamesWonByPlayer(2) / this.player['two'].games_needed_to_win)) {
+          return true;
+        }
+        return false;
+      }
+    };
+
+    Match.prototype.toJSON = function() {
+      return {
+        player_one: this.player['one'].toJSON(),
+        player_two: this.player['two'].toJSON(),
+        player_one_games_won: this.getGamesWonByPlayer(1),
+        player_two_games_won: this.getGamesWonByPlayer(2),
+        current_game: this.current_game.toJSON(),
+        completed_games: this.completedGamesToJSON(),
+        sudden_death: this.sudden_death,
+        forfeit: this.forfeit,
+        ended: this.ended,
+        original_id: this.original_id,
+        league_match_id: this.league_match_id
+      };
+    };
+
+    Match.prototype.completedGamesToJSON = function() {
+      var arrayToReturn, i;
+      arrayToReturn = [];
+      i = 0;
+      while (i <= this.completed_games.length - 1) {
+        arrayToReturn[i] = this.completed_games[i].toJSON();
+        i++;
+      }
+      return arrayToReturn;
+    };
+
+    Match.prototype.fromJSON = function(json) {
+      var currentGame;
+      this.player['one'] = this.playerFromJSON(json.player_one);
+      this.player['two'] = this.playerFromJSON(json.player_two);
+      this.resetPlayerRankStats();
+      this.completed_games = this.completedGamesFromJSON(json.completed_games);
+      this.sudden_death = json.sudden_death;
+      this.forfeit = json.forfeit;
+      this.ended = json.ended;
+      this.original_id = json.original_id;
+      this.league_match_id = json.league_match_id;
+      currentGame = this.getNewGame();
+      currentGame.fromJSON(new function() {
+        return json.current_game;
+      });
+      return this.current_game = currentGame;
+    };
+
+    Match.prototype.playerFromJSON = function(json) {
+      var player;
+      player = new EightBallPlayer();
+      player.fromJSON(new function() {
+        return json;
+      });
+      return player;
+    };
+
+    Match.prototype.completedGamesFromJSON = function(json) {
+      var arrayToReturn, completedGame, i;
+      arrayToReturn = [];
+      i = 0;
+      while (i <= json.length - 1) {
+        completedGame = this.getNewGame();
+        completedGame.fromJSON(new function() {
+          return json[i];
+        });
+        arrayToReturn.push(completedGame);
+        i++;
+      }
+      return arrayToReturn;
+    };
+
+    return Match;
+
+  })($CS.Models.EightBall);
+
+  $CS.Models.EightBall.Match = Match;
 
   Player = (function(_super) {
 
@@ -1891,49 +1502,7 @@
 
     Player.name = 'Player';
 
-    function Player() {
-      return Player.__super__.constructor.apply(this, arguments);
-    }
-
     Player.prototype.defaults = {
-      name: "Fetus",
-      age: 0,
-      children: []
-    };
-
-    Player.prototype.initialize = function() {
-      _.extend(this, this.defaults);
-      console.log("Welcome to this world");
-      return this.bind("change:name", function() {
-        var name;
-        name = this.get("name");
-        return console.log("Changed my name to " + name);
-      });
-    };
-
-    Player.prototype.replaceNameAttr = function(name) {
-      return this.set({
-        name: name
-      });
-    };
-
-    return Player;
-
-  })(Backbone.Model);
-
-  $CS.Models.Player = Player;
-
-  EightBall = (function(_super) {
-
-    __extends(EightBall, _super);
-
-    EightBall.name = 'EightBall';
-
-    function EightBall() {
-      return EightBall.__super__.constructor.apply(this, arguments);
-    }
-
-    EightBall.prototype.defaults = {
       name: null,
       rank: null,
       number: null,
@@ -1948,24 +1517,21 @@
       is_captain: false
     };
 
-    EightBall.prototype.initialize = function(options) {
+    function Player(options) {
+      var _ref, _ref1, _ref2, _ref3;
       _.extend(this, this.defaults);
-      this.name = options.name || null;
-      this.rank = options.rank || null;
-      this.number = options.playerNumber || null;
-      this.team_number = options.teamNumber || null;
-      return this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(this.rank);
-    };
+      this.name = (_ref = options.name) != null ? _ref : options.name = null;
+      this.rank = (_ref1 = options.rank) != null ? _ref1 : options.rank = null;
+      this.number = (_ref2 = options.playerNumber) != null ? _ref2 : options.playerNumber = null;
+      this.team_number = (_ref3 = options.teamNumber) != null ? _ref3 : options.teamNumber = null;
+      this.timeouts_allowed = new $CS.Models.EightBall.Ranks().getTimeouts(this.rank);
+    }
 
-    EightBall.prototype.getGamesNeededToWin = function() {
+    Player.prototype.getGamesNeededToWin = function() {
       return this.games_needed_to_win.toString();
     };
 
-    EightBall.prototype.getRemainingBallCount = function() {
-      return (this.ball_count - this.score).toString();
-    };
-
-    EightBall.prototype.getFirstNameWithInitials = function() {
+    Player.prototype.getFirstNameWithInitials = function() {
       var nameToReturn, spaceIndex;
       spaceIndex = this.name.indexOf(" ");
       if (spaceIndex === -1) {
@@ -1975,51 +1541,43 @@
       return nameToReturn + " " + this.name[spaceIndex + 1] + ".";
     };
 
-    EightBall.prototype.getSafeties = function() {
-      return this.safeties.toString();
+    Player.prototype.getSafeties = function() {
+      return this.safeties;
     };
 
-    EightBall.prototype.getGamesWon = function() {
+    Player.prototype.getGamesWon = function() {
       return this.games_won.toString();
     };
 
-    EightBall.prototype.getRatioScore = function() {
-      return this.score / this.ball_count;
-    };
-
-    EightBall.prototype.getEightOnSnaps = function() {
+    Player.prototype.getEightOnSnaps = function() {
       return this.eight_on_snaps.toString();
     };
 
-    EightBall.prototype.getBreakAndRuns = function() {
+    Player.prototype.getBreakAndRuns = function() {
       return this.break_and_runs.toString();
     };
 
-    EightBall.prototype.resetPlayerRankStats = function() {
-      return this.timeouts_allowed = new $CS.Models.Rank.EightBall().getTimeouts(this.rank);
+    Player.prototype.resetPlayerRankStats = function() {
+      return this.timeouts_allowed = new $CS.Models.EightBall.Ranks().getTimeouts(this.rank);
     };
 
-    EightBall.prototype.addToGamesWon = function(num) {
+    Player.prototype.addToGamesWon = function(num) {
       return this.games_won += num;
     };
 
-    EightBall.prototype.addToSafeties = function(num) {
+    Player.prototype.addToSafeties = function(num) {
       return this.safeties += num;
     };
 
-    EightBall.prototype.hasWon = function() {
-      return this.score >= this.ball_count;
-    };
-
-    EightBall.prototype.addToEightOnSnaps = function(num) {
+    Player.prototype.addToEightOnSnaps = function(num) {
       return this.eight_on_snaps += num;
     };
 
-    EightBall.prototype.addToBreakAndRuns = function(num) {
+    Player.prototype.addToBreakAndRuns = function(num) {
       return this.break_and_runs += num;
     };
 
-    EightBall.prototype.toJSON = function() {
+    Player.prototype.toJSON = function() {
       return {
         name: this.name,
         rank: this.rank,
@@ -2034,9 +1592,9 @@
       };
     };
 
-    EightBall.prototype.fromJSON = function(playerJSON) {
+    Player.prototype.fromJSON = function(playerJSON) {
       this.name = playerJSON.name;
-      this.tank = playerJSON.rank;
+      this.rank = playerJSON.rank;
       this.number = playerJSON.number;
       this.team_number = playerJSON.team_number;
       this.games_won = playerJSON.games_won;
@@ -2047,141 +1605,47 @@
       return this.resetPlayerRankStats();
     };
 
-    return EightBall;
+    return Player;
 
-  })($CS.Models.Player);
+  })($CS.Models.EightBall);
 
-  $CS.Models.Player.EightBall = EightBall;
+  $CS.Models.EightBall.Player = Player;
 
-  NineBall = (function(_super) {
+  PracticeMatch = (function(_super) {
 
-    __extends(NineBall, _super);
+    __extends(PracticeMatch, _super);
 
-    NineBall.name = 'NineBall';
+    PracticeMatch.name = 'PracticeMatch';
 
-    function NineBall() {
-      return NineBall.__super__.constructor.apply(this, arguments);
-    }
+    PracticeMatch.prototype.defaults = {};
 
-    NineBall.prototype.defaults = {};
-
-    NineBall.prototype.initialize = function(name, rank, number, teamNumber) {
+    function PracticeMatch() {
       _.extend(this, this.defaults);
-      return console.log(this);
-    };
-
-    return NineBall;
-
-  })($CS.Models.Player);
-
-  $CS.Models.Player.NineBall = NineBall;
-
-  Post = (function(_super) {
-
-    __extends(Post, _super);
-
-    Post.name = 'Post';
-
-    function Post() {
-      return Post.__super__.constructor.apply(this, arguments);
+      console.log(this);
     }
 
-    Post.prototype.url = "" + $CS.API_ENDPOINT + "/posts";
+    return PracticeMatch;
 
-    Post.prototype.toParams = function() {
-      return $CS.Utils.QueryStringBuilder.stringify(this.attributes, "post");
-    };
+  })($CS.Models.EightBall);
 
-    Post.prototype.toJSON = function() {
-      return {
-        post: this.attributes
-      };
-    };
+  $CS.Models.EightBall.PracticeMatch = PracticeMatch;
 
-    return Post;
+  Ranks = (function(_super) {
 
-  })(Backbone.Model);
+    __extends(Ranks, _super);
 
-  Posts = (function(_super) {
+    Ranks.name = 'Ranks';
 
-    __extends(Posts, _super);
-
-    Posts.name = 'Posts';
-
-    function Posts() {
-      return Posts.__super__.constructor.apply(this, arguments);
-    }
-
-    Posts.prototype.url = "" + $CS.API_ENDPOINT + "/posts";
-
-    Posts.prototype.model = Post;
-
-    return Posts;
-
-  })(Backbone.Collection);
-
-  $CS.Models.Post = Post;
-
-  $CS.Models.Posts = Posts;
-
-  Rank = (function(_super) {
-
-    __extends(Rank, _super);
-
-    Rank.name = 'Rank';
-
-    function Rank() {
-      return Rank.__super__.constructor.apply(this, arguments);
-    }
-
-    Rank.prototype.defaults = {
-      name: "Fetus",
-      age: 0,
-      children: []
-    };
-
-    Rank.prototype.initialize = function() {
-      _.extend(this, this.defaults);
-      console.log("Welcome to this world");
-      return this.bind("change:name", function() {
-        var name;
-        name = this.get("name");
-        return console.log("Changed my name to " + name);
-      });
-    };
-
-    Rank.prototype.replaceNameAttr = function(name) {
-      return this.set({
-        name: name
-      });
-    };
-
-    return Rank;
-
-  })(Backbone.Model);
-
-  $CS.Models.Rank = Rank;
-
-  EightBall = (function(_super) {
-
-    __extends(EightBall, _super);
-
-    EightBall.name = 'EightBall';
-
-    function EightBall() {
-      return EightBall.__super__.constructor.apply(this, arguments);
-    }
-
-    EightBall.prototype.defaults = {
+    Ranks.prototype.defaults = {
       games_to_win: []
     };
 
-    EightBall.prototype.initialize = function() {
+    function Ranks() {
       _.extend(this, this.defaults);
-      return this.setRanks();
-    };
+      this.setRanks();
+    }
 
-    EightBall.prototype.getGamesNeedToWin = function(myRank, opponentRank) {
+    Ranks.prototype.getGamesNeedToWin = function(myRank, opponentRank) {
       var gamesNeeded;
       if (myRank > 1 && myRank < 8 && opponentRank > 1 && opponentRank < 8) {
         gamesNeeded = this.games_to_win[myRank][opponentRank];
@@ -2190,7 +1654,7 @@
       return 0;
     };
 
-    EightBall.prototype.getTimeouts = function(rank) {
+    Ranks.prototype.getTimeouts = function(rank) {
       if (rank < 4) {
         return 2;
       } else {
@@ -2201,7 +1665,7 @@
       return 0;
     };
 
-    EightBall.prototype.setRanks = function() {
+    Ranks.prototype.setRanks = function() {
       this.games_to_win[2] = [];
       this.games_to_win[2][2] = 2;
       this.games_to_win[2][3] = 2;
@@ -2246,23 +1710,316 @@
       return this.games_to_win[7][7] = 5;
     };
 
-    return EightBall;
+    return Ranks;
 
-  })($CS.Models.Rank);
+  })($CS.Models.EightBall);
 
-  $CS.Models.Rank.EightBall = EightBall;
+  $CS.Models.EightBall.Ranks = Ranks;
 
-  NineBall = (function(_super) {
+  TournamentMatch = (function(_super) {
 
-    __extends(NineBall, _super);
+    __extends(TournamentMatch, _super);
 
-    NineBall.name = 'NineBall';
+    TournamentMatch.name = 'TournamentMatch';
 
-    function NineBall() {
-      return NineBall.__super__.constructor.apply(this, arguments);
+    TournamentMatch.prototype.defaults = {};
+
+    function TournamentMatch() {
+      _.extend(this, this.defaults);
+      console.log(this);
     }
 
-    NineBall.prototype.defaults = {
+    return TournamentMatch;
+
+  })($CS.Models.EightBall);
+
+  $CS.Models.EightBall.TournamentMatch = TournamentMatch;
+
+  Game = (function(_super) {
+
+    __extends(Game, _super);
+
+    Game.name = 'Game';
+
+    Game.prototype.defaults = {
+      name: "Fetus",
+      age: 0,
+      children: []
+    };
+
+    function Game(options) {
+      if (options == null) {
+        options = {};
+      }
+      _.extend(this, this.defaults);
+      this.name = options.name;
+      this.age = options.age;
+      this.children = options.children;
+      this.bind("change:name", function() {
+        var name;
+        return name = this.get("name");
+      });
+    }
+
+    Game.prototype.replaceNameAttr = function(name) {
+      return this.set({
+        name: name
+      });
+    };
+
+    return Game;
+
+  })(Backbone.Model);
+
+  $CS.Models.Game = Game;
+
+  League = (function(_super) {
+
+    __extends(League, _super);
+
+    League.name = 'League';
+
+    League.prototype.defaults = {
+      name: "Fetus",
+      age: 0,
+      children: []
+    };
+
+    function League(options) {
+      if (options == null) {
+        options = {};
+      }
+      _.extend(this, this.defaults);
+      this.name = options.name;
+      this.age = options.age;
+      this.children = options.children;
+      this.bind("change:name", function() {
+        var name;
+        return name = this.get("name");
+      });
+    }
+
+    League.prototype.replaceNameAttr = function(name) {
+      return this.set({
+        name: name
+      });
+    };
+
+    return League;
+
+  })(Backbone.Model);
+
+  $CS.Models.League = League;
+
+  DoubleJeopardy = (function(_super) {
+
+    __extends(DoubleJeopardy, _super);
+
+    DoubleJeopardy.name = 'DoubleJeopardy';
+
+    function DoubleJeopardy() {
+      return DoubleJeopardy.__super__.constructor.apply(this, arguments);
+    }
+
+    DoubleJeopardy.prototype.defaults = {};
+
+    DoubleJeopardy.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return _.extend(this, this.defaults);
+    };
+
+    return DoubleJeopardy;
+
+  })($CS.Models.League);
+
+  $CS.Models.League.DoubleJeopardy = DoubleJeopardy;
+
+  Doubles = (function(_super) {
+
+    __extends(Doubles, _super);
+
+    Doubles.name = 'Doubles';
+
+    function Doubles() {
+      return Doubles.__super__.constructor.apply(this, arguments);
+    }
+
+    Doubles.prototype.defaults = {};
+
+    Doubles.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return _.extend(this, this.defaults);
+    };
+
+    return Doubles;
+
+  })($CS.Models.League);
+
+  $CS.Models.League.Doubles = Doubles;
+
+  Masters = (function(_super) {
+
+    __extends(Masters, _super);
+
+    Masters.name = 'Masters';
+
+    function Masters() {
+      return Masters.__super__.constructor.apply(this, arguments);
+    }
+
+    Masters.prototype.defaults = {};
+
+    Masters.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return _.extend(this, this.defaults);
+    };
+
+    return Masters;
+
+  })($CS.Models.League);
+
+  $CS.Models.League.Masters = Masters;
+
+  MixedDoubles = (function(_super) {
+
+    __extends(MixedDoubles, _super);
+
+    MixedDoubles.name = 'MixedDoubles';
+
+    function MixedDoubles() {
+      return MixedDoubles.__super__.constructor.apply(this, arguments);
+    }
+
+    MixedDoubles.prototype.defaults = {};
+
+    MixedDoubles.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return _.extend(this, this.defaults);
+    };
+
+    return MixedDoubles;
+
+  })($CS.Models.League);
+
+  $CS.Models.League.MixedDoubles = MixedDoubles;
+
+  Womens = (function(_super) {
+
+    __extends(Womens, _super);
+
+    Womens.name = 'Womens';
+
+    function Womens() {
+      return Womens.__super__.constructor.apply(this, arguments);
+    }
+
+    Womens.prototype.defaults = {};
+
+    Womens.prototype.initialize = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      return _.extend(this, this.defaults);
+    };
+
+    return Womens;
+
+  })($CS.Models.League);
+
+  $CS.Models.League.Womens = Womens;
+
+  Match = (function(_super) {
+
+    __extends(Match, _super);
+
+    Match.name = 'Match';
+
+    Match.prototype.defaults = {};
+
+    function Match() {
+      _.extend(this, this.defaults);
+    }
+
+    return Match;
+
+  })(Backbone.Model);
+
+  $CS.Models.Match = Match;
+
+  Game = (function(_super) {
+
+    __extends(Game, _super);
+
+    Game.name = 'Game';
+
+    Game.prototype.defaults = {};
+
+    function Game(addToPlayerOne, addToPlayerTwo, callback) {
+      _.extend(this, this.defaults);
+      console.log(this);
+    }
+
+    return Game;
+
+  })($CS.Models.NineBall);
+
+  $CS.Models.NineBall.Game = Game;
+
+  League = (function(_super) {
+
+    __extends(League, _super);
+
+    League.name = 'League';
+
+    League.prototype.defaults = {};
+
+    function League(options) {
+      if (options == null) {
+        options = {};
+      }
+      _.extend(this, this.defaults);
+    }
+
+    return League;
+
+  })($CS.Models.NineBall);
+
+  $CS.Models.NineBall.League = League;
+
+  Player = (function(_super) {
+
+    __extends(Player, _super);
+
+    Player.name = 'Player';
+
+    Player.prototype.defaults = {};
+
+    function Player(name, rank, number, teamNumber) {
+      _.extend(this, this.defaults);
+      console.log(this);
+    }
+
+    return Player;
+
+  })($CS.Models.NineBall);
+
+  $CS.Models.NineBall.Player = Player;
+
+  Ranks = (function(_super) {
+
+    __extends(Ranks, _super);
+
+    Ranks.name = 'Ranks';
+
+    Ranks.prototype.defaults = {
       ball_counts: {
         1: 14,
         2: 19,
@@ -2276,29 +2033,29 @@
       }
     };
 
-    NineBall.prototype.initialize = function() {
+    function Ranks() {
       _.extend(this, this.defaults);
-      return this.setRanks();
-    };
+      this.setRanks();
+    }
 
-    NineBall.prototype.getBallCount = function(rank) {
+    Ranks.prototype.getBallCount = function(rank) {
       return parseInt(this.ball_counts[rank], 10);
     };
 
-    NineBall.prototype.getLosingPlayersMatchPoints = function(loserRank, loserScore) {
+    Ranks.prototype.getLosingPlayersMatchPoints = function(loserRank, loserScore) {
       var losingMatchPoints;
       losingMatchPoints = this.losersMatchPoints[loserRank][loserScore];
       return losingMatchPoints;
     };
 
-    NineBall.prototype.getWinningPlayersMatchPoints = function(loserRank, loserScore) {
+    Ranks.prototype.getWinningPlayersMatchPoints = function(loserRank, loserScore) {
       var losingMatchPoints, winningMatchPoints;
       losingMatchPoints = this.losersMatchPoints[loserRank][loserScore];
       winningMatchPoints = 20 - this.losersMatchPoints[loserRank][loserScore];
       return winningMatchPoints;
     };
 
-    NineBall.prototype.getTimeouts = function(rank) {
+    Ranks.prototype.getTimeouts = function(rank) {
       if (rank < 4) {
         return 2;
       } else {
@@ -2309,7 +2066,7 @@
       return 0;
     };
 
-    NineBall.prototype.setRanks = function() {
+    Ranks.prototype.setRanks = function() {
       this.losersMatchPoints = [];
       this.losersMatchPoints[1] = [];
       this.losersMatchPoints[1][0] = 0;
@@ -2690,11 +2447,109 @@
       return this.losersMatchPoints[9][74] = 8;
     };
 
-    return NineBall;
+    return Ranks;
 
-  })($CS.Models.Rank);
+  })($CS.Models.NineBall);
 
-  $CS.Models.Rank.NineBall = NineBall;
+  $CS.Models.NineBall.Ranks = Ranks;
+
+  Player = (function(_super) {
+
+    __extends(Player, _super);
+
+    Player.name = 'Player';
+
+    Player.prototype.defaults = {
+      name: "Fetus",
+      age: 0,
+      children: []
+    };
+
+    function Player() {
+      _.extend(this, this.defaults);
+      this.bind("change:name", function() {
+        var name;
+        return name = this.get("name");
+      });
+    }
+
+    Player.prototype.replaceNameAttr = function(name) {
+      return this.set({
+        name: name
+      });
+    };
+
+    return Player;
+
+  })(Backbone.Model);
+
+  $CS.Models.Player = Player;
+
+  Post = (function(_super) {
+
+    __extends(Post, _super);
+
+    Post.name = 'Post';
+
+    function Post() {
+      return Post.__super__.constructor.apply(this, arguments);
+    }
+
+    Post.prototype.url = "" + $CS.API_ENDPOINT + "/posts";
+
+    Post.prototype.toParams = function() {
+      return $CS.Utils.QueryStringBuilder.stringify(this.attributes, "post");
+    };
+
+    Post.prototype.toJSON = function() {
+      return {
+        post: this.attributes
+      };
+    };
+
+    return Post;
+
+  })(Backbone.Model);
+
+  Posts = (function(_super) {
+
+    __extends(Posts, _super);
+
+    Posts.name = 'Posts';
+
+    function Posts() {
+      return Posts.__super__.constructor.apply(this, arguments);
+    }
+
+    Posts.prototype.url = "" + $CS.API_ENDPOINT + "/posts";
+
+    Posts.prototype.model = Post;
+
+    return Posts;
+
+  })(Backbone.Collection);
+
+  $CS.Models.Post = Post;
+
+  $CS.Models.Posts = Posts;
+
+  Rank = (function(_super) {
+
+    __extends(Rank, _super);
+
+    Rank.name = 'Rank';
+
+    Rank.prototype.defaults = {};
+
+    function Rank() {
+      _.extend(this, this.defaults);
+    }
+
+    return Rank;
+
+  })(Backbone.Model);
+
+  $CS.Models.Rank = Rank;
 
   Team = (function(_super) {
 
@@ -2702,31 +2557,11 @@
 
     Team.name = 'Team';
 
+    Team.prototype.defaults = {};
+
     function Team() {
-      return Team.__super__.constructor.apply(this, arguments);
-    }
-
-    Team.prototype.defaults = {
-      name: "Fetus",
-      age: 0,
-      children: []
-    };
-
-    Team.prototype.initialize = function() {
       _.extend(this, this.defaults);
-      console.log("Welcome to this world");
-      return this.bind("change:name", function() {
-        var name;
-        name = this.get("name");
-        return console.log("Changed my name to " + name);
-      });
-    };
-
-    Team.prototype.replaceNameAttr = function(name) {
-      return this.set({
-        name: name
-      });
-    };
+    }
 
     return Team;
 

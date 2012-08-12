@@ -4,7 +4,7 @@ class League extends Backbone.Model
     age: 0
     children: []
 
-  initialize: (options = {}) ->
+  constructor: (options = {}) ->
     _.extend @, @defaults
     
     @name      = options.name

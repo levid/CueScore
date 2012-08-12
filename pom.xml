@@ -67,6 +67,7 @@
               <pattern>.+/backbone-min\.js</pattern>
               <pattern>.+/underscore-min\.js</pattern>
               <pattern>.+/contains\.js</pattern>
+              <pattern>.+/*_spec\.js</pattern>
             </noInstrumentPatterns>
         </configuration>
       </plugin>

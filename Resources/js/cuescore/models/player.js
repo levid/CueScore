@@ -10,23 +10,19 @@
 
     Player.name = 'Player';
 
-    function Player() {
-      return Player.__super__.constructor.apply(this, arguments);
-    }
-
     Player.prototype.defaults = {
       name: "Fetus",
       age: 0,
       children: []
     };
 
-    Player.prototype.initialize = function() {
+    function Player() {
       _.extend(this, this.defaults);
-      return this.bind("change:name", function() {
+      this.bind("change:name", function() {
         var name;
         return name = this.get("name");
       });
-    };
+    }
 
     Player.prototype.replaceNameAttr = function(name) {
       return this.set({

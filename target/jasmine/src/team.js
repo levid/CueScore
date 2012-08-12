@@ -10,15 +10,11 @@
 
     Team.name = 'Team';
 
-    function Team() {
-      return Team.__super__.constructor.apply(this, arguments);
-    }
-
     Team.prototype.defaults = {};
 
-    Team.prototype.initialize = function() {
-      return _.extend(this, this.defaults);
-    };
+    function Team() {
+      _.extend(this, this.defaults);
+    }
 
     return Team;
 

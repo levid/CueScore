@@ -11,11 +11,24 @@ CueScore = root.CueScore =
   Controllers: 
     DashboardController: {}
   Models:
-    Format:
-      EightBall:
-        Game: {}
-        Match: {}
-    Game: {}
+    EightBall: 
+      Player: {}
+      Game: {}
+      Match: {}
+      Ranks: {}
+      League: {}
+      LeagueMatch: {}
+      PracticeMatch: {}
+      TournamentMatch: {}
+    NineBall: 
+      Player: {}
+      Game: {}
+      Match: {}
+      Ranks: {}
+      League: {}
+      LeagueMatch: {}
+      PracticeMatch: {}
+      TournamentMatch: {}
     League:
       Doubles: {}
       MixedDoubles: {}
@@ -24,13 +37,6 @@ CueScore = root.CueScore =
       Masters: {}
       EightBall: {}
       NineBall: {}
-    Match: 
-      Type:
-        LeagueMatch: {}
-        PracticeMatch: {}
-        TournamentMatch: {}
-    Player: {}
-    Rank: {}
     Team: {}
   Helpers:  {}
   Views:

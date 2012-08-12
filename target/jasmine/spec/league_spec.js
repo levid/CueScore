@@ -2,37 +2,39 @@
 (function() {
 
   describe("League", function() {
-    var attributes, model;
+    var model;
     model = void 0;
-    attributes = void 0;
     beforeEach(function() {
-      model = new $CS.Models.League();
-      return attributes = model.attributes;
+      var options;
+      return model = new $CS.Models.League(options = {
+        name: "Isaac Wooten",
+        age: 1,
+        children: []
+      });
     });
     return describe("Constructor", function() {
       it("should be able to create a new League", function() {
-        model.initialize();
         return expect(model).not.toBeUndefined();
       });
       it("should contain default attributes", function() {
-        expect(attributes.name).toBeDefined();
-        expect(attributes.age).toBeDefined();
-        expect(attributes.children).toBeDefined();
-        expect(attributes.name).toEqual("Fetus");
-        expect(attributes.age).toEqual(0);
-        return expect(attributes.children).toEqual([]);
+        expect(model.name).toBeDefined();
+        expect(model.age).toBeDefined();
+        expect(model.children).toBeDefined();
+        expect(model.name).toEqual("Isaac Wooten");
+        expect(model.age).toEqual(1);
+        return expect(model.children).toEqual([]);
       });
       return it("should store the parameters", function() {
-        var options;
+        var attributes, options;
         model = new $CS.Models.League(options = {
           name: "Isaac Wooten",
           age: 1,
           children: []
         });
         attributes = model.attributes;
-        expect(attributes.name).toEqual("Isaac Wooten");
-        expect(attributes.age).toEqual(1);
-        return expect(attributes.children).toEqual([]);
+        expect(model.name).toEqual("Isaac Wooten");
+        expect(model.age).toEqual(1);
+        return expect(model.children).toEqual([]);
       });
     });
   });

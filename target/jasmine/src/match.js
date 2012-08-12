@@ -10,15 +10,11 @@
 
     Match.name = 'Match';
 
-    function Match() {
-      return Match.__super__.constructor.apply(this, arguments);
-    }
-
     Match.prototype.defaults = {};
 
-    Match.prototype.initialize = function() {
-      return _.extend(this, this.defaults);
-    };
+    function Match() {
+      _.extend(this, this.defaults);
+    }
 
     return Match;
 

@@ -1,23 +1,26 @@
 describe "League", ->
   model = undefined
-  attributes = undefined
   
   beforeEach ->
-    model = new $CS.Models.League()
-    attributes = model.attributes
+    model = new $CS.Models.League(
+      options =
+        name: "Isaac Wooten"
+        age: 1
+        children: []
+    )
 
   describe "Constructor", ->
     it "should be able to create a new League", ->
-      model.initialize()
       expect(model).not.toBeUndefined()
 
     it "should contain default attributes", ->
-      expect(attributes.name).toBeDefined()
-      expect(attributes.age).toBeDefined()
-      expect(attributes.children).toBeDefined()
-      expect(attributes.name).toEqual "Fetus"
-      expect(attributes.age).toEqual 0
-      expect(attributes.children).toEqual []
+      expect(model.name).toBeDefined()
+      expect(model.age).toBeDefined()
+      expect(model.children).toBeDefined()
+      
+      expect(model.name).toEqual "Isaac Wooten"
+      expect(model.age).toEqual 1
+      expect(model.children).toEqual []
 
     it "should store the parameters", ->
       model = new $CS.Models.League(
@@ -28,7 +31,7 @@ describe "League", ->
       )
       
       attributes = model.attributes
-      expect(attributes.name).toEqual "Isaac Wooten"
-      expect(attributes.age).toEqual 1
-      expect(attributes.children).toEqual []
+      expect(model.name).toEqual "Isaac Wooten"
+      expect(model.age).toEqual 1
+      expect(model.children).toEqual []
 

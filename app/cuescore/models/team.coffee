@@ -1,7 +1,7 @@
 class Team extends Backbone.Model
   defaults: {}
 
-  initialize: ->
+  constructor: ->
     _.extend @, @defaults
 
 $CS.Models.Team = Team
