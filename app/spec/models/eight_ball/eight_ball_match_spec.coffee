@@ -324,55 +324,57 @@ describe "Eight Ball Match", ->
 
   describe "toJSON/fromJSON", ->
     it "should be able to take a new Match and turn it into a JSON object", ->
-      console.log match
       expect(match.toJSON()).toEqual
-        player_one:
-          name: "Player1"
-          rank: 2
-          games_needed_to_win: 2
-          number: "12345"
-          team_number: "123"
-          games_won: 0
-          safeties: 0
-          eight_on_snaps: 0
-          break_and_runs: 0
-          currently_up: true
-
-        player_two:
-          name: "Player2"
-          rank: 7
-          games_needed_to_win: 7
-          number: "987654"
-          team_number: "456"
-          games_won: 0
-          safeties: 0
-          eight_on_snaps: 0
-          break_and_runs: 0
-          currently_up: false
-
-        player_one_games_won: 0
-        player_two_games_won: 0
+        player:
+          one:
+            name: "Player1"
+            rank: 2
+            games_needed_to_win: 2
+            number: "12345"
+            team_number: "123"
+            games_won: 0
+            safeties: 0
+            eight_on_snaps: 0
+            break_and_runs: 0
+            currently_up: true
+    
+          two:
+            name: "Player2"
+            rank: 7
+            games_needed_to_win: 7
+            number: "987654"
+            team_number: "456"
+            games_won: 0
+            safeties: 0
+            eight_on_snaps: 0
+            break_and_runs: 0
+            currently_up: false
+    
+        player_one_won: 3
+        player_two_won: 0
         current_game:
-          player_one_timeouts_taken: 0
+          player_one_timeouts_taken: 2
           player_two_timeouts_taken: 0
-          number_of_innings: 0
           player_one_eight_on_snap: false
-          player_one_break_and_run: false
+          player_one_break_and_run: true
           player_two_eight_on_snap: false
           player_two_break_and_run: false
-          player_one_ball_type: null
-          player_two_ball_type: null
-          player_one_eight_ball: []
+          player_one_ball_type: 2
+          player_two_ball_type: 1
+          player_one_eight_ball: [8]
           player_two_eight_ball: []
-          player_one_won: false
+          player_one_won: true
           player_two_won: false
-          ended: false
+          number_of_innings: 0
+          early_eight: false
+          scratch_on_eight: false
+          breaking_player_still_shooting: true
           striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15]
           solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7]
           last_ball_hit_in: null
           on_break: true
-          breaking_player_still_shooting: true
-
+          ended: false
+    
         completed_games: [
           player_one_timeouts_taken: 2
           player_two_timeouts_taken: 0
@@ -382,25 +384,48 @@ describe "Eight Ball Match", ->
           player_two_break_and_run: false
           player_one_ball_type: 2
           player_two_ball_type: 1
-          player_one_eight_ball: [ 8 ]
-          player_two_eight_ball: [  ]
+          player_one_eight_ball: [8]
+          player_two_eight_ball: []
           player_one_won: true
           player_two_won: false
           number_of_innings: 0
           early_eight: false
           scratch_on_eight: false
           breaking_player_still_shooting: true
-          striped_balls_hit_in: [ 12, 9, 10, 11, 13, 14, 15 ]
-          solid_balls_hit_in: [ 1, 2, 3, 4, 5, 6, 7 ]
-          last_ball_hit_in: 8 
+          striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15]
+          solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7]
+          last_ball_hit_in: 8
           on_break: true
-          ended: true 
+          ended: true
+        ,
+          player_one_timeouts_taken: 2
+          player_two_timeouts_taken: 0
+          player_one_eight_on_snap: false
+          player_one_break_and_run: true
+          player_two_eight_on_snap: false
+          player_two_break_and_run: false
+          player_one_ball_type: 2
+          player_two_ball_type: 1
+          player_one_eight_ball: [8]
+          player_two_eight_ball: []
+          player_one_won: true
+          player_two_won: false
+          number_of_innings: 0
+          early_eight: false
+          scratch_on_eight: false
+          breaking_player_still_shooting: false
+          striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15]
+          solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7]
+          last_ball_hit_in: 15
+          on_break: false
+          ended: true
         ]
+        sudden_death: false
+        forfeit: false
         ended: false
         original_id: 0
         league_match_id: 0
-
-
+        
     it "should be able to take a filled Match and turn it into a JSON object", ->
       match.scoreNumberedBall 1
       match.shotMissed()
@@ -409,74 +434,103 @@ describe "Eight Ball Match", ->
       match.scoreNumberedBall 8
       match.startNewGame()
       expect(match.toJSON()).toEqual
-        player_one:
-          name: "Player1"
-          rank: 2
-          games_needed_to_win: 2
-          number: "12345"
-          team_number: "123"
-          games_won: 0
-          safeties: 0
-          eight_on_snaps: 0
-          break_and_runs: 0
-          currently_up: true
-
-        player_two:
-          name: "Player2"
-          rank: 7
-          games_needed_to_win: 7
-          number: "987654"
-          team_number: "456"
-          games_won: 0
-          safeties: 0
-          eight_on_snaps: 0
-          break_and_runs: 0
-          currently_up: false
-
-        player_one_games_won: 1
-        player_two_games_won: 0
+        player:
+          one:
+            name: "Player1"
+            rank: 2
+            games_needed_to_win: 2
+            number: "12345"
+            team_number: "123"
+            games_won: 0
+            safeties: 0
+            eight_on_snaps: 0
+            break_and_runs: 0
+            currently_up: false
+    
+          two:
+            name: "Player2"
+            rank: 7
+            games_needed_to_win: 7
+            number: "987654"
+            team_number: "456"
+            games_won: 0
+            safeties: 0
+            eight_on_snaps: 0
+            break_and_runs: 0
+            currently_up: true
+    
+        player_one_won: 3
+        player_two_won: 0
         current_game:
-          player_one_timeouts_taken: 0
+          player_one_timeouts_taken: 2
           player_two_timeouts_taken: 0
-          number_of_innings: 0
           player_one_eight_on_snap: false
-          player_one_break_and_run: false
-          player_two_eight_on_snap: false
-          player_two_break_and_run: false
-          player_one_ball_type: null
-          player_two_ball_type: null
-          player_one_eight_ball: []
-          player_two_eight_ball: []
-          player_one_won: false
-          player_two_won: false
-          ended: false
-          striped_balls_hit_in: []
-          solid_balls_hit_in: []
-          last_ball_hit_in: null
-          on_break: true
-          breaking_player_still_shooting: true
-
-        completed_games: [        
-          player_one_timeouts_taken: 0
-          player_two_timeouts_taken: 0
-          number_of_innings: 0
-          player_one_eight_on_snap: false
-          player_one_break_and_run: false
+          player_one_break_and_run: true
           player_two_eight_on_snap: false
           player_two_break_and_run: false
           player_one_ball_type: 2
           player_two_ball_type: 1
-          player_one_eight_ball: []
-          player_two_eight_ball: [8]
+          player_one_eight_ball: [8]
+          player_two_eight_ball: []
           player_one_won: true
           player_two_won: false
-          ended: true
-          striped_balls_hit_in: [12]
-          solid_balls_hit_in: [1]
-          last_ball_hit_in: 8
-          on_break: false
+          number_of_innings: 0
+          early_eight: false
+          scratch_on_eight: false
           breaking_player_still_shooting: false
+          striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15]
+          solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7]
+          last_ball_hit_in: null
+          on_break: false
+          ended: false
+    
+        completed_games: [
+          player_one_timeouts_taken: 2
+          player_two_timeouts_taken: 0
+          player_one_eight_on_snap: false
+          player_one_break_and_run: true
+          player_two_eight_on_snap: false
+          player_two_break_and_run: false
+          player_one_ball_type: 2
+          player_two_ball_type: 1
+          player_one_eight_ball: [8]
+          player_two_eight_ball: []
+          player_one_won: true
+          player_two_won: false
+          number_of_innings: 0
+          early_eight: false
+          scratch_on_eight: false
+          breaking_player_still_shooting: true
+          striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15]
+          solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7]
+          last_ball_hit_in: 8
+          on_break: true
+          ended: true
+        ,
+          player_one_timeouts_taken: 2
+          player_two_timeouts_taken: 0
+          player_one_eight_on_snap: false
+          player_one_break_and_run: true
+          player_two_eight_on_snap: false
+          player_two_break_and_run: false
+          player_one_ball_type: 2
+          player_two_ball_type: 1
+          player_one_eight_ball: [8]
+          player_two_eight_ball: []
+          player_one_won: true
+          player_two_won: false
+          number_of_innings: 0
+          early_eight: false
+          scratch_on_eight: false
+          breaking_player_still_shooting: false
+          striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15]
+          solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7]
+          last_ball_hit_in: 15
+          on_break: false
+          ended: true
         ]
+        sudden_death: false
+        forfeit: false
         ended: false
         original_id: 0
         league_match_id: 0
@@ -490,25 +544,49 @@ describe "Eight Ball Match", ->
       match.scoreNumberedBall 8
       match.startNewGame()
       expect(match.completedGamesToJSON()).toEqual [
-        player_one_timeouts_taken: 0
+        player_one_timeouts_taken: 2
         player_two_timeouts_taken: 0
-        number_of_innings: 0
         player_one_eight_on_snap: false
-        player_one_break_and_run: false
+        player_one_break_and_run: true
         player_two_eight_on_snap: false
         player_two_break_and_run: false
         player_one_ball_type: 2
         player_two_ball_type: 1
-        player_one_eight_ball: []
-        player_two_eight_ball: [8]
+        player_one_eight_ball: [8]
+        player_two_eight_ball: []
         player_one_won: true
         player_two_won: false
-        ended: true
-        striped_balls_hit_in: [15]
-        solid_balls_hit_in: [1]
+        number_of_innings: 0
+        early_eight: false
+        scratch_on_eight: false
+        breaking_player_still_shooting: true
+        striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15]
+        solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7]
         last_ball_hit_in: 8
-        on_break: false
+        on_break: true
+        ended: true
+      ,
+        player_one_timeouts_taken: 2
+        player_two_timeouts_taken: 0
+        player_one_eight_on_snap: false
+        player_one_break_and_run: true
+        player_two_eight_on_snap: false
+        player_two_break_and_run: false
+        player_one_ball_type: 2
+        player_two_ball_type: 1
+        player_one_eight_ball: [8]
+        player_two_eight_ball: []
+        player_one_won: true
+        player_two_won: false
+        number_of_innings: 0
+        early_eight: false
+        scratch_on_eight: false
         breaking_player_still_shooting: false
+        striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15]
+        solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7]
+        last_ball_hit_in: 15
+        on_break: false
+        ended: true
       ]
 
     it "should be able to take a Player JSON and fill a Player object and return it", ->
@@ -538,73 +616,103 @@ describe "Eight Ball Match", ->
 
     it "should be able to take a Match JSON and fill its values", ->
       match.fromJSON
-        player_one:
-          name: "Player1"
-          rank: 2
-          number: "12345"
-          team_number: "123"
-          games_won: 0
-          safeties: 0
-          eight_on_snaps: 0
-          break_and_runs: 0
-          currently_up: true
-
-        player_two:
-          name: "Player2"
-          rank: 7
-          number: "987654"
-          team_number: "456"
-          games_won: 0
-          safeties: 0
-          eight_on_snaps: 0
-          break_and_runs: 0
-          currently_up: false
-
-        player_one_games_won: 0
-        player_two_games_won: 1
-        
+        player:
+          one:
+            name: "Player1"
+            rank: 2
+            games_needed_to_win: 2
+            number: "12345"
+            team_number: "123"
+            games_won: 0
+            safeties: 0
+            eight_on_snaps: 0
+            break_and_runs: 0
+            currently_up: true
+    
+          two:
+            name: "Player2"
+            rank: 7
+            games_needed_to_win: 7
+            number: "987654"
+            team_number: "456"
+            games_won: 0
+            safeties: 0
+            eight_on_snaps: 0
+            break_and_runs: 0
+            currently_up: false
+    
+        player_one_won: 3
+        player_two_won: 0
         current_game:
-          player_one_timeouts_taken: 0
+          player_one_timeouts_taken: 2
           player_two_timeouts_taken: 0
-          number_of_innings: 0
           player_one_eight_on_snap: false
-          player_one_break_and_run: false
-          player_two_eight_on_snap: false
-          player_two_break_and_run: false
-          player_one_ball_type: null
-          player_two_ball_type: null
-          player_one_eight_ball: []
-          player_two_eight_ball: []
-          player_one_won: false
-          player_two_won: false
-          ended: false
-          striped_balls_hit_in: []
-          solid_balls_hit_in: []
-          last_ball_hit_in: null
-          on_break: true
-          breaking_player_still_shooting: true
-
-        completed_games: [        
-          player_one_timeouts_taken: 0
-          player_two_timeouts_taken: 0
-          number_of_innings: 0
-          player_one_eight_on_snap: false
-          player_one_break_and_run: false
+          player_one_break_and_run: true
           player_two_eight_on_snap: false
           player_two_break_and_run: false
           player_one_ball_type: 2
           player_two_ball_type: 1
-          player_one_eight_ball: []
-          player_two_eight_ball: [8]
+          player_one_eight_ball: [8]
+          player_two_eight_ball: []
           player_one_won: true
           player_two_won: false
-          ended: true
-          striped_balls_hit_in: [12]
-          solid_balls_hit_in: [1]
-          last_ball_hit_in: 8
-          on_break: false
+          number_of_innings: 0
+          early_eight: false
+          scratch_on_eight: false
+          breaking_player_still_shooting: true
+          striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15]
+          solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7]
+          last_ball_hit_in: null
+          on_break: true
+          ended: false
+    
+        completed_games: [
+          player_one_timeouts_taken: 2
+          player_two_timeouts_taken: 0
+          player_one_eight_on_snap: false
+          player_one_break_and_run: true
+          player_two_eight_on_snap: false
+          player_two_break_and_run: false
+          player_one_ball_type: 2
+          player_two_ball_type: 1
+          player_one_eight_ball: [8]
+          player_two_eight_ball: []
+          player_one_won: true
+          player_two_won: false
+          number_of_innings: 0
+          early_eight: false
+          scratch_on_eight: false
           breaking_player_still_shooting: false
+          striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15]
+          solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7]
+          last_ball_hit_in: 8
+          on_break: true
+          ended: true
+        ,
+          player_one_timeouts_taken: 2
+          player_two_timeouts_taken: 0
+          player_one_eight_on_snap: false
+          player_one_break_and_run: true
+          player_two_eight_on_snap: false
+          player_two_break_and_run: false
+          player_one_ball_type: 2
+          player_two_ball_type: 1
+          player_one_eight_ball: [8]
+          player_two_eight_ball: []
+          player_one_won: true
+          player_two_won: false
+          number_of_innings: 0
+          early_eight: false
+          scratch_on_eight: false
+          breaking_player_still_shooting: false
+          striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15]
+          solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7]
+          last_ball_hit_in: 15
+          on_break: false
+          ended: true
         ]
+        sudden_death: false
+        forfeit: false
         ended: false
         original_id: 0
         league_match_id: 0
@@ -617,7 +725,7 @@ describe "Eight Ball Match", ->
       expect(match.player.two.name).toEqual "Player2"
       expect(match.current_game.breaking_player_still_shooting).toEqual true
       expect(match.completed_games[0].breaking_player_still_shooting).toEqual false
-      expect(match.completed_games[0].player.two.has_won).toEqual true
+      expect(match.completed_games[0].player.two_won).toEqual true
       expect(match.player.one.getGamesNeededToWin()).toEqual "2"
 
     it "should be able to take a completed_games JSON array and convert it to JS Array with Objects", ->

@@ -225,10 +225,12 @@
 
     Match.prototype.toJSON = function() {
       return {
-        player_one: this.player.one.toJSON(),
-        player_two: this.player.two.toJSON(),
-        player_one_games_won: this.getGamesWonByPlayer(1),
-        player_two_games_won: this.getGamesWonByPlayer(2),
+        player: {
+          one: this.player.one.toJSON(),
+          two: this.player.two.toJSON()
+        },
+        player_one_won: this.getGamesWonByPlayer(1),
+        player_two_won: this.getGamesWonByPlayer(2),
         current_game: this.current_game.toJSON(),
         completed_games: this.completedGamesToJSON(),
         sudden_death: this.sudden_death,
@@ -252,8 +254,8 @@
 
     Match.prototype.fromJSON = function(json) {
       var currentGame;
-      this.player.one = this.playerFromJSON(json.player_one);
-      this.player.two = this.playerFromJSON(json.player_two);
+      this.player.one = this.playerFromJSON(json.player.one);
+      this.player.two = this.playerFromJSON(json.player.two);
       this.resetPlayerRankStats();
       this.completed_games = this.completedGamesFromJSON(json.completed_games);
       this.sudden_death = json.sudden_death;

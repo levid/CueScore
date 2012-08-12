@@ -174,10 +174,11 @@ class Match extends $CS.Models.EightBall
   # JSON Data
   
   toJSON: ->
-    player_one:           @player.one.toJSON()
-    player_two:           @player.two.toJSON()
-    player_one_games_won: @getGamesWonByPlayer(1)
-    player_two_games_won: @getGamesWonByPlayer(2)
+    player:           
+      one:                @player.one.toJSON()
+      two:                @player.two.toJSON()
+    player_one_won:       @getGamesWonByPlayer(1)
+    player_two_won:       @getGamesWonByPlayer(2)
     current_game:         @current_game.toJSON()
     completed_games:      @completedGamesToJSON()
     sudden_death:         @sudden_death
@@ -196,8 +197,8 @@ class Match extends $CS.Models.EightBall
     arrayToReturn
 
   fromJSON: (json) ->
-    @player.one       = @playerFromJSON(json.player_one)
-    @player.two       = @playerFromJSON(json.player_two)
+    @player.one       = @playerFromJSON(json.player.one)
+    @player.two       = @playerFromJSON(json.player.two)
     @resetPlayerRankStats()
     @completed_games  = @completedGamesFromJSON(json.completed_games)
     @sudden_death     = json.sudden_death
