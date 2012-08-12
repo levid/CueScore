@@ -7,11 +7,11 @@ This is a master detail view application, utilizing a native table view componen
 ### Before building the app in Titanium run:
 
 ```bash
-  gem install ti
+gem install ti
 ```
 
 ```bash
-  ti compile all
+ti compile all
 ```
 
 ----------------------------------
@@ -21,19 +21,19 @@ Watch CoffeeScript Files and compile them
 ### Run from app directory: 
 
 ```bash
-  cd app
+cd app
 ```
 
 ### Then to watch for cuescore source file changes run:
 
 ```bash
-  coffee -c -o ../Resources/js/cuescore --watch cuescore
+coffee -c -o ../Resources/js/cuescore --watch cuescore
 ```
 
 ### In another terminal window run to watch for spec file changes:
 
 ```bash
-  coffee -c -o ../spec/javascripts/libs --watch spec
+coffee -c -o ../spec/javascripts/libs --watch spec
 ```
 
 ----------------------------------
@@ -43,7 +43,9 @@ Use Maven to run Jasmine tests and code coverage
 ### from root project dir:
 
 ```bash
-  mvn archetype:generate -DarchetypeRepository=http://searls-maven-repository.googlecode.com/svn/trunk/snapshots -DarchetypeGroupId=com.github.searls -DarchetypeArtifactId=jasmine-archetype -DarchetypeVersion=1.2.0.0-SNAPSHOT -DgroupId=com.acme -DartifactId=my-jasmine-project -Dversion=0.0.1-SNAPSHOT
+mvn archetype:generate -DarchetypeRepository=http://searls-maven-repository.googlecode.com/svn/trunk/snapshots -DarchetypeGroupId=com.github.searls -DarchetypeArtifactId=jasmine-archetype -DarchetypeVersion=1.2.0.0-SNAPSHOT -DgroupId=com.acme -DartifactId=my-jasmine-project -Dversion=0.0.1-SNAPSHOT
+```
+```bash
 mvn jasmine:bdd
 ```
 
@@ -52,7 +54,7 @@ mvn jasmine:bdd
 ### To generate code coverage run:
 
 ```bash
-  mvn verify
+mvn verify
 ```
 
 > ####To make changes edit the pom.xml file in the root project dir.
@@ -60,10 +62,10 @@ mvn jasmine:bdd
 ### If you don't want to use maven then just run these commands from project root dir:
 
 ```bash
-  gem install jasmine
+gem install jasmine
 ```
 ```bash
-  rake jasmine
+rake jasmine
 ```
 
 > #### Go to: http://localhost:8888 to see test results
