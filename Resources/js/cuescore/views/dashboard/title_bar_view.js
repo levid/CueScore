@@ -80,7 +80,7 @@
       });
       listButton.add(listButtonLabel);
       gridButton.addEventListener("click", function() {
-        showGrid();
+        $CS.Views.Dashboard.showGrid();
         gridButton.animate({
           backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png"
         });
@@ -91,7 +91,7 @@
         return listButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype.png";
       });
       listButton.addEventListener("click", function() {
-        showList();
+        $CS.Views.Dashboard.showList();
         gridButton.animate({
           backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png"
         });
@@ -109,7 +109,7 @@
 
     return TitleBarView;
 
-  })(Template);
+  })($CS.Views.Dashboard);
 
   $CS.Views.Dashboard.TitleBarView = TitleBarView;
 

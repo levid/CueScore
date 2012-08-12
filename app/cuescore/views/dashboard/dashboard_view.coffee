@@ -9,8 +9,10 @@ class DashboardView extends Template
     
     Ti.UI.setBackgroundColor "#000000"
     
-    $CS.Views.Dashboard.createMainWindow = @createMainWindow
-    $CS.Views.Dashboard.createMainView = @createMainView
+    $CS.Views.Dashboard.createMainWindow  = @createMainWindow
+    $CS.Views.Dashboard.createMainView    = @createMainView
+    $CS.Views.Dashboard.showGrid          = @showGrid
+    $CS.Views.Dashboard.showList          = @showList
     
     @setUp()
 
@@ -53,12 +55,12 @@ class DashboardView extends Template
   getDisplayType: (type) ->
     if type == "grid"
       gridViewClass = new $CS.Views.Dashboard.GridView()
-      gridView      = gridViewClass.gridView
-      gridView
+      @gridView      = gridViewClass.gridView
+      @gridView
     else if type == "list"
       listViewClass = new $CS.Views.Dashboard.ListView()
-      listView      = listViewClass.listView
-      listView
+      @listView      = listViewClass.listView
+      @listView
     
   createDashboardContainer: ->
     dashboardContainer = Titanium.UI.createView(
@@ -83,20 +85,20 @@ class DashboardView extends Template
   handle_btn_click: (e) =>
     console.warn "button clicked: #{JSON.stringify e}"
 
-  isGrid: =>
+  isGrid: () =>
     @displayType is "grid"
     
-  isList: =>
+  isList: () =>
     @displayType is "list"
     
-  showGrid: =>
+  showGrid: () =>
     @displayType = "grid"
     @gridView.visible = true
-    listView.visible = false
+    @listView.visible = false
     
-  showList: =>
+  showList: () =>
     @displayType = "list"
     @gridView.visible = false
-    listView.visible = true
+    @listView.visible = true
 
 $CS.Views.Dashboard = DashboardView

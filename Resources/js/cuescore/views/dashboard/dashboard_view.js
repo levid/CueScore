@@ -30,6 +30,8 @@
       Ti.UI.setBackgroundColor("#000000");
       $CS.Views.Dashboard.createMainWindow = this.createMainWindow;
       $CS.Views.Dashboard.createMainView = this.createMainView;
+      $CS.Views.Dashboard.showGrid = this.showGrid;
+      $CS.Views.Dashboard.showList = this.showList;
       this.setUp();
     }
 
@@ -82,15 +84,15 @@
     };
 
     DashboardView.prototype.getDisplayType = function(type) {
-      var gridView, gridViewClass, listView, listViewClass;
+      var gridViewClass, listViewClass;
       if (type === "grid") {
         gridViewClass = new $CS.Views.Dashboard.GridView();
-        gridView = gridViewClass.gridView;
-        return gridView;
+        this.gridView = gridViewClass.gridView;
+        return this.gridView;
       } else if (type === "list") {
         listViewClass = new $CS.Views.Dashboard.ListView();
-        listView = listViewClass.listView;
-        return listView;
+        this.listView = listViewClass.listView;
+        return this.listView;
       }
     };
 
@@ -135,13 +137,13 @@
     DashboardView.prototype.showGrid = function() {
       this.displayType = "grid";
       this.gridView.visible = true;
-      return listView.visible = false;
+      return this.listView.visible = false;
     };
 
     DashboardView.prototype.showList = function() {
       this.displayType = "list";
       this.gridView.visible = false;
-      return listView.visible = true;
+      return this.listView.visible = true;
     };
 
     return DashboardView;

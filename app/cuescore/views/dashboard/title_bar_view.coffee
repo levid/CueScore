@@ -1,4 +1,4 @@
-class TitleBarView extends Template
+class TitleBarView extends $CS.Views.Dashboard
   defaults: {}
   
   constructor: (displayType) ->
@@ -65,14 +65,14 @@ class TitleBarView extends Template
     )
     listButton.add listButtonLabel
     gridButton.addEventListener "click", ->
-      showGrid()
+      $CS.Views.Dashboard.showGrid()
       gridButton.animate backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png"
       listButton.animate backgroundImage: "images/match/buttons/btn-dashboard-viewtype.png"
       gridButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype-selected.png"
       listButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype.png"
     
     listButton.addEventListener "click", ->
-      showList()
+      $CS.Views.Dashboard.showList()
       gridButton.animate backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png"
       listButton.animate backgroundImage: "images/match/buttons/btn-dashboard-viewtype.png"
       gridButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype.png"
