@@ -13,9 +13,8 @@
     ListView.prototype.defaults = {};
 
     function ListView() {
-      var listView;
       _.extend(this, this.defaults);
-      listView = Ti.UI.createView({
+      this.listView = Ti.UI.createView({
         backgroundColor: "#000000",
         top: 0,
         isNinePatch: false

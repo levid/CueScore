@@ -1,8 +1,6 @@
 $CS.App =
 
   init: ->
-    console.log "test"
-    
     gameModel = new $CS.Models.Game
     
     dashboardController = new $CS.Controllers.DashboardController

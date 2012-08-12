@@ -40,7 +40,19 @@ CueScore = root.CueScore =
     Team: {}
   Helpers:  {}
   Views:
-    Dashboard: {}
+    Dashboard: 
+      ActivityView: {}
+      EventsView: {}
+      GridView: {}
+      ListView: {}
+      LiveView: {}
+      MainView: {}
+      NewsView: {}
+      ProfileVIew: {}
+      RulesView: {}
+      SettingsView: {}
+      TeamsView: {}
+      TitleBarView: {}
     Settings: {}
     Sample: {}
     Play: {}
@@ -54,7 +66,7 @@ CueScore = root.CueScore =
     Rules: {}
     PostView: {}
     PostsView: {}
-  Utils:
+  Utilities:
     QueryStringBuilder: {}
   Window: {}
 

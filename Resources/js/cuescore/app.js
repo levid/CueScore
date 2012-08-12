@@ -4,7 +4,6 @@
   $CS.App = {
     init: function() {
       var dashboardController, gameModel;
-      console.log("test");
       gameModel = new $CS.Models.Game;
       dashboardController = new $CS.Controllers.DashboardController;
       return dashboardController.open();

@@ -1,5 +1,5 @@
 (function() {
-  var API, ActivityView, AppSync, Dashboard, DashboardController, DoubleJeopardy, Doubles, EventsView, Game, GridView, League, LeagueMatch, ListView, LiveView, Masters, Match, MenuView, MixedDoubles, NewsView, Player, Post, PostViewController, Posts, PostsController, PostsViewController, PracticeMatch, ProfileView, QueryStringBuilder, Rank, Ranks, RulesView, SettingsView, Team, TeamsView, Template, TournamentMatch, Womens, after, console, every, getScoreRatio, say,
+  var API, ActivityView, AppSync, DashboardController, DashboardView, DoubleJeopardy, Doubles, EventsView, Game, GridView, League, LeagueMatch, ListView, LiveView, Masters, Match, MenuView, MixedDoubles, NewsView, Player, Post, PostViewController, Posts, PostsController, PostsViewController, PracticeMatch, ProfileView, QueryStringBuilder, Rank, Ranks, RulesView, SettingsView, Team, TeamsView, Template, TitleBarView, TournamentMatch, Utilities, Womens, after, console, every, say,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -7,7 +7,6 @@
   $CS.App = {
     init: function() {
       var dashboardController, gameModel;
-      console.log("test");
       gameModel = new $CS.Models.Game;
       dashboardController = new $CS.Controllers.DashboardController;
       return dashboardController.open();
@@ -265,30 +264,6 @@
 
   })();
 
-  getScoreRatio = function(playerScore, playerBallCount) {
-    return playerScore / playerBallCount;
-  };
-
-  Array.prototype.exists = function(search) {
-    var i;
-    i = 0;
-    while (i < this.length) {
-      if (this[i] === search) {
-        return true;
-      }
-      i++;
-    }
-    return false;
-  };
-
-  root.getPlatformWidth = function() {
-    return Ti.Platform.displayCaps.platformWidth;
-  };
-
-  root.getPlatformHeight = function() {
-    return Ti.Platform.displayCaps.platformHeight - 22;
-  };
-
   Array.prototype.contains = function(obj) {
     var i;
     i = this.length;
@@ -446,7 +421,7 @@
 
   })();
 
-  $CS.Utils.QueryStringBuilder = QueryStringBuilder;
+  $CS.Utilities.QueryStringBuilder = QueryStringBuilder;
 
   Backbone.setDomLibrary(TiQuery);
 
@@ -467,6 +442,49 @@
     return Template;
 
   })(Backbone.View);
+
+  Utilities = (function() {
+    var getScoreRatio;
+
+    Utilities.name = 'Utilities';
+
+    Utilities.prototype.defaults = {};
+
+    function Utilities(options) {
+      var i;
+      if (options == null) {
+        options = {};
+      }
+      _.extend(this, this.defaults);
+      Array.prototype.exists = function(search) {};
+      i = 0;
+      while (i < this.length) {
+        if (this[i] === search) {
+          return true;
+        }
+        i++;
+      }
+      false;
+
+    }
+
+    getScoreRatio = function(playerScore, playerBallCount) {
+      return playerScore / playerBallCount;
+    };
+
+    Utilities.prototype.getPlatformWidth = function() {
+      return Ti.Platform.displayCaps.platformWidth;
+    };
+
+    Utilities.prototype.getPlatformHeight = function() {
+      return Ti.Platform.displayCaps.platformHeight - 22;
+    };
+
+    return Utilities;
+
+  })();
+
+  $CS.Utilities = new Utilities;
 
   $CS.Window.Main = (function(_super) {
 
@@ -3467,8 +3485,6 @@
   };
 
   DashboardController = (function() {
-    var isGrid, isList, showGrid, showList,
-      _this = this;
 
     DashboardController.name = 'DashboardController';
 
@@ -3476,77 +3492,22 @@
 
     function DashboardController(options) {
       this.options = options;
-      this.handle_btn_click = __bind(this.handle_btn_click, this);
-
       this.options = _.extend({}, this.opts, this.options);
-      Ti.UI.setBackgroundColor("#000000");
       this.displayType = "grid";
-      this.loadDependencies();
       this.createWindows();
     }
 
     DashboardController.prototype.createWindows = function() {
-      this.dashboardWindow = $CS.Views.Dashboard.createMainWindow({
-        title: 'Dashboard',
-        id: 'dashboardWindow',
-        orientationModes: $CS.Helpers.Application.createOrientiationModes
-      });
-      this.dashboardView = $CS.Views.Dashboard.createMainView({
-        id: 'dashboardView'
-      });
-      this.dashboardWindow.addEventListener('click', this.handle_btn_click);
-      this.dashboardContainerClass = new root.DashboardContainer;
-      this.dashboardContainer = this.dashboardContainerClass.dashboardContainer;
-      this.gridViewClass = new root.GridView;
-      this.gridView = this.gridViewClass.gridView;
-      this.dashboardContainer.add(this.gridView);
-      this.dashboardView.add(this.dashboardContainer);
-      this.dashboardView.add(this.dashboardContainerClass.titleBar);
-      return this.dashboardWindow.add(this.dashboardView);
+      return this.dashboard = new $CS.Views.Dashboard(this.displayType);
     };
 
     DashboardController.prototype.open = function() {
-      if (Ti.Platform.name !== "android") {
-        Ti.UI.iPhone.showStatusBar();
-        return this.dashboardWindow.open({
-          fullscreen: false
-        });
-      } else {
-        return this.dashboardWindow.open({
-          fullscreen: true
-        });
-      }
-    };
-
-    DashboardController.prototype.handle_btn_click = function(e) {
-      return console.warn("button clicked: " + (JSON.stringify(e)));
-    };
-
-    DashboardController.prototype.loadDependencies = function() {};
-
-    isGrid = function() {
-      return DashboardController.displayType === "grid";
-    };
-
-    isList = function() {
-      return DashboardController.displayType === "list";
-    };
-
-    showGrid = function() {
-      DashboardController.displayType = "grid";
-      DashboardController.gridView.visible = true;
-      return listView.visible = false;
-    };
-
-    showList = function() {
-      DashboardController.displayType = "list";
-      DashboardController.gridView.visible = false;
-      return listView.visible = true;
+      return this.dashboard.open();
     };
 
     return DashboardController;
 
-  }).call(this);
+  })();
 
   $CS.Controllers.DashboardController = DashboardController;
 
@@ -3586,6 +3547,260 @@
   })();
 
   $CS.Controllers.PostsController = PostsController;
+
+  DashboardView = (function(_super) {
+
+    __extends(DashboardView, _super);
+
+    DashboardView.name = 'DashboardView';
+
+    DashboardView.prototype.defaults = {
+      displayType: null
+    };
+
+    function DashboardView(displayType) {
+      this.showList = __bind(this.showList, this);
+
+      this.showGrid = __bind(this.showGrid, this);
+
+      this.isList = __bind(this.isList, this);
+
+      this.isGrid = __bind(this.isGrid, this);
+
+      this.handle_btn_click = __bind(this.handle_btn_click, this);
+      _.extend(this, this.defaults);
+      this.displayType = displayType;
+      Ti.UI.setBackgroundColor("#000000");
+      $CS.Views.Dashboard.createMainWindow = this.createMainWindow;
+      $CS.Views.Dashboard.createMainView = this.createMainView;
+      this.setUp();
+    }
+
+    DashboardView.prototype.setUp = function() {
+      this.dashboardContainer = this.getDashboardContainer();
+      this.titleBar = this.getTitleBar();
+      this.viewType = this.getDisplayType(this.displayType);
+      this.dashboardWindow = $.Window({
+        title: 'Dashboard',
+        id: 'dashboardWindow',
+        orientationModes: $CS.Helpers.Application.createOrientiationModes
+      });
+      this.dashboardView = $.View({
+        id: 'dashboardView'
+      });
+      this.dashboardContainer.add(this.viewType);
+      this.dashboardView.add(this.dashboardContainer);
+      this.dashboardView.add(this.titleBar);
+      this.dashboardWindow.add(this.dashboardView);
+      return this.dashboardWindow.addEventListener('click', this.handle_btn_click);
+    };
+
+    DashboardView.prototype.getTitleBar = function() {
+      var titleBar, titleBarClass;
+      titleBarClass = new $CS.Views.Dashboard.TitleBarView(this.displayType);
+      titleBar = titleBarClass.titleBar;
+      return titleBar;
+    };
+
+    DashboardView.prototype.getDashboardContainer = function() {
+      return this.createDashboardContainer();
+    };
+
+    DashboardView.prototype.createMainWindow = function(options) {
+      var window;
+      if (options == null) {
+        options = {};
+      }
+      window = Ti.UI.createWindow(options);
+      return window;
+    };
+
+    DashboardView.prototype.createMainView = function(options) {
+      var view;
+      if (options == null) {
+        options = {};
+      }
+      view = Ti.UI.createView(options);
+      return view;
+    };
+
+    DashboardView.prototype.getDisplayType = function(type) {
+      var gridView, gridViewClass, listView, listViewClass;
+      if (type === "grid") {
+        gridViewClass = new $CS.Views.Dashboard.GridView();
+        gridView = gridViewClass.gridView;
+        return gridView;
+      } else if (type === "list") {
+        listViewClass = new $CS.Views.Dashboard.ListView();
+        listView = listViewClass.listView;
+        return listView;
+      }
+    };
+
+    DashboardView.prototype.createDashboardContainer = function() {
+      var dashboardContainer;
+      dashboardContainer = Titanium.UI.createView({
+        backgroundImage: (Ti.Platform.name !== "android" ? "images/match/layout/bg-menus-iphone.png" : "images/match/layout/bg-menus-android.png"),
+        backgroundColor: "transparent",
+        top: 44,
+        left: 0,
+        height: $CS.Utilities.getPlatformHeight() - 44,
+        width: $CS.Utilities.getPlatformWidth()
+      });
+      return dashboardContainer;
+    };
+
+    DashboardView.prototype.open = function() {
+      if (Ti.Platform.name !== "android") {
+        Ti.UI.iPhone.showStatusBar();
+        return this.dashboardWindow.open({
+          fullscreen: false
+        });
+      } else {
+        return this.dashboardWindow.open({
+          fullscreen: true
+        });
+      }
+    };
+
+    DashboardView.prototype.handle_btn_click = function(e) {
+      return console.warn("button clicked: " + (JSON.stringify(e)));
+    };
+
+    DashboardView.prototype.isGrid = function() {
+      return this.displayType === "grid";
+    };
+
+    DashboardView.prototype.isList = function() {
+      return this.displayType === "list";
+    };
+
+    DashboardView.prototype.showGrid = function() {
+      this.displayType = "grid";
+      this.gridView.visible = true;
+      return listView.visible = false;
+    };
+
+    DashboardView.prototype.showList = function() {
+      this.displayType = "list";
+      this.gridView.visible = false;
+      return listView.visible = true;
+    };
+
+    return DashboardView;
+
+  })(Template);
+
+  $CS.Views.Dashboard = DashboardView;
+
+  TitleBarView = (function(_super) {
+
+    __extends(TitleBarView, _super);
+
+    TitleBarView.name = 'TitleBarView';
+
+    TitleBarView.prototype.defaults = {};
+
+    function TitleBarView(displayType) {
+      _.extend(this, this.defaults);
+      this.setUp(displayType);
+    }
+
+    TitleBarView.prototype.setUp = function(displayType) {
+      var dashboardLabel, gridButton, gridButtonLabel, listButton, listButtonLabel;
+      this.titleBar = Titanium.UI.createView({
+        backgroundColor: "transparent",
+        backgroundImage: "images/match/layout/titlebar-matches.png",
+        top: 0,
+        left: 0,
+        width: $CS.Utilities.getPlatformWidth(),
+        height: 44,
+        isNinePatch: false
+      });
+      dashboardLabel = Titanium.UI.createLabel({
+        text: "Dashboard",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        textAlign: "center",
+        font: {
+          fontSize: 20,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      gridButton = Titanium.UI.createView({
+        backgroundColor: "transparent",
+        backgroundImage: displayType === "grid" ? "images/match/buttons/btn-dashboard-viewtype-selected.png" : "images/match/buttons/btn-dashboard-viewtype.png",
+        top: 7,
+        left: 8,
+        width: 80,
+        height: 30
+      });
+      gridButtonLabel = Titanium.UI.createLabel({
+        text: "Grid View",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        left: 11,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      gridButton.add(gridButtonLabel);
+      listButton = Titanium.UI.createView({
+        backgroundColor: "transparent",
+        backgroundImage: displayType === "list" ? "images/match/buttons/btn-dashboard-viewtype-selected.png" : "images/match/buttons/btn-dashboard-viewtype.png",
+        top: 7,
+        right: 8,
+        width: 80,
+        height: 30
+      });
+      listButtonLabel = Titanium.UI.createLabel({
+        text: "List View",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        left: 11,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      listButton.add(listButtonLabel);
+      gridButton.addEventListener("click", function() {
+        showGrid();
+        gridButton.animate({
+          backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png"
+        });
+        listButton.animate({
+          backgroundImage: "images/match/buttons/btn-dashboard-viewtype.png"
+        });
+        gridButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype-selected.png";
+        return listButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype.png";
+      });
+      listButton.addEventListener("click", function() {
+        showList();
+        gridButton.animate({
+          backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png"
+        });
+        listButton.animate({
+          backgroundImage: "images/match/buttons/btn-dashboard-viewtype.png"
+        });
+        gridButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype.png";
+        return listButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype-selected.png";
+      });
+      this.titleBar.add(gridButton);
+      this.titleBar.add(listButton);
+      this.titleBar.add(dashboardLabel);
+      return this.titleBar;
+    };
+
+    return TitleBarView;
+
+  })(Template);
+
+  $CS.Views.Dashboard.TitleBarView = TitleBarView;
 
   ActivityView = (function(_super) {
 
@@ -3702,118 +3917,6 @@
   })($CS.Views.Dashboard);
 
   $CS.Views.Dashboard.ActivityView = ActivityView;
-
-  Dashboard = (function(_super) {
-
-    __extends(Dashboard, _super);
-
-    Dashboard.name = 'Dashboard';
-
-    Dashboard.prototype.defaults = {};
-
-    function Dashboard() {
-      var dashboardContainer, dashboardLabel, gridButton, gridButtonLabel, listButton, listButtonLabel, titleBar;
-      _.extend(this, this.defaults);
-      dashboardContainer = Titanium.UI.createView({
-        backgroundImage: (Ti.Platform.name !== "android" ? "images/match/layout/bg-menus-iphone.png" : "images/match/layout/bg-menus-android.png"),
-        backgroundColor: "transparent",
-        top: 44,
-        left: 0,
-        height: this.getPlatformHeight() - 44,
-        width: this.getPlatformWidth()
-      });
-      titleBar = Titanium.UI.createView({
-        backgroundColor: "transparent",
-        backgroundImage: "images/match/layout/titlebar-matches.png",
-        top: 0,
-        left: 0,
-        width: this.getPlatformWidth(),
-        height: 44,
-        isNinePatch: false
-      });
-      dashboardLabel = Titanium.UI.createLabel({
-        text: "Dashboard",
-        color: "#ffffff",
-        shadowColor: "#000000",
-        textAlign: "center",
-        font: {
-          fontSize: 20,
-          fontWeight: "bold",
-          fontFamily: "HelveticaNeue-Bold"
-        }
-      });
-      gridButton = Titanium.UI.createView({
-        backgroundColor: "transparent",
-        backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png",
-        top: 7,
-        left: 8,
-        width: 80,
-        height: 30
-      });
-      gridButtonLabel = Titanium.UI.createLabel({
-        text: "Grid View",
-        color: "#ffffff",
-        shadowColor: "#000000",
-        left: 11,
-        font: {
-          fontSize: 13,
-          fontWeight: "bold",
-          fontFamily: "HelveticaNeue-Bold"
-        }
-      });
-      gridButton.add(gridButtonLabel);
-      listButton = Titanium.UI.createView({
-        backgroundColor: "transparent",
-        backgroundImage: "images/match/buttons/btn-dashboard-viewtype.png",
-        top: 7,
-        right: 8,
-        width: 80,
-        height: 30
-      });
-      listButtonLabel = Titanium.UI.createLabel({
-        text: "List View",
-        color: "#ffffff",
-        shadowColor: "#000000",
-        left: 11,
-        font: {
-          fontSize: 13,
-          fontWeight: "bold",
-          fontFamily: "HelveticaNeue-Bold"
-        }
-      });
-      listButton.add(listButtonLabel);
-      gridButton.addEventListener("click", function() {
-        showGrid();
-        gridButton.animate({
-          backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png"
-        });
-        listButton.animate({
-          backgroundImage: "images/match/buttons/btn-dashboard-viewtype.png"
-        });
-        gridButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype-selected.png";
-        return listButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype.png";
-      });
-      listButton.addEventListener("click", function() {
-        showList();
-        gridButton.animate({
-          backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png"
-        });
-        listButton.animate({
-          backgroundImage: "images/match/buttons/btn-dashboard-viewtype.png"
-        });
-        gridButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype.png";
-        return listButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype-selected.png";
-      });
-      titleBar.add(gridButton);
-      titleBar.add(listButton);
-      titleBar.add(dashboardLabel);
-    }
-
-    return Dashboard;
-
-  })(Template);
-
-  $CS.Views.Dashboard = Dashboard;
 
   EventsView = (function(_super) {
 
@@ -4389,9 +4492,8 @@
     ListView.prototype.defaults = {};
 
     function ListView() {
-      var listView;
       _.extend(this, this.defaults);
-      listView = Ti.UI.createView({
+      this.listView = Ti.UI.createView({
         backgroundColor: "#000000",
         top: 0,
         isNinePatch: false
@@ -4519,24 +4621,6 @@
   })($CS.Views.Dashboard);
 
   $CS.Views.Dashboard.LiveView = LiveView;
-
-  $CS.Views.Dashboard.createMainWindow = function(options) {
-    var window;
-    if (options == null) {
-      options = {};
-    }
-    window = Ti.UI.createWindow(options);
-    return window;
-  };
-
-  $CS.Views.Dashboard.createMainView = function(options) {
-    var view;
-    if (options == null) {
-      options = {};
-    }
-    view = Ti.UI.createView(options);
-    return view;
-  };
 
   MenuView = (function(_super) {
 

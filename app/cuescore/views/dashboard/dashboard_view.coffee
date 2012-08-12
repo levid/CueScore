@@ -1,90 +1,102 @@
-class Dashboard extends Template
-  defaults: {}
+class DashboardView extends Template
+  defaults:
+    displayType: null
   
-  constructor: () ->
+  constructor: (displayType) ->
     _.extend @, @defaults
     
+    @displayType = displayType
+    
+    Ti.UI.setBackgroundColor "#000000"
+    
+    $CS.Views.Dashboard.createMainWindow = @createMainWindow
+    $CS.Views.Dashboard.createMainView = @createMainView
+    
+    @setUp()
+
+  setUp: () ->
+    @dashboardContainer = @getDashboardContainer()
+    @titleBar           = @getTitleBar()
+    @viewType           = @getDisplayType(@displayType)
+    
+    @dashboardWindow = $.Window
+      title: 'Dashboard'
+      id: 'dashboardWindow'
+      orientationModes: $CS.Helpers.Application.createOrientiationModes
+      
+    @dashboardView = $.View
+      id: 'dashboardView'
+      
+    @dashboardContainer.add   @viewType
+    @dashboardView.add        @dashboardContainer
+    @dashboardView.add        @titleBar
+    @dashboardWindow.add      @dashboardView
+
+    @dashboardWindow.addEventListener 'click', @handle_btn_click
+    
+  getTitleBar: () ->
+    titleBarClass = new $CS.Views.Dashboard.TitleBarView(@displayType)
+    titleBar = titleBarClass.titleBar
+    titleBar
+    
+  getDashboardContainer: () ->
+    @createDashboardContainer()
+
+  createMainWindow: (options={}) ->
+    window = Ti.UI.createWindow(options)
+    window
+    
+  createMainView: (options={}) ->
+    view = Ti.UI.createView(options)
+    view
+    
+  getDisplayType: (type) ->
+    if type == "grid"
+      gridViewClass = new $CS.Views.Dashboard.GridView()
+      gridView      = gridViewClass.gridView
+      gridView
+    else if type == "list"
+      listViewClass = new $CS.Views.Dashboard.ListView()
+      listView      = listViewClass.listView
+      listView
+    
+  createDashboardContainer: ->
     dashboardContainer = Titanium.UI.createView(
       backgroundImage: (if (Ti.Platform.name isnt "android") then "images/match/layout/bg-menus-iphone.png" else "images/match/layout/bg-menus-android.png")
       backgroundColor: "transparent"
       top: 44
       left: 0
-      height: (@getPlatformHeight() - 44)
-      width: @getPlatformWidth()
+      height: ($CS.Utilities.getPlatformHeight() - 44)
+      width: $CS.Utilities.getPlatformWidth()
     )
-    titleBar = Titanium.UI.createView(
-      backgroundColor: "transparent"
-      backgroundImage: "images/match/layout/titlebar-matches.png"
-      top: 0
-      left: 0
-      width: @getPlatformWidth()
-      height: 44
-      isNinePatch: false
-    )
-    dashboardLabel = Titanium.UI.createLabel(
-      text: "Dashboard"
-      color: "#ffffff"
-      shadowColor: "#000000"
-      textAlign: "center"
-      font:
-        fontSize: 20
-        fontWeight: "bold"
-        fontFamily: "HelveticaNeue-Bold"
-    )
-    gridButton = Titanium.UI.createView(
-      backgroundColor: "transparent"
-      backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png"
-      top: 7
-      left: 8
-      width: 80
-      height: 30
-    )
-    gridButtonLabel = Titanium.UI.createLabel(
-      text: "Grid View"
-      color: "#ffffff"
-      shadowColor: "#000000"
-      left: 11
-      font:
-        fontSize: 13
-        fontWeight: "bold"
-        fontFamily: "HelveticaNeue-Bold"
-    )
-    gridButton.add gridButtonLabel
-    listButton = Titanium.UI.createView(
-      backgroundColor: "transparent"
-      backgroundImage: "images/match/buttons/btn-dashboard-viewtype.png"
-      top: 7
-      right: 8
-      width: 80
-      height: 30
-    )
-    listButtonLabel = Titanium.UI.createLabel(
-      text: "List View"
-      color: "#ffffff"
-      shadowColor: "#000000"
-      left: 11
-      font:
-        fontSize: 13
-        fontWeight: "bold"
-        fontFamily: "HelveticaNeue-Bold"
-    )
-    listButton.add listButtonLabel
-    gridButton.addEventListener "click", ->
-      showGrid()
-      gridButton.animate backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png"
-      listButton.animate backgroundImage: "images/match/buttons/btn-dashboard-viewtype.png"
-      gridButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype-selected.png"
-      listButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype.png"
+    dashboardContainer
     
-    listButton.addEventListener "click", ->
-      showList()
-      gridButton.animate backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png"
-      listButton.animate backgroundImage: "images/match/buttons/btn-dashboard-viewtype.png"
-      gridButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype.png"
-      listButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype-selected.png"
-    
-    titleBar.add gridButton
-    titleBar.add listButton
-    titleBar.add dashboardLabel
+  open: () ->
+    unless Ti.Platform.name is "android"
+      Ti.UI.iPhone.showStatusBar()
+      @dashboardWindow.open 
+        fullscreen: false
+    else
+      @dashboardWindow.open 
+        fullscreen: true
+  
+  handle_btn_click: (e) =>
+    console.warn "button clicked: #{JSON.stringify e}"
 
-$CS.Views.Dashboard = Dashboard
+  isGrid: =>
+    @displayType is "grid"
+    
+  isList: =>
+    @displayType is "list"
+    
+  showGrid: =>
+    @displayType = "grid"
+    @gridView.visible = true
+    listView.visible = false
+    
+  showList: =>
+    @displayType = "list"
+    @gridView.visible = false
+    listView.visible = true
+
+$CS.Views.Dashboard = DashboardView

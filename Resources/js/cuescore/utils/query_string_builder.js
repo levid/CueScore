@@ -85,6 +85,6 @@
 
   })();
 
-  $CS.Utils.QueryStringBuilder = QueryStringBuilder;
+  $CS.Utilities.QueryStringBuilder = QueryStringBuilder;
 
 }).call(this);

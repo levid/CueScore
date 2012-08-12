@@ -4,7 +4,7 @@ class ListView extends $CS.Views.Dashboard
   constructor: () ->
     _.extend @, @defaults
     
-    listView = Ti.UI.createView(
+    @listView = Ti.UI.createView(
       backgroundColor: "#000000"
       top: 0
       isNinePatch: false

@@ -52,4 +52,4 @@ class QueryStringBuilder
 
       this.stringify value, new_prefix, accum
       
-$CS.Utils.QueryStringBuilder = QueryStringBuilder
+$CS.Utilities.QueryStringBuilder = QueryStringBuilder
