@@ -1,5 +1,5 @@
 (function() {
-  var API, AppSync, DashboardController, DoubleJeopardy, Doubles, Game, League, LeagueMatch, Masters, Match, MixedDoubles, Player, Post, PostViewController, Posts, PostsController, PostsViewController, PracticeMatch, QueryStringBuilder, Rank, Ranks, Team, Template, TournamentMatch, Womens, after, console, every, say,
+  var API, ActivityView, AppSync, Dashboard, DashboardController, DoubleJeopardy, Doubles, EventsView, Game, GridView, League, LeagueMatch, ListView, LiveView, Masters, Match, MenuView, MixedDoubles, NewsView, Player, Post, PostViewController, Posts, PostsController, PostsViewController, PracticeMatch, ProfileView, QueryStringBuilder, Rank, Ranks, RulesView, SettingsView, Team, TeamsView, Template, TournamentMatch, Womens, after, console, every, getScoreRatio, say,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -264,6 +264,30 @@
     return AppSync;
 
   })();
+
+  getScoreRatio = function(playerScore, playerBallCount) {
+    return playerScore / playerBallCount;
+  };
+
+  Array.prototype.exists = function(search) {
+    var i;
+    i = 0;
+    while (i < this.length) {
+      if (this[i] === search) {
+        return true;
+      }
+      i++;
+    }
+    return false;
+  };
+
+  root.getPlatformWidth = function() {
+    return Ti.Platform.displayCaps.platformWidth;
+  };
+
+  root.getPlatformHeight = function() {
+    return Ti.Platform.displayCaps.platformHeight - 22;
+  };
 
   Array.prototype.contains = function(obj) {
     var i;
@@ -3498,22 +3522,7 @@
       return console.warn("button clicked: " + (JSON.stringify(e)));
     };
 
-    DashboardController.prototype.loadDependencies = function() {
-      Ti.include("/js/Common.js");
-      Ti.include("/js/pages/matchSetup.js");
-      Ti.include("/js/pages/match.js");
-      Ti.include("/js/pages/toolViews/teams.js");
-      Ti.include("/js/pages/toolViews/activity.js");
-      Ti.include("/js/pages/toolViews/profile.js");
-      Ti.include("/js/pages/toolViews/news.js");
-      Ti.include("/js/pages/toolViews/events.js");
-      Ti.include("/js/pages/toolViews/live.js");
-      Ti.include("/js/pages/toolViews/rules.js");
-      Ti.include("/js/pages/toolViews/settings.js");
-      Ti.include("/js/pages/dashboardViews/dashboardCommonView.js");
-      Ti.include("/js/pages/dashboardViews/gridView.js");
-      return Ti.include("/js/pages/dashboardViews/listView.js");
-    };
+    DashboardController.prototype.loadDependencies = function() {};
 
     isGrid = function() {
       return DashboardController.displayType === "grid";
@@ -3578,6 +3587,939 @@
 
   $CS.Controllers.PostsController = PostsController;
 
+  ActivityView = (function(_super) {
+
+    __extends(ActivityView, _super);
+
+    ActivityView.name = 'ActivityView';
+
+    ActivityView.prototype.defaults = {};
+
+    function ActivityView() {
+      _.extend(this, this.defaults);
+      try {
+        Ti.include("/js/Common.js");
+        Ti.include("/js/pages/toolViews/toolsMenuView.js");
+      } catch (_error) {}
+      this.setUp();
+    }
+
+    ActivityView.prototype.setUp = function() {
+      var toolbarLabel,
+        _this = this;
+      this.activityWindow = Ti.UI.createWindow({
+        orientationModes: [Ti.UI.PORTRAIT]
+      });
+      this.activityContainer = Ti.UI.createView({
+        backgroundColor: "#000000",
+        top: 0,
+        left: 0,
+        height: this.getPlatformHeight(),
+        width: this.getPlatformWidth()
+      });
+      this.activityScrollView = Ti.UI.createScrollView({
+        contentWidth: "auto",
+        contentHeight: "auto",
+        minZoomScale: 0,
+        maxZoomScale: 10,
+        backgroundColor: "transparent",
+        top: 12,
+        left: 12,
+        height: 390,
+        width: 295,
+        showPagingControl: true
+      });
+      this.activityView = Ti.UI.createView({
+        height: 243,
+        width: 243,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.comingSoon = Ti.UI.createView({
+        backgroundImage: "images/match/layout/overlay-comingsoon.png",
+        backgroundColor: "transparent",
+        top: 20,
+        height: 243,
+        width: 243
+      });
+      this.activityLabel = Ti.UI.createLabel({
+        text: "test test test test ",
+        top: 0,
+        left: 0,
+        color: "#ffffff",
+        height: 1500,
+        width: 285,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.activityView.add(this.comingSoon);
+      toolbarLabel = Ti.UI.createLabel({
+        text: "Activity",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        textAlign: "center",
+        font: {
+          fontSize: 20,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      titleBar.add(dashboardButton);
+      titleBar.add(toolbarLabel);
+      this.activityContainer.add(toolsMenuContainer);
+      this.activityContainer.add(titleBar);
+      this.activityContainer.add(this.activityView);
+      this.activityWindow.add(this.activityContainer);
+      this.dashboardButton.addEventListener("click", function() {
+        _this.activityWindow.close();
+        return _this.dashboardWindow.show();
+      });
+      ({
+        showActivity: function() {
+          if (Ti.Platform.name !== "android") {
+            Ti.UI.iPhone.showStatusBar();
+            return _this.activityWindow.open({
+              fullscreen: false
+            });
+          } else {
+            return _this.activityWindow.open({
+              fullscreen: true
+            });
+          }
+        }
+      });
+      return showActivity();
+    };
+
+    return ActivityView;
+
+  })($CS.Views.Dashboard);
+
+  $CS.Views.Dashboard.ActivityView = ActivityView;
+
+  Dashboard = (function(_super) {
+
+    __extends(Dashboard, _super);
+
+    Dashboard.name = 'Dashboard';
+
+    Dashboard.prototype.defaults = {};
+
+    function Dashboard() {
+      var dashboardContainer, dashboardLabel, gridButton, gridButtonLabel, listButton, listButtonLabel, titleBar;
+      _.extend(this, this.defaults);
+      dashboardContainer = Titanium.UI.createView({
+        backgroundImage: (Ti.Platform.name !== "android" ? "images/match/layout/bg-menus-iphone.png" : "images/match/layout/bg-menus-android.png"),
+        backgroundColor: "transparent",
+        top: 44,
+        left: 0,
+        height: this.getPlatformHeight() - 44,
+        width: this.getPlatformWidth()
+      });
+      titleBar = Titanium.UI.createView({
+        backgroundColor: "transparent",
+        backgroundImage: "images/match/layout/titlebar-matches.png",
+        top: 0,
+        left: 0,
+        width: this.getPlatformWidth(),
+        height: 44,
+        isNinePatch: false
+      });
+      dashboardLabel = Titanium.UI.createLabel({
+        text: "Dashboard",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        textAlign: "center",
+        font: {
+          fontSize: 20,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      gridButton = Titanium.UI.createView({
+        backgroundColor: "transparent",
+        backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png",
+        top: 7,
+        left: 8,
+        width: 80,
+        height: 30
+      });
+      gridButtonLabel = Titanium.UI.createLabel({
+        text: "Grid View",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        left: 11,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      gridButton.add(gridButtonLabel);
+      listButton = Titanium.UI.createView({
+        backgroundColor: "transparent",
+        backgroundImage: "images/match/buttons/btn-dashboard-viewtype.png",
+        top: 7,
+        right: 8,
+        width: 80,
+        height: 30
+      });
+      listButtonLabel = Titanium.UI.createLabel({
+        text: "List View",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        left: 11,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      listButton.add(listButtonLabel);
+      gridButton.addEventListener("click", function() {
+        showGrid();
+        gridButton.animate({
+          backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png"
+        });
+        listButton.animate({
+          backgroundImage: "images/match/buttons/btn-dashboard-viewtype.png"
+        });
+        gridButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype-selected.png";
+        return listButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype.png";
+      });
+      listButton.addEventListener("click", function() {
+        showList();
+        gridButton.animate({
+          backgroundImage: "images/match/buttons/btn-dashboard-viewtype-selected.png"
+        });
+        listButton.animate({
+          backgroundImage: "images/match/buttons/btn-dashboard-viewtype.png"
+        });
+        gridButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype.png";
+        return listButton.backgroundImage = "images/match/buttons/btn-dashboard-viewtype-selected.png";
+      });
+      titleBar.add(gridButton);
+      titleBar.add(listButton);
+      titleBar.add(dashboardLabel);
+    }
+
+    return Dashboard;
+
+  })(Template);
+
+  $CS.Views.Dashboard = Dashboard;
+
+  EventsView = (function(_super) {
+
+    __extends(EventsView, _super);
+
+    EventsView.name = 'EventsView';
+
+    EventsView.prototype.defaults = {};
+
+    function EventsView() {
+      _.extend(this, this.defaults);
+      try {
+        Ti.include("/js/Common.js");
+        Ti.include("/js/pages/toolViews/toolsMenuView.js");
+      } catch (_error) {}
+      this.setUp();
+    }
+
+    EventsView.prototype.setUp = function() {
+      var toolbarLabel,
+        _this = this;
+      this.eventsWindow = Ti.UI.createWindow({
+        orientationModes: [Ti.UI.PORTRAIT]
+      });
+      this.eventsContainer = Ti.UI.createView({
+        backgroundColor: "#000000",
+        top: 0,
+        left: 0,
+        height: this.getPlatformHeight(),
+        width: this.getPlatformWidth()
+      });
+      this.eventsScrollView = Ti.UI.createScrollView({
+        contentWidth: "auto",
+        contentHeight: "auto",
+        minZoomScale: 0,
+        maxZoomScale: 10,
+        backgroundColor: "transparent",
+        top: 12,
+        left: 12,
+        height: 390,
+        width: 295,
+        showPagingControl: true
+      });
+      this.eventsView = Ti.UI.createView({
+        height: 243,
+        width: 243,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.comingSoon = Ti.UI.createView({
+        backgroundImage: "images/match/layout/overlay-comingsoon.png",
+        backgroundColor: "transparent",
+        top: 20,
+        height: 243,
+        width: 243
+      });
+      this.eventsLabel = Ti.UI.createLabel({
+        text: "test test test test ",
+        top: 0,
+        left: 0,
+        color: "#ffffff",
+        height: 1500,
+        width: 285,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.eventsView.add(this.comingSoon);
+      toolbarLabel = Ti.UI.createLabel({
+        text: "Events",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        textAlign: "center",
+        font: {
+          fontSize: 20,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      titleBar.add(dashboardButton);
+      titleBar.add(toolbarLabel);
+      this.eventsContainer.add(toolsMenuContainer);
+      this.eventsContainer.add(titleBar);
+      this.eventsContainer.add(this.eventsView);
+      this.eventsWindow.add(this.eventsContainer);
+      this.dashboardButton.addEventListener("click", function() {
+        this.eventsWindow.close();
+        return this.dashboardWindow.show();
+      });
+      ({
+        showEvents: function() {
+          if (Ti.Platform.name !== "android") {
+            Ti.UI.iPhone.showStatusBar();
+            return _this.eventsWindow.open({
+              fullscreen: false
+            });
+          } else {
+            return _this.eventsWindow.open({
+              fullscreen: true
+            });
+          }
+        }
+      });
+      return showEvents();
+    };
+
+    return EventsView;
+
+  })($CS.Views.Dashboard);
+
+  $CS.Views.Dashboard.EventsView = EventsView;
+
+  GridView = (function(_super) {
+
+    __extends(GridView, _super);
+
+    GridView.name = 'GridView';
+
+    GridView.prototype.defaults = {};
+
+    function GridView() {
+      var activityIcon, activityIconBackground, activityIconContainer, activityIconLabel, activityWindowHolder, eventsIcon, eventsIconBackground, eventsIconContainer, eventsIconLabel, eventsWindowHolder, liveIcon, liveIconBackground, liveIconContainer, liveIconLabel, liveWindowHolder, newsIcon, newsIconBackground, newsIconContainer, newsIconLabel, newsWindowHolder, playIcon, playIconBackground, playIconContainer, playIconLabel, playWindowHolder, profileIcon, profileIconBackground, profileIconContainer, profileIconLabel, profileWindowHolder, rulesIcon, rulesIconBackground, rulesIconContainer, rulesIconLabel, rulesWindowHolder, settingsIcon, settingsIconBackground, settingsIconContainer, settingsIconLabel, settingsWindowHolder, teamsIcon, teamsIconBackground, teamsIconContainer, teamsIconLabel, teamsWindowHolder;
+      _.extend(this, this.defaults);
+      playWindowHolder = null;
+      teamsWindowHolder = null;
+      activityWindowHolder = null;
+      profileWindowHolder = null;
+      newsWindowHolder = null;
+      eventsWindowHolder = null;
+      liveWindowHolder = null;
+      rulesWindowHolder = null;
+      settingsWindowHolder = null;
+      this.gridView = Ti.UI.createView({
+        top: 12,
+        left: 12,
+        height: 390,
+        width: 295,
+        isNinePatch: false
+      });
+      playIconContainer = Ti.UI.createView({
+        left: 13,
+        top: 16,
+        height: 102,
+        width: 82
+      });
+      playIconBackground = Ti.UI.createView({
+        backgroundImage: "images/match/layout/bg-dashboard-buttons-gridview.png",
+        top: 0,
+        left: 0,
+        height: 83,
+        width: 82
+      });
+      playIcon = Ti.UI.createView({
+        backgroundImage: "images/match/buttons/btn-dashboard-play-large.png",
+        top: 5,
+        left: 6,
+        height: 71,
+        width: 70
+      });
+      playIconLabel = Ti.UI.createLabel({
+        color: "#ffffff",
+        backgroundColor: "transparent",
+        text: "Play",
+        top: 80,
+        height: 20,
+        width: 82,
+        textAlign: "center",
+        font: {
+          fontSize: 14,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      playIcon.addEventListener("click", function() {
+        if (playWindowHolder == null) {
+          playWindowHolder = matchSetup();
+        } else {
+          playWindowHolder.showMatchSetup();
+        }
+        return dashboardWindow.hide();
+      });
+      playIconBackground.add(playIcon);
+      playIconContainer.add(playIconBackground);
+      playIconContainer.add(playIconLabel);
+      teamsIconContainer = Ti.UI.createView({
+        left: 108,
+        top: 16,
+        height: 102,
+        width: 82
+      });
+      teamsIconBackground = Ti.UI.createView({
+        backgroundImage: "images/match/layout/bg-dashboard-buttons-gridview.png",
+        top: 0,
+        left: 0,
+        height: 83,
+        width: 82
+      });
+      teamsIcon = Ti.UI.createView({
+        backgroundImage: "images/match/buttons/btn-dashboard-leagues-large.png",
+        top: 5,
+        left: 6,
+        height: 71,
+        width: 70
+      });
+      teamsIconLabel = Ti.UI.createLabel({
+        color: "#ffffff",
+        backgroundColor: "transparent",
+        text: "Teams",
+        top: 80,
+        height: 20,
+        width: 82,
+        textAlign: "center",
+        font: {
+          fontSize: 14,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      teamsIcon.addEventListener("click", function() {
+        if (teamsWindowHolder == null) {
+          teamsWindowHolder = teams();
+        } else {
+          teamsWindowHolder.showTeams();
+        }
+        return dashboardWindow.hide();
+      });
+      teamsIconBackground.add(teamsIcon);
+      teamsIconContainer.add(teamsIconBackground);
+      teamsIconContainer.add(teamsIconLabel);
+      activityIconContainer = Ti.UI.createView({
+        left: 203,
+        top: 16,
+        height: 102,
+        width: 82
+      });
+      activityIconBackground = Ti.UI.createView({
+        backgroundImage: "images/match/layout/bg-dashboard-buttons-gridview.png",
+        top: 0,
+        left: 0,
+        height: 83,
+        width: 82
+      });
+      activityIcon = Ti.UI.createView({
+        backgroundImage: "images/match/buttons/btn-dashboard-activity-large.png",
+        top: 5,
+        left: 6,
+        height: 71,
+        width: 70
+      });
+      activityIconLabel = Ti.UI.createLabel({
+        color: "#ffffff",
+        backgroundColor: "transparent",
+        text: "Activity",
+        top: 80,
+        height: 20,
+        width: 82,
+        textAlign: "center",
+        font: {
+          fontSize: 14,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      activityIcon.addEventListener("click", function() {
+        if (activityWindowHolder == null) {
+          activityWindowHolder = activity();
+        } else {
+          activityWindowHolder.showActivity();
+        }
+        return dashboardWindow.hide();
+      });
+      activityIconBackground.add(activityIcon);
+      activityIconContainer.add(activityIconBackground);
+      activityIconContainer.add(activityIconLabel);
+      profileIconContainer = Ti.UI.createView({
+        left: 13,
+        top: 137,
+        height: 102,
+        width: 82
+      });
+      profileIconBackground = Ti.UI.createView({
+        backgroundImage: "images/match/layout/bg-dashboard-buttons-gridview.png",
+        top: 0,
+        left: 0,
+        height: 83,
+        width: 82
+      });
+      profileIcon = Ti.UI.createView({
+        backgroundImage: "images/match/buttons/btn-dashboard-profile-large.png",
+        top: 5,
+        left: 6,
+        height: 71,
+        width: 70
+      });
+      profileIconLabel = Ti.UI.createLabel({
+        color: "#ffffff",
+        backgroundColor: "transparent",
+        text: "Profile",
+        top: 80,
+        height: 20,
+        width: 82,
+        textAlign: "center",
+        font: {
+          fontSize: 14,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      profileIcon.addEventListener("click", function() {
+        if (profileWindowHolder == null) {
+          profileWindowHolder = profile();
+        } else {
+          profileWindowHolder.showProfile();
+        }
+        return dashboardWindow.hide();
+      });
+      profileIconBackground.add(profileIcon);
+      profileIconContainer.add(profileIconBackground);
+      profileIconContainer.add(profileIconLabel);
+      newsIconContainer = Ti.UI.createView({
+        left: 108,
+        top: 137,
+        height: 102,
+        width: 82
+      });
+      newsIconBackground = Ti.UI.createView({
+        backgroundImage: "images/match/layout/bg-dashboard-buttons-gridview.png",
+        top: 0,
+        left: 0,
+        height: 83,
+        width: 82
+      });
+      newsIcon = Ti.UI.createView({
+        backgroundImage: "images/match/buttons/btn-dashboard-news-large.png",
+        top: 5,
+        left: 6,
+        height: 71,
+        width: 70
+      });
+      newsIconLabel = Ti.UI.createLabel({
+        color: "#ffffff",
+        backgroundColor: "transparent",
+        text: "News",
+        top: 80,
+        height: 20,
+        width: 82,
+        textAlign: "center",
+        font: {
+          fontSize: 14,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      newsIcon.addEventListener("click", function() {
+        if (newsWindowHolder == null) {
+          newsWindowHolder = news();
+        } else {
+          newsWindowHolder.showNews();
+        }
+        return dashboardWindow.hide();
+      });
+      newsIconBackground.add(newsIcon);
+      newsIconContainer.add(newsIconBackground);
+      newsIconContainer.add(newsIconLabel);
+      eventsIconContainer = Ti.UI.createView({
+        left: 203,
+        top: 137,
+        height: 102,
+        width: 82
+      });
+      eventsIconBackground = Ti.UI.createView({
+        backgroundImage: "images/match/layout/bg-dashboard-buttons-gridview.png",
+        top: 0,
+        left: 0,
+        height: 83,
+        width: 82
+      });
+      eventsIcon = Ti.UI.createView({
+        backgroundImage: "images/match/buttons/btn-dashboard-events-large.png",
+        top: 5,
+        left: 6,
+        height: 71,
+        width: 70
+      });
+      eventsIconLabel = Ti.UI.createLabel({
+        color: "#ffffff",
+        backgroundColor: "transparent",
+        text: "Events",
+        top: 80,
+        height: 20,
+        width: 82,
+        textAlign: "center",
+        font: {
+          fontSize: 14,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      eventsIcon.addEventListener("click", function() {
+        if (eventsWindowHolder == null) {
+          eventsWindowHolder = events();
+        } else {
+          eventsWindowHolder.showEvents();
+        }
+        return dashboardWindow.hide();
+      });
+      eventsIconBackground.add(eventsIcon);
+      eventsIconContainer.add(eventsIconBackground);
+      eventsIconContainer.add(eventsIconLabel);
+      liveIconContainer = Ti.UI.createView({
+        left: 13,
+        top: 255,
+        height: 102,
+        width: 82
+      });
+      liveIconBackground = Ti.UI.createView({
+        backgroundImage: "images/match/layout/bg-dashboard-buttons-gridview.png",
+        top: 0,
+        left: 0,
+        height: 83,
+        width: 82
+      });
+      liveIcon = Ti.UI.createView({
+        backgroundImage: "images/match/buttons/btn-dashboard-live-large.png",
+        top: 5,
+        left: 6,
+        height: 71,
+        width: 70
+      });
+      liveIconLabel = Ti.UI.createLabel({
+        color: "#ffffff",
+        backgroundColor: "transparent",
+        text: "Live",
+        top: 80,
+        height: 20,
+        width: 82,
+        textAlign: "center",
+        font: {
+          fontSize: 14,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      liveIcon.addEventListener("click", function() {
+        if (liveWindowHolder == null) {
+          liveWindowHolder = live();
+        } else {
+          liveWindowHolder.showLive();
+        }
+        return dashboardWindow.hide();
+      });
+      liveIconBackground.add(liveIcon);
+      liveIconContainer.add(liveIconBackground);
+      liveIconContainer.add(liveIconLabel);
+      rulesIconContainer = Ti.UI.createView({
+        left: 108,
+        top: 255,
+        height: 102,
+        width: 82
+      });
+      rulesIconBackground = Ti.UI.createView({
+        backgroundImage: "images/match/layout/bg-dashboard-buttons-gridview.png",
+        top: 0,
+        left: 0,
+        height: 83,
+        width: 82
+      });
+      rulesIcon = Ti.UI.createView({
+        backgroundImage: "images/match/buttons/btn-dashboard-rules-large.png",
+        top: 5,
+        left: 6,
+        height: 71,
+        width: 70
+      });
+      rulesIconLabel = Ti.UI.createLabel({
+        color: "#ffffff",
+        backgroundColor: "transparent",
+        text: "Rules",
+        top: 80,
+        height: 20,
+        width: 82,
+        textAlign: "center",
+        font: {
+          fontSize: 14,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      rulesIcon.addEventListener("click", function() {
+        if (rulesWindowHolder == null) {
+          rulesWindowHolder = rules();
+        } else {
+          rulesWindowHolder.showRules();
+        }
+        return dashboardWindow.hide();
+      });
+      rulesIconBackground.add(rulesIcon);
+      rulesIconContainer.add(rulesIconBackground);
+      rulesIconContainer.add(rulesIconLabel);
+      settingsIconContainer = Ti.UI.createView({
+        left: 203,
+        top: 255,
+        height: 102,
+        width: 82
+      });
+      settingsIconBackground = Ti.UI.createView({
+        backgroundImage: "images/match/layout/bg-dashboard-buttons-gridview.png",
+        top: 0,
+        left: 0,
+        height: 83,
+        width: 82
+      });
+      settingsIcon = Ti.UI.createView({
+        backgroundImage: "images/match/buttons/btn-dashboard-settings-large.png",
+        top: 5,
+        left: 6,
+        height: 71,
+        width: 70
+      });
+      settingsIconLabel = Ti.UI.createLabel({
+        color: "#ffffff",
+        backgroundColor: "transparent",
+        text: "Settings",
+        top: 80,
+        height: 20,
+        width: 82,
+        textAlign: "center",
+        font: {
+          fontSize: 14,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      settingsIcon.addEventListener("click", function() {
+        if (settingsWindowHolder == null) {
+          settingsWindowHolder = settings();
+        } else {
+          settingsWindowHolder.showSettings();
+        }
+        return dashboardWindow.hide();
+      });
+      settingsIconBackground.add(settingsIcon);
+      settingsIconContainer.add(settingsIconBackground);
+      settingsIconContainer.add(settingsIconLabel);
+      this.gridView.add(playIconContainer);
+      this.gridView.add(teamsIconContainer);
+      this.gridView.add(activityIconContainer);
+      this.gridView.add(profileIconContainer);
+      this.gridView.add(newsIconContainer);
+      this.gridView.add(eventsIconContainer);
+      this.gridView.add(liveIconContainer);
+      this.gridView.add(rulesIconContainer);
+      this.gridView.add(settingsIconContainer);
+    }
+
+    return GridView;
+
+  })($CS.Views.Dashboard);
+
+  $CS.Views.Dashboard.GridView = GridView;
+
+  ListView = (function(_super) {
+
+    __extends(ListView, _super);
+
+    ListView.name = 'ListView';
+
+    ListView.prototype.defaults = {};
+
+    function ListView() {
+      var listView;
+      _.extend(this, this.defaults);
+      listView = Ti.UI.createView({
+        backgroundColor: "#000000",
+        top: 0,
+        isNinePatch: false
+      });
+    }
+
+    return ListView;
+
+  })($CS.Views.Dashboard);
+
+  $CS.Views.Dashboard.ListView = ListView;
+
+  LiveView = (function(_super) {
+
+    __extends(LiveView, _super);
+
+    LiveView.name = 'LiveView';
+
+    LiveView.prototype.defaults = {};
+
+    function LiveView() {
+      _.extend(this, this.defaults);
+      try {
+        Ti.include("/js/Common.js");
+        Ti.include("/js/pages/toolViews/toolsMenuView.js");
+      } catch (_error) {}
+      this.setUp();
+    }
+
+    LiveView.prototype.setUp = function() {
+      var toolbarLabel,
+        _this = this;
+      this.liveWindow = Ti.UI.createWindow({
+        orientationModes: [Ti.UI.PORTRAIT]
+      });
+      this.liveContainer = Ti.UI.createView({
+        backgroundColor: "#000000",
+        top: 0,
+        left: 0,
+        height: this.getPlatformHeight(),
+        width: this.getPlatformWidth()
+      });
+      this.liveScrollView = Ti.UI.createScrollView({
+        contentWidth: "auto",
+        contentHeight: "auto",
+        minZoomScale: 0,
+        maxZoomScale: 10,
+        backgroundColor: "transparent",
+        top: 12,
+        left: 12,
+        height: 390,
+        width: 295,
+        showPagingControl: true
+      });
+      this.liveView = Ti.UI.createView({
+        height: 243,
+        width: 243,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.comingSoon = Ti.UI.createView({
+        backgroundImage: "images/match/layout/overlay-comingsoon.png",
+        backgroundColor: "transparent",
+        top: 20,
+        height: 243,
+        width: 243
+      });
+      this.liveLabel = Ti.UI.createLabel({
+        text: "test test test test ",
+        top: 0,
+        left: 0,
+        color: "#ffffff",
+        height: 1500,
+        width: 285,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.liveView.add(this.comingSoon);
+      toolbarLabel = Ti.UI.createLabel({
+        text: "Live",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        textAlign: "center",
+        font: {
+          fontSize: 20,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      titleBar.add(dashboardButton);
+      titleBar.add(toolbarLabel);
+      this.liveContainer.add(toolsMenuContainer);
+      this.liveContainer.add(titleBar);
+      this.liveContainer.add(this.liveView);
+      this.liveWindow.add(this.liveContainer);
+      this.dashboardButton.addEventListener("click", function() {
+        this.liveWindow.close();
+        return this.dashboardWindow.show();
+      });
+      ({
+        showLive: function() {
+          if (Ti.Platform.name !== "android") {
+            Ti.UI.iPhone.showStatusBar();
+            return _this.liveWindow.open({
+              fullscreen: false
+            });
+          } else {
+            return _this.liveWindow.open({
+              fullscreen: true
+            });
+          }
+        }
+      });
+      return showLive();
+    };
+
+    return LiveView;
+
+  })($CS.Views.Dashboard);
+
+  $CS.Views.Dashboard.LiveView = LiveView;
+
   $CS.Views.Dashboard.createMainWindow = function(options) {
     var window;
     if (options == null) {
@@ -3595,6 +4537,647 @@
     view = Ti.UI.createView(options);
     return view;
   };
+
+  MenuView = (function(_super) {
+
+    __extends(MenuView, _super);
+
+    MenuView.name = 'MenuView';
+
+    MenuView.prototype.defaults = {};
+
+    function MenuView() {
+      _.extend(this, this.defaults);
+      this.setUp();
+    }
+
+    MenuView.prototype.setUp = function() {
+      var titleBar, toolsMenuContainer;
+      toolsMenuContainer = Ti.UI.createView({
+        backgroundImage: (Ti.Platform.name !== "android" ? "images/match/layout/bg-menus-iphone.png" : "images/match/layout/bg-menus-android.png"),
+        backgroundColor: "transparent",
+        top: 44,
+        left: 0,
+        height: this.getPlatformHeight() - 44,
+        width: this.getPlatformWidth()
+      });
+      titleBar = Ti.UI.createView({
+        backgroundColor: "transparent",
+        backgroundImage: "images/match/layout/titlebar-matches.png",
+        top: 0,
+        left: 0,
+        width: this.getPlatformWidth(),
+        height: 44,
+        isNinePatch: false
+      });
+      this.dashboardButton = Ti.UI.createView({
+        backgroundColor: "transparent",
+        backgroundImage: "images/match/buttons/btn-tabmenu-backto-dashboard.png",
+        top: 7,
+        left: 8,
+        width: 93,
+        height: 30,
+        isNinePatch: false
+      });
+      this.dashboardButtonLabel = Ti.UI.createLabel({
+        text: "Dashboard",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        left: 13,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      return this.dashboardButton.add(this.dashboardButtonLabel);
+    };
+
+    return MenuView;
+
+  })($CS.Views.Dashboard);
+
+  $CS.Views.Dashboard.MenuView = MenuView;
+
+  NewsView = (function(_super) {
+
+    __extends(NewsView, _super);
+
+    NewsView.name = 'NewsView';
+
+    NewsView.prototype.defaults = {};
+
+    function NewsView() {
+      _.extend(this, this.defaults);
+      try {
+        Ti.include("/js/Common.js");
+        Ti.include("/js/pages/toolViews/toolsMenuView.js");
+      } catch (_error) {}
+      this.setUp();
+    }
+
+    NewsView.prototype.setUp = function() {
+      var toolbarLabel,
+        _this = this;
+      this.newsWindow = Ti.UI.createWindow({
+        orientationModes: [Ti.UI.PORTRAIT]
+      });
+      this.newsContainer = Ti.UI.createView({
+        backgroundColor: "#000000",
+        top: 0,
+        left: 0,
+        height: this.getPlatformHeight(),
+        width: this.getPlatformWidth()
+      });
+      this.newsScrollView = Ti.UI.createScrollView({
+        contentWidth: "auto",
+        contentHeight: "auto",
+        minZoomScale: 0,
+        maxZoomScale: 10,
+        backgroundColor: "transparent",
+        top: 12,
+        left: 12,
+        height: 390,
+        width: 295,
+        showPagingControl: true
+      });
+      this.newsView = Ti.UI.createView({
+        height: 243,
+        width: 243,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.comingSoon = Ti.UI.createView({
+        backgroundImage: "images/match/layout/overlay-comingsoon.png",
+        backgroundColor: "transparent",
+        top: 20,
+        height: 243,
+        width: 243
+      });
+      this.newsLabel = Ti.UI.createLabel({
+        text: "test test test test ",
+        top: 0,
+        left: 0,
+        color: "#ffffff",
+        height: 1500,
+        width: 285,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.newsView.add(this.comingSoon);
+      toolbarLabel = Ti.UI.createLabel({
+        text: "News",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        textAlign: "center",
+        font: {
+          fontSize: 20,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      titleBar.add(dashboardButton);
+      titleBar.add(toolbarLabel);
+      this.newsContainer.add(toolsMenuContainer);
+      this.newsContainer.add(titleBar);
+      this.newsContainer.add(this.newsView);
+      this.newsWindow.add(this.newsContainer);
+      this.dashboardButton.addEventListener("click", function() {
+        this.newsWindow.close();
+        return this.dashboardWindow.show();
+      });
+      ({
+        showNews: function() {
+          if (Ti.Platform.name !== "android") {
+            Ti.UI.iPhone.showStatusBar();
+            return _this.newsWindow.open({
+              fullscreen: false
+            });
+          } else {
+            return _this.newsWindow.open({
+              fullscreen: true
+            });
+          }
+        }
+      });
+      return showNews();
+    };
+
+    return NewsView;
+
+  })($CS.Views.Dashboard);
+
+  $CS.Views.Dashboard.NewsView = NewsView;
+
+  ProfileView = (function(_super) {
+
+    __extends(ProfileView, _super);
+
+    ProfileView.name = 'ProfileView';
+
+    ProfileView.prototype.defaults = {};
+
+    function ProfileView() {
+      _.extend(this, this.defaults);
+      try {
+        Ti.include("/js/Common.js");
+        Ti.include("/js/pages/toolViews/toolsMenuView.js");
+      } catch (_error) {}
+      this.setUp();
+    }
+
+    ProfileView.prototype.setUp = function() {
+      var toolbarLabel,
+        _this = this;
+      this.profileWindow = Ti.UI.createWindow({
+        orientationModes: [Ti.UI.PORTRAIT]
+      });
+      this.profileContainer = Ti.UI.createView({
+        backgroundColor: "#000000",
+        top: 0,
+        left: 0,
+        height: this.getPlatformHeight(),
+        width: this.getPlatformWidth()
+      });
+      this.profileScrollView = Ti.UI.createScrollView({
+        contentWidth: "auto",
+        contentHeight: "auto",
+        minZoomScale: 0,
+        maxZoomScale: 10,
+        backgroundColor: "transparent",
+        top: 12,
+        left: 12,
+        height: 390,
+        width: 295,
+        showPagingControl: true
+      });
+      this.profileView = Ti.UI.createView({
+        height: 243,
+        width: 243,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.comingSoon = Ti.UI.createView({
+        backgroundImage: "images/match/layout/overlay-comingsoon.png",
+        backgroundColor: "transparent",
+        top: 20,
+        height: 243,
+        width: 243
+      });
+      this.profileLabel = Ti.UI.createLabel({
+        text: "test test test test ",
+        top: 0,
+        left: 0,
+        color: "#ffffff",
+        height: 1500,
+        width: 285,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.profileView.add(this.comingSoon);
+      toolbarLabel = Ti.UI.createLabel({
+        text: "Profile",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        textAlign: "center",
+        font: {
+          fontSize: 20,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      titleBar.add(dashboardButton);
+      titleBar.add(toolbarLabel);
+      this.profileContainer.add(toolsMenuContainer);
+      this.profileContainer.add(titleBar);
+      this.profileContainer.add(this.profileView);
+      this.profileWindow.add(this.profileContainer);
+      this.dashboardButton.addEventListener("click", function() {
+        this.profileWindow.close();
+        return this.dashboardWindow.show();
+      });
+      ({
+        showProfile: function() {
+          if (Ti.Platform.name !== "android") {
+            Ti.UI.iPhone.showStatusBar();
+            return _this.profileWindow.open({
+              fullscreen: false
+            });
+          } else {
+            return _this.profileWindow.open({
+              fullscreen: true
+            });
+          }
+        }
+      });
+      return showProfile();
+    };
+
+    return ProfileView;
+
+  })($CS.Views.Dashboard);
+
+  $CS.Views.Dashboard.ProfileView = ProfileView;
+
+  RulesView = (function(_super) {
+
+    __extends(RulesView, _super);
+
+    RulesView.name = 'RulesView';
+
+    RulesView.prototype.defaults = {};
+
+    function RulesView() {
+      _.extend(this, this.defaults);
+      try {
+        Ti.include("/js/Common.js");
+        Ti.include("/js/pages/toolViews/toolsMenuView.js");
+      } catch (_error) {}
+      this.setUp();
+    }
+
+    RulesView.prototype.setUp = function() {
+      var toolbarLabel,
+        _this = this;
+      this.rulesWindow = Ti.UI.createWindow({
+        orientationModes: [Ti.UI.PORTRAIT]
+      });
+      this.rulesContainer = Ti.UI.createView({
+        backgroundColor: "#000000",
+        top: 0,
+        left: 0,
+        height: this.getPlatformHeight(),
+        width: this.getPlatformWidth()
+      });
+      this.rulesScrollView = Ti.UI.createScrollView({
+        contentWidth: "auto",
+        contentHeight: "auto",
+        minZoomScale: 0,
+        maxZoomScale: 10,
+        backgroundColor: "transparent",
+        top: 12,
+        left: 12,
+        height: 390,
+        width: 295,
+        showPagingControl: true
+      });
+      this.rulesView = Ti.UI.createView({
+        height: 243,
+        width: 243,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.comingSoon = Ti.UI.createView({
+        backgroundImage: "images/match/layout/overlay-comingsoon.png",
+        backgroundColor: "transparent",
+        top: 20,
+        height: 243,
+        width: 243
+      });
+      this.rulesLabel = Ti.UI.createLabel({
+        text: "test test test test ",
+        top: 0,
+        left: 0,
+        color: "#ffffff",
+        height: 1500,
+        width: 285,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.rulesView.add(this.comingSoon);
+      toolbarLabel = Ti.UI.createLabel({
+        text: "Rules",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        textAlign: "center",
+        font: {
+          fontSize: 20,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      titleBar.add(dashboardButton);
+      titleBar.add(toolbarLabel);
+      this.rulesContainer.add(toolsMenuContainer);
+      this.rulesContainer.add(titleBar);
+      this.rulesContainer.add(this.rulesView);
+      this.rulesWindow.add(this.rulesContainer);
+      this.dashboardButton.addEventListener("click", function() {
+        this.rulesWindow.close();
+        return this.dashboardWindow.show();
+      });
+      ({
+        showRules: function() {
+          if (Ti.Platform.name !== "android") {
+            Ti.UI.iPhone.showStatusBar();
+            return _this.rulesWindow.open({
+              fullscreen: false
+            });
+          } else {
+            return _this.rulesWindow.open({
+              fullscreen: true
+            });
+          }
+        }
+      });
+      return showRules();
+    };
+
+    return RulesView;
+
+  })($CS.Views.Dashboard);
+
+  $CS.Views.Dashboard.RulesView = RulesView;
+
+  SettingsView = (function(_super) {
+
+    __extends(SettingsView, _super);
+
+    SettingsView.name = 'SettingsView';
+
+    SettingsView.prototype.defaults = {};
+
+    function SettingsView() {
+      _.extend(this, this.defaults);
+      try {
+        Ti.include("/js/Common.js");
+        Ti.include("/js/pages/toolViews/toolsMenuView.js");
+      } catch (_error) {}
+      this.setUp();
+    }
+
+    SettingsView.prototype.setUp = function() {
+      var toolbarLabel,
+        _this = this;
+      this.settingsWindow = Ti.UI.createWindow({
+        orientationModes: [Ti.UI.PORTRAIT]
+      });
+      this.settingsContainer = Ti.UI.createView({
+        backgroundColor: "#000000",
+        top: 0,
+        left: 0,
+        height: this.getPlatformHeight(),
+        width: this.getPlatformWidth()
+      });
+      this.settingsScrollView = Ti.UI.createScrollView({
+        contentWidth: "auto",
+        contentHeight: "auto",
+        minZoomScale: 0,
+        maxZoomScale: 10,
+        backgroundColor: "transparent",
+        top: 12,
+        left: 12,
+        height: 390,
+        width: 295,
+        showPagingControl: true
+      });
+      this.settingsView = Ti.UI.createView({
+        height: 243,
+        width: 243,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.comingSoon = Ti.UI.createView({
+        backgroundImage: "images/match/layout/overlay-comingsoon.png",
+        backgroundColor: "transparent",
+        top: 20,
+        height: 243,
+        width: 243
+      });
+      this.settingsLabel = Ti.UI.createLabel({
+        text: "test test test test ",
+        top: 0,
+        left: 0,
+        color: "#ffffff",
+        height: 1500,
+        width: 285,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.settingsView.add(this.comingSoon);
+      toolbarLabel = Ti.UI.createLabel({
+        text: "Settings",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        textAlign: "center",
+        font: {
+          fontSize: 20,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      titleBar.add(dashboardButton);
+      titleBar.add(toolbarLabel);
+      this.settingsContainer.add(toolsMenuContainer);
+      this.settingsContainer.add(titleBar);
+      this.settingsContainer.add(this.settingsView);
+      this.settingsWindow.add(this.settingsContainer);
+      this.dashboardButton.addEventListener("click", function() {
+        this.settingsWindow.close();
+        return this.dashboardWindow.show();
+      });
+      ({
+        showSettings: function() {
+          if (Ti.Platform.name !== "android") {
+            Ti.UI.iPhone.showStatusBar();
+            return _this.settingsWindow.open({
+              fullscreen: false
+            });
+          } else {
+            return _this.settingsWindow.open({
+              fullscreen: true
+            });
+          }
+        }
+      });
+      return showSettings();
+    };
+
+    return SettingsView;
+
+  })($CS.Views.Dashboard);
+
+  $CS.Views.Dashboard.SettingsView = SettingsView;
+
+  TeamsView = (function(_super) {
+
+    __extends(TeamsView, _super);
+
+    TeamsView.name = 'TeamsView';
+
+    TeamsView.prototype.defaults = {};
+
+    function TeamsView() {
+      _.extend(this, this.defaults);
+      try {
+        Ti.include("/js/Common.js");
+        Ti.include("/js/pages/toolViews/toolsMenuView.js");
+      } catch (_error) {}
+      this.setUp();
+    }
+
+    TeamsView.prototype.setUp = function() {
+      var toolbarLabel,
+        _this = this;
+      this.teamsWindow = Ti.UI.createWindow({
+        orientationModes: [Ti.UI.PORTRAIT]
+      });
+      this.teamsContainer = Ti.UI.createView({
+        backgroundColor: "#000000",
+        top: 0,
+        left: 0,
+        height: this.getPlatformHeight(),
+        width: this.getPlatformWidth()
+      });
+      this.teamsScrollView = Ti.UI.createScrollView({
+        contentWidth: "auto",
+        contentHeight: "auto",
+        minZoomScale: 0,
+        maxZoomScale: 10,
+        backgroundColor: "transparent",
+        top: 12,
+        left: 12,
+        height: 390,
+        width: 295,
+        showPagingControl: true
+      });
+      this.teamsView = Ti.UI.createView({
+        height: 243,
+        width: 243,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.comingSoon = Ti.UI.createView({
+        backgroundImage: "images/match/layout/overlay-comingsoon.png",
+        backgroundColor: "transparent",
+        top: 20,
+        height: 243,
+        width: 243
+      });
+      this.teamsLabel = Ti.UI.createLabel({
+        text: "test test test test ",
+        top: 0,
+        left: 0,
+        color: "#ffffff",
+        height: 1500,
+        width: 285,
+        font: {
+          fontSize: 13,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      this.teamsView.add(this.comingSoon);
+      toolbarLabel = Ti.UI.createLabel({
+        text: "Teams",
+        color: "#ffffff",
+        shadowColor: "#000000",
+        textAlign: "center",
+        font: {
+          fontSize: 20,
+          fontWeight: "bold",
+          fontFamily: "HelveticaNeue-Bold"
+        }
+      });
+      titleBar.add(dashboardButton);
+      titleBar.add(toolbarLabel);
+      this.teamsContainer.add(toolsMenuContainer);
+      this.teamsContainer.add(titleBar);
+      this.teamsContainer.add(this.teamsView);
+      this.teamsWindow.add(this.teamsContainer);
+      this.dashboardButton.addEventListener("click", function() {
+        this.teamsWindow.close();
+        return this.dashboardWindow.show();
+      });
+      ({
+        showTeams: function() {
+          if (Ti.Platform.name !== "android") {
+            Ti.UI.iPhone.showStatusBar();
+            return _this.teamsWindow.open({
+              fullscreen: false
+            });
+          } else {
+            return _this.teamsWindow.open({
+              fullscreen: true
+            });
+          }
+        }
+      });
+      return showTeams();
+    };
+
+    return TeamsView;
+
+  })($CS.Views.Dashboard);
+
+  $CS.Views.Dashboard.TeamsView = TeamsView;
 
   $CS.Views.Login.createLoginWindow = function(options) {
     var button, window;

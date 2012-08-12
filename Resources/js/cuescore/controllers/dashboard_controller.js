@@ -59,22 +59,7 @@
       return console.warn("button clicked: " + (JSON.stringify(e)));
     };
 
-    DashboardController.prototype.loadDependencies = function() {
-      Ti.include("/js/Common.js");
-      Ti.include("/js/pages/matchSetup.js");
-      Ti.include("/js/pages/match.js");
-      Ti.include("/js/pages/toolViews/teams.js");
-      Ti.include("/js/pages/toolViews/activity.js");
-      Ti.include("/js/pages/toolViews/profile.js");
-      Ti.include("/js/pages/toolViews/news.js");
-      Ti.include("/js/pages/toolViews/events.js");
-      Ti.include("/js/pages/toolViews/live.js");
-      Ti.include("/js/pages/toolViews/rules.js");
-      Ti.include("/js/pages/toolViews/settings.js");
-      Ti.include("/js/pages/dashboardViews/dashboardCommonView.js");
-      Ti.include("/js/pages/dashboardViews/gridView.js");
-      return Ti.include("/js/pages/dashboardViews/listView.js");
-    };
+    DashboardController.prototype.loadDependencies = function() {};
 
     isGrid = function() {
       return DashboardController.displayType === "grid";

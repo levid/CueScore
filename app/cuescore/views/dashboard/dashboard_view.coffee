@@ -1,5 +1,9 @@
-class DashboardContainer
+class Dashboard extends Template
+  defaults: {}
+  
   constructor: () ->
+    _.extend @, @defaults
+    
     dashboardContainer = Titanium.UI.createView(
       backgroundImage: (if (Ti.Platform.name isnt "android") then "images/match/layout/bg-menus-iphone.png" else "images/match/layout/bg-menus-android.png")
       backgroundColor: "transparent"
@@ -82,5 +86,5 @@ class DashboardContainer
     titleBar.add gridButton
     titleBar.add listButton
     titleBar.add dashboardLabel
-    
-root.DashboardContainer = DashboardContainer
+
+$CS.Views.Dashboard = Dashboard
