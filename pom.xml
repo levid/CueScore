@@ -29,7 +29,9 @@
             <source>Resources/app.js</source>
             <source>Resources/vendor/underscore/underscore-min.js</source>
             <source>Resources/vendor/backbone/backbone-min.js</source>
-            <source>Resources/js/cuescore/utils/contains.js</source>
+            <source>Resources/js/cuescore/utils/utilities.js</source>
+            <source>Resources/js/cuescore/utils/data_service.js</source>
+            <source>Resources/js/cuescore/utils/base_64.js</source>
           </preloadSources>
           <jsSrcDir>Resources/js/cuescore/models/</jsSrcDir>
           <jsTestSrcDir>spec/javascripts/libs/models/</jsTestSrcDir>

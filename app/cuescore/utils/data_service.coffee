@@ -1,4 +1,4 @@
-class DataService
+class DataService extends $CS.Utilities
   defaults: {}
 
   constructor: (options = {}) ->

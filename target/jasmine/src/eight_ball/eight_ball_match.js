@@ -153,8 +153,9 @@
     Match.prototype.getMatchPointsByPlayer = function(playerNum) {
       if ((this.getGamesWonByPlayer(1) / this.player.one.gamesNeededToWin) > (this.getGamesWonByPlayer(2) / this.player.two.gamesNeededToWin)) {
         return 1;
+      } else {
+        return 0;
       }
-      return 0;
     };
 
     Match.prototype.getMatchPoints = function() {
