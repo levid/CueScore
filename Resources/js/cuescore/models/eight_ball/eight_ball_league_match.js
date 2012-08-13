@@ -11,66 +11,60 @@
     LeagueMatch.name = 'LeagueMatch';
 
     LeagueMatch.prototype.defaults = {
-      game_type: null,
-      match: [
-        {
-          one: null,
-          two: null,
-          three: null,
-          four: null,
-          five: null
-        }
-      ],
-      team_number: "",
-      home_team: {
-        number: null,
-        name: null,
-        signed: false
+      match: {
+        one: null,
+        two: null,
+        three: null,
+        four: null,
+        five: null
       },
-      away_team: {
-        number: null,
-        name: null,
-        signed: false
-      },
-      start_time: null,
-      end_time: "",
-      table_type: null,
-      small_json: false,
-      league_match_id: 0
+      teamNumber: "",
+      homeTeamNumber: null,
+      homeTeamName: null,
+      homeTeamSigned: false,
+      awayTeamNumber: null,
+      awayTeamName: null,
+      awayTeamSigned: false,
+      startTime: null,
+      endTime: "",
+      tableType: null,
+      smallJson: false,
+      leagueMatchId: 0
     };
 
-    function LeagueMatch(GameType, HomeTeamNumber, AwayTeamNumber, HomeTeamName, AwayTeamName, StartTime, TableType) {
+    function LeagueMatch(options) {
+      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
       _.extend(this, this.defaults);
-      this.game_type = "EightBall";
-      this.home_team.number = HomeTeamNumber || null;
-      this.home_team.name = HomeTeamName || "";
-      this.away_team.number = AwayTeamNumber || null;
-      this.away_team.name = AwayTeamName || "";
-      this.start_time = StartTime || "";
-      this.table_type = TableType || "";
-      DataService.saveLeagueMatch(this, function(id) {
-        return this.league_match_id = id;
+      this.homeTeamNumber = (_ref = options.homeTeamNumber) != null ? _ref : options.homeTeamNumber = null;
+      this.homeTeamName = (_ref1 = options.homeTeamName) != null ? _ref1 : options.homeTeamName = null;
+      this.awayTeamNumber = (_ref2 = options.awayTeamNumber) != null ? _ref2 : options.awayTeamNumber = null;
+      this.awayTeamName = (_ref3 = options.awayTeamName) != null ? _ref3 : options.awayTeamName = null;
+      this.startTime = (_ref4 = options.startTime) != null ? _ref4 : options.startTime = null;
+      this.tableType = (_ref5 = options.tableType) != null ? _ref5 : options.tableType = null;
+      this.DataService = new $CS.Utilities.DataService;
+      this.DataService.saveLeagueMatch(this, function(id) {
+        return this.leagueMatchId = id;
       });
     }
 
     LeagueMatch.prototype.getHomeTeamScore = function() {
       var totalScore;
       totalScore = 0;
-      totalScore = this.match['one'].getMatchPointsByTeamNumber(this.home_team.number);
-      totalScore += this.match['two'].getMatchPointsByTeamNumber(this.home_team.number);
-      totalScore += this.match['three'].getMatchPointsByTeamNumber(this.home_team.number);
-      totalScore += this.match['four'].getMatchPointsByTeamNumber(this.home_team.number);
-      totalScore += this.match['five'].getMatchPointsByTeamNumber(this.home_team.number);
+      totalScore = this.match['one'].getMatchPointsByTeamNumber(this.homeTeamNumber);
+      totalScore += this.match['two'].getMatchPointsByTeamNumber(this.homeTeamNumber);
+      totalScore += this.match['three'].getMatchPointsByTeamNumber(this.homeTeamNumber);
+      totalScore += this.match['four'].getMatchPointsByTeamNumber(this.homeTeamNumber);
+      totalScore += this.match['five'].getMatchPointsByTeamNumber(this.homeTeamNumber);
       return totalScore;
     };
 
     LeagueMatch.prototype.getAwayTeamScore = function() {
       var totalScore;
-      totalScore = this.match['one'].getMatchPointsByTeamNumber(this.away_team.number);
-      totalScore += this.match['two'].getMatchPointsByTeamNumber(this.away_team.number);
-      totalScore += this.match['three'].getMatchPointsByTeamNumber(this.away_team.number);
-      totalScore += this.match['four'].getMatchPointsByTeamNumber(this.away_team.number);
-      totalScore += this.match['five'].getMatchPointsByTeamNumber(this.away_team.number);
+      totalScore = this.match['one'].getMatchPointsByTeamNumber(this.awayTeamNumber);
+      totalScore += this.match['two'].getMatchPointsByTeamNumber(this.awayTeamNumber);
+      totalScore += this.match['three'].getMatchPointsByTeamNumber(this.awayTeamNumber);
+      totalScore += this.match['four'].getMatchPointsByTeamNumber(this.awayTeamNumber);
+      totalScore += this.match['five'].getMatchPointsByTeamNumber(this.awayTeamNumber);
       return totalScore;
     };
 
@@ -88,10 +82,10 @@
       } else if (matchNum === 5) {
         matchNumString = "five";
       }
-      this.match[matchNumString] = match;
-      this.match[matchNumString].league_match_id = this.league_match_id;
+      this.match[matchNumString] = matchData;
+      this.match[matchNumString].leagueMatchId = matchNum;
       if (!(this.match[matchNumString].original_id != null) || this.match[matchNumString].original_id === 0) {
-        return DataService.saveMatch(this.match[matchNumString], function(id) {
+        return this.DataService.saveMatch(this.match[matchNumString], function(id) {
           return this.match[matchNumString].original_id = id;
         });
       }
@@ -104,7 +98,8 @@
         homeScore = 0;
         names = ['one', 'two', 'three', 'four', 'five'];
         _fn = function(name) {
-          if (_this.match[name].player_one.team_number = _this.home_team.number) {
+          name = name.toString();
+          if (_this.match[name].player.one.teamNumber = _this.homeTeamNumber) {
             return homeScore += _this.match[name].getMatchPointsByPlayer(1);
           } else {
             return homeScore += _this.match[name].getMatchPointsByPlayer(2);
@@ -119,7 +114,8 @@
         awayScore = 0;
         names = ['one', 'two', 'three', 'four', 'five'];
         _fn1 = function(name) {
-          if (_this.match[name].player_one.team_number === _this.away_team.number) {
+          name = name.toString();
+          if (_this.match[name].player.one.teamNumber === _this.awayTeamNumber) {
             return awayScore += _this.match[name].getMatchPointsByPlayer(1);
           } else {
             return awayScore += _this.match[name].getMatchPointsByPlayer(2);
@@ -149,81 +145,81 @@
 
     LeagueMatch.prototype.getWinningTeamNumber = function() {
       if (this.getMatchPointsByTeam('home') < this.getMatchPointsByTeam('away')) {
-        return this.away_team.number;
+        return this.awayTeamNumber;
       }
-      return this.home_team.number;
+      return this.homeTeamNumber;
     };
 
     LeagueMatch.prototype.toJSON = function() {
-      if (this.small_json === true) {
+      if (this.smallJson === true) {
         return this.toSmallJSON();
       }
       return {
-        match_one: this.match['one'].toJSON(),
-        match_two: this.match['two'].toJSON(),
-        match_three: this.match['three'].toJSON(),
-        match_four: this.match['four'].toJSON(),
-        match_five: this.match['five'].toJSON(),
-        team_number: this.team_number,
-        home_team_number: this.home_team.number,
-        away_team_number: this.away_team.number,
-        start_time: this.start_time,
-        end_time: this.end_time,
-        table_type: this.table_type,
-        league_match_id: this.league_match_id
+        matchOne: this.match.one.toJSON(),
+        matchTwo: this.match.two.toJSON(),
+        matchThree: this.match.three.toJSON(),
+        matchFour: this.match.four.toJSON(),
+        matchFive: this.match.five.toJSON(),
+        teamNumber: this.teamNumber,
+        homeTeamNumber: this.homeTeamNumber,
+        awayTeamNumber: this.awayTeamNumber,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        tableType: this.tableType,
+        leagueMatchId: this.leagueMatchId
       };
     };
 
     LeagueMatch.prototype.fromJSON = function(jsonLeagueMatch) {
       var matchFive, matchFour, matchOne, matchThree, matchTwo;
-      matchOne = new $CS.Models.Match.Type.LeagueMatch('EightBall');
-      matchTwo = new $CS.Models.Match.Type.LeagueMatch('EightBall');
-      matchThree = new $CS.Models.Match.Type.LeagueMatch('EightBall');
-      matchFour = new $CS.Models.Match.Type.LeagueMatch('EightBall');
-      matchFive = new $CS.Models.Match.Type.LeagueMatch('EightBall');
-      matchOne.fromJSON(jsonLeagueMatch.match_one);
-      matchTwo.fromJSON(jsonLeagueMatch.match_two);
-      matchThree.fromJSON(jsonLeagueMatch.match_three);
-      matchFour.fromJSON(jsonLeagueMatch.match_four);
-      matchFive.fromJSON(jsonLeagueMatch.match_five);
-      this.match['one'] = matchOne;
-      this.match['two'] = matchTwo;
-      this.match['three'] = matchThree;
-      this.match['four'] = matchFour;
-      this.match['five'] = matchFive;
-      this.team_number = jsonLeagueMatch.TeamNumber;
-      this.home_team.number = jsonLeagueMatch.HomeTeamNumber;
-      this.away_team.number = jsonLeagueMatch.AwayTeamNumber;
-      this.start_time = jsonLeagueMatch.StartTime;
-      this.end_time = jsonLeagueMatch.EndTime;
-      this.table_type = jsonLeagueMatch.TableType;
-      return this.league_match_id = jsonLeagueMatch.LeagueMatchId;
+      matchOne = new $CS.Models.EightBall.LeagueMatch();
+      matchTwo = new $CS.Models.EightBall.LeagueMatch();
+      matchThree = new $CS.Models.EightBall.LeagueMatch();
+      matchFour = new $CS.Models.EightBall.LeagueMatch();
+      matchFive = new $CS.Models.EightBall.LeagueMatch();
+      matchOne.fromJSON(jsonLeagueMatch.matchOne);
+      matchTwo.fromJSON(jsonLeagueMatch.matchTwo);
+      matchThree.fromJSON(jsonLeagueMatch.matchThree);
+      matchFour.fromJSON(jsonLeagueMatch.matchFour);
+      matchFive.fromJSON(jsonLeagueMatch.matchFive);
+      this.match.one = matchOne;
+      this.match.two = matchTwo;
+      this.match.three = matchThree;
+      this.match.four = matchFour;
+      this.match.five = matchFive;
+      this.teamNumber = jsonLeagueMatch.TeamNumber;
+      this.homeTeamNumber = jsonLeagueMatch.HomeTeamNumber;
+      this.awayTeamNumber = jsonLeagueMatch.AwayTeamNumber;
+      this.startTime = jsonLeagueMatch.StartTime;
+      this.endTime = jsonLeagueMatch.EndTime;
+      this.tableType = jsonLeagueMatch.TableType;
+      return this.leagueMatchId = jsonLeagueMatch.LeagueMatchId;
     };
 
     LeagueMatch.prototype.toSmallJSON = function() {
       return {
-        team_number: this.team_number,
-        home_team_number: this.home_team.number,
-        away_team_number: this.away_team.number,
-        start_time: this.start_time,
-        end_time: this.end_time,
-        table_type: this.table_type,
-        league_match_id: this.league_match_id
+        teamNumber: this.teamNumber,
+        homeTeamNumber: this.homeTeamNumber,
+        awayTeamNumber: this.awayTeamNumber,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        tableType: this.tableType,
+        leagueMatchId: this.leagueMatchId
       };
     };
 
     LeagueMatch.prototype.fromSmallJSON = function(jsonLeagueMatch) {
-      this.team_number = jsonLeagueMatch.team_number;
-      this.home_team.number = jsonLeagueMatch.home_team_number;
-      this.away_team.number = jsonLeagueMatch.away_team_number;
-      this.start_time = jsonLeagueMatch.start_time;
-      this.end_time = jsonLeagueMatch.end_time;
-      this.table_type = jsonLeagueMatch.table_type;
-      return this.league_match_id = jsonLeagueMatch.league_match_id;
+      this.teamNumber = jsonLeagueMatch.teamNumber;
+      this.homeTeamNumber = jsonLeagueMatch.homeTeamNumber;
+      this.awayTeamNumber = jsonLeagueMatch.awayTeamNumber;
+      this.startTime = jsonLeagueMatch.startTime;
+      this.endTime = jsonLeagueMatch.endTime;
+      this.tableType = jsonLeagueMatch.tableType;
+      return this.leagueMatchId = jsonLeagueMatch.leagueMatchId;
     };
 
     LeagueMatch.prototype.ended = function() {
-      return this.match['one'].ended && this.match['two'].ended && this.match['three'].ended && this.match['four'].ended && this.match['five'].ended;
+      return this.match.one.ended && this.match.two.ended && this.match.three.ended && this.match.four.ended && this.match.five.ended;
     };
 
     return LeagueMatch;

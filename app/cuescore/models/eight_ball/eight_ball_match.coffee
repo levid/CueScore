@@ -113,8 +113,10 @@ class Match extends $CS.Models.EightBall
     gamesWon
     
   getMatchPointsByPlayer: (playerNum) ->
-    return 1 if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) > (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
-    0
+    if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) > (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
+      return 1 
+    else
+      return 0
     
   getMatchPoints: ->
     if @getMatchPointsByPlayer(1) is @getMatchPointsByPlayer(2)

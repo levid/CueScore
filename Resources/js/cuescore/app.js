@@ -4,6 +4,8 @@
   $CS.App = {
     init: function() {
       var dashboardController, gameModel;
+      this.DataService = new $CS.Utilities.DataService;
+      this.DataService.setupLocalDatabase();
       gameModel = new $CS.Models.Game;
       dashboardController = new $CS.Controllers.DashboardController;
       return dashboardController.open();
