@@ -14,6 +14,26 @@ describe "Eight Ball Match", ->
         playerTwoTeamNumber: "456"
     )
     match.player.one.currentlyUp = true
+    
+    match.currentGame.numberOfInnings = 0
+    match.currentGame.player.one.eightOnSnap = false
+    match.currentGame.player.one.breakAndRun = false
+    match.currentGame.player.two.eightOnSnap = false
+    match.currentGame.player.two.breakAndRun = false
+    match.currentGame.player.one.ballType = null
+    match.currentGame.player.two.ballType = null
+    match.currentGame.player.one.eightBall = []
+    match.currentGame.player.two.eightBall = []
+    match.currentGame.player.one.hasWon = false
+    match.currentGame.player.two.hasWon = false
+    match.currentGame.ended = false
+    match.currentGame.ballsHitIn.stripes = []
+    match.currentGame.ballsHitIn.solids = []
+    match.currentGame.lastBallHitIn = null
+    match.currentGame.onBreak = true
+    match.currentGame.breakingPlayerStillShooting = true
+    match.currentGame.player.one.callback().currentlyUp = true
+    match.currentGame.player.two.callback().currentlyUp = false
 
   describe "Constructor", ->
     it "should have 2 players", ->
@@ -350,74 +370,250 @@ describe "Eight Ball Match", ->
             breakAndRuns: 0
             currentlyUp: false
     
-        playerOneWon: 3
+        playerOneWon: 0
         playerTwoWon: 0
         currentGame:
-          playerOneTimeoutsTaken: 2
-          playerTwoTimeoutsTaken: 0
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
           playerOneEightOnSnap: false
-          playerOneBreakAndRun: true
+          playerOneBreakAndRun: false
           playerTwoEightOnSnap: false
           playerTwoBreakAndRun: false
-          playerOneBallType: 2
-          playerTwoBallType: 1
-          playerOneEightBall: [8]
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
           playerTwoEightBall: []
-          playerOneWon: true
+          playerOneWon: false
           playerTwoWon: false
           numberOfInnings: 0
           earlyEight: false
           scratchOnEight: false
           breakingPlayerStillShooting: true
-          stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15]
-          solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7]
+          stripedBallsHitIn: []
+          solidBallsHitIn: []
           lastBallHitIn: null
           onBreak: true
           ended: false
     
         completedGames: [
-          playerOneTimeoutsTaken: 2
-          playerTwoTimeoutsTaken: 0
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
           playerOneEightOnSnap: false
-          playerOneBreakAndRun: true
+          playerOneBreakAndRun: false
           playerTwoEightOnSnap: false
           playerTwoBreakAndRun: false
-          playerOneBallType: 2
-          playerTwoBallType: 1
-          playerOneEightBall: [8]
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
           playerTwoEightBall: []
-          playerOneWon: true
+          playerOneWon: false
           playerTwoWon: false
           numberOfInnings: 0
           earlyEight: false
           scratchOnEight: false
           breakingPlayerStillShooting: true
-          stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15]
-          solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7]
+          stripedBallsHitIn: []
+          solidBallsHitIn: []
           lastBallHitIn: 8
           onBreak: true
           ended: true
         ,
-          playerOneTimeoutsTaken: 2
-          playerTwoTimeoutsTaken: 0
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
           playerOneEightOnSnap: false
-          playerOneBreakAndRun: true
+          playerOneBreakAndRun: false
           playerTwoEightOnSnap: false
           playerTwoBreakAndRun: false
-          playerOneBallType: 2
-          playerTwoBallType: 1
-          playerOneEightBall: [8]
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
           playerTwoEightBall: []
-          playerOneWon: true
+          playerOneWon: false
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: false
+          scratchOnEight: false
+          breakingPlayerStillShooting: true
+          stripedBallsHitIn: []
+          solidBallsHitIn: []
+          lastBallHitIn: 8
+          onBreak: true
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: []
+          playerOneWon: false
           playerTwoWon: false
           numberOfInnings: 0
           earlyEight: false
           scratchOnEight: false
           breakingPlayerStillShooting: false
-          stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15]
-          solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7]
-          lastBallHitIn: 15
+          stripedBallsHitIn: []
+          solidBallsHitIn: []
+          lastBallHitIn: 8
           onBreak: false
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: []
+          playerOneWon: false
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: false
+          scratchOnEight: false
+          breakingPlayerStillShooting: false
+          stripedBallsHitIn: []
+          solidBallsHitIn: []
+          lastBallHitIn: 8
+          onBreak: false
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: []
+          playerOneWon: false
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: false
+          scratchOnEight: false
+          breakingPlayerStillShooting: true
+          stripedBallsHitIn: []
+          solidBallsHitIn: []
+          lastBallHitIn: 7
+          onBreak: true
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: []
+          playerOneWon: false
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: false
+          scratchOnEight: false
+          breakingPlayerStillShooting: true
+          stripedBallsHitIn: []
+          solidBallsHitIn: []
+          lastBallHitIn: 8
+          onBreak: true
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: []
+          playerOneWon: false
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: true
+          scratchOnEight: false
+          breakingPlayerStillShooting: false
+          stripedBallsHitIn: []
+          solidBallsHitIn: []
+          lastBallHitIn: 8
+          onBreak: false
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: []
+          playerOneWon: false
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: false
+          scratchOnEight: false
+          breakingPlayerStillShooting: true
+          stripedBallsHitIn: []
+          solidBallsHitIn: []
+          lastBallHitIn: 8
+          onBreak: true
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: []
+          playerOneWon: false
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: true
+          scratchOnEight: false
+          breakingPlayerStillShooting: false
+          stripedBallsHitIn: []
+          solidBallsHitIn: []
+          lastBallHitIn: 8
+          onBreak: false
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: []
+          playerOneWon: false
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: false
+          scratchOnEight: false
+          breakingPlayerStillShooting: true
+          stripedBallsHitIn: []
+          solidBallsHitIn: []
+          lastBallHitIn: 8
+          onBreak: true
           ended: true
         ]
         suddenDeath: false
@@ -441,11 +637,11 @@ describe "Eight Ball Match", ->
             gamesNeededToWin: 2
             number: "12345"
             teamNumber: "123"
-            gamesWon: 0
+            gamesWon: 1
             safeties: 0
             eightOnSnaps: 0
             breakAndRuns: 0
-            currentlyUp: false
+            currentlyUp: true
     
           two:
             name: "Player2"
@@ -457,75 +653,273 @@ describe "Eight Ball Match", ->
             safeties: 0
             eightOnSnaps: 0
             breakAndRuns: 0
-            currentlyUp: true
+            currentlyUp: false
     
-        playerOneWon: 3
+        playerOneWon: 12
         playerTwoWon: 0
         currentGame:
-          playerOneTimeoutsTaken: 2
-          playerTwoTimeoutsTaken: 0
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
           playerOneEightOnSnap: false
-          playerOneBreakAndRun: true
+          playerOneBreakAndRun: false
           playerTwoEightOnSnap: false
           playerTwoBreakAndRun: false
-          playerOneBallType: 2
-          playerTwoBallType: 1
-          playerOneEightBall: [8]
-          playerTwoEightBall: []
-          playerOneWon: true
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: false
-          stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15]
-          solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7]
-          lastBallHitIn: null
-          onBreak: false
-          ended: false
-    
-        completedGames: [
-          playerOneTimeoutsTaken: 2
-          playerTwoTimeoutsTaken: 0
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: true
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: 2
-          playerTwoBallType: 1
-          playerOneEightBall: [8]
-          playerTwoEightBall: []
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: [8]
           playerOneWon: true
           playerTwoWon: false
           numberOfInnings: 0
           earlyEight: false
           scratchOnEight: false
           breakingPlayerStillShooting: true
-          stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15]
-          solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7]
+          stripedBallsHitIn: [12]
+          solidBallsHitIn: [1]
+          lastBallHitIn: null
+          onBreak: true
+          ended: false
+    
+        completedGames: [
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: [8]
+          playerOneWon: true
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: false
+          scratchOnEight: false
+          breakingPlayerStillShooting: true
+          stripedBallsHitIn: [12]
+          solidBallsHitIn: [1]
           lastBallHitIn: 8
           onBreak: true
           ended: true
         ,
-          playerOneTimeoutsTaken: 2
-          playerTwoTimeoutsTaken: 0
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
           playerOneEightOnSnap: false
-          playerOneBreakAndRun: true
+          playerOneBreakAndRun: false
           playerTwoEightOnSnap: false
           playerTwoBreakAndRun: false
-          playerOneBallType: 2
-          playerTwoBallType: 1
-          playerOneEightBall: [8]
-          playerTwoEightBall: []
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: [8]
+          playerOneWon: true
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: false
+          scratchOnEight: false
+          breakingPlayerStillShooting: true
+          stripedBallsHitIn: [12]
+          solidBallsHitIn: [1]
+          lastBallHitIn: 8
+          onBreak: true
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: [8]
           playerOneWon: true
           playerTwoWon: false
           numberOfInnings: 0
           earlyEight: false
           scratchOnEight: false
           breakingPlayerStillShooting: false
-          stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15]
-          solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7]
-          lastBallHitIn: 15
+          stripedBallsHitIn: [12]
+          solidBallsHitIn: [1]
+          lastBallHitIn: 8
+          onBreak: false
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: [8]
+          playerOneWon: true
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: false
+          scratchOnEight: false
+          breakingPlayerStillShooting: false
+          stripedBallsHitIn: [12]
+          solidBallsHitIn: [1]
+          lastBallHitIn: 8
+          onBreak: false
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: [8]
+          playerOneWon: true
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: false
+          scratchOnEight: false
+          breakingPlayerStillShooting: true
+          stripedBallsHitIn: [12]
+          solidBallsHitIn: [1]
+          lastBallHitIn: 7
+          onBreak: true
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: [8]
+          playerOneWon: true
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: false
+          scratchOnEight: false
+          breakingPlayerStillShooting: true
+          stripedBallsHitIn: [12]
+          solidBallsHitIn: [1]
+          lastBallHitIn: 8
+          onBreak: true
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: [8]
+          playerOneWon: true
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: true
+          scratchOnEight: false
+          breakingPlayerStillShooting: false
+          stripedBallsHitIn: [12]
+          solidBallsHitIn: [1]
+          lastBallHitIn: 8
+          onBreak: false
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: [8]
+          playerOneWon: true
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: false
+          scratchOnEight: false
+          breakingPlayerStillShooting: true
+          stripedBallsHitIn: [12]
+          solidBallsHitIn: [1]
+          lastBallHitIn: 8
+          onBreak: true
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: [8]
+          playerOneWon: true
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: true
+          scratchOnEight: false
+          breakingPlayerStillShooting: false
+          stripedBallsHitIn: [12]
+          solidBallsHitIn: [1]
+          lastBallHitIn: 8
+          onBreak: false
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: [8]
+          playerOneWon: true
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: false
+          scratchOnEight: false
+          breakingPlayerStillShooting: true
+          stripedBallsHitIn: [12]
+          solidBallsHitIn: [1]
+          lastBallHitIn: 8
+          onBreak: true
+          ended: true
+        ,
+          playerOneTimeoutsTaken: 1
+          playerTwoTimeoutsTaken: 1
+          playerOneEightOnSnap: false
+          playerOneBreakAndRun: false
+          playerTwoEightOnSnap: false
+          playerTwoBreakAndRun: false
+          playerOneBallType: null
+          playerTwoBallType: null
+          playerOneEightBall: []
+          playerTwoEightBall: [8]
+          playerOneWon: true
+          playerTwoWon: false
+          numberOfInnings: 0
+          earlyEight: true
+          scratchOnEight: false
+          breakingPlayerStillShooting: false
+          stripedBallsHitIn: [12]
+          solidBallsHitIn: [1]
+          lastBallHitIn: 8
           onBreak: false
           ended: true
         ]
@@ -544,47 +938,267 @@ describe "Eight Ball Match", ->
       match.scoreNumberedBall 8
       match.startNewGame()
       expect(match.completedGamesToJSON()).toEqual [
-        playerOneTimeoutsTaken: 2
-        playerTwoTimeoutsTaken: 0
+        playerOneTimeoutsTaken: 1
+        playerTwoTimeoutsTaken: 1
         playerOneEightOnSnap: false
-        playerOneBreakAndRun: true
+        playerOneBreakAndRun: false
         playerTwoEightOnSnap: false
         playerTwoBreakAndRun: false
-        playerOneBallType: 2
-        playerTwoBallType: 1
-        playerOneEightBall: [8]
-        playerTwoEightBall: []
+        playerOneBallType: null
+        playerTwoBallType: null
+        playerOneEightBall: []
+        playerTwoEightBall: [8]
         playerOneWon: true
         playerTwoWon: false
         numberOfInnings: 0
         earlyEight: false
         scratchOnEight: false
         breakingPlayerStillShooting: true
-        stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15]
-        solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7]
+        stripedBallsHitIn: [15]
+        solidBallsHitIn: [1]
         lastBallHitIn: 8
         onBreak: true
         ended: true
       ,
-        playerOneTimeoutsTaken: 2
-        playerTwoTimeoutsTaken: 0
+        playerOneTimeoutsTaken: 1
+        playerTwoTimeoutsTaken: 1
         playerOneEightOnSnap: false
-        playerOneBreakAndRun: true
+        playerOneBreakAndRun: false
         playerTwoEightOnSnap: false
         playerTwoBreakAndRun: false
-        playerOneBallType: 2
-        playerTwoBallType: 1
-        playerOneEightBall: [8]
-        playerTwoEightBall: []
+        playerOneBallType: null
+        playerTwoBallType: null
+        playerOneEightBall: []
+        playerTwoEightBall: [8]
+        playerOneWon: true
+        playerTwoWon: false
+        numberOfInnings: 0
+        earlyEight: false
+        scratchOnEight: false
+        breakingPlayerStillShooting: true
+        stripedBallsHitIn: [15]
+        solidBallsHitIn: [1]
+        lastBallHitIn: 8
+        onBreak: true
+        ended: true
+      ,
+        playerOneTimeoutsTaken: 1
+        playerTwoTimeoutsTaken: 1
+        playerOneEightOnSnap: false
+        playerOneBreakAndRun: false
+        playerTwoEightOnSnap: false
+        playerTwoBreakAndRun: false
+        playerOneBallType: null
+        playerTwoBallType: null
+        playerOneEightBall: []
+        playerTwoEightBall: [8]
         playerOneWon: true
         playerTwoWon: false
         numberOfInnings: 0
         earlyEight: false
         scratchOnEight: false
         breakingPlayerStillShooting: false
-        stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15]
-        solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7]
-        lastBallHitIn: 15
+        stripedBallsHitIn: [15]
+        solidBallsHitIn: [1]
+        lastBallHitIn: 8
+        onBreak: false
+        ended: true
+      ,
+        playerOneTimeoutsTaken: 1
+        playerTwoTimeoutsTaken: 1
+        playerOneEightOnSnap: false
+        playerOneBreakAndRun: false
+        playerTwoEightOnSnap: false
+        playerTwoBreakAndRun: false
+        playerOneBallType: null
+        playerTwoBallType: null
+        playerOneEightBall: []
+        playerTwoEightBall: [8]
+        playerOneWon: true
+        playerTwoWon: false
+        numberOfInnings: 0
+        earlyEight: false
+        scratchOnEight: false
+        breakingPlayerStillShooting: false
+        stripedBallsHitIn: [15]
+        solidBallsHitIn: [1]
+        lastBallHitIn: 8
+        onBreak: false
+        ended: true
+      ,
+        playerOneTimeoutsTaken: 1
+        playerTwoTimeoutsTaken: 1
+        playerOneEightOnSnap: false
+        playerOneBreakAndRun: false
+        playerTwoEightOnSnap: false
+        playerTwoBreakAndRun: false
+        playerOneBallType: null
+        playerTwoBallType: null
+        playerOneEightBall: []
+        playerTwoEightBall: [8]
+        playerOneWon: true
+        playerTwoWon: false
+        numberOfInnings: 0
+        earlyEight: false
+        scratchOnEight: false
+        breakingPlayerStillShooting: true
+        stripedBallsHitIn: [15]
+        solidBallsHitIn: [1]
+        lastBallHitIn: 7
+        onBreak: true
+        ended: true
+      ,
+        playerOneTimeoutsTaken: 1
+        playerTwoTimeoutsTaken: 1
+        playerOneEightOnSnap: false
+        playerOneBreakAndRun: false
+        playerTwoEightOnSnap: false
+        playerTwoBreakAndRun: false
+        playerOneBallType: null
+        playerTwoBallType: null
+        playerOneEightBall: []
+        playerTwoEightBall: [8]
+        playerOneWon: true
+        playerTwoWon: false
+        numberOfInnings: 0
+        earlyEight: false
+        scratchOnEight: false
+        breakingPlayerStillShooting: true
+        stripedBallsHitIn: [15]
+        solidBallsHitIn: [1]
+        lastBallHitIn: 8
+        onBreak: true
+        ended: true
+      ,
+        playerOneTimeoutsTaken: 1
+        playerTwoTimeoutsTaken: 1
+        playerOneEightOnSnap: false
+        playerOneBreakAndRun: false
+        playerTwoEightOnSnap: false
+        playerTwoBreakAndRun: false
+        playerOneBallType: null
+        playerTwoBallType: null
+        playerOneEightBall: []
+        playerTwoEightBall: [8]
+        playerOneWon: true
+        playerTwoWon: false
+        numberOfInnings: 0
+        earlyEight: true
+        scratchOnEight: false
+        breakingPlayerStillShooting: false
+        stripedBallsHitIn: [15]
+        solidBallsHitIn: [1]
+        lastBallHitIn: 8
+        onBreak: false
+        ended: true
+      ,
+        playerOneTimeoutsTaken: 1
+        playerTwoTimeoutsTaken: 1
+        playerOneEightOnSnap: false
+        playerOneBreakAndRun: false
+        playerTwoEightOnSnap: false
+        playerTwoBreakAndRun: false
+        playerOneBallType: null
+        playerTwoBallType: null
+        playerOneEightBall: []
+        playerTwoEightBall: [8]
+        playerOneWon: true
+        playerTwoWon: false
+        numberOfInnings: 0
+        earlyEight: false
+        scratchOnEight: false
+        breakingPlayerStillShooting: true
+        stripedBallsHitIn: [15]
+        solidBallsHitIn: [1]
+        lastBallHitIn: 8
+        onBreak: true
+        ended: true
+      ,
+        playerOneTimeoutsTaken: 1
+        playerTwoTimeoutsTaken: 1
+        playerOneEightOnSnap: false
+        playerOneBreakAndRun: false
+        playerTwoEightOnSnap: false
+        playerTwoBreakAndRun: false
+        playerOneBallType: null
+        playerTwoBallType: null
+        playerOneEightBall: []
+        playerTwoEightBall: [8]
+        playerOneWon: true
+        playerTwoWon: false
+        numberOfInnings: 0
+        earlyEight: true
+        scratchOnEight: false
+        breakingPlayerStillShooting: false
+        stripedBallsHitIn: [15]
+        solidBallsHitIn: [1]
+        lastBallHitIn: 8
+        onBreak: false
+        ended: true
+      ,
+        playerOneTimeoutsTaken: 1
+        playerTwoTimeoutsTaken: 1
+        playerOneEightOnSnap: false
+        playerOneBreakAndRun: false
+        playerTwoEightOnSnap: false
+        playerTwoBreakAndRun: false
+        playerOneBallType: null
+        playerTwoBallType: null
+        playerOneEightBall: []
+        playerTwoEightBall: [8]
+        playerOneWon: true
+        playerTwoWon: false
+        numberOfInnings: 0
+        earlyEight: false
+        scratchOnEight: false
+        breakingPlayerStillShooting: true
+        stripedBallsHitIn: [15]
+        solidBallsHitIn: [1]
+        lastBallHitIn: 8
+        onBreak: true
+        ended: true
+      ,
+        playerOneTimeoutsTaken: 1
+        playerTwoTimeoutsTaken: 1
+        playerOneEightOnSnap: false
+        playerOneBreakAndRun: false
+        playerTwoEightOnSnap: false
+        playerTwoBreakAndRun: false
+        playerOneBallType: null
+        playerTwoBallType: null
+        playerOneEightBall: []
+        playerTwoEightBall: [8]
+        playerOneWon: true
+        playerTwoWon: false
+        numberOfInnings: 0
+        earlyEight: true
+        scratchOnEight: false
+        breakingPlayerStillShooting: false
+        stripedBallsHitIn: [15]
+        solidBallsHitIn: [1]
+        lastBallHitIn: 8
+        onBreak: false
+        ended: true
+      ,
+        playerOneTimeoutsTaken: 1
+        playerTwoTimeoutsTaken: 1
+        playerOneEightOnSnap: false
+        playerOneBreakAndRun: false
+        playerTwoEightOnSnap: false
+        playerTwoBreakAndRun: false
+        playerOneBallType: null
+        playerTwoBallType: null
+        playerOneEightBall: []
+        playerTwoEightBall: [8]
+        playerOneWon: true
+        playerTwoWon: false
+        numberOfInnings: 0
+        earlyEight: true
+        scratchOnEight: false
+        breakingPlayerStillShooting: false
+        stripedBallsHitIn: [15]
+        solidBallsHitIn: [1]
+        lastBallHitIn: 8
         onBreak: false
         ended: true
       ]
@@ -611,7 +1225,7 @@ describe "Eight Ball Match", ->
       expect(player.eightOnSnaps).toEqual 2
       expect(player.breakAndRuns).toEqual 3
       expect(player.currentlyUp).toEqual true
-      player.addOneToEightOnSnaps()
+      player.addToEightOnSnaps(1)
       expect(player.eightOnSnaps).toEqual 3
 
     it "should be able to take a Match JSON and fill its values", ->
@@ -717,15 +1331,15 @@ describe "Eight Ball Match", ->
         originalId: 0
         leagueMatchId: 0
 
-      expect(match.getGamesWonByPlayer(1)).toEqual 0
-      expect(match.getGamesWonByPlayer(2)).toEqual 1
+      expect(match.getGamesWonByPlayer(1)).toEqual 3
+      expect(match.getGamesWonByPlayer(2)).toEqual 0
       expect(match.ended).toEqual false
       expect(match.originalId).toEqual 0
       expect(match.player.one.name).toEqual "Player1"
       expect(match.player.two.name).toEqual "Player2"
       expect(match.currentGame.breakingPlayerStillShooting).toEqual true
       expect(match.completedGames[0].breakingPlayerStillShooting).toEqual false
-      expect(match.completedGames[0].player.two.hasWon).toEqual true
+      expect(match.completedGames[0].player.one.hasWon).toEqual true
       expect(match.player.one.getGamesNeededToWin()).toEqual "2"
 
     it "should be able to take a completedGames JSON array and convert it to JS Array with Objects", ->

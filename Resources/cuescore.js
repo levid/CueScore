@@ -1656,10 +1656,10 @@
     };
 
     Match.prototype.getMatchPointsByTeamNumber = function(teamNumber) {
-      if (this.player.one.team_number === teamNumber) {
+      if (this.player.one.teamNumber === teamNumber) {
         return this.getMatchPointsByPlayer(1);
       } else {
-        if (this.player.two.team_number === teamNumber) {
+        if (this.player.two.teamNumber === teamNumber) {
           return this.getMatchPointsByPlayer(2);
         }
       }
@@ -1685,17 +1685,17 @@
       var gamesWon, i;
       i = 0;
       if (playerNum === 1) {
-        gamesWon = (this.currentGame.player['one'].has_won === true ? 1 : 0);
+        gamesWon = (this.currentGame.player.one.hasWon === true ? 1 : 0);
         while (i <= (this.completedGames.length - 1)) {
-          if (this.completedGames[i].player['one'].has_won === true) {
+          if (this.completedGames[i].player.one.hasWon === true) {
             gamesWon = gamesWon + 1;
           }
           i++;
         }
       } else if (playerNum === 2) {
-        gamesWon = (this.currentGame.player['two'].has_won === true ? 1 : 0);
+        gamesWon = (this.currentGame.player.two.hasWon === true ? 1 : 0);
         while (i <= (this.completedGames.length - 1)) {
-          if (this.completedGames[i].player['two'].has_won === true) {
+          if (this.completedGames[i].player.two.hasWon === true) {
             gamesWon = gamesWon + 1;
           }
           i++;
@@ -1748,7 +1748,11 @@
       return this.currentGame.hitSafety();
     };
 
-    Match.prototype.checkForWin = function() {};
+    Match.prototype.checkForWin = function() {
+      if (this.getRemainingGamesNeededToWinByPlayer(1) === 0 || this.getRemainingGamesNeededToWinByPlayer(1) === 0) {
+        return this.ended = true;
+      }
+    };
 
     Match.prototype.startNewGame = function() {
       if (this.currentGame.ended === true) {
@@ -1827,7 +1831,7 @@
 
     Match.prototype.playerFromJSON = function(json) {
       var player;
-      player = new $CS.Models.EightBall.Player();
+      player = new $CS.Models.EightBall.Player(json);
       player.fromJSON(new function() {
         return json;
       });

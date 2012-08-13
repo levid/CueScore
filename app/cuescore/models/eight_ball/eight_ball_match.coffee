@@ -83,9 +83,9 @@ class Match extends $CS.Models.EightBall
     (@completedGames.length + 1)
   
   getMatchPointsByTeamNumber: (teamNumber) ->
-    if @player.one.team_number is teamNumber
+    if @player.one.teamNumber is teamNumber
       return @getMatchPointsByPlayer(1)
-    else return @getMatchPointsByPlayer(2) if @player.two.team_number is teamNumber
+    else return @getMatchPointsByPlayer(2) if @player.two.teamNumber is teamNumber
     0
     
   getWinningPlayer: ->
@@ -94,21 +94,21 @@ class Match extends $CS.Models.EightBall
     
   getRemainingGamesNeededToWinByPlayer: (playerNum) ->
     if playerNum == 1
-      (@player.one.gamesNeededToWin - @getGamesWonByPlayer(1))
+      return (@player.one.gamesNeededToWin - @getGamesWonByPlayer(1))
     else if playerNum == 2
-      (@player.two.gamesNeededToWin - @getGamesWonByPlayer(2))
+      return (@player.two.gamesNeededToWin - @getGamesWonByPlayer(2))
       
   getGamesWonByPlayer: (playerNum) ->
     i = 0
     if playerNum == 1
-      gamesWon = (if (@currentGame.player['one'].has_won is true) then 1 else 0)
+      gamesWon = (if (@currentGame.player.one.hasWon is true) then 1 else 0)
       while i <= (@completedGames.length - 1)
-        gamesWon = gamesWon + 1  if @completedGames[i].player['one'].has_won is true
+        gamesWon = gamesWon + 1  if @completedGames[i].player.one.hasWon is true
         i++
     else if playerNum == 2
-      gamesWon = (if (@currentGame.player['two'].has_won is true) then 1 else 0)
+      gamesWon = (if (@currentGame.player.two.hasWon is true) then 1 else 0)
       while i <= (@completedGames.length - 1)
-        gamesWon = gamesWon + 1  if @completedGames[i].player['two'].has_won is true
+        gamesWon = gamesWon + 1  if @completedGames[i].player.two.hasWon is true
         i++
     gamesWon
     
@@ -153,6 +153,8 @@ class Match extends $CS.Models.EightBall
     @currentGame.hitSafety()
     
   checkForWin: ->
+    if @getRemainingGamesNeededToWinByPlayer(1) == 0 or @getRemainingGamesNeededToWinByPlayer(1) == 0
+      @ended = true
 
   startNewGame: ->
     if @currentGame.ended is true
@@ -216,7 +218,7 @@ class Match extends $CS.Models.EightBall
     @currentGame = currentGame
 
   playerFromJSON: (json) ->
-    player = new $CS.Models.EightBall.Player()
+    player = new $CS.Models.EightBall.Player(json)
     player.fromJSON (new ->
       json
     )
