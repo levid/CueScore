@@ -31,8 +31,8 @@ describe "Eight Ball Match", ->
     it "should set Player 1 to break first", ->
       expect(match.player.one.currentlyUp).toEqual true
 
-    it "should create the first Game and set it to current_game", ->
-      expect(match.current_game).toNotEqual null
+    it "should create the first Game and set it to currentGame", ->
+      expect(match.currentGame).toNotEqual null
 
 
   describe "Scoring", ->
@@ -41,9 +41,9 @@ describe "Eight Ball Match", ->
 
     it "should add 1 to the respective ball type array when a ball is scored", ->
       match.scoreNumberedBall 1
-      expect(match.current_game.ballsHitIn.solids).toEqual [1]
+      expect(match.currentGame.ballsHitIn.solids).toEqual [1]
       match.scoreNumberedBall 12
-      expect(match.current_game.ballsHitIn.stripes).toEqual [12]
+      expect(match.currentGame.ballsHitIn.stripes).toEqual [12]
 
 
   describe "Match/Game Ending", ->
@@ -58,8 +58,8 @@ describe "Eight Ball Match", ->
       match.scoreNumberedBall 7
       match.scoreNumberedBall 8
       expect(match.getRemainingGamesNeededToWinByPlayer(1)).toEqual 1
-      expect(match.current_game.ended).toEqual true
-      expect(match.current_game.player.one.hasWon).toEqual true
+      expect(match.currentGame.ended).toEqual true
+      expect(match.currentGame.player.one.hasWon).toEqual true
       expect(match.ended).toEqual false
       match.startNewGame()
       match.scoreNumberedBall 1
@@ -96,8 +96,8 @@ describe "Eight Ball Match", ->
       match.scoreNumberedBall 6
       match.scoreNumberedBall 7
       match.scoreNumberedBall 8
-      match.current_game.setBallTypeByPlayer(2, 'stripes')
-      expect(match.current_game.player.two.hasWon).toEqual true
+      match.currentGame.setBallTypeByPlayer(2, 'stripes')
+      expect(match.currentGame.player.two.hasWon).toEqual true
       expect(match.getRemainingGamesNeededToWinByPlayer(2)).toEqual 6
 
     it "should add current game to the completedGames list and start a new Game when the game has completed", ->
@@ -112,7 +112,7 @@ describe "Eight Ball Match", ->
       match.scoreNumberedBall 8
       match.startNewGame()
       expect(match.completedGames.length).toEqual 1
-      expect(match.current_game.ended).toEqual false
+      expect(match.currentGame.ended).toEqual false
       expect(match.completedGames[0].ended).toEqual true
 
     it "should know if the match is completed", ->
@@ -301,17 +301,17 @@ describe "Eight Ball Match", ->
     expect(match.player.two.safeties).toEqual 1
 
   it "should reset Timeouts taken for each player when a game has ended", ->
-    expect(match.current_game.player.one.timeouts_taken).toEqual 0
-    expect(match.current_game.player.two.timeouts_taken).toEqual 0
-    match.current_game.takeTimeout()
-    expect(match.current_game.player.one.timeouts_taken).toEqual 1
+    expect(match.currentGame.player.one.timeouts_taken).toEqual 0
+    expect(match.currentGame.player.two.timeouts_taken).toEqual 0
+    match.currentGame.takeTimeout()
+    expect(match.currentGame.player.one.timeouts_taken).toEqual 1
     match.shotMissed()
-    match.current_game.takeTimeout()
-    expect(match.current_game.player.two.timeouts_taken).toEqual 1
+    match.currentGame.takeTimeout()
+    expect(match.currentGame.player.two.timeouts_taken).toEqual 1
     match.scoreNumberedBall 8
     match.startNewGame()
-    expect(match.current_game.player.one.timeouts_taken).toEqual 0
-    expect(match.current_game.player.two.timeouts_taken).toEqual 0
+    expect(match.currentGame.player.one.timeouts_taken).toEqual 0
+    expect(match.currentGame.player.two.timeouts_taken).toEqual 0
 
   it "should be able to tell who won the entire match", ->
     expect(match.player.one.hasWon).toEqual false
@@ -352,7 +352,7 @@ describe "Eight Ball Match", ->
     
         playerOneWon: 3
         playerTwoWon: 0
-        current_game:
+        currentGame:
           playerOneTimeoutsTaken: 2
           playerTwoTimeoutsTaken: 0
           playerOneEightOnSnap: false
@@ -461,7 +461,7 @@ describe "Eight Ball Match", ->
     
         playerOneWon: 3
         playerTwoWon: 0
-        current_game:
+        currentGame:
           playerOneTimeoutsTaken: 2
           playerTwoTimeoutsTaken: 0
           playerOneEightOnSnap: false
@@ -643,7 +643,7 @@ describe "Eight Ball Match", ->
     
         playerOneWon: 3
         playerTwoWon: 0
-        current_game:
+        currentGame:
           playerOneTimeoutsTaken: 2
           playerTwoTimeoutsTaken: 0
           playerOneEightOnSnap: false
@@ -723,7 +723,7 @@ describe "Eight Ball Match", ->
       expect(match.originalId).toEqual 0
       expect(match.player.one.name).toEqual "Player1"
       expect(match.player.two.name).toEqual "Player2"
-      expect(match.current_game.breakingPlayerStillShooting).toEqual true
+      expect(match.currentGame.breakingPlayerStillShooting).toEqual true
       expect(match.completedGames[0].breakingPlayerStillShooting).toEqual false
       expect(match.completedGames[0].player.two.hasWon).toEqual true
       expect(match.player.one.getGamesNeededToWin()).toEqual "2"

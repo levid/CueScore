@@ -68,16 +68,16 @@ class Match extends $CS.Models.EightBall
     )
     
   getTotalInnings: ->
-    totalInnings = @currentGame.number_of_innings
+    totalInnings = @currentGame.numberOfInnings
     if @completedGames.length > 0
       i = 0
       while i <= (@completedGames.length - 1)
-        totalInnings += @completedGames[i].number_of_innings
+        totalInnings += @completedGames[i].numberOfInnings
         i++
     totalInnings.toString()
     
   getTotalSafeties: ->
-    @player.one.getSafeties() + "to" + @player.two.getSafeties()
+    @player.one.getSafeties() + " to " + @player.two.getSafeties()
     
   getCurrentGameNumber: ->
     (@completedGames.length + 1)

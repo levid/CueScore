@@ -82,11 +82,11 @@
 
     Match.prototype.getTotalInnings = function() {
       var i, totalInnings;
-      totalInnings = this.currentGame.number_of_innings;
+      totalInnings = this.currentGame.numberOfInnings;
       if (this.completedGames.length > 0) {
         i = 0;
         while (i <= (this.completedGames.length - 1)) {
-          totalInnings += this.completedGames[i].number_of_innings;
+          totalInnings += this.completedGames[i].numberOfInnings;
           i++;
         }
       }
@@ -94,7 +94,7 @@
     };
 
     Match.prototype.getTotalSafeties = function() {
-      return this.player.one.getSafeties() + "to" + this.player.two.getSafeties();
+      return this.player.one.getSafeties() + " to " + this.player.two.getSafeties();
     };
 
     Match.prototype.getCurrentGameNumber = function() {
