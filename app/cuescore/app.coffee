@@ -1,10 +1,6 @@
 $CS.App =
 
   init: ->
-    
-    @DataService = new $CS.Utilities.DataService
-    @DataService.setupLocalDatabase()
-    
     gameModel = new $CS.Models.Game
     
     dashboardController = new $CS.Controllers.DashboardController
