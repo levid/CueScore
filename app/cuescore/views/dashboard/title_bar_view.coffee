@@ -28,7 +28,7 @@ class TitleBarView extends $CS.Views.Dashboard
     )
     gridButton = Titanium.UI.createView(
       backgroundColor: "transparent"
-      backgroundImage: if displayType == "grid" then "images/match/buttons/btn-dashboard-viewtype-selected.png" else "images/match/buttons/btn-dashboard-viewtype.png"
+      backgroundImage: if $CS.Views.Dashboard.isGrid() then "images/match/buttons/btn-dashboard-viewtype-selected.png" else "images/match/buttons/btn-dashboard-viewtype.png"
       top: 7
       left: 8
       width: 80
@@ -47,7 +47,7 @@ class TitleBarView extends $CS.Views.Dashboard
     gridButton.add gridButtonLabel
     listButton = Titanium.UI.createView(
       backgroundColor: "transparent"
-      backgroundImage: if displayType == "list" then "images/match/buttons/btn-dashboard-viewtype-selected.png" else "images/match/buttons/btn-dashboard-viewtype.png"
+      backgroundImage: if $CS.Views.Dashboard.isList() then "images/match/buttons/btn-dashboard-viewtype-selected.png" else "images/match/buttons/btn-dashboard-viewtype.png"
       top: 7
       right: 8
       width: 80

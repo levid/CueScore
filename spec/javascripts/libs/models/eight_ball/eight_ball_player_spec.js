@@ -28,11 +28,11 @@
         expect(player.name).toBeDefined();
         expect(player.rank).toBeDefined();
         expect(player.number).toBeDefined();
-        expect(player.team_number).toBeDefined();
+        expect(player.teamNumber).toBeDefined();
         expect(player.name).toEqual("Isaac Wooten");
         expect(player.rank).toEqual(1);
         expect(player.number).toEqual("123456");
-        return expect(player.team_number).toEqual("123");
+        return expect(player.teamNumber).toEqual("123");
       });
       return it("should store the parameters", function() {
         var options;
@@ -45,23 +45,23 @@
         expect(player.name).toEqual("Isaac Wooten");
         expect(player.rank).toEqual(1);
         expect(player.number).toEqual("123456");
-        return expect(player.team_number).toEqual("123");
+        return expect(player.teamNumber).toEqual("123");
       });
     });
     describe("Scoring", function() {
       it("should have games won", function() {
-        return expect(player.games_won).toEqual(0);
+        return expect(player.gamesWon).toEqual(0);
       });
       it("should be able to return a string of the games needed to win", function() {
-        player.games_needed_to_win = 2;
+        player.gamesNeededToWin = 2;
         return expect(player.getGamesNeededToWin()).toEqual("2");
       });
       it("should be able to add a game win to total games won", function() {
-        expect(player.games_won).toEqual(0);
+        expect(player.gamesWon).toEqual(0);
         player.addToGamesWon(1);
-        expect(player.games_won).toEqual(1);
+        expect(player.gamesWon).toEqual(1);
         player.addToGamesWon(1);
-        return expect(player.games_won).toEqual(2);
+        return expect(player.gamesWon).toEqual(2);
       });
       it("should keep track of safeties", function() {
         player.addToSafeties(1);
@@ -72,20 +72,20 @@
         return expect(player.safeties).toEqual(1);
       });
       it("should be able to keep track of number of 8 on snap", function() {
-        return expect(player.eight_on_snaps).toEqual(0);
+        return expect(player.eightOnSnaps).toEqual(0);
       });
       it("should be able to keep track of number of break and run", function() {
-        return expect(player.break_and_runs).toEqual(0);
+        return expect(player.breakAndRuns).toEqual(0);
       });
       it("should be able to add one to number of 8 on snap", function() {
-        expect(player.eight_on_snaps).toEqual(0);
+        expect(player.eightOnSnaps).toEqual(0);
         player.addToEightOnSnaps(1);
-        return expect(player.eight_on_snaps).toEqual(1);
+        return expect(player.eightOnSnaps).toEqual(1);
       });
       it("should be able add one to break and run", function() {
-        expect(player.break_and_runs).toEqual(0);
+        expect(player.breakAndRuns).toEqual(0);
         player.addToBreakAndRuns(1);
-        return expect(player.break_and_runs).toEqual(1);
+        return expect(player.breakAndRuns).toEqual(1);
       });
       it("should return the Score as a string", function() {
         return expect(player.getGamesWon()).toEqual("0");
@@ -103,20 +103,20 @@
       it("should be able to hold Timeouts Allowed", function() {
         return expect(player.timeouts_allowed).toEqual(2);
       });
-      return it("should be able to store games_needed_to_win", function() {
-        player.games_needed_to_win = 1;
+      return it("should be able to store gamesNeededToWin", function() {
+        player.gamesNeededToWin = 1;
         return expect(player.getGamesNeededToWin()).toEqual("1");
       });
     });
     describe("Innings", function() {
       it("should be able to keep track if it is the currently up player", function() {
-        return expect(player.currently_up).toNotEqual(null);
+        return expect(player.currentlyUp).toNotEqual(null);
       });
       return it("should be able to set currently up to true or false", function() {
-        player.currently_up = true;
-        expect(player.currently_up).toEqual(true);
-        player.currently_up = false;
-        return expect(player.currently_up).toEqual(false);
+        player.currentlyUp = true;
+        expect(player.currentlyUp).toEqual(true);
+        player.currentlyUp = false;
+        return expect(player.currentlyUp).toEqual(false);
       });
     });
     describe("Player Details", function() {
@@ -143,9 +143,9 @@
         return expect(player.number).toEqual('123456');
       });
       return it("should know if the player is a captain", function() {
-        expect(player.is_captain).toEqual(false);
-        player.is_captain = true;
-        return expect(player.is_captain).toEqual(true);
+        expect(player.isCaptain).toEqual(false);
+        player.isCaptain = true;
+        return expect(player.isCaptain).toEqual(true);
       });
     });
     return describe("toJSON/fromJSON", function() {
@@ -153,60 +153,60 @@
         return expect(player.toJSON()).toEqual({
           name: "Isaac Wooten",
           rank: 1,
-          games_needed_to_win: 0,
+          gamesNeededToWin: 0,
           number: "123456",
-          team_number: "123",
-          games_won: 0,
+          teamNumber: "123",
+          gamesWon: 0,
           safeties: 0,
-          eight_on_snaps: 0,
-          break_and_runs: 0,
-          currently_up: false
+          eightOnSnaps: 0,
+          breakAndRuns: 0,
+          currentlyUp: false
         });
       });
       it("should be able to take a Player with all variables filled and turn it into a JSON object", function() {
-        player.games_won = 1;
+        player.gamesWon = 1;
         player.safeties = 1;
-        player.eight_on_snaps = 2;
-        player.break_and_runs = 3;
+        player.eightOnSnaps = 2;
+        player.breakAndRuns = 3;
         player.TimeoutsTaken = 1;
-        player.currently_up = true;
+        player.currentlyUp = true;
         return expect(player.toJSON()).toEqual({
           name: "Isaac Wooten",
           rank: 1,
-          games_needed_to_win: 0,
+          gamesNeededToWin: 0,
           number: "123456",
-          team_number: "123",
-          games_won: 1,
+          teamNumber: "123",
+          gamesWon: 1,
           safeties: 1,
-          eight_on_snaps: 2,
-          break_and_runs: 3,
-          currently_up: true
+          eightOnSnaps: 2,
+          breakAndRuns: 3,
+          currentlyUp: true
         });
       });
       return it("should be able to take a Player JSON and fill a Player object with it", function() {
         player.fromJSON({
           name: "James Armstead",
           rank: 2,
-          games_needed_to_win: 0,
+          gamesNeededToWin: 0,
           number: "4321",
-          team_number: "789",
-          games_won: 1,
+          teamNumber: "789",
+          gamesWon: 1,
           safeties: 1,
-          eight_on_snaps: 2,
-          break_and_runs: 3,
-          currently_up: true
+          eightOnSnaps: 2,
+          breakAndRuns: 3,
+          currentlyUp: true
         });
         expect(player.name).toEqual("James Armstead");
         expect(player.rank).toEqual(2);
         expect(player.number).toEqual("4321");
-        expect(player.team_number).toEqual("789");
-        expect(player.games_won).toEqual(1);
+        expect(player.teamNumber).toEqual("789");
+        expect(player.gamesWon).toEqual(1);
         expect(player.safeties).toEqual(1);
-        expect(player.eight_on_snaps).toEqual(2);
-        expect(player.break_and_runs).toEqual(3);
-        expect(player.currently_up).toEqual(true);
+        expect(player.eightOnSnaps).toEqual(2);
+        expect(player.breakAndRuns).toEqual(3);
+        expect(player.currentlyUp).toEqual(true);
         player.addToEightOnSnaps(1);
-        return expect(player.eight_on_snaps).toEqual(3);
+        return expect(player.eightOnSnaps).toEqual(3);
       });
     });
   });

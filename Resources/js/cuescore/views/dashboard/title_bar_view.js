@@ -41,7 +41,7 @@
       });
       gridButton = Titanium.UI.createView({
         backgroundColor: "transparent",
-        backgroundImage: displayType === "grid" ? "images/match/buttons/btn-dashboard-viewtype-selected.png" : "images/match/buttons/btn-dashboard-viewtype.png",
+        backgroundImage: $CS.Views.Dashboard.isGrid() ? "images/match/buttons/btn-dashboard-viewtype-selected.png" : "images/match/buttons/btn-dashboard-viewtype.png",
         top: 7,
         left: 8,
         width: 80,
@@ -61,7 +61,7 @@
       gridButton.add(gridButtonLabel);
       listButton = Titanium.UI.createView({
         backgroundColor: "transparent",
-        backgroundImage: displayType === "list" ? "images/match/buttons/btn-dashboard-viewtype-selected.png" : "images/match/buttons/btn-dashboard-viewtype.png",
+        backgroundImage: $CS.Views.Dashboard.isList() ? "images/match/buttons/btn-dashboard-viewtype-selected.png" : "images/match/buttons/btn-dashboard-viewtype.png",
         top: 7,
         right: 8,
         width: 80,

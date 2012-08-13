@@ -3,15 +3,15 @@ class Player extends $CS.Models.EightBall
     name: null
     rank: null
     number: null
-    team_number: null
-    games_won: 0
+    teamNumber: null
+    gamesWon: 0
     safeties: 0
-    currently_up: false
-    eight_on_snaps: 0
-    break_and_runs: 0
+    currentlyUp: false
+    eightOnSnaps: 0
+    breakAndRuns: 0
     timeouts_allowed: null
-    games_needed_to_win: 0
-    is_captain: false
+    gamesNeededToWin: 0
+    isCaptain: false
 
   constructor: (options) ->
     _.extend @, @defaults
@@ -19,14 +19,14 @@ class Player extends $CS.Models.EightBall
     @name             = options.name ?= null
     @rank             = options.rank ?= null
     @number           = options.playerNumber ?= null
-    @team_number      = options.teamNumber ?= null
+    @teamNumber      = options.teamNumber ?= null
     
     @timeouts_allowed = new $CS.Models.EightBall.Ranks().getTimeouts(@rank)
     
   # Getters
   
   getGamesNeededToWin: ->
-    @games_needed_to_win.toString()
+    @gamesNeededToWin.toString()
 
   getFirstNameWithInitials: ->
     spaceIndex = @name.indexOf(" ")
@@ -38,13 +38,13 @@ class Player extends $CS.Models.EightBall
     @safeties
 
   getGamesWon: ->
-    @games_won.toString()
+    @gamesWon.toString()
 
   getEightOnSnaps: ->
-    @eight_on_snaps.toString()
+    @eightOnSnaps.toString()
 
   getBreakAndRuns: ->
-    @break_and_runs.toString()
+    @breakAndRuns.toString()
     
   # Setters
 
@@ -52,41 +52,41 @@ class Player extends $CS.Models.EightBall
     @timeouts_allowed = new $CS.Models.EightBall.Ranks().getTimeouts(@rank)
 
   addToGamesWon: (num) ->
-    @games_won += num
+    @gamesWon += num
 
   addToSafeties: (num) ->
     @safeties += num
 
   addToEightOnSnaps: (num) ->
-    @eight_on_snaps += num
+    @eightOnSnaps += num
 
   addToBreakAndRuns: (num) ->
-    @break_and_runs += num
+    @breakAndRuns += num
     
   # JSON Data
 
   toJSON: ->
     name:                 @name
     rank:                 @rank
-    games_needed_to_win:  @games_needed_to_win
+    gamesNeededToWin:     @gamesNeededToWin
     number:               @number
-    team_number:          @team_number
-    games_won:            @games_won
+    teamNumber:           @teamNumber
+    gamesWon:             @gamesWon
     safeties:             @safeties
-    eight_on_snaps:       @eight_on_snaps
-    break_and_runs:       @break_and_runs
-    currently_up:         @currently_up
+    eightOnSnaps:         @eightOnSnaps
+    breakAndRuns:         @breakAndRuns
+    currentlyUp:          @currentlyUp
 
   fromJSON: (playerJSON) ->
     @name                 = playerJSON.name
     @rank                 = playerJSON.rank
     @number               = playerJSON.number
-    @team_number          = playerJSON.team_number
-    @games_won            = playerJSON.games_won
+    @teamNumber           = playerJSON.teamNumber
+    @gamesWon             = playerJSON.gamesWon
     @safeties             = playerJSON.safeties
-    @eight_on_snaps       = playerJSON.eight_on_snaps
-    @break_and_runs       = playerJSON.break_and_runs
-    @currently_up         = playerJSON.currently_up
+    @eightOnSnaps         = playerJSON.eightOnSnaps
+    @breakAndRuns         = playerJSON.breakAndRuns
+    @currentlyUp          = playerJSON.currentlyUp
     @resetPlayerRankStats()
 
 $CS.Models.EightBall.Player = Player

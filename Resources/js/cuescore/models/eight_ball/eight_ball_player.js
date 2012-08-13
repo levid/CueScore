@@ -14,15 +14,15 @@
       name: null,
       rank: null,
       number: null,
-      team_number: null,
-      games_won: 0,
+      teamNumber: null,
+      gamesWon: 0,
       safeties: 0,
-      currently_up: false,
-      eight_on_snaps: 0,
-      break_and_runs: 0,
+      currentlyUp: false,
+      eightOnSnaps: 0,
+      breakAndRuns: 0,
       timeouts_allowed: null,
-      games_needed_to_win: 0,
-      is_captain: false
+      gamesNeededToWin: 0,
+      isCaptain: false
     };
 
     function Player(options) {
@@ -31,12 +31,12 @@
       this.name = (_ref = options.name) != null ? _ref : options.name = null;
       this.rank = (_ref1 = options.rank) != null ? _ref1 : options.rank = null;
       this.number = (_ref2 = options.playerNumber) != null ? _ref2 : options.playerNumber = null;
-      this.team_number = (_ref3 = options.teamNumber) != null ? _ref3 : options.teamNumber = null;
+      this.teamNumber = (_ref3 = options.teamNumber) != null ? _ref3 : options.teamNumber = null;
       this.timeouts_allowed = new $CS.Models.EightBall.Ranks().getTimeouts(this.rank);
     }
 
     Player.prototype.getGamesNeededToWin = function() {
-      return this.games_needed_to_win.toString();
+      return this.gamesNeededToWin.toString();
     };
 
     Player.prototype.getFirstNameWithInitials = function() {
@@ -54,15 +54,15 @@
     };
 
     Player.prototype.getGamesWon = function() {
-      return this.games_won.toString();
+      return this.gamesWon.toString();
     };
 
     Player.prototype.getEightOnSnaps = function() {
-      return this.eight_on_snaps.toString();
+      return this.eightOnSnaps.toString();
     };
 
     Player.prototype.getBreakAndRuns = function() {
-      return this.break_and_runs.toString();
+      return this.breakAndRuns.toString();
     };
 
     Player.prototype.resetPlayerRankStats = function() {
@@ -70,7 +70,7 @@
     };
 
     Player.prototype.addToGamesWon = function(num) {
-      return this.games_won += num;
+      return this.gamesWon += num;
     };
 
     Player.prototype.addToSafeties = function(num) {
@@ -78,25 +78,25 @@
     };
 
     Player.prototype.addToEightOnSnaps = function(num) {
-      return this.eight_on_snaps += num;
+      return this.eightOnSnaps += num;
     };
 
     Player.prototype.addToBreakAndRuns = function(num) {
-      return this.break_and_runs += num;
+      return this.breakAndRuns += num;
     };
 
     Player.prototype.toJSON = function() {
       return {
         name: this.name,
         rank: this.rank,
-        games_needed_to_win: this.games_needed_to_win,
+        gamesNeededToWin: this.gamesNeededToWin,
         number: this.number,
-        team_number: this.team_number,
-        games_won: this.games_won,
+        teamNumber: this.teamNumber,
+        gamesWon: this.gamesWon,
         safeties: this.safeties,
-        eight_on_snaps: this.eight_on_snaps,
-        break_and_runs: this.break_and_runs,
-        currently_up: this.currently_up
+        eightOnSnaps: this.eightOnSnaps,
+        breakAndRuns: this.breakAndRuns,
+        currentlyUp: this.currentlyUp
       };
     };
 
@@ -104,12 +104,12 @@
       this.name = playerJSON.name;
       this.rank = playerJSON.rank;
       this.number = playerJSON.number;
-      this.team_number = playerJSON.team_number;
-      this.games_won = playerJSON.games_won;
+      this.teamNumber = playerJSON.teamNumber;
+      this.gamesWon = playerJSON.gamesWon;
       this.safeties = playerJSON.safeties;
-      this.eight_on_snaps = playerJSON.eight_on_snaps;
-      this.break_and_runs = playerJSON.break_and_runs;
-      this.currently_up = playerJSON.currently_up;
+      this.eightOnSnaps = playerJSON.eightOnSnaps;
+      this.breakAndRuns = playerJSON.breakAndRuns;
+      this.currentlyUp = playerJSON.currentlyUp;
       return this.resetPlayerRankStats();
     };
 

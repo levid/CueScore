@@ -14,10 +14,6 @@
 
     function RulesView() {
       _.extend(this, this.defaults);
-      try {
-        Ti.include("/js/Common.js");
-        Ti.include("/js/pages/toolViews/toolsMenuView.js");
-      } catch (_error) {}
       this.setUp();
     }
 

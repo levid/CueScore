@@ -3554,9 +3554,7 @@
 
     DashboardView.name = 'DashboardView';
 
-    DashboardView.prototype.defaults = {
-      displayType: null
-    };
+    DashboardView.prototype.defaults = {};
 
     function DashboardView(displayType) {
       this.showList = __bind(this.showList, this);
@@ -3575,11 +3573,12 @@
       $CS.Views.Dashboard.createMainView = this.createMainView;
       $CS.Views.Dashboard.showGrid = this.showGrid;
       $CS.Views.Dashboard.showList = this.showList;
+      $CS.Views.Dashboard.isGrid = this.isGrid;
+      $CS.Views.Dashboard.isList = this.isList;
       this.setUp();
     }
 
     DashboardView.prototype.setUp = function() {
-      this.dashboardContainer = this.getDashboardContainer();
       this.titleBar = this.getTitleBar();
       this.viewType = this.getDisplayType(this.displayType);
       this.dashboardWindow = $.Window({
@@ -3590,11 +3589,27 @@
       this.dashboardView = $.View({
         id: 'dashboardView'
       });
+      this.dashboardContainer = $.View({
+        backgroundImage: (Ti.Platform.name !== "android" ? "images/match/layout/bg-menus-iphone.png" : "images/match/layout/bg-menus-android.png"),
+        backgroundColor: "transparent",
+        top: 44,
+        left: 0,
+        height: $CS.Utilities.getPlatformHeight() - 44,
+        width: $CS.Utilities.getPlatformWidth()
+      });
       this.dashboardContainer.add(this.viewType);
       this.dashboardView.add(this.dashboardContainer);
       this.dashboardView.add(this.titleBar);
       this.dashboardWindow.add(this.dashboardView);
+      return this.bindEvents();
+    };
+
+    DashboardView.prototype.bindEvents = function() {
       return this.dashboardWindow.addEventListener('click', this.handle_btn_click);
+    };
+
+    DashboardView.prototype.handle_btn_click = function(e) {
+      return console.warn("button clicked: " + (JSON.stringify(e)));
     };
 
     DashboardView.prototype.getTitleBar = function() {
@@ -3602,10 +3617,6 @@
       titleBarClass = new $CS.Views.Dashboard.TitleBarView(this.displayType);
       titleBar = titleBarClass.titleBar;
       return titleBar;
-    };
-
-    DashboardView.prototype.getDashboardContainer = function() {
-      return this.createDashboardContainer();
     };
 
     DashboardView.prototype.createMainWindow = function(options) {
@@ -3628,28 +3639,15 @@
 
     DashboardView.prototype.getDisplayType = function(type) {
       var gridViewClass, listViewClass;
-      if (type === "grid") {
+      if (this.isGrid()) {
         gridViewClass = new $CS.Views.Dashboard.GridView();
         this.gridView = gridViewClass.gridView;
         return this.gridView;
-      } else if (type === "list") {
+      } else if (this.isList()) {
         listViewClass = new $CS.Views.Dashboard.ListView();
         this.listView = listViewClass.listView;
         return this.listView;
       }
-    };
-
-    DashboardView.prototype.createDashboardContainer = function() {
-      var dashboardContainer;
-      dashboardContainer = Titanium.UI.createView({
-        backgroundImage: (Ti.Platform.name !== "android" ? "images/match/layout/bg-menus-iphone.png" : "images/match/layout/bg-menus-android.png"),
-        backgroundColor: "transparent",
-        top: 44,
-        left: 0,
-        height: $CS.Utilities.getPlatformHeight() - 44,
-        width: $CS.Utilities.getPlatformWidth()
-      });
-      return dashboardContainer;
     };
 
     DashboardView.prototype.open = function() {
@@ -3663,10 +3661,6 @@
           fullscreen: true
         });
       }
-    };
-
-    DashboardView.prototype.handle_btn_click = function(e) {
-      return console.warn("button clicked: " + (JSON.stringify(e)));
     };
 
     DashboardView.prototype.isGrid = function() {
@@ -3732,7 +3726,7 @@
       });
       gridButton = Titanium.UI.createView({
         backgroundColor: "transparent",
-        backgroundImage: displayType === "grid" ? "images/match/buttons/btn-dashboard-viewtype-selected.png" : "images/match/buttons/btn-dashboard-viewtype.png",
+        backgroundImage: $CS.Views.Dashboard.isGrid() ? "images/match/buttons/btn-dashboard-viewtype-selected.png" : "images/match/buttons/btn-dashboard-viewtype.png",
         top: 7,
         left: 8,
         width: 80,
@@ -3752,7 +3746,7 @@
       gridButton.add(gridButtonLabel);
       listButton = Titanium.UI.createView({
         backgroundColor: "transparent",
-        backgroundImage: displayType === "list" ? "images/match/buttons/btn-dashboard-viewtype-selected.png" : "images/match/buttons/btn-dashboard-viewtype.png",
+        backgroundImage: $CS.Views.Dashboard.isList() ? "images/match/buttons/btn-dashboard-viewtype-selected.png" : "images/match/buttons/btn-dashboard-viewtype.png",
         top: 7,
         right: 8,
         width: 80,
@@ -3814,10 +3808,6 @@
 
     function ActivityView() {
       _.extend(this, this.defaults);
-      try {
-        Ti.include("/js/Common.js");
-        Ti.include("/js/pages/toolViews/toolsMenuView.js");
-      } catch (_error) {}
       this.setUp();
     }
 
@@ -3930,10 +3920,6 @@
 
     function EventsView() {
       _.extend(this, this.defaults);
-      try {
-        Ti.include("/js/Common.js");
-        Ti.include("/js/pages/toolViews/toolsMenuView.js");
-      } catch (_error) {}
       this.setUp();
     }
 
@@ -4518,10 +4504,6 @@
 
     function LiveView() {
       _.extend(this, this.defaults);
-      try {
-        Ti.include("/js/Common.js");
-        Ti.include("/js/pages/toolViews/toolsMenuView.js");
-      } catch (_error) {}
       this.setUp();
     }
 
@@ -4695,10 +4677,6 @@
 
     function NewsView() {
       _.extend(this, this.defaults);
-      try {
-        Ti.include("/js/Common.js");
-        Ti.include("/js/pages/toolViews/toolsMenuView.js");
-      } catch (_error) {}
       this.setUp();
     }
 
@@ -4811,10 +4789,6 @@
 
     function ProfileView() {
       _.extend(this, this.defaults);
-      try {
-        Ti.include("/js/Common.js");
-        Ti.include("/js/pages/toolViews/toolsMenuView.js");
-      } catch (_error) {}
       this.setUp();
     }
 
@@ -4927,10 +4901,6 @@
 
     function RulesView() {
       _.extend(this, this.defaults);
-      try {
-        Ti.include("/js/Common.js");
-        Ti.include("/js/pages/toolViews/toolsMenuView.js");
-      } catch (_error) {}
       this.setUp();
     }
 
@@ -5043,10 +5013,6 @@
 
     function SettingsView() {
       _.extend(this, this.defaults);
-      try {
-        Ti.include("/js/Common.js");
-        Ti.include("/js/pages/toolViews/toolsMenuView.js");
-      } catch (_error) {}
       this.setUp();
     }
 
@@ -5159,10 +5125,6 @@
 
     function TeamsView() {
       _.extend(this, this.defaults);
-      try {
-        Ti.include("/js/Common.js");
-        Ti.include("/js/pages/toolViews/toolsMenuView.js");
-      } catch (_error) {}
       this.setUp();
     }
 

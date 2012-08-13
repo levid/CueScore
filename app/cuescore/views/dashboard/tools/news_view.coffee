@@ -3,10 +3,6 @@ class NewsView extends $CS.Views.Dashboard
   
   constructor: () ->
     _.extend @, @defaults
-    
-    try
-      Ti.include "/js/Common.js"
-      Ti.include "/js/pages/toolViews/toolsMenuView.js"
       
     @setUp()
       

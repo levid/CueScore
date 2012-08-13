@@ -14,36 +14,36 @@
       stripes: 1,
       solids: 2,
       innings: 0,
-      match_ended_callback: function() {},
-      number_of_innings: 0,
+      matchEndedCallback: function() {},
+      numberOfInnings: 0,
       ended: false,
-      balls_hit_in: {
+      ballsHitIn: {
         stripes: [],
         solids: []
       },
-      last_ball_hit_in: null,
-      on_break: true,
-      breaking_player_still_shooting: true,
-      scratch_on_eight: false,
-      early_eight: false,
+      lastBallHitIn: null,
+      onBreak: true,
+      breakingPlayerStillShooting: true,
+      scratchOnEight: false,
+      earlyEight: false,
       player: {
         one: {
-          eight_ball: [],
-          eight_on_snap: false,
-          break_and_run: false,
-          timeouts_taken: 0,
+          eightBall: [],
+          eightOnSnap: false,
+          breakAndRun: false,
+          timeoutsTaken: 0,
           callback: function() {},
-          ball_type: null,
-          has_won: false
+          ballType: null,
+          hasWon: false
         },
         two: {
-          eight_ball: [],
-          eight_on_snap: false,
-          break_and_run: false,
-          timeouts_taken: 0,
+          eightBall: [],
+          eightOnSnap: false,
+          breakAndRun: false,
+          timeoutsTaken: 0,
           callback: function() {},
-          ball_type: null,
-          has_won: false
+          ballType: null,
+          hasWon: false
         }
       }
     };
@@ -52,22 +52,22 @@
       _.extend(this, this.defaults);
       this.player.one.callback = options.addToPlayerOne;
       this.player.two.callback = options.addToPlayerTwo;
-      this.match_ended_callback = options.callback;
-      this.player.one.callback().timeouts_taken = 0;
-      this.player.two.callback().timeouts_taken = 0;
+      this.matchEndedCallback = options.callback;
+      this.player.one.callback().timeoutsTaken = 0;
+      this.player.two.callback().timeoutsTaken = 0;
     }
 
     Game.prototype.getCurrentlyUpPlayer = function() {
-      if (this.player.one.callback().currently_up === true) {
+      if (this.player.one.callback().currentlyUp === true) {
         return this.player.one.callback();
       }
       return this.player.two.callback();
     };
 
     Game.prototype.getWinningPlayer = function() {
-      if (this.player.one.has_won === true) {
+      if (this.player.one.hasWon === true) {
         return this.player.one;
-      } else if (this.player.two.has_won === true) {
+      } else if (this.player.two.hasWon === true) {
         return this.player.two;
       }
     };
@@ -78,21 +78,21 @@
 
     Game.prototype.getBallsHitInByPlayer = function(playerNum) {
       if (playerNum === 1) {
-        if (this.player.one.ball_type === this.stripes) {
-          return this.balls_hit_in.stripes.concat(this.player.one.eight_ball);
+        if (this.player.one.ballType === this.stripes) {
+          return this.ballsHitIn.stripes.concat(this.player.one.eightBall);
         } else {
-          if (this.player.one.ball_type === this.solids) {
-            return this.balls_hit_in.solids.concat(this.player.one.eight_ball);
+          if (this.player.one.ballType === this.solids) {
+            return this.ballsHitIn.solids.concat(this.player.one.eightBall);
           }
           return [];
         }
       }
       if (playerNum === 2) {
-        if (this.player.two.ball_type === this.stripes) {
-          return this.balls_hit_in.stripes.concat(this.player.two.eight_ball);
+        if (this.player.two.ballType === this.stripes) {
+          return this.ballsHitIn.stripes.concat(this.player.two.eightBall);
         } else {
-          if (this.player.two.ball_type === this.solids) {
-            return this.balls_hit_in.solids.concat(this.player.two.eight_ball);
+          if (this.player.two.ballType === this.solids) {
+            return this.ballsHitIn.solids.concat(this.player.two.eightBall);
           }
           return [];
         }
@@ -104,71 +104,71 @@
     };
 
     Game.prototype.getBallsHitIn = function() {
-      return this.balls_hit_in.solids.concat(this.balls_hit_in.stripes.concat(this.player.two.eight_ball.concat(this.player.one.eight_ball)));
+      return this.ballsHitIn.solids.concat(this.ballsHitIn.stripes.concat(this.player.two.eightBall.concat(this.player.one.eightBall)));
     };
 
     Game.prototype.getCurrentPlayerRemainingTimeouts = function() {
-      if (this.player.one.callback().currently_up === true) {
-        return this.player.one.callback().timeouts_allowed - this.player.one.timeouts_taken;
+      if (this.player.one.callback().currentlyUp === true) {
+        return this.player.one.callback().timeouts_allowed - this.player.one.timeoutsTaken;
       } else {
-        return this.player.two.callback().timeouts_allowed - this.player.two.timeouts_taken;
+        return this.player.two.callback().timeouts_allowed - this.player.two.timeoutsTaken;
       }
     };
 
     Game.prototype.setPlayerWon = function(playerNum) {
       if (playerNum === 1) {
-        this.player.one.has_won = true;
-        return this.player.one.callback().games_won += 1;
+        this.player.one.hasWon = true;
+        return this.player.one.callback().gamesWon += 1;
       } else if (playerNum === 2) {
-        this.player.two.has_won = true;
-        return this.player.two.callback().games_won += 1;
+        this.player.two.hasWon = true;
+        return this.player.two.callback().gamesWon += 1;
       }
     };
 
     Game.prototype.setEightOnSnapByPlayer = function(playerNum) {
       if (playerNum === 1) {
-        if (this.player.one.eight_on_snap !== true) {
+        if (this.player.one.eightOnSnap !== true) {
           this.player.one.callback().addToEightOnSnaps(1);
         }
-        return this.player.one.eight_on_snap = true;
+        return this.player.one.eightOnSnap = true;
       } else if (playerNum === 2) {
-        if (this.player.two.eight_on_snap !== true) {
+        if (this.player.two.eightOnSnap !== true) {
           this.player.two.callback().addToEightOnSnaps(1);
         }
-        return this.player.two.eight_on_snap = true;
+        return this.player.two.eightOnSnap = true;
       }
     };
 
     Game.prototype.setBreakAndRunByPlayer = function(playerNum) {
       if (playerNum === 1) {
-        if (this.player.one.break_and_run !== true) {
+        if (this.player.one.breakAndRun !== true) {
           this.player.one.callback().addToBreakAndRuns(1);
         }
-        return this.player.one.break_and_run = true;
+        return this.player.one.breakAndRun = true;
       } else if (playerNum === 2) {
-        if (this.player.two.break_and_run !== true) {
+        if (this.player.two.breakAndRun !== true) {
           this.player.two.callback().addToBreakAndRuns(1);
         }
-        return this.player.two.break_and_run = true;
+        return this.player.two.breakAndRun = true;
       }
     };
 
     Game.prototype.setBallTypeByPlayer = function(playerNum, type) {
       if (playerNum === 1 && type === "stripes") {
-        this.player.one.ball_type = this.stripes;
-        this.player.two.ball_type = this.solids;
+        this.player.one.ballType = this.stripes;
+        this.player.two.ballType = this.solids;
         return this.checkForWinner();
       } else if (playerNum === 2 && type === "stripes") {
-        this.player.two.ball_type = this.stripes;
-        this.player.one.ball_type = this.solids;
+        this.player.two.ballType = this.stripes;
+        this.player.one.ballType = this.solids;
         return this.checkForWinner();
       } else if (playerNum === 1 && type === "solids") {
-        this.player.one.ball_type = this.solids;
-        this.player.two.ball_type = this.stripes;
+        this.player.one.ballType = this.solids;
+        this.player.two.ballType = this.stripes;
         return this.checkForWinner();
       } else if (playerNum === 2 && type === "solids") {
-        this.player.two.ball_type = this.solids;
-        this.player.one.ball_type = this.stripes;
+        this.player.two.ballType = this.solids;
+        this.player.one.ballType = this.stripes;
         return this.checkForWinner();
       }
     };
@@ -179,18 +179,18 @@
     };
 
     Game.prototype.hitScratchOnEight = function() {
-      this.scratch_on_eight = true;
+      this.scratchOnEight = true;
       this.ended = true;
-      if (this.player.one.callback().currently_up === true) {
-        this.player.two.has_won = true;
-        this.player.one.callback().currently_up = false;
-        this.player.two.callback().currently_up = true;
+      if (this.player.one.callback().currentlyUp === true) {
+        this.player.two.hasWon = true;
+        this.player.one.callback().currentlyUp = false;
+        this.player.two.callback().currentlyUp = true;
       } else {
-        this.player.one.has_won = true;
-        this.player.two.callback().currently_up = false;
-        this.player.one.callback().currently_up = true;
+        this.player.one.hasWon = true;
+        this.player.two.callback().currentlyUp = false;
+        this.player.one.callback().currentlyUp = true;
       }
-      return this.match_ended_callback();
+      return this.matchEndedCallback();
     };
 
     Game.prototype.shotMissed = function() {
@@ -198,21 +198,21 @@
     };
 
     Game.prototype.addToNumberOfInnings = function(num) {
-      return this.number_of_innings += num;
+      return this.numberOfInnings += num;
     };
 
     Game.prototype.takeTimeout = function() {
       if (this.getCurrentPlayerRemainingTimeouts() > 0) {
-        if (this.player.one.callback().currently_up === true) {
-          return this.player.one.timeouts_taken += 1;
+        if (this.player.one.callback().currentlyUp === true) {
+          return this.player.one.timeoutsTaken += 1;
         } else {
-          return this.player.two.timeouts_taken += 1;
+          return this.player.two.timeoutsTaken += 1;
         }
       }
     };
 
     Game.prototype.breakIsOver = function() {
-      return this.on_break = false;
+      return this.onBreak = false;
     };
 
     Game.prototype.end = function() {
@@ -221,38 +221,38 @@
 
     Game.prototype.scoreBall = function(ballNumber) {
       if (!(this.getBallsHitIn().indexOf(ballNumber) >= 0)) {
-        this.last_ball_hit_in = ballNumber;
+        this.lastBallHitIn = ballNumber;
         if (ballNumber > 0 && ballNumber < 8) {
-          this.balls_hit_in.solids.push(ballNumber);
+          this.ballsHitIn.solids.push(ballNumber);
         } else if (ballNumber > 8 && ballNumber < 16) {
-          this.balls_hit_in.stripes.push(ballNumber);
+          this.ballsHitIn.stripes.push(ballNumber);
         } else {
-          if (this.player.one.callback().currently_up === true) {
-            this.player.one.eight_ball.push(ballNumber);
+          if (this.player.one.callback().currentlyUp === true) {
+            this.player.one.eightBall.push(ballNumber);
           } else {
-            if (this.player.two.callback().currently_up === true) {
-              this.player.two.eight_ball.push(ballNumber);
+            if (this.player.two.callback().currentlyUp === true) {
+              this.player.two.eightBall.push(ballNumber);
             }
           }
-          if (this.on_break === true) {
-            if (this.balls_hit_in.solids.length !== 7 && this.balls_hit_in.stripes.length !== 7) {
-              if (this.player.one.callback().currently_up === true) {
+          if (this.onBreak === true) {
+            if (this.ballsHitIn.solids.length !== 7 && this.ballsHitIn.stripes.length !== 7) {
+              if (this.player.one.callback().currentlyUp === true) {
                 this.setEightOnSnapByPlayer(1);
               } else {
-                if (this.player.two.callback().currently_up === true) {
+                if (this.player.two.callback().currentlyUp === true) {
                   this.setEightOnSnapByPlayer(2);
                 }
               }
             }
           } else {
-            if (this.balls_hit_in.solids.length !== 7 && this.balls_hit_in.stripes.length !== 7) {
-              this.early_eight = true;
-              if (this.player.one.callback().currently_up === true) {
-                this.player.one.callback().currently_up = false;
-                this.player.two.callback().currently_up = true;
-              } else if (this.player.two.callback().currently_up === true) {
-                this.player.one.callback().currently_up = true;
-                this.player.two.callback().currently_up = false;
+            if (this.ballsHitIn.solids.length !== 7 && this.ballsHitIn.stripes.length !== 7) {
+              this.earlyEight = true;
+              if (this.player.one.callback().currentlyUp === true) {
+                this.player.one.callback().currentlyUp = false;
+                this.player.two.callback().currentlyUp = true;
+              } else if (this.player.two.callback().currentlyUp === true) {
+                this.player.one.callback().currentlyUp = true;
+                this.player.two.callback().currentlyUp = false;
               }
             }
           }
@@ -266,120 +266,120 @@
         this.ended = true;
       }
       if (this.ended === true) {
-        if (this.breaking_player_still_shooting === true && (this.balls_hit_in.solids.length === 7 || this.balls_hit_in.stripes.length === 7)) {
-          if (this.player.one.callback().currently_up === true) {
+        if (this.breakingPlayerStillShooting === true && (this.ballsHitIn.solids.length === 7 || this.ballsHitIn.stripes.length === 7)) {
+          if (this.player.one.callback().currentlyUp === true) {
             this.setBreakAndRunByPlayer(1);
-            this.player.one.ball_type = this.solids;
-            this.player.two.ball_type = this.stripes;
-          } else if (this.player.two.callback().currently_up === true) {
+            this.player.one.ballType = this.solids;
+            this.player.two.ballType = this.stripes;
+          } else if (this.player.two.callback().currentlyUp === true) {
             this.setBreakAndRunByPlayer(2);
-            this.player.two.ball_type = this.solids;
-            this.player.one.ball_type = this.stripes;
+            this.player.two.ballType = this.solids;
+            this.player.one.ballType = this.stripes;
           }
         }
-        if (this.player.one.eight_ball.indexOf(8) >= 0 && this.on_break === false) {
+        if (this.player.one.eightBall.indexOf(8) >= 0 && this.onBreak === false) {
           if (this.getBallsHitInByPlayer(1).length !== 8 && this.getBallsHitInByPlayer(2).length !== 8) {
             this.setPlayerWon(2);
           } else if (this.getBallsHitInByPlayer(1).length === 8) {
             this.setPlayerWon(1);
           }
-        } else if (this.player.two.eight_ball.indexOf(8) >= 0 && this.on_break === false) {
+        } else if (this.player.two.eightBall.indexOf(8) >= 0 && this.onBreak === false) {
           if (this.getBallsHitInByPlayer(1).length !== 8 && this.getBallsHitInByPlayer(2).length !== 8) {
             this.setPlayerWon(1);
           } else if (this.getBallsHitInByPlayer(2).length === 8) {
             this.setPlayerWon(2);
           }
         } else {
-          if (this.player.one.callback().currently_up === true) {
+          if (this.player.one.callback().currentlyUp === true) {
             this.setPlayerWon(1);
-          } else if (this.player.two.callback().currently_up === true) {
+          } else if (this.player.two.callback().currentlyUp === true) {
             this.setPlayerWon(2);
           }
         }
-        return this.match_ended_callback();
+        return this.matchEndedCallback();
       }
     };
 
     Game.prototype.nextPlayerIsUp = function() {
-      if (this.on_break !== true || ((this.player.two.callback().currently_up === true || this.player.one.callback().currently_up === true) && this.getBallsHitIn().length === 0)) {
-        if (this.player.one.callback().currently_up === true) {
-          this.player.two.callback().currently_up = true;
-          this.player.one.callback().currently_up = false;
-          if (this.player.one.ball_type == null) {
-            if (this.balls_hit_in.solids.length > 0 && this.balls_hit_in.stripes.length === 0) {
-              this.player.one.ball_type = this.solids;
-              this.player.two.ball_type = this.stripes;
-            } else if (this.balls_hit_in.solids.length === 0 && this.balls_hit_in.stripes.length > 0) {
-              this.player.one.ball_type = this.stripes;
-              this.player.two.ball_type = this.solids;
+      if (this.onBreak !== true || ((this.player.two.callback().currentlyUp === true || this.player.one.callback().currentlyUp === true) && this.getBallsHitIn().length === 0)) {
+        if (this.player.one.callback().currentlyUp === true) {
+          this.player.two.callback().currentlyUp = true;
+          this.player.one.callback().currentlyUp = false;
+          if (this.player.one.ballType == null) {
+            if (this.ballsHitIn.solids.length > 0 && this.ballsHitIn.stripes.length === 0) {
+              this.player.one.ballType = this.solids;
+              this.player.two.ballType = this.stripes;
+            } else if (this.ballsHitIn.solids.length === 0 && this.ballsHitIn.stripes.length > 0) {
+              this.player.one.ballType = this.stripes;
+              this.player.two.ballType = this.solids;
             }
           }
-        } else if (this.player.two.callback().currently_up === true) {
-          this.player.two.callback().currently_up = false;
-          this.player.one.callback().currently_up = true;
+        } else if (this.player.two.callback().currentlyUp === true) {
+          this.player.two.callback().currentlyUp = false;
+          this.player.one.callback().currentlyUp = true;
           this.addToNumberOfInnings(1);
-          if (this.player.two.ball_type == null) {
-            if (this.balls_hit_in.solids.length === 0 && this.balls_hit_in.stripes.length > 0) {
-              this.player.one.ball_type = this.solids;
-              this.player.two.ball_type = this.stripes;
-            } else if (this.balls_hit_in.solids.length > 0 && this.balls_hit_in.stripes.length === 0) {
-              this.player.one.ball_type = this.stripes;
-              this.player.two.ball_type = this.solids;
+          if (this.player.two.ballType == null) {
+            if (this.ballsHitIn.solids.length === 0 && this.ballsHitIn.stripes.length > 0) {
+              this.player.one.ballType = this.solids;
+              this.player.two.ballType = this.stripes;
+            } else if (this.ballsHitIn.solids.length > 0 && this.ballsHitIn.stripes.length === 0) {
+              this.player.one.ballType = this.stripes;
+              this.player.two.ballType = this.solids;
             }
           }
         } else {
-          this.player.one.callback().currently_up = true;
+          this.player.one.callback().currentlyUp = true;
         }
-        this.breaking_player_still_shooting = false;
+        this.breakingPlayerStillShooting = false;
       }
-      return this.on_break = false;
+      return this.onBreak = false;
     };
 
     Game.prototype.toJSON = function() {
       return {
-        player_one_timeouts_taken: this.player.one.timeouts_taken,
-        player_two_timeouts_taken: this.player.two.timeouts_taken,
-        player_one_eight_on_snap: this.player.one.eight_on_snap,
-        player_one_break_and_run: this.player.one.break_and_run,
-        player_two_eight_on_snap: this.player.two.eight_on_snap,
-        player_two_break_and_run: this.player.two.break_and_run,
-        player_one_ball_type: this.player.one.ball_type,
-        player_two_ball_type: this.player.two.ball_type,
-        player_one_eight_ball: this.player.one.eight_ball,
-        player_two_eight_ball: this.player.two.eight_ball,
-        player_one_won: this.player.one.has_won,
-        player_two_won: this.player.two.has_won,
-        number_of_innings: this.number_of_innings,
-        early_eight: this.early_eight,
-        scratch_on_eight: this.scratch_on_eight,
-        breaking_player_still_shooting: this.breaking_player_still_shooting,
-        striped_balls_hit_in: this.balls_hit_in.stripes,
-        solid_balls_hit_in: this.balls_hit_in.solids,
-        last_ball_hit_in: this.last_ball_hit_in,
-        on_break: this.on_break,
+        playerOneTimeoutsTaken: this.player.one.timeoutsTaken,
+        playerTwoTimeoutsTaken: this.player.two.timeoutsTaken,
+        playerOneEightOnSnap: this.player.one.eightOnSnap,
+        playerOneBreakAndRun: this.player.one.breakAndRun,
+        playerTwoEightOnSnap: this.player.two.eightOnSnap,
+        playerTwoBreakAndRun: this.player.two.breakAndRun,
+        playerOneBallType: this.player.one.ballType,
+        playerTwoBallType: this.player.two.ballType,
+        playerOneEightBall: this.player.one.eightBall,
+        playerTwoEightBall: this.player.two.eightBall,
+        playerOneWon: this.player.one.hasWon,
+        playerTwoWon: this.player.two.hasWon,
+        numberOfInnings: this.numberOfInnings,
+        earlyEight: this.earlyEight,
+        scratchOnEight: this.scratchOnEight,
+        breakingPlayerStillShooting: this.breakingPlayerStillShooting,
+        stripedBallsHitIn: this.ballsHitIn.stripes,
+        solidBallsHitIn: this.ballsHitIn.solids,
+        lastBallHitIn: this.lastBallHitIn,
+        onBreak: this.onBreak,
         ended: this.ended
       };
     };
 
     Game.prototype.fromJSON = function(gameJSON) {
-      this.player.one.timeouts_taken = gameJSON.player_one_timeouts_taken;
-      this.player.two.timeouts_taken = gameJSON.player_two_timeouts_taken;
-      this.player.one.eight_on_snap = gameJSON.player_one_eight_on_snap;
-      this.player.one.break_and_run = gameJSON.player_one_break_and_run;
-      this.player.two.eight_on_snap = gameJSON.player_two_eight_on_snap;
-      this.player.two.break_and_run = gameJSON.player_two_break_and_run;
-      this.player.one.ball_type = gameJSON.player_one_ball_type;
-      this.player.two.ball_type = gameJSON.player_two_ball_type;
-      this.player.one.eight_ball = gameJSON.player_one_eight_ball;
-      this.player.two.eight_ball = gameJSON.player_two_eight_ball;
-      this.player.one.has_won = gameJSON.player_one_won;
-      this.player.two.has_won = gameJSON.player_two_won;
-      this.number_of_innings = gameJSON.number_of_innings;
-      this.breaking_player_still_shooting = gameJSON.breaking_player_still_shooting;
-      this.balls_hit_in.solids = gameJSON.solid_balls_hit_in;
-      this.balls_hit_in.stripes = gameJSON.striped_balls_hit_in;
-      this.last_ball_hit_in = gameJSON.last_ball_hit_in;
-      this.on_break = gameJSON.on_break;
+      this.player.one.timeoutsTaken = gameJSON.playerOneTimeoutsTaken;
+      this.player.two.timeoutsTaken = gameJSON.playerTwoTimeoutsTaken;
+      this.player.one.eightOnSnap = gameJSON.playerOneEightOnSnap;
+      this.player.one.breakAndRun = gameJSON.playerOneBreakAndRun;
+      this.player.two.eightOnSnap = gameJSON.playerTwoEightOnSnap;
+      this.player.two.breakAndRun = gameJSON.playerTwoBreakAndRun;
+      this.player.one.ballType = gameJSON.playerOneBallType;
+      this.player.two.ballType = gameJSON.playerTwoBallType;
+      this.player.one.eightBall = gameJSON.playerOneEightBall;
+      this.player.two.eightBall = gameJSON.playerTwoEightBall;
+      this.player.one.hasWon = gameJSON.playerOneWon;
+      this.player.two.hasWon = gameJSON.playerTwoWon;
+      this.numberOfInnings = gameJSON.numberOfInnings;
+      this.breakingPlayerStillShooting = gameJSON.breakingPlayerStillShooting;
+      this.ballsHitIn.solids = gameJSON.solidBallsHitIn;
+      this.ballsHitIn.stripes = gameJSON.stripedBallsHitIn;
+      this.lastBallHitIn = gameJSON.lastBallHitIn;
+      this.onBreak = gameJSON.onBreak;
       return this.ended = gameJSON.ended;
     };
 
