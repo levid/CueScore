@@ -16,23 +16,23 @@
         playerOneTeamNumber: "123",
         playerTwoTeamNumber: "456"
       });
-      return match.player.one.currently_up = true;
+      return match.player.one.currentlyUp = true;
     });
     describe("Constructor", function() {
       it("should have 2 players", function() {
         expect(match.player.one.name).toEqual("Player1");
         expect(match.player.one.rank).toEqual(2);
         expect(match.player.one.number).toEqual("12345");
-        expect(match.player.one.team_number).toEqual("123");
-        expect(match.player.one.games_needed_to_win).toEqual(2);
+        expect(match.player.one.teamNumber).toEqual("123");
+        expect(match.player.one.gamesNeededToWin).toEqual(2);
         expect(match.player.two.name).toEqual("Player2");
         expect(match.player.two.rank).toEqual(7);
         expect(match.player.two.number).toEqual("987654");
-        expect(match.player.two.team_number).toEqual("456");
-        return expect(match.player.two.games_needed_to_win).toEqual(7);
+        expect(match.player.two.teamNumber).toEqual("456");
+        return expect(match.player.two.gamesNeededToWin).toEqual(7);
       });
       it("should set Player 1 to break first", function() {
-        return expect(match.player.one.currently_up).toEqual(true);
+        return expect(match.player.one.currentlyUp).toEqual(true);
       });
       return it("should create the first Game and set it to current_game", function() {
         return expect(match.current_game).toNotEqual(null);
@@ -44,9 +44,9 @@
       });
       return it("should add 1 to the respective ball type array when a ball is scored", function() {
         match.scoreNumberedBall(1);
-        expect(match.current_game.balls_hit_in.solids).toEqual([1]);
+        expect(match.current_game.ballsHitIn.solids).toEqual([1]);
         match.scoreNumberedBall(12);
-        return expect(match.current_game.balls_hit_in.stripes).toEqual([12]);
+        return expect(match.current_game.ballsHitIn.stripes).toEqual([12]);
       });
     });
     describe("Match/Game Ending", function() {
@@ -62,7 +62,7 @@
         match.scoreNumberedBall(8);
         expect(match.getRemainingGamesNeededToWinByPlayer(1)).toEqual(1);
         expect(match.current_game.ended).toEqual(true);
-        expect(match.current_game.player.one.has_won).toEqual(true);
+        expect(match.current_game.player.one.hasWon).toEqual(true);
         expect(match.ended).toEqual(false);
         match.startNewGame();
         match.scoreNumberedBall(1);
@@ -100,11 +100,11 @@
         match.scoreNumberedBall(7);
         match.scoreNumberedBall(8);
         match.current_game.setBallTypeByPlayer(2, 'stripes');
-        expect(match.current_game.player.two.has_won).toEqual(true);
+        expect(match.current_game.player.two.hasWon).toEqual(true);
         return expect(match.getRemainingGamesNeededToWinByPlayer(2)).toEqual(6);
       });
-      it("should add current game to the completed_games list and start a new Game when the game has completed", function() {
-        expect(match.completed_games.length).toEqual(0);
+      it("should add current game to the completedGames list and start a new Game when the game has completed", function() {
+        expect(match.completedGames.length).toEqual(0);
         match.scoreNumberedBall(1);
         match.scoreNumberedBall(2);
         match.scoreNumberedBall(3);
@@ -114,32 +114,32 @@
         match.scoreNumberedBall(7);
         match.scoreNumberedBall(8);
         match.startNewGame();
-        expect(match.completed_games.length).toEqual(1);
+        expect(match.completedGames.length).toEqual(1);
         expect(match.current_game.ended).toEqual(false);
-        return expect(match.completed_games[0].ended).toEqual(true);
+        return expect(match.completedGames[0].ended).toEqual(true);
       });
       it("should know if the match is completed", function() {
         return expect(match.ended).toEqual(false);
       });
       return it("should hold multiple completed games", function() {
-        return expect(match.completed_games).toNotEqual(null);
+        return expect(match.completedGames).toNotEqual(null);
       });
     });
     describe("Players", function() {
       it("should be able to have the rank changed and have the BallCounts and timeouts_allowed automatically", function() {
-        expect(match.player.one.games_needed_to_win).toEqual(2);
-        expect(match.player.two.games_needed_to_win).toEqual(7);
+        expect(match.player.one.gamesNeededToWin).toEqual(2);
+        expect(match.player.two.gamesNeededToWin).toEqual(7);
         expect(match.player.one.timeouts_allowed).toEqual(2);
         match.player.one.rank = 7;
         match.resetPlayerRankStats();
-        expect(match.player.one.games_needed_to_win).toEqual(5);
+        expect(match.player.one.gamesNeededToWin).toEqual(5);
         expect(match.player.one.timeouts_allowed).toEqual(1);
-        return expect(match.player.two.games_needed_to_win).toEqual(5);
+        return expect(match.player.two.gamesNeededToWin).toEqual(5);
       });
       it("should change currently up player on missed shot", function() {
-        expect(match.player.one.currently_up).toEqual(true);
+        expect(match.player.one.currentlyUp).toEqual(true);
         match.shotMissed();
-        return expect(match.player.two.currently_up).toEqual(true);
+        return expect(match.player.two.currentlyUp).toEqual(true);
       });
       it("should be able to get the player twos games won", function() {
         match.scoreNumberedBall(1);
@@ -244,11 +244,11 @@
       match.shotMissed();
       return expect(match.getTotalInnings()).toEqual(3);
     });
-    it("should be able to hold on to the original_id from the database", function() {
-      return expect(match.original_id).toEqual(0);
+    it("should be able to hold on to the originalId from the database", function() {
+      return expect(match.originalId).toEqual(0);
     });
-    it("should be able to hold on to the league_match_id from the database", function() {
-      return expect(match.league_match_id).toEqual(0);
+    it("should be able to hold on to the leagueMatchId from the database", function() {
+      return expect(match.leagueMatchId).toEqual(0);
     });
     it("should be able to know when the last thing that happened was a player switch", function() {
       expect(match.ArePlayersSwitching).toEqual(false);
@@ -258,21 +258,21 @@
       return expect(match.ArePlayersSwitching).toEqual(false);
     });
     it("should be able to put match into sudden death mode", function() {
-      expect(match.sudden_death).toEqual(false);
-      expect(match.player.one.games_needed_to_win).toEqual(2);
-      expect(match.player.two.games_needed_to_win).toEqual(7);
+      expect(match.suddenDeath).toEqual(false);
+      expect(match.player.one.gamesNeededToWin).toEqual(2);
+      expect(match.player.two.gamesNeededToWin).toEqual(7);
       match.setSuddenDeathMode();
-      expect(match.sudden_death).toEqual(true);
-      expect(match.player.one.games_needed_to_win).toEqual(1);
-      return expect(match.player.two.games_needed_to_win).toEqual(1);
+      expect(match.suddenDeath).toEqual(true);
+      expect(match.player.one.gamesNeededToWin).toEqual(1);
+      return expect(match.player.two.gamesNeededToWin).toEqual(1);
     });
     it("should switch players if eight ball is hit in without all other 7 balls", function() {
       match.shotMissed();
-      expect(match.player.two.currently_up).toEqual(true);
-      expect(match.player.one.currently_up).toEqual(false);
+      expect(match.player.two.currentlyUp).toEqual(true);
+      expect(match.player.one.currentlyUp).toEqual(false);
       match.scoreNumberedBall(8);
-      expect(match.player.one.currently_up).toEqual(true);
-      return expect(match.player.two.currently_up).toEqual(false);
+      expect(match.player.one.currentlyUp).toEqual(true);
+      return expect(match.player.two.currentlyUp).toEqual(false);
     });
     it("should be able to know the current game number", function() {
       expect(match.getCurrentGameNumber()).toEqual(1);
@@ -317,13 +317,13 @@
       return expect(match.current_game.player.two.timeouts_taken).toEqual(0);
     });
     it("should be able to tell who won the entire match", function() {
-      expect(match.player.one.has_won).toEqual(false);
-      expect(match.player.two.has_won).toEqual(false);
+      expect(match.player.one.hasWon).toEqual(false);
+      expect(match.player.two.hasWon).toEqual(false);
       match.scoreNumberedBall(8);
       match.startNewGame();
       match.scoreNumberedBall(8);
       expect(match.getRemainingGamesNeededToWinByPlayer(1)).toEqual("0");
-      return expect(match.player.one.has_won).toEqual(true);
+      return expect(match.player.one.hasWon).toEqual(true);
     });
     return describe("toJSON/fromJSON", function() {
       it("should be able to take a new Match and turn it into a JSON object", function() {
@@ -332,105 +332,105 @@
             one: {
               name: "Player1",
               rank: 2,
-              games_needed_to_win: 2,
+              gamesNeededToWin: 2,
               number: "12345",
-              team_number: "123",
-              games_won: 0,
+              teamNumber: "123",
+              gamesWon: 0,
               safeties: 0,
-              eight_on_snaps: 0,
-              break_and_runs: 0,
-              currently_up: true
+              eightOnSnaps: 0,
+              breakAndRuns: 0,
+              currentlyUp: true
             },
             two: {
               name: "Player2",
               rank: 7,
-              games_needed_to_win: 7,
+              gamesNeededToWin: 7,
               number: "987654",
-              team_number: "456",
-              games_won: 0,
+              teamNumber: "456",
+              gamesWon: 0,
               safeties: 0,
-              eight_on_snaps: 0,
-              break_and_runs: 0,
-              currently_up: false
+              eightOnSnaps: 0,
+              breakAndRuns: 0,
+              currentlyUp: false
             }
           },
-          player_one_won: 3,
-          player_two_won: 0,
+          playerOneWon: 3,
+          playerTwoWon: 0,
           current_game: {
-            player_one_timeouts_taken: 2,
-            player_two_timeouts_taken: 0,
-            player_one_eight_on_snap: false,
-            player_one_break_and_run: true,
-            player_two_eight_on_snap: false,
-            player_two_break_and_run: false,
-            player_one_ball_type: 2,
-            player_two_ball_type: 1,
-            player_one_eight_ball: [8],
-            player_two_eight_ball: [],
-            player_one_won: true,
-            player_two_won: false,
-            number_of_innings: 0,
-            early_eight: false,
-            scratch_on_eight: false,
-            breaking_player_still_shooting: true,
-            striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15],
-            solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7],
-            last_ball_hit_in: null,
-            on_break: true,
+            playerOneTimeoutsTaken: 2,
+            playerTwoTimeoutsTaken: 0,
+            playerOneEightOnSnap: false,
+            playerOneBreakAndRun: true,
+            playerTwoEightOnSnap: false,
+            playerTwoBreakAndRun: false,
+            playerOneBallType: 2,
+            playerTwoBallType: 1,
+            playerOneEightBall: [8],
+            playerTwoEightBall: [],
+            playerOneWon: true,
+            playerTwoWon: false,
+            numberOfInnings: 0,
+            earlyEight: false,
+            scratchOnEight: false,
+            breakingPlayerStillShooting: true,
+            stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15],
+            solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7],
+            lastBallHitIn: null,
+            onBreak: true,
             ended: false
           },
-          completed_games: [
+          completedGames: [
             {
-              player_one_timeouts_taken: 2,
-              player_two_timeouts_taken: 0,
-              player_one_eight_on_snap: false,
-              player_one_break_and_run: true,
-              player_two_eight_on_snap: false,
-              player_two_break_and_run: false,
-              player_one_ball_type: 2,
-              player_two_ball_type: 1,
-              player_one_eight_ball: [8],
-              player_two_eight_ball: [],
-              player_one_won: true,
-              player_two_won: false,
-              number_of_innings: 0,
-              early_eight: false,
-              scratch_on_eight: false,
-              breaking_player_still_shooting: true,
-              striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15],
-              solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7],
-              last_ball_hit_in: 8,
-              on_break: true,
+              playerOneTimeoutsTaken: 2,
+              playerTwoTimeoutsTaken: 0,
+              playerOneEightOnSnap: false,
+              playerOneBreakAndRun: true,
+              playerTwoEightOnSnap: false,
+              playerTwoBreakAndRun: false,
+              playerOneBallType: 2,
+              playerTwoBallType: 1,
+              playerOneEightBall: [8],
+              playerTwoEightBall: [],
+              playerOneWon: true,
+              playerTwoWon: false,
+              numberOfInnings: 0,
+              earlyEight: false,
+              scratchOnEight: false,
+              breakingPlayerStillShooting: true,
+              stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15],
+              solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7],
+              lastBallHitIn: 8,
+              onBreak: true,
               ended: true
             }, {
-              player_one_timeouts_taken: 2,
-              player_two_timeouts_taken: 0,
-              player_one_eight_on_snap: false,
-              player_one_break_and_run: true,
-              player_two_eight_on_snap: false,
-              player_two_break_and_run: false,
-              player_one_ball_type: 2,
-              player_two_ball_type: 1,
-              player_one_eight_ball: [8],
-              player_two_eight_ball: [],
-              player_one_won: true,
-              player_two_won: false,
-              number_of_innings: 0,
-              early_eight: false,
-              scratch_on_eight: false,
-              breaking_player_still_shooting: false,
-              striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15],
-              solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7],
-              last_ball_hit_in: 15,
-              on_break: false,
+              playerOneTimeoutsTaken: 2,
+              playerTwoTimeoutsTaken: 0,
+              playerOneEightOnSnap: false,
+              playerOneBreakAndRun: true,
+              playerTwoEightOnSnap: false,
+              playerTwoBreakAndRun: false,
+              playerOneBallType: 2,
+              playerTwoBallType: 1,
+              playerOneEightBall: [8],
+              playerTwoEightBall: [],
+              playerOneWon: true,
+              playerTwoWon: false,
+              numberOfInnings: 0,
+              earlyEight: false,
+              scratchOnEight: false,
+              breakingPlayerStillShooting: false,
+              stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15],
+              solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7],
+              lastBallHitIn: 15,
+              onBreak: false,
               ended: true
             }
           ],
-          sudden_death: false,
+          suddenDeath: false,
           forfeit: false,
           ended: false,
-          original_id: 0,
-          league_match_id: 0
+          originalId: 0,
+          leagueMatchId: 0
         });
       });
       it("should be able to take a filled Match and turn it into a JSON object", function() {
@@ -445,105 +445,105 @@
             one: {
               name: "Player1",
               rank: 2,
-              games_needed_to_win: 2,
+              gamesNeededToWin: 2,
               number: "12345",
-              team_number: "123",
-              games_won: 0,
+              teamNumber: "123",
+              gamesWon: 0,
               safeties: 0,
-              eight_on_snaps: 0,
-              break_and_runs: 0,
-              currently_up: false
+              eightOnSnaps: 0,
+              breakAndRuns: 0,
+              currentlyUp: false
             },
             two: {
               name: "Player2",
               rank: 7,
-              games_needed_to_win: 7,
+              gamesNeededToWin: 7,
               number: "987654",
-              team_number: "456",
-              games_won: 0,
+              teamNumber: "456",
+              gamesWon: 0,
               safeties: 0,
-              eight_on_snaps: 0,
-              break_and_runs: 0,
-              currently_up: true
+              eightOnSnaps: 0,
+              breakAndRuns: 0,
+              currentlyUp: true
             }
           },
-          player_one_won: 3,
-          player_two_won: 0,
+          playerOneWon: 3,
+          playerTwoWon: 0,
           current_game: {
-            player_one_timeouts_taken: 2,
-            player_two_timeouts_taken: 0,
-            player_one_eight_on_snap: false,
-            player_one_break_and_run: true,
-            player_two_eight_on_snap: false,
-            player_two_break_and_run: false,
-            player_one_ball_type: 2,
-            player_two_ball_type: 1,
-            player_one_eight_ball: [8],
-            player_two_eight_ball: [],
-            player_one_won: true,
-            player_two_won: false,
-            number_of_innings: 0,
-            early_eight: false,
-            scratch_on_eight: false,
-            breaking_player_still_shooting: false,
-            striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15],
-            solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7],
-            last_ball_hit_in: null,
-            on_break: false,
+            playerOneTimeoutsTaken: 2,
+            playerTwoTimeoutsTaken: 0,
+            playerOneEightOnSnap: false,
+            playerOneBreakAndRun: true,
+            playerTwoEightOnSnap: false,
+            playerTwoBreakAndRun: false,
+            playerOneBallType: 2,
+            playerTwoBallType: 1,
+            playerOneEightBall: [8],
+            playerTwoEightBall: [],
+            playerOneWon: true,
+            playerTwoWon: false,
+            numberOfInnings: 0,
+            earlyEight: false,
+            scratchOnEight: false,
+            breakingPlayerStillShooting: false,
+            stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15],
+            solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7],
+            lastBallHitIn: null,
+            onBreak: false,
             ended: false
           },
-          completed_games: [
+          completedGames: [
             {
-              player_one_timeouts_taken: 2,
-              player_two_timeouts_taken: 0,
-              player_one_eight_on_snap: false,
-              player_one_break_and_run: true,
-              player_two_eight_on_snap: false,
-              player_two_break_and_run: false,
-              player_one_ball_type: 2,
-              player_two_ball_type: 1,
-              player_one_eight_ball: [8],
-              player_two_eight_ball: [],
-              player_one_won: true,
-              player_two_won: false,
-              number_of_innings: 0,
-              early_eight: false,
-              scratch_on_eight: false,
-              breaking_player_still_shooting: true,
-              striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15],
-              solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7],
-              last_ball_hit_in: 8,
-              on_break: true,
+              playerOneTimeoutsTaken: 2,
+              playerTwoTimeoutsTaken: 0,
+              playerOneEightOnSnap: false,
+              playerOneBreakAndRun: true,
+              playerTwoEightOnSnap: false,
+              playerTwoBreakAndRun: false,
+              playerOneBallType: 2,
+              playerTwoBallType: 1,
+              playerOneEightBall: [8],
+              playerTwoEightBall: [],
+              playerOneWon: true,
+              playerTwoWon: false,
+              numberOfInnings: 0,
+              earlyEight: false,
+              scratchOnEight: false,
+              breakingPlayerStillShooting: true,
+              stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15],
+              solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7],
+              lastBallHitIn: 8,
+              onBreak: true,
               ended: true
             }, {
-              player_one_timeouts_taken: 2,
-              player_two_timeouts_taken: 0,
-              player_one_eight_on_snap: false,
-              player_one_break_and_run: true,
-              player_two_eight_on_snap: false,
-              player_two_break_and_run: false,
-              player_one_ball_type: 2,
-              player_two_ball_type: 1,
-              player_one_eight_ball: [8],
-              player_two_eight_ball: [],
-              player_one_won: true,
-              player_two_won: false,
-              number_of_innings: 0,
-              early_eight: false,
-              scratch_on_eight: false,
-              breaking_player_still_shooting: false,
-              striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15],
-              solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7],
-              last_ball_hit_in: 15,
-              on_break: false,
+              playerOneTimeoutsTaken: 2,
+              playerTwoTimeoutsTaken: 0,
+              playerOneEightOnSnap: false,
+              playerOneBreakAndRun: true,
+              playerTwoEightOnSnap: false,
+              playerTwoBreakAndRun: false,
+              playerOneBallType: 2,
+              playerTwoBallType: 1,
+              playerOneEightBall: [8],
+              playerTwoEightBall: [],
+              playerOneWon: true,
+              playerTwoWon: false,
+              numberOfInnings: 0,
+              earlyEight: false,
+              scratchOnEight: false,
+              breakingPlayerStillShooting: false,
+              stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15],
+              solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7],
+              lastBallHitIn: 15,
+              onBreak: false,
               ended: true
             }
           ],
-          sudden_death: false,
+          suddenDeath: false,
           forfeit: false,
           ended: false,
-          original_id: 0,
-          league_match_id: 0
+          originalId: 0,
+          leagueMatchId: 0
         });
       });
       it("should be able to put a matches completed games into a JSON object", function() {
@@ -555,48 +555,48 @@
         match.startNewGame();
         return expect(match.completedGamesToJSON()).toEqual([
           {
-            player_one_timeouts_taken: 2,
-            player_two_timeouts_taken: 0,
-            player_one_eight_on_snap: false,
-            player_one_break_and_run: true,
-            player_two_eight_on_snap: false,
-            player_two_break_and_run: false,
-            player_one_ball_type: 2,
-            player_two_ball_type: 1,
-            player_one_eight_ball: [8],
-            player_two_eight_ball: [],
-            player_one_won: true,
-            player_two_won: false,
-            number_of_innings: 0,
-            early_eight: false,
-            scratch_on_eight: false,
-            breaking_player_still_shooting: true,
-            striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15],
-            solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7],
-            last_ball_hit_in: 8,
-            on_break: true,
+            playerOneTimeoutsTaken: 2,
+            playerTwoTimeoutsTaken: 0,
+            playerOneEightOnSnap: false,
+            playerOneBreakAndRun: true,
+            playerTwoEightOnSnap: false,
+            playerTwoBreakAndRun: false,
+            playerOneBallType: 2,
+            playerTwoBallType: 1,
+            playerOneEightBall: [8],
+            playerTwoEightBall: [],
+            playerOneWon: true,
+            playerTwoWon: false,
+            numberOfInnings: 0,
+            earlyEight: false,
+            scratchOnEight: false,
+            breakingPlayerStillShooting: true,
+            stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15],
+            solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7],
+            lastBallHitIn: 8,
+            onBreak: true,
             ended: true
           }, {
-            player_one_timeouts_taken: 2,
-            player_two_timeouts_taken: 0,
-            player_one_eight_on_snap: false,
-            player_one_break_and_run: true,
-            player_two_eight_on_snap: false,
-            player_two_break_and_run: false,
-            player_one_ball_type: 2,
-            player_two_ball_type: 1,
-            player_one_eight_ball: [8],
-            player_two_eight_ball: [],
-            player_one_won: true,
-            player_two_won: false,
-            number_of_innings: 0,
-            early_eight: false,
-            scratch_on_eight: false,
-            breaking_player_still_shooting: false,
-            striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15],
-            solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7],
-            last_ball_hit_in: 15,
-            on_break: false,
+            playerOneTimeoutsTaken: 2,
+            playerTwoTimeoutsTaken: 0,
+            playerOneEightOnSnap: false,
+            playerOneBreakAndRun: true,
+            playerTwoEightOnSnap: false,
+            playerTwoBreakAndRun: false,
+            playerOneBallType: 2,
+            playerTwoBallType: 1,
+            playerOneEightBall: [8],
+            playerTwoEightBall: [],
+            playerOneWon: true,
+            playerTwoWon: false,
+            numberOfInnings: 0,
+            earlyEight: false,
+            scratchOnEight: false,
+            breakingPlayerStillShooting: false,
+            stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15],
+            solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7],
+            lastBallHitIn: 15,
+            onBreak: false,
             ended: true
           }
         ]);
@@ -606,26 +606,26 @@
         player = match.playerFromJSON({
           name: "James Armstead",
           rank: 2,
-          games_needed_to_win: 0,
+          gamesNeededToWin: 0,
           number: "4321",
-          team_number: "789",
-          games_won: 1,
+          teamNumber: "789",
+          gamesWon: 1,
           safeties: 1,
-          eight_on_snaps: 2,
-          break_and_runs: 3,
-          currently_up: true
+          eightOnSnaps: 2,
+          breakAndRuns: 3,
+          currentlyUp: true
         });
         expect(player.name).toEqual("James Armstead");
         expect(player.rank).toEqual(2);
         expect(player.number).toEqual("4321");
-        expect(player.team_number).toEqual("789");
-        expect(player.games_won).toEqual(1);
+        expect(player.teamNumber).toEqual("789");
+        expect(player.gamesWon).toEqual(1);
         expect(player.safeties).toEqual(1);
-        expect(player.eight_on_snaps).toEqual(2);
-        expect(player.break_and_runs).toEqual(3);
-        expect(player.currently_up).toEqual(true);
+        expect(player.eightOnSnaps).toEqual(2);
+        expect(player.breakAndRuns).toEqual(3);
+        expect(player.currentlyUp).toEqual(true);
         player.addOneToEightOnSnaps();
-        return expect(player.eight_on_snaps).toEqual(3);
+        return expect(player.eightOnSnaps).toEqual(3);
       });
       it("should be able to take a Match JSON and fill its values", function() {
         match.fromJSON({
@@ -633,144 +633,144 @@
             one: {
               name: "Player1",
               rank: 2,
-              games_needed_to_win: 2,
+              gamesNeededToWin: 2,
               number: "12345",
-              team_number: "123",
-              games_won: 0,
+              teamNumber: "123",
+              gamesWon: 0,
               safeties: 0,
-              eight_on_snaps: 0,
-              break_and_runs: 0,
-              currently_up: true
+              eightOnSnaps: 0,
+              breakAndRuns: 0,
+              currentlyUp: true
             },
             two: {
               name: "Player2",
               rank: 7,
-              games_needed_to_win: 7,
+              gamesNeededToWin: 7,
               number: "987654",
-              team_number: "456",
-              games_won: 0,
+              teamNumber: "456",
+              gamesWon: 0,
               safeties: 0,
-              eight_on_snaps: 0,
-              break_and_runs: 0,
-              currently_up: false
+              eightOnSnaps: 0,
+              breakAndRuns: 0,
+              currentlyUp: false
             }
           },
-          player_one_won: 3,
-          player_two_won: 0,
+          playerOneWon: 3,
+          playerTwoWon: 0,
           current_game: {
-            player_one_timeouts_taken: 2,
-            player_two_timeouts_taken: 0,
-            player_one_eight_on_snap: false,
-            player_one_break_and_run: true,
-            player_two_eight_on_snap: false,
-            player_two_break_and_run: false,
-            player_one_ball_type: 2,
-            player_two_ball_type: 1,
-            player_one_eight_ball: [8],
-            player_two_eight_ball: [],
-            player_one_won: true,
-            player_two_won: false,
-            number_of_innings: 0,
-            early_eight: false,
-            scratch_on_eight: false,
-            breaking_player_still_shooting: true,
-            striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15],
-            solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7],
-            last_ball_hit_in: null,
-            on_break: true,
+            playerOneTimeoutsTaken: 2,
+            playerTwoTimeoutsTaken: 0,
+            playerOneEightOnSnap: false,
+            playerOneBreakAndRun: true,
+            playerTwoEightOnSnap: false,
+            playerTwoBreakAndRun: false,
+            playerOneBallType: 2,
+            playerTwoBallType: 1,
+            playerOneEightBall: [8],
+            playerTwoEightBall: [],
+            playerOneWon: true,
+            playerTwoWon: false,
+            numberOfInnings: 0,
+            earlyEight: false,
+            scratchOnEight: false,
+            breakingPlayerStillShooting: true,
+            stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15],
+            solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7],
+            lastBallHitIn: null,
+            onBreak: true,
             ended: false
           },
-          completed_games: [
+          completedGames: [
             {
-              player_one_timeouts_taken: 2,
-              player_two_timeouts_taken: 0,
-              player_one_eight_on_snap: false,
-              player_one_break_and_run: true,
-              player_two_eight_on_snap: false,
-              player_two_break_and_run: false,
-              player_one_ball_type: 2,
-              player_two_ball_type: 1,
-              player_one_eight_ball: [8],
-              player_two_eight_ball: [],
-              player_one_won: true,
-              player_two_won: false,
-              number_of_innings: 0,
-              early_eight: false,
-              scratch_on_eight: false,
-              breaking_player_still_shooting: false,
-              striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15],
-              solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7],
-              last_ball_hit_in: 8,
-              on_break: true,
+              playerOneTimeoutsTaken: 2,
+              playerTwoTimeoutsTaken: 0,
+              playerOneEightOnSnap: false,
+              playerOneBreakAndRun: true,
+              playerTwoEightOnSnap: false,
+              playerTwoBreakAndRun: false,
+              playerOneBallType: 2,
+              playerTwoBallType: 1,
+              playerOneEightBall: [8],
+              playerTwoEightBall: [],
+              playerOneWon: true,
+              playerTwoWon: false,
+              numberOfInnings: 0,
+              earlyEight: false,
+              scratchOnEight: false,
+              breakingPlayerStillShooting: false,
+              stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15],
+              solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7],
+              lastBallHitIn: 8,
+              onBreak: true,
               ended: true
             }, {
-              player_one_timeouts_taken: 2,
-              player_two_timeouts_taken: 0,
-              player_one_eight_on_snap: false,
-              player_one_break_and_run: true,
-              player_two_eight_on_snap: false,
-              player_two_break_and_run: false,
-              player_one_ball_type: 2,
-              player_two_ball_type: 1,
-              player_one_eight_ball: [8],
-              player_two_eight_ball: [],
-              player_one_won: true,
-              player_two_won: false,
-              number_of_innings: 0,
-              early_eight: false,
-              scratch_on_eight: false,
-              breaking_player_still_shooting: false,
-              striped_balls_hit_in: [12, 9, 10, 11, 13, 14, 15],
-              solid_balls_hit_in: [1, 2, 3, 4, 5, 6, 7],
-              last_ball_hit_in: 15,
-              on_break: false,
+              playerOneTimeoutsTaken: 2,
+              playerTwoTimeoutsTaken: 0,
+              playerOneEightOnSnap: false,
+              playerOneBreakAndRun: true,
+              playerTwoEightOnSnap: false,
+              playerTwoBreakAndRun: false,
+              playerOneBallType: 2,
+              playerTwoBallType: 1,
+              playerOneEightBall: [8],
+              playerTwoEightBall: [],
+              playerOneWon: true,
+              playerTwoWon: false,
+              numberOfInnings: 0,
+              earlyEight: false,
+              scratchOnEight: false,
+              breakingPlayerStillShooting: false,
+              stripedBallsHitIn: [12, 9, 10, 11, 13, 14, 15],
+              solidBallsHitIn: [1, 2, 3, 4, 5, 6, 7],
+              lastBallHitIn: 15,
+              onBreak: false,
               ended: true
             }
           ],
-          sudden_death: false,
+          suddenDeath: false,
           forfeit: false,
           ended: false,
-          original_id: 0,
-          league_match_id: 0
+          originalId: 0,
+          leagueMatchId: 0
         });
         expect(match.getGamesWonByPlayer(1)).toEqual(0);
         expect(match.getGamesWonByPlayer(2)).toEqual(1);
         expect(match.ended).toEqual(false);
-        expect(match.original_id).toEqual(0);
+        expect(match.originalId).toEqual(0);
         expect(match.player.one.name).toEqual("Player1");
         expect(match.player.two.name).toEqual("Player2");
-        expect(match.current_game.breaking_player_still_shooting).toEqual(true);
-        expect(match.completed_games[0].breaking_player_still_shooting).toEqual(false);
-        expect(match.completed_games[0].player.two_won).toEqual(true);
+        expect(match.current_game.breakingPlayerStillShooting).toEqual(true);
+        expect(match.completedGames[0].breakingPlayerStillShooting).toEqual(false);
+        expect(match.completedGames[0].player.two.hasWon).toEqual(true);
         return expect(match.player.one.getGamesNeededToWin()).toEqual("2");
       });
-      return it("should be able to take a completed_games JSON array and convert it to JS Array with Objects", function() {
-        var completed_games;
-        completed_games = match.completedGamesFromJSON([
+      return it("should be able to take a completedGames JSON array and convert it to JS Array with Objects", function() {
+        var completedGames;
+        completedGames = match.completedGamesFromJSON([
           {
-            player_one_timeouts_taken: 0,
-            player_two_timeouts_taken: 0,
-            number_of_innings: 0,
-            player_one_eight_on_snap: false,
-            player_one_break_and_run: false,
-            player_two_eight_on_snap: false,
-            player_two_break_and_run: false,
-            player_one_ball_type: 1,
-            player_two_ball_type: null,
-            player_one_eight_ball: [],
-            player_two_eight_ball: [8],
-            player_one_won: true,
-            player_two_won: false,
+            playerOneTimeoutsTaken: 0,
+            playerTwoTimeoutsTaken: 0,
+            numberOfInnings: 0,
+            playerOneEightOnSnap: false,
+            playerOneBreakAndRun: false,
+            playerTwoEightOnSnap: false,
+            playerTwoBreakAndRun: false,
+            playerOneBallType: 1,
+            playerTwoBallType: null,
+            playerOneEightBall: [],
+            playerTwoEightBall: [8],
+            playerOneWon: true,
+            playerTwoWon: false,
             ended: true,
-            striped_balls_hit_in: [1],
-            solid_balls_hit_in: [12],
-            last_ball_hit_in: 12,
-            on_break: false,
-            breaking_player_still_shooting: false
+            stripedBallsHitIn: [1],
+            solidBallsHitIn: [12],
+            lastBallHitIn: 12,
+            onBreak: false,
+            breakingPlayerStillShooting: false
           }
         ]);
-        expect(completed_games[0].getBallsHitInByPlayer(1)).toEqual([1]);
-        return expect(completed_games[0].player.one.has_won).toEqual(true);
+        expect(completedGames[0].getBallsHitInByPlayer(1)).toEqual([1]);
+        return expect(completedGames[0].player.one.hasWon).toEqual(true);
       });
     });
   });

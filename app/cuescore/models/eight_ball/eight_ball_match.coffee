@@ -3,51 +3,51 @@ class Match extends $CS.Models.EightBall
     player:
       one: {}
       two: {}
-    completed_games: []
+    completedGames: []
     ended: false
-    original_id: 0
-    league_match_id: 0
-    player_number_winning: 0
-    player_one_won: false
-    player_two_won: false
-    are_players_switching: false
-    sudden_death: false
+    originalId: 0
+    leagueMatchId: 0
+    playerNumberWinning: 0
+    playerOneWon: false
+    playerTwoWon: false
+    arePlayersSwitching: false
+    suddenDeath: false
     forfeit: false
-    current_game: null
+    currentGame: null
     
   constructor: (options) ->
     _.extend @, @defaults
     
-    player_one_name         = options.playerOneName
-    player_two_name         = options.playerTwoName
-    player_one_rank         = options.playerOneRank
-    player_two_rank         = options.playerTwoRank
-    player_one_number       = options.playerOneNumber
-    player_two_number       = options.playerTwoNumber
-    player_one_team_number  = options.playerOneTeamNumber
-    player_two_team_number  = options.playerTwoTeamNumber
+    playerOneName         = options.playerOneName
+    playerTwoName         = options.playerTwoName
+    playerOneRank         = options.playerOneRank
+    playerTwoRank         = options.playerTwoRank
+    playerOneNumber       = options.playerOneNumber
+    playerTwoNumber       = options.playerTwoNumber
+    playerOneTeamNumber   = options.playerOneTeamNumber
+    playerTwoTeamNumber   = options.playerTwoTeamNumber
     
     @player.one = new $CS.Models.EightBall.Player(
       options = 
-        name: player_one_name
-        rank: player_one_rank
-        playerNumber: player_one_number
-        teamNumber: player_one_team_number
+        name: playerOneName
+        rank: playerOneRank
+        playerNumber: playerOneNumber
+        teamNumber: playerOneTeamNumber
     )
     
     @player.two = new $CS.Models.EightBall.Player(
       options = 
-        name: player_two_name
-        rank: player_two_rank
-        playerNumber: player_two_number
-        teamNumber: player_two_team_number
+        name: playerTwoName
+        rank: playerTwoRank
+        playerNumber: playerTwoNumber
+        teamNumber: playerTwoTeamNumber
     )
     
     if @player.one.rank? and @player.two.rank?
-      @player.one.games_needed_to_win = new $CS.Models.EightBall.Ranks().getGamesNeedToWin(player_one_rank, player_two_rank)
-      @player.two.games_needed_to_win = new $CS.Models.EightBall.Ranks().getGamesNeedToWin(player_two_rank, player_one_rank)
+      @player.one.gamesNeededToWin = new $CS.Models.EightBall.Ranks().getGamesNeedToWin(playerOneRank, playerTwoRank)
+      @player.two.gamesNeededToWin = new $CS.Models.EightBall.Ranks().getGamesNeedToWin(playerTwoRank, playerOneRank)
       
-    @current_game = @getNewGame()
+    @currentGame = @getNewGame()
     
   # Getters
   
@@ -60,19 +60,19 @@ class Match extends $CS.Models.EightBall
           @player.two
         callback: =>
           if @getRemainingGamesNeededToWinByPlayer(1) is 0
-            @player_one_won = true
+            @playerOneWon = true
             @ended = true
           else if @getRemainingGamesNeededToWinByPlayer(2) is 0
-            @player_two_won = true
+            @playerTwoWon = true
             @ended = true
     )
     
   getTotalInnings: ->
-    totalInnings = @current_game.number_of_innings
-    if @completed_games.length > 0
+    totalInnings = @currentGame.number_of_innings
+    if @completedGames.length > 0
       i = 0
-      while i <= (@completed_games.length - 1)
-        totalInnings += @completed_games[i].number_of_innings
+      while i <= (@completedGames.length - 1)
+        totalInnings += @completedGames[i].number_of_innings
         i++
     totalInnings.toString()
     
@@ -80,7 +80,7 @@ class Match extends $CS.Models.EightBall
     @player.one.getSafeties() + "to" + @player.two.getSafeties()
     
   getCurrentGameNumber: ->
-    (@completed_games.length + 1)
+    (@completedGames.length + 1)
   
   getMatchPointsByTeamNumber: (teamNumber) ->
     if @player.one.team_number is teamNumber
@@ -89,31 +89,31 @@ class Match extends $CS.Models.EightBall
     0
     
   getWinningPlayer: ->
-    return @player.one if (@getGamesWonByPlayer(1) / @player.one.games_needed_to_win) > (@getGamesWonByPlayer(2) / @player.two.games_needed_to_win)
+    return @player.one if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) > (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
     @player.two
     
   getRemainingGamesNeededToWinByPlayer: (playerNum) ->
     if playerNum == 1
-      (@player.one.games_needed_to_win - @getGamesWonByPlayer(1))
+      (@player.one.gamesNeededToWin - @getGamesWonByPlayer(1))
     else if playerNum == 2
-      (@player.two.games_needed_to_win - @getGamesWonByPlayer(2))
+      (@player.two.gamesNeededToWin - @getGamesWonByPlayer(2))
       
   getGamesWonByPlayer: (playerNum) ->
     i = 0
     if playerNum == 1
-      gamesWon = (if (@current_game.player['one'].has_won is true) then 1 else 0)
-      while i <= (@completed_games.length - 1)
-        gamesWon = gamesWon + 1  if @completed_games[i].player['one'].has_won is true
+      gamesWon = (if (@currentGame.player['one'].has_won is true) then 1 else 0)
+      while i <= (@completedGames.length - 1)
+        gamesWon = gamesWon + 1  if @completedGames[i].player['one'].has_won is true
         i++
     else if playerNum == 2
-      gamesWon = (if (@current_game.player['two'].has_won is true) then 1 else 0)
-      while i <= (@completed_games.length - 1)
-        gamesWon = gamesWon + 1  if @completed_games[i].player['two'].has_won is true
+      gamesWon = (if (@currentGame.player['two'].has_won is true) then 1 else 0)
+      while i <= (@completedGames.length - 1)
+        gamesWon = gamesWon + 1  if @completedGames[i].player['two'].has_won is true
         i++
     gamesWon
     
   getMatchPointsByPlayer: (playerNum) ->
-    return 1 if (@getGamesWonByPlayer(1) / @player.one.games_needed_to_win) > (@getGamesWonByPlayer(2) / @player.two.games_needed_to_win)
+    return 1 if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) > (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
     0
     
   getMatchPoints: ->
@@ -125,50 +125,50 @@ class Match extends $CS.Models.EightBall
   # Setters
   
   setSuddenDeathMode: ->
-    @sudden_death = true
-    @player.one.games_needed_to_win = 1
-    @player.two.games_needed_to_win = 1
+    @suddenDeath = true
+    @player.one.gamesNeededToWin = 1
+    @player.two.gamesNeededToWin = 1
   
   
   # Methods
   
   scoreNumberedBall: (ballNumber) ->
-    @are_players_switching = false
-    @current_game.scoreBall(ballNumber)
+    @arePlayersSwitching = false
+    @currentGame.scoreBall(ballNumber)
     
     if @isPlayerWinning(1) is true
-      @player_number_winning = 1
+      @playerNumberWinning = 1
     else
-      @player_number_winning = 2
+      @playerNumberWinning = 2
       
     @checkForWin()
     
   shotMissed: ->
-    @current_game.nextPlayerIsUp()
-    @are_players_switching = true if @current_game.breaking_player_still_shooting is false
+    @currentGame.nextPlayerIsUp()
+    @arePlayersSwitching = true if @currentGame.breakingPlayerStillShooting is false
     
   hitSafety: ->
-    @current_game.hitSafety()
+    @currentGame.hitSafety()
     
   checkForWin: ->
 
   startNewGame: ->
-    if @current_game.ended is true
-      @completed_games.push @current_game
-      @current_game = @getNewGame()
+    if @currentGame.ended is true
+      @completedGames.push @currentGame
+      @currentGame = @getNewGame()
 
   resetPlayerRankStats: ->
-    @player.one.games_needed_to_win = new $CS.Models.EightBall.Ranks().getGamesNeedToWin(@player.one.rank, @player.two.rank)
-    @player.two.games_needed_to_win = new $CS.Models.EightBall.Ranks().getGamesNeedToWin(@player.two.rank, @player.one.rank)
+    @player.one.gamesNeededToWin = new $CS.Models.EightBall.Ranks().getGamesNeedToWin(@player.one.rank, @player.two.rank)
+    @player.two.gamesNeededToWin = new $CS.Models.EightBall.Ranks().getGamesNeedToWin(@player.two.rank, @player.one.rank)
     @player.one.resetPlayerRankStats()
     @player.two.resetPlayerRankStats()
 
   isPlayerWinning: (playerNum) ->
     if playerNum == 1
-      return true  if (@getGamesWonByPlayer(1) / @player.one.games_needed_to_win) > (@getGamesWonByPlayer(2) / @player.two.games_needed_to_win)
+      return true  if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) > (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
       false
     else if playerNum == 2
-      return true  if (@getGamesWonByPlayer(1) / @player.one.games_needed_to_win) < (@getGamesWonByPlayer(2) / @player.two.games_needed_to_win)
+      return true  if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) < (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
       false
       
   # JSON Data
@@ -177,22 +177,22 @@ class Match extends $CS.Models.EightBall
     player:           
       one:                @player.one.toJSON()
       two:                @player.two.toJSON()
-    player_one_won:       @getGamesWonByPlayer(1)
-    player_two_won:       @getGamesWonByPlayer(2)
-    current_game:         @current_game.toJSON()
-    completed_games:      @completedGamesToJSON()
-    sudden_death:         @sudden_death
+    playerOneWon:         @getGamesWonByPlayer(1)
+    playerTwoWon:         @getGamesWonByPlayer(2)
+    currentGame:          @currentGame.toJSON()
+    completedGames:       @completedGamesToJSON()
+    suddenDeath:          @suddenDeath
     forfeit:              @forfeit
     ended:                @ended
-    original_id:          @original_id
-    league_match_id:      @league_match_id
+    originalId:           @originalId
+    leagueMatchId:        @leagueMatchId
 
   completedGamesToJSON: ->
     arrayToReturn = []
     i = 0
 
-    while i <= @completed_games.length - 1
-      arrayToReturn[i] = @completed_games[i].toJSON()
+    while i <= @completedGames.length - 1
+      arrayToReturn[i] = @completedGames[i].toJSON()
       i++
     arrayToReturn
 
@@ -200,18 +200,18 @@ class Match extends $CS.Models.EightBall
     @player.one       = @playerFromJSON(json.player.one)
     @player.two       = @playerFromJSON(json.player.two)
     @resetPlayerRankStats()
-    @completed_games  = @completedGamesFromJSON(json.completed_games)
-    @sudden_death     = json.sudden_death
+    @completedGames   = @completedGamesFromJSON(json.completedGames)
+    @suddenDeath      = json.suddenDeath
     @forfeit          = json.forfeit
     @ended            = json.ended
-    @original_id      = json.original_id
-    @league_match_id  = json.league_match_id
+    @originalId       = json.originalId
+    @leagueMatchId    = json.leagueMatchId
     
     currentGame = @getNewGame()
     currentGame.fromJSON (new ->
-      json.current_game
+      json.currentGame
     )
-    @current_game = currentGame
+    @currentGame = currentGame
 
   playerFromJSON: (json) ->
     player = new $CS.Models.EightBall.Player()
