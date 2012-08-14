@@ -1,5 +1,13 @@
 root = @
 
+Array::exists = (search) ->
+  i = 0
+
+  while i < @length
+    return true  if this[i] is search
+    i++
+  false
+
 # This file is the entry point for the application. It sets up the four main
 # tab windows.
 # The `CueScore` object provides common access to app data, API wrapper and UI utilities

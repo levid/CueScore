@@ -294,8 +294,10 @@
           }
         } else {
           if (this.player.one.callback().currentlyUp === true) {
+            console.log("player one made eight on break");
             this.setPlayerWon(1);
           } else if (this.player.two.callback().currentlyUp === true) {
+            console.log("player two made eight on break");
             this.setPlayerWon(2);
           }
         }

@@ -203,6 +203,41 @@ class Game extends $CS.Models.EightBall
       @checkForWinner()
       
   checkForWinner: ->
+    # @ended = true  if @getBallsHitIn().exists(8)
+    # if @ended is true
+      # if @breakingPlayerStillShooting is true and (@ballsHitIn.solids.length is 7 or @ballsHitIn.stripes.length is 7)
+        # if @player.one.callback().currentlyUp is true
+          # @setBreakAndRunByPlayer(1)
+          # if @ballsHitIn.solids.length is 7
+            # @player.one.ballType = @solids
+            # @player.two.ballType = @stripes
+          # else
+            # @player.one.ballType = @stripes
+            # @player.two.ballType = @solids
+        # else if @@player.two.callback().currentlyUp is true
+          # @setBreakAndRunByPlayer(2)
+          # if @ballsHitIn.solids.length is 7
+            # @player.two.ballType = @solids
+            # @player.one.ballType = @stripes
+          # else
+            # @player.one.ballType = @solids
+            # @player.two.ballType = @stripes
+      # if @player.one.eightBall.exists(8) and @onBreak is false
+        # if @getBallsHitInByPlayer(1).length isnt 8
+          # @setPlayerWon(2)
+        # else
+          # @setPlayerWon(1)
+      # else if @player.two.eightBall.exists(8) and @onBreak is false
+        # if @getBallsHitInByPlayer(1).length isnt 8
+          # @setPlayerWon(1)
+        # else
+          # @setPlayerWon(2)
+      # else
+        # if @player.one.callback().currentlyUp is true
+          # @setPlayerWon(1)
+        # else
+          # @setPlayerWon(2)  if @@player.two.callback().currentlyUp is true
+      # @matchEndedCallback()
     @ended = true if @getBallsHitIn().indexOf(8) >= 0
     if @ended is true
      
@@ -247,9 +282,11 @@ class Game extends $CS.Models.EightBall
       else
         # Player 1 made the 8 on the break
         if @player.one.callback().currentlyUp is true
+          console.log "player one made eight on break"
           @setPlayerWon(1)
         # Player 2 made the 8 on the break
         else if @player.two.callback().currentlyUp is true
+          console.log "player two made eight on break"
           @setPlayerWon(2) 
 
       @matchEndedCallback()

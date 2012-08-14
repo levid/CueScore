@@ -313,15 +313,20 @@
       });
       it("should be able to return the match points for player two", function() {
         expect(match.getMatchPointsByPlayer(2)).toEqual(0);
+        match.currentGame.breakIsOver();
         match.shotMissed();
         match.scoreNumberedBall(8);
         match.startNewGame();
+        match.currentGame.breakIsOver();
         match.scoreNumberedBall(8);
         match.startNewGame();
+        match.currentGame.breakIsOver();
         match.scoreNumberedBall(8);
         match.startNewGame();
+        match.currentGame.breakIsOver();
         match.scoreNumberedBall(8);
         match.startNewGame();
+        match.currentGame.breakIsOver();
         match.scoreNumberedBall(8);
         return expect(match.getMatchPointsByPlayer(2)).toEqual(1);
       });

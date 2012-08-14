@@ -312,15 +312,20 @@ describe "Eight Ball Match", ->
   
     it "should be able to return the match points for player two", ->
       expect(match.getMatchPointsByPlayer(2)).toEqual 0
+      match.currentGame.breakIsOver()
       match.shotMissed()
       match.scoreNumberedBall 8
       match.startNewGame()
+      match.currentGame.breakIsOver()
       match.scoreNumberedBall 8
       match.startNewGame()
+      match.currentGame.breakIsOver()
       match.scoreNumberedBall 8
       match.startNewGame()
+      match.currentGame.breakIsOver()
       match.scoreNumberedBall 8
       match.startNewGame()
+      match.currentGame.breakIsOver()
       match.scoreNumberedBall 8
       expect(match.getMatchPointsByPlayer(2)).toEqual 1
 

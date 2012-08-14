@@ -7,20 +7,10 @@
     Utilities.prototype.defaults = {};
 
     function Utilities(options) {
-      var i;
       if (options == null) {
         options = {};
       }
       _.extend(this, this.defaults);
-      Array.prototype.exists = function(search) {};
-      i = 0;
-      while (i < this.length) {
-        if (this[i] === search) {
-          return true;
-        }
-        i++;
-      }
-      false;
     }
 
     Utilities.prototype.getPlatformWidth = function() {
