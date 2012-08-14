@@ -72,6 +72,45 @@ describe "Eight Ball League Match", ->
     ), 5
     leagueMatch.match.five.player.one.currentlyUp = true
 
+    setUpMatchDefaults = (matchNum) ->
+      leagueMatch.match[matchNum].player.one.currentlyUp = true
+      leagueMatch.match[matchNum].completedGames = []
+      leagueMatch.match[matchNum].ended = false
+      leagueMatch.match[matchNum].originalId = 0
+      leagueMatch.match[matchNum].leagueMatchId = 0
+      leagueMatch.match[matchNum].playerNumberWinning = 0
+      leagueMatch.match[matchNum].playerOneWon = false
+      leagueMatch.match[matchNum].playerTwoWon = false
+      leagueMatch.match[matchNum].arePlayersSwitching = false
+      leagueMatch.match[matchNum].suddenDeath = false
+      leagueMatch.match[matchNum].forfeit = false
+      
+      leagueMatch.match[matchNum].currentGame.numberOfInnings = 0
+      leagueMatch.match[matchNum].currentGame.player.one.eightOnSnap = false
+      leagueMatch.match[matchNum].currentGame.player.one.breakAndRun = false
+      leagueMatch.match[matchNum].currentGame.player.two.eightOnSnap = false
+      leagueMatch.match[matchNum].currentGame.player.two.breakAndRun = false
+      leagueMatch.match[matchNum].currentGame.player.one.ballType = null
+      leagueMatch.match[matchNum].currentGame.player.two.ballType = null
+      leagueMatch.match[matchNum].currentGame.player.one.eightBall = []
+      leagueMatch.match[matchNum].currentGame.player.two.eightBall = []
+      leagueMatch.match[matchNum].currentGame.playerOneWon = false
+      leagueMatch.match[matchNum].currentGame.playerTwoWon = false
+      leagueMatch.match[matchNum].currentGame.ended = false
+      leagueMatch.match[matchNum].currentGame.ballsHitIn.stripes = []
+      leagueMatch.match[matchNum].currentGame.ballsHitIn.solids = []
+      leagueMatch.match[matchNum].currentGame.lastBallHitIn = null
+      leagueMatch.match[matchNum].currentGame.onBreak = true
+      leagueMatch.match[matchNum].currentGame.breakingPlayerStillShooting = true
+      leagueMatch.match[matchNum].currentGame.player.one.callback().currentlyUp = true
+      leagueMatch.match[matchNum].currentGame.player.two.callback().currentlyUp = false
+      
+    setUpMatchDefaults('one')
+    setUpMatchDefaults('two')
+    setUpMatchDefaults('three')
+    setUpMatchDefaults('four')
+    setUpMatchDefaults('five')
+
   it "should have homeTeamNumber, awayTeamNumber, startTime, and tableType initialized from constructor", ->
     expect(leagueMatch.homeTeamNumber).toEqual "123"
     expect(leagueMatch.awayTeamNumber).toEqual "345"
@@ -96,7 +135,9 @@ describe "Eight Ball League Match", ->
     expect(leagueMatch.endTime).toEqual ""
 
   it "should be able to set each match and set the leagueMatchId for each", ->
+    console.log leagueMatch.match.one.leagueMatchId
     expect(leagueMatch.match.one.leagueMatchId).toEqual 1
+    console.log leagueMatch.match.two.leagueMatchId
     expect(leagueMatch.match.two.leagueMatchId).toEqual 2
     expect(leagueMatch.match.three.leagueMatchId).toEqual 3
     expect(leagueMatch.match.four.leagueMatchId).toEqual 4

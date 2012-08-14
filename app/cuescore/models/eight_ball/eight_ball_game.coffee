@@ -282,11 +282,9 @@ class Game extends $CS.Models.EightBall
       else
         # Player 1 made the 8 on the break
         if @player.one.callback().currentlyUp is true
-          console.log "player one made eight on break"
           @setPlayerWon(1)
         # Player 2 made the 8 on the break
         else if @player.two.callback().currentlyUp is true
-          console.log "player two made eight on break"
           @setPlayerWon(2) 
 
       @matchEndedCallback()

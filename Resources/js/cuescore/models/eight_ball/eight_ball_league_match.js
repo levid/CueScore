@@ -31,7 +31,8 @@
     };
 
     function LeagueMatch(options) {
-      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
+      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5,
+        _this = this;
       _.extend(this, this.defaults);
       this.homeTeamNumber = (_ref = options.homeTeamNumber) != null ? _ref : options.homeTeamNumber = null;
       this.homeTeamName = (_ref1 = options.homeTeamName) != null ? _ref1 : options.homeTeamName = null;
@@ -41,28 +42,28 @@
       this.tableType = (_ref5 = options.tableType) != null ? _ref5 : options.tableType = null;
       this.DataService = new $CS.Utilities.DataService;
       this.DataService.saveLeagueMatch(this, function(id) {
-        return this.leagueMatchId = id;
+        return _this.leagueMatchId = id;
       });
     }
 
     LeagueMatch.prototype.getHomeTeamScore = function() {
       var totalScore;
       totalScore = 0;
-      totalScore = this.match['one'].getMatchPointsByTeamNumber(this.homeTeamNumber);
-      totalScore += this.match['two'].getMatchPointsByTeamNumber(this.homeTeamNumber);
-      totalScore += this.match['three'].getMatchPointsByTeamNumber(this.homeTeamNumber);
-      totalScore += this.match['four'].getMatchPointsByTeamNumber(this.homeTeamNumber);
-      totalScore += this.match['five'].getMatchPointsByTeamNumber(this.homeTeamNumber);
+      totalScore = this.match.one.getMatchPointsByTeamNumber(this.homeTeamNumber);
+      totalScore += this.match.two.getMatchPointsByTeamNumber(this.homeTeamNumber);
+      totalScore += this.match.three.getMatchPointsByTeamNumber(this.homeTeamNumber);
+      totalScore += this.match.four.getMatchPointsByTeamNumber(this.homeTeamNumber);
+      totalScore += this.match.five.getMatchPointsByTeamNumber(this.homeTeamNumber);
       return totalScore;
     };
 
     LeagueMatch.prototype.getAwayTeamScore = function() {
       var totalScore;
-      totalScore = this.match['one'].getMatchPointsByTeamNumber(this.awayTeamNumber);
-      totalScore += this.match['two'].getMatchPointsByTeamNumber(this.awayTeamNumber);
-      totalScore += this.match['three'].getMatchPointsByTeamNumber(this.awayTeamNumber);
-      totalScore += this.match['four'].getMatchPointsByTeamNumber(this.awayTeamNumber);
-      totalScore += this.match['five'].getMatchPointsByTeamNumber(this.awayTeamNumber);
+      totalScore = this.match.one.getMatchPointsByTeamNumber(this.awayTeamNumber);
+      totalScore += this.match.two.getMatchPointsByTeamNumber(this.awayTeamNumber);
+      totalScore += this.match.three.getMatchPointsByTeamNumber(this.awayTeamNumber);
+      totalScore += this.match.four.getMatchPointsByTeamNumber(this.awayTeamNumber);
+      totalScore += this.match.five.getMatchPointsByTeamNumber(this.awayTeamNumber);
       return totalScore;
     };
 

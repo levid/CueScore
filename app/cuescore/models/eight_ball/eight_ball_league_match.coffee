@@ -30,26 +30,26 @@ class LeagueMatch extends $CS.Models.EightBall
     @tableType        = options.tableType ?= null
     
     @DataService = new $CS.Utilities.DataService
-    @DataService.saveLeagueMatch @, (id) ->
+    @DataService.saveLeagueMatch @, (id) =>
       @leagueMatchId = id
 
   # Getters
 
   getHomeTeamScore: ->
     totalScore = 0
-    totalScore = @match['one'].getMatchPointsByTeamNumber(@homeTeamNumber)
-    totalScore += @match['two'].getMatchPointsByTeamNumber(@homeTeamNumber)
-    totalScore += @match['three'].getMatchPointsByTeamNumber(@homeTeamNumber)
-    totalScore += @match['four'].getMatchPointsByTeamNumber(@homeTeamNumber)
-    totalScore += @match['five'].getMatchPointsByTeamNumber(@homeTeamNumber)
+    totalScore = @match.one.getMatchPointsByTeamNumber(@homeTeamNumber)
+    totalScore += @match.two.getMatchPointsByTeamNumber(@homeTeamNumber)
+    totalScore += @match.three.getMatchPointsByTeamNumber(@homeTeamNumber)
+    totalScore += @match.four.getMatchPointsByTeamNumber(@homeTeamNumber)
+    totalScore += @match.five.getMatchPointsByTeamNumber(@homeTeamNumber)
     totalScore
 
   getAwayTeamScore: ->
-    totalScore = @match['one'].getMatchPointsByTeamNumber(@awayTeamNumber)
-    totalScore += @match['two'].getMatchPointsByTeamNumber(@awayTeamNumber)
-    totalScore += @match['three'].getMatchPointsByTeamNumber(@awayTeamNumber)
-    totalScore += @match['four'].getMatchPointsByTeamNumber(@awayTeamNumber)
-    totalScore += @match['five'].getMatchPointsByTeamNumber(@awayTeamNumber)
+    totalScore = @match.one.getMatchPointsByTeamNumber(@awayTeamNumber)
+    totalScore += @match.two.getMatchPointsByTeamNumber(@awayTeamNumber)
+    totalScore += @match.three.getMatchPointsByTeamNumber(@awayTeamNumber)
+    totalScore += @match.four.getMatchPointsByTeamNumber(@awayTeamNumber)
+    totalScore += @match.five.getMatchPointsByTeamNumber(@awayTeamNumber)
     totalScore
 
   setMatch: (matchData, matchNum) ->
