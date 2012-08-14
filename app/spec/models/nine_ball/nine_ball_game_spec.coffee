@@ -48,6 +48,9 @@ describe "Nine Ball Game", ->
       expect(playerOne.Score).toEqual 1
       game.hitDeadBall 1
       expect(game.PlayerOneDeadBalls.length).toEqual 0
+      
+    it "should return the correct score ratio based on the BallCount", ->
+      expect(getScoreRatio(1, 2)).toEqual .5
 
 
   describe "Innings", ->

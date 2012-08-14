@@ -15,6 +15,17 @@ describe "Eight Ball Match", ->
     )
     match.player.one.currentlyUp = true
     
+    match.completedGames = []
+    match.ended = false
+    match.originalId = 0
+    match.leagueMatchId = 0
+    match.playerNumberWinning = 0
+    match.playerOneWon = false
+    match.playerTwoWon = false
+    match.arePlayersSwitching = false
+    match.suddenDeath = false
+    match.forfeit = false
+    
     match.currentGame.numberOfInnings = 0
     match.currentGame.player.one.eightOnSnap = false
     match.currentGame.player.one.breakAndRun = false
@@ -24,8 +35,8 @@ describe "Eight Ball Match", ->
     match.currentGame.player.two.ballType = null
     match.currentGame.player.one.eightBall = []
     match.currentGame.player.two.eightBall = []
-    match.currentGame.player.one.hasWon = false
-    match.currentGame.player.two.hasWon = false
+    match.currentGame.playerOneWon = false
+    match.currentGame.playerTwoWon = false
     match.currentGame.ended = false
     match.currentGame.ballsHitIn.stripes = []
     match.currentGame.ballsHitIn.solids = []
@@ -64,7 +75,62 @@ describe "Eight Ball Match", ->
       expect(match.currentGame.ballsHitIn.solids).toEqual [1]
       match.scoreNumberedBall 12
       expect(match.currentGame.ballsHitIn.stripes).toEqual [12]
-
+      
+    it "should be able to get the total number of innings", ->
+      expect(match.getTotalInnings()).toEqual 0
+      match.shotMissed()
+      match.shotMissed()
+      match.shotMissed()
+      match.shotMissed()
+      expect(match.getTotalInnings()).toEqual 2
+      match.shotMissed()
+      match.shotMissed()
+      expect(match.getTotalInnings()).toEqual 3
+  
+    it "should be able to hold on to the originalId from the database", ->
+      expect(match.originalId).toEqual 0
+  
+    it "should be able to hold on to the leagueMatchId from the database", ->
+      expect(match.leagueMatchId).toEqual 0
+      
+    it "should be able to put match into sudden death mode", ->
+      expect(match.suddenDeath).toEqual false
+      expect(match.player.one.gamesNeededToWin).toEqual 2
+      expect(match.player.two.gamesNeededToWin).toEqual 7
+      match.setSuddenDeathMode()
+      expect(match.suddenDeath).toEqual true
+      expect(match.player.one.gamesNeededToWin).toEqual 1
+      expect(match.player.two.gamesNeededToWin).toEqual 1
+  
+    it "should be able to know the current game number", ->
+      expect(match.getCurrentGameNumber()).toEqual 1
+      match.scoreNumberedBall 1
+      match.scoreNumberedBall 2
+      match.scoreNumberedBall 3
+      match.scoreNumberedBall 4
+      match.scoreNumberedBall 5
+      match.scoreNumberedBall 6
+      match.scoreNumberedBall 7
+      match.scoreNumberedBall 8
+      match.startNewGame()
+      expect(match.getCurrentGameNumber()).toEqual 2
+  
+    it "should be able to get total number of safeties", ->
+      expect(match.getTotalSafeties()).toEqual "0 to 0"
+  
+    it "should be able to hit a safety", ->
+      expect(match.getTotalSafeties()).toEqual "0 to 0"
+      match.hitSafety()
+      expect(match.getTotalSafeties()).toEqual "1 to 0"
+      expect(match.player.one.safeties).toEqual 1
+      match.shotMissed()
+      match.hitSafety()
+      expect(match.getTotalSafeties()).toEqual "2 to 0"
+      expect(match.player.two.safeties).toEqual 0
+      match.hitSafety()
+      expect(match.getTotalSafeties()).toEqual "2 to 1"
+      expect(match.player.two.safeties).toEqual 1
+      
 
   describe "Match/Game Ending", ->
     it "should know when the match is completed", ->
@@ -79,7 +145,7 @@ describe "Eight Ball Match", ->
       match.scoreNumberedBall 8
       expect(match.getRemainingGamesNeededToWinByPlayer(1)).toEqual 1
       expect(match.currentGame.ended).toEqual true
-      expect(match.currentGame.player.one.hasWon).toEqual true
+      expect(match.currentGame.playerOneWon).toEqual true
       expect(match.ended).toEqual false
       match.startNewGame()
       match.scoreNumberedBall 1
@@ -116,8 +182,8 @@ describe "Eight Ball Match", ->
       match.scoreNumberedBall 6
       match.scoreNumberedBall 7
       match.scoreNumberedBall 8
-      match.currentGame.setBallTypeByPlayer(2, 'stripes')
-      expect(match.currentGame.player.two.hasWon).toEqual true
+      match.currentGame.setBallTypeByPlayer(2, 'solids')
+      expect(match.currentGame.playerTwoWon).toEqual true
       expect(match.getRemainingGamesNeededToWinByPlayer(2)).toEqual 6
 
     it "should add current game to the completedGames list and start a new Game when the game has completed", ->
@@ -140,6 +206,15 @@ describe "Eight Ball Match", ->
 
     it "should hold multiple completed games", ->
       expect(match.completedGames).toNotEqual null
+      
+    it "should be able to tell who won the entire match", ->
+      expect(match.playerOneWon).toEqual false
+      expect(match.playerTwoWon).toEqual false
+      match.scoreNumberedBall 8
+      match.startNewGame()
+      match.scoreNumberedBall 8
+      expect(match.getRemainingGamesNeededToWinByPlayer(1)).toEqual 0
+      expect(match.playerOneWon).toEqual true
 
 
   describe "Players", ->
@@ -217,130 +292,65 @@ describe "Eight Ball Match", ->
       match.startNewGame()
       match.scoreNumberedBall 1
       expect(match.getMatchPoints()).toEqual "0-1"
+      
+    it "should be able to get the winning player", ->
+      match.scoreNumberedBall 1
+      match.scoreNumberedBall 2
+      match.scoreNumberedBall 3
+      match.scoreNumberedBall 4
+      match.scoreNumberedBall 5
+      match.scoreNumberedBall 6
+      match.scoreNumberedBall 7
+      match.scoreNumberedBall 8
+      match.startNewGame()
+      expect(match.getWinningPlayer().name).toEqual "Player1"
+  
+    it "should be able to return the match points for player one", ->
+      expect(match.getMatchPointsByPlayer(1)).toEqual 0
+      match.scoreNumberedBall 8
+      expect(match.getMatchPointsByPlayer(1)).toEqual 1
+  
+    it "should be able to return the match points for player two", ->
+      expect(match.getMatchPointsByPlayer(2)).toEqual 0
+      match.shotMissed()
+      match.scoreNumberedBall 8
+      match.startNewGame()
+      match.scoreNumberedBall 8
+      match.startNewGame()
+      match.scoreNumberedBall 8
+      match.startNewGame()
+      match.scoreNumberedBall 8
+      match.startNewGame()
+      match.scoreNumberedBall 8
+      expect(match.getMatchPointsByPlayer(2)).toEqual 1
 
-
-  it "should be able to get the winning player", ->
-    match.scoreNumberedBall 1
-    match.scoreNumberedBall 2
-    match.scoreNumberedBall 3
-    match.scoreNumberedBall 4
-    match.scoreNumberedBall 5
-    match.scoreNumberedBall 6
-    match.scoreNumberedBall 7
-    match.scoreNumberedBall 8
-    match.startNewGame()
-    expect(match.getWinningPlayer().name).toEqual "Player1"
-
-  it "should be able to return playerones match points", ->
-    expect(match.getMatchPointsByPlayer(1)).toEqual 0
-    match.scoreNumberedBall 8
-    expect(match.getMatchPointsByPlayer(1)).toEqual 1
-
-  it "should be able to return playertwos match points", ->
-    expect(match.getMatchPointsByPlayer(2)).toEqual 0
-    match.shotMissed()
-    match.scoreNumberedBall 8
-    match.startNewGame()
-    match.scoreNumberedBall 8
-    match.startNewGame()
-    match.scoreNumberedBall 8
-    match.startNewGame()
-    match.scoreNumberedBall 8
-    match.startNewGame()
-    match.scoreNumberedBall 8
-    expect(match.getMatchPointsByPlayer(2)).toEqual 1
-
-  it "should be able to get the total number of innings", ->
-    expect(match.getTotalInnings()).toEqual 0
-    match.shotMissed()
-    match.shotMissed()
-    match.shotMissed()
-    match.shotMissed()
-    expect(match.getTotalInnings()).toEqual 2
-    match.shotMissed()
-    match.shotMissed()
-    expect(match.getTotalInnings()).toEqual 3
-
-  it "should be able to hold on to the originalId from the database", ->
-    expect(match.originalId).toEqual 0
-
-  it "should be able to hold on to the leagueMatchId from the database", ->
-    expect(match.leagueMatchId).toEqual 0
-
-  it "should be able to know when the last thing that happened was a player switch", ->
-    expect(match.ArePlayersSwitching).toEqual false
-    match.shotMissed()
-    expect(match.ArePlayersSwitching).toEqual true
-    match.scoreNumberedBall 1
-    expect(match.ArePlayersSwitching).toEqual false
-
-  it "should be able to put match into sudden death mode", ->
-    expect(match.suddenDeath).toEqual false
-    expect(match.player.one.gamesNeededToWin).toEqual 2
-    expect(match.player.two.gamesNeededToWin).toEqual 7
-    match.setSuddenDeathMode()
-    expect(match.suddenDeath).toEqual true
-    expect(match.player.one.gamesNeededToWin).toEqual 1
-    expect(match.player.two.gamesNeededToWin).toEqual 1
-
-  it "should switch players if eight ball is hit in without all other 7 balls", ->
-    match.shotMissed()
-    expect(match.player.two.currentlyUp).toEqual true
-    expect(match.player.one.currentlyUp).toEqual false
-    match.scoreNumberedBall 8
-    expect(match.player.one.currentlyUp).toEqual true
-    expect(match.player.two.currentlyUp).toEqual false
-
-  it "should be able to know the current game number", ->
-    expect(match.getCurrentGameNumber()).toEqual 1
-    match.scoreNumberedBall 1
-    match.scoreNumberedBall 2
-    match.scoreNumberedBall 3
-    match.scoreNumberedBall 4
-    match.scoreNumberedBall 5
-    match.scoreNumberedBall 6
-    match.scoreNumberedBall 7
-    match.scoreNumberedBall 8
-    match.startNewGame()
-    expect(match.getCurrentGameNumber()).toEqual 2
-
-  it "should be able to get total number of safeties", ->
-    expect(match.getTotalSafeties()).toEqual "0 to 0"
-
-  it "should be able to hit a safety", ->
-    expect(match.getTotalSafeties()).toEqual "0 to 0"
-    match.hitSafety()
-    expect(match.getTotalSafeties()).toEqual "1 to 0"
-    expect(match.player.one.safeties).toEqual 1
-    match.shotMissed()
-    match.hitSafety()
-    expect(match.getTotalSafeties()).toEqual "2 to 0"
-    expect(match.player.two.safeties).toEqual 0
-    match.hitSafety()
-    expect(match.getTotalSafeties()).toEqual "2 to 1"
-    expect(match.player.two.safeties).toEqual 1
-
-  it "should reset Timeouts taken for each player when a game has ended", ->
-    expect(match.currentGame.player.one.timeouts_taken).toEqual 0
-    expect(match.currentGame.player.two.timeouts_taken).toEqual 0
-    match.currentGame.takeTimeout()
-    expect(match.currentGame.player.one.timeouts_taken).toEqual 1
-    match.shotMissed()
-    match.currentGame.takeTimeout()
-    expect(match.currentGame.player.two.timeouts_taken).toEqual 1
-    match.scoreNumberedBall 8
-    match.startNewGame()
-    expect(match.currentGame.player.one.timeouts_taken).toEqual 0
-    expect(match.currentGame.player.two.timeouts_taken).toEqual 0
-
-  it "should be able to tell who won the entire match", ->
-    expect(match.player.one.hasWon).toEqual false
-    expect(match.player.two.hasWon).toEqual false
-    match.scoreNumberedBall 8
-    match.startNewGame()
-    match.scoreNumberedBall 8
-    expect(match.getRemainingGamesNeededToWinByPlayer(1)).toEqual "0"
-    expect(match.player.one.hasWon).toEqual true
+    it "should be able to know when the last thing that happened was a player switch", ->
+      expect(match.arePlayersSwitching).toEqual false
+      match.shotMissed()
+      expect(match.arePlayersSwitching).toEqual true
+      match.scoreNumberedBall 1
+      expect(match.arePlayersSwitching).toEqual false
+      
+    it "should switch players if eight ball is hit in without all other 7 balls", ->
+      match.shotMissed()
+      expect(match.player.two.currentlyUp).toEqual true
+      expect(match.player.one.currentlyUp).toEqual false
+      match.scoreNumberedBall 8
+      expect(match.player.one.currentlyUp).toEqual true
+      expect(match.player.two.currentlyUp).toEqual false
+      
+    it "should reset Timeouts taken for each player when a game has ended", ->
+      expect(match.currentGame.player.one.timeoutsTaken).toEqual 0
+      expect(match.currentGame.player.two.timeoutsTaken).toEqual 0
+      match.currentGame.takeTimeout()
+      expect(match.currentGame.player.one.timeoutsTaken).toEqual 1
+      match.shotMissed()
+      match.currentGame.takeTimeout()
+      expect(match.currentGame.player.two.timeoutsTaken).toEqual 1
+      match.scoreNumberedBall 8
+      match.startNewGame()
+      expect(match.currentGame.player.one.timeoutsTaken).toEqual 0
+      expect(match.currentGame.player.two.timeoutsTaken).toEqual 0
 
   describe "toJSON/fromJSON", ->
     it "should be able to take a new Match and turn it into a JSON object", ->
@@ -373,8 +383,8 @@ describe "Eight Ball Match", ->
         playerOneWon: 0
         playerTwoWon: 0
         currentGame:
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
+          playerOneTimeoutsTaken: 0
+          playerTwoTimeoutsTaken: 0
           playerOneEightOnSnap: false
           playerOneBreakAndRun: false
           playerTwoEightOnSnap: false
@@ -395,227 +405,7 @@ describe "Eight Ball Match", ->
           onBreak: true
           ended: false
     
-        completedGames: [
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: []
-          playerOneWon: false
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: true
-          stripedBallsHitIn: []
-          solidBallsHitIn: []
-          lastBallHitIn: 8
-          onBreak: true
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: []
-          playerOneWon: false
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: true
-          stripedBallsHitIn: []
-          solidBallsHitIn: []
-          lastBallHitIn: 8
-          onBreak: true
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: []
-          playerOneWon: false
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: false
-          stripedBallsHitIn: []
-          solidBallsHitIn: []
-          lastBallHitIn: 8
-          onBreak: false
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: []
-          playerOneWon: false
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: false
-          stripedBallsHitIn: []
-          solidBallsHitIn: []
-          lastBallHitIn: 8
-          onBreak: false
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: []
-          playerOneWon: false
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: true
-          stripedBallsHitIn: []
-          solidBallsHitIn: []
-          lastBallHitIn: 7
-          onBreak: true
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: []
-          playerOneWon: false
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: true
-          stripedBallsHitIn: []
-          solidBallsHitIn: []
-          lastBallHitIn: 8
-          onBreak: true
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: []
-          playerOneWon: false
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: true
-          scratchOnEight: false
-          breakingPlayerStillShooting: false
-          stripedBallsHitIn: []
-          solidBallsHitIn: []
-          lastBallHitIn: 8
-          onBreak: false
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: []
-          playerOneWon: false
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: true
-          stripedBallsHitIn: []
-          solidBallsHitIn: []
-          lastBallHitIn: 8
-          onBreak: true
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: []
-          playerOneWon: false
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: true
-          scratchOnEight: false
-          breakingPlayerStillShooting: false
-          stripedBallsHitIn: []
-          solidBallsHitIn: []
-          lastBallHitIn: 8
-          onBreak: false
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: []
-          playerOneWon: false
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: true
-          stripedBallsHitIn: []
-          solidBallsHitIn: []
-          lastBallHitIn: 8
-          onBreak: true
-          ended: true
-        ]
+        completedGames: []
         suddenDeath: false
         forfeit: false
         ended: false
@@ -655,11 +445,11 @@ describe "Eight Ball Match", ->
             breakAndRuns: 0
             currentlyUp: false
     
-        playerOneWon: 12
+        playerOneWon: 1
         playerTwoWon: 0
         currentGame:
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
+          playerOneTimeoutsTaken: 0
+          playerTwoTimeoutsTaken: 0
           playerOneEightOnSnap: false
           playerOneBreakAndRun: false
           playerTwoEightOnSnap: false
@@ -668,7 +458,7 @@ describe "Eight Ball Match", ->
           playerTwoBallType: null
           playerOneEightBall: []
           playerTwoEightBall: [8]
-          playerOneWon: true
+          playerOneWon: false
           playerTwoWon: false
           numberOfInnings: 0
           earlyEight: false
@@ -681,228 +471,8 @@ describe "Eight Ball Match", ->
           ended: false
     
         completedGames: [
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: [8]
-          playerOneWon: true
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: true
-          stripedBallsHitIn: [12]
-          solidBallsHitIn: [1]
-          lastBallHitIn: 8
-          onBreak: true
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: [8]
-          playerOneWon: true
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: true
-          stripedBallsHitIn: [12]
-          solidBallsHitIn: [1]
-          lastBallHitIn: 8
-          onBreak: true
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: [8]
-          playerOneWon: true
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: false
-          stripedBallsHitIn: [12]
-          solidBallsHitIn: [1]
-          lastBallHitIn: 8
-          onBreak: false
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: [8]
-          playerOneWon: true
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: false
-          stripedBallsHitIn: [12]
-          solidBallsHitIn: [1]
-          lastBallHitIn: 8
-          onBreak: false
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: [8]
-          playerOneWon: true
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: true
-          stripedBallsHitIn: [12]
-          solidBallsHitIn: [1]
-          lastBallHitIn: 7
-          onBreak: true
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: [8]
-          playerOneWon: true
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: true
-          stripedBallsHitIn: [12]
-          solidBallsHitIn: [1]
-          lastBallHitIn: 8
-          onBreak: true
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: [8]
-          playerOneWon: true
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: true
-          scratchOnEight: false
-          breakingPlayerStillShooting: false
-          stripedBallsHitIn: [12]
-          solidBallsHitIn: [1]
-          lastBallHitIn: 8
-          onBreak: false
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: [8]
-          playerOneWon: true
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: true
-          stripedBallsHitIn: [12]
-          solidBallsHitIn: [1]
-          lastBallHitIn: 8
-          onBreak: true
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: [8]
-          playerOneWon: true
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: true
-          scratchOnEight: false
-          breakingPlayerStillShooting: false
-          stripedBallsHitIn: [12]
-          solidBallsHitIn: [1]
-          lastBallHitIn: 8
-          onBreak: false
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
-          playerOneEightOnSnap: false
-          playerOneBreakAndRun: false
-          playerTwoEightOnSnap: false
-          playerTwoBreakAndRun: false
-          playerOneBallType: null
-          playerTwoBallType: null
-          playerOneEightBall: []
-          playerTwoEightBall: [8]
-          playerOneWon: true
-          playerTwoWon: false
-          numberOfInnings: 0
-          earlyEight: false
-          scratchOnEight: false
-          breakingPlayerStillShooting: true
-          stripedBallsHitIn: [12]
-          solidBallsHitIn: [1]
-          lastBallHitIn: 8
-          onBreak: true
-          ended: true
-        ,
-          playerOneTimeoutsTaken: 1
-          playerTwoTimeoutsTaken: 1
+          playerOneTimeoutsTaken: 0
+          playerTwoTimeoutsTaken: 0
           playerOneEightOnSnap: false
           playerOneBreakAndRun: false
           playerTwoEightOnSnap: false
@@ -938,250 +508,8 @@ describe "Eight Ball Match", ->
       match.scoreNumberedBall 8
       match.startNewGame()
       expect(match.completedGamesToJSON()).toEqual [
-        playerOneTimeoutsTaken: 1
-        playerTwoTimeoutsTaken: 1
-        playerOneEightOnSnap: false
-        playerOneBreakAndRun: false
-        playerTwoEightOnSnap: false
-        playerTwoBreakAndRun: false
-        playerOneBallType: null
-        playerTwoBallType: null
-        playerOneEightBall: []
-        playerTwoEightBall: [8]
-        playerOneWon: true
-        playerTwoWon: false
-        numberOfInnings: 0
-        earlyEight: false
-        scratchOnEight: false
-        breakingPlayerStillShooting: true
-        stripedBallsHitIn: [15]
-        solidBallsHitIn: [1]
-        lastBallHitIn: 8
-        onBreak: true
-        ended: true
-      ,
-        playerOneTimeoutsTaken: 1
-        playerTwoTimeoutsTaken: 1
-        playerOneEightOnSnap: false
-        playerOneBreakAndRun: false
-        playerTwoEightOnSnap: false
-        playerTwoBreakAndRun: false
-        playerOneBallType: null
-        playerTwoBallType: null
-        playerOneEightBall: []
-        playerTwoEightBall: [8]
-        playerOneWon: true
-        playerTwoWon: false
-        numberOfInnings: 0
-        earlyEight: false
-        scratchOnEight: false
-        breakingPlayerStillShooting: true
-        stripedBallsHitIn: [15]
-        solidBallsHitIn: [1]
-        lastBallHitIn: 8
-        onBreak: true
-        ended: true
-      ,
-        playerOneTimeoutsTaken: 1
-        playerTwoTimeoutsTaken: 1
-        playerOneEightOnSnap: false
-        playerOneBreakAndRun: false
-        playerTwoEightOnSnap: false
-        playerTwoBreakAndRun: false
-        playerOneBallType: null
-        playerTwoBallType: null
-        playerOneEightBall: []
-        playerTwoEightBall: [8]
-        playerOneWon: true
-        playerTwoWon: false
-        numberOfInnings: 0
-        earlyEight: false
-        scratchOnEight: false
-        breakingPlayerStillShooting: false
-        stripedBallsHitIn: [15]
-        solidBallsHitIn: [1]
-        lastBallHitIn: 8
-        onBreak: false
-        ended: true
-      ,
-        playerOneTimeoutsTaken: 1
-        playerTwoTimeoutsTaken: 1
-        playerOneEightOnSnap: false
-        playerOneBreakAndRun: false
-        playerTwoEightOnSnap: false
-        playerTwoBreakAndRun: false
-        playerOneBallType: null
-        playerTwoBallType: null
-        playerOneEightBall: []
-        playerTwoEightBall: [8]
-        playerOneWon: true
-        playerTwoWon: false
-        numberOfInnings: 0
-        earlyEight: false
-        scratchOnEight: false
-        breakingPlayerStillShooting: false
-        stripedBallsHitIn: [15]
-        solidBallsHitIn: [1]
-        lastBallHitIn: 8
-        onBreak: false
-        ended: true
-      ,
-        playerOneTimeoutsTaken: 1
-        playerTwoTimeoutsTaken: 1
-        playerOneEightOnSnap: false
-        playerOneBreakAndRun: false
-        playerTwoEightOnSnap: false
-        playerTwoBreakAndRun: false
-        playerOneBallType: null
-        playerTwoBallType: null
-        playerOneEightBall: []
-        playerTwoEightBall: [8]
-        playerOneWon: true
-        playerTwoWon: false
-        numberOfInnings: 0
-        earlyEight: false
-        scratchOnEight: false
-        breakingPlayerStillShooting: true
-        stripedBallsHitIn: [15]
-        solidBallsHitIn: [1]
-        lastBallHitIn: 7
-        onBreak: true
-        ended: true
-      ,
-        playerOneTimeoutsTaken: 1
-        playerTwoTimeoutsTaken: 1
-        playerOneEightOnSnap: false
-        playerOneBreakAndRun: false
-        playerTwoEightOnSnap: false
-        playerTwoBreakAndRun: false
-        playerOneBallType: null
-        playerTwoBallType: null
-        playerOneEightBall: []
-        playerTwoEightBall: [8]
-        playerOneWon: true
-        playerTwoWon: false
-        numberOfInnings: 0
-        earlyEight: false
-        scratchOnEight: false
-        breakingPlayerStillShooting: true
-        stripedBallsHitIn: [15]
-        solidBallsHitIn: [1]
-        lastBallHitIn: 8
-        onBreak: true
-        ended: true
-      ,
-        playerOneTimeoutsTaken: 1
-        playerTwoTimeoutsTaken: 1
-        playerOneEightOnSnap: false
-        playerOneBreakAndRun: false
-        playerTwoEightOnSnap: false
-        playerTwoBreakAndRun: false
-        playerOneBallType: null
-        playerTwoBallType: null
-        playerOneEightBall: []
-        playerTwoEightBall: [8]
-        playerOneWon: true
-        playerTwoWon: false
-        numberOfInnings: 0
-        earlyEight: true
-        scratchOnEight: false
-        breakingPlayerStillShooting: false
-        stripedBallsHitIn: [15]
-        solidBallsHitIn: [1]
-        lastBallHitIn: 8
-        onBreak: false
-        ended: true
-      ,
-        playerOneTimeoutsTaken: 1
-        playerTwoTimeoutsTaken: 1
-        playerOneEightOnSnap: false
-        playerOneBreakAndRun: false
-        playerTwoEightOnSnap: false
-        playerTwoBreakAndRun: false
-        playerOneBallType: null
-        playerTwoBallType: null
-        playerOneEightBall: []
-        playerTwoEightBall: [8]
-        playerOneWon: true
-        playerTwoWon: false
-        numberOfInnings: 0
-        earlyEight: false
-        scratchOnEight: false
-        breakingPlayerStillShooting: true
-        stripedBallsHitIn: [15]
-        solidBallsHitIn: [1]
-        lastBallHitIn: 8
-        onBreak: true
-        ended: true
-      ,
-        playerOneTimeoutsTaken: 1
-        playerTwoTimeoutsTaken: 1
-        playerOneEightOnSnap: false
-        playerOneBreakAndRun: false
-        playerTwoEightOnSnap: false
-        playerTwoBreakAndRun: false
-        playerOneBallType: null
-        playerTwoBallType: null
-        playerOneEightBall: []
-        playerTwoEightBall: [8]
-        playerOneWon: true
-        playerTwoWon: false
-        numberOfInnings: 0
-        earlyEight: true
-        scratchOnEight: false
-        breakingPlayerStillShooting: false
-        stripedBallsHitIn: [15]
-        solidBallsHitIn: [1]
-        lastBallHitIn: 8
-        onBreak: false
-        ended: true
-      ,
-        playerOneTimeoutsTaken: 1
-        playerTwoTimeoutsTaken: 1
-        playerOneEightOnSnap: false
-        playerOneBreakAndRun: false
-        playerTwoEightOnSnap: false
-        playerTwoBreakAndRun: false
-        playerOneBallType: null
-        playerTwoBallType: null
-        playerOneEightBall: []
-        playerTwoEightBall: [8]
-        playerOneWon: true
-        playerTwoWon: false
-        numberOfInnings: 0
-        earlyEight: false
-        scratchOnEight: false
-        breakingPlayerStillShooting: true
-        stripedBallsHitIn: [15]
-        solidBallsHitIn: [1]
-        lastBallHitIn: 8
-        onBreak: true
-        ended: true
-      ,
-        playerOneTimeoutsTaken: 1
-        playerTwoTimeoutsTaken: 1
-        playerOneEightOnSnap: false
-        playerOneBreakAndRun: false
-        playerTwoEightOnSnap: false
-        playerTwoBreakAndRun: false
-        playerOneBallType: null
-        playerTwoBallType: null
-        playerOneEightBall: []
-        playerTwoEightBall: [8]
-        playerOneWon: true
-        playerTwoWon: false
-        numberOfInnings: 0
-        earlyEight: true
-        scratchOnEight: false
-        breakingPlayerStillShooting: false
-        stripedBallsHitIn: [15]
-        solidBallsHitIn: [1]
-        lastBallHitIn: 8
-        onBreak: false
-        ended: true
-      ,
-        playerOneTimeoutsTaken: 1
-        playerTwoTimeoutsTaken: 1
+        playerOneTimeoutsTaken: 0
+        playerTwoTimeoutsTaken: 0
         playerOneEightOnSnap: false
         playerOneBreakAndRun: false
         playerTwoEightOnSnap: false
@@ -1339,7 +667,7 @@ describe "Eight Ball Match", ->
       expect(match.player.two.name).toEqual "Player2"
       expect(match.currentGame.breakingPlayerStillShooting).toEqual true
       expect(match.completedGames[0].breakingPlayerStillShooting).toEqual false
-      expect(match.completedGames[0].player.one.hasWon).toEqual true
+      expect(match.completedGames[0].playerOneWon).toEqual true
       expect(match.player.one.getGamesNeededToWin()).toEqual "2"
 
     it "should be able to take a completedGames JSON array and convert it to JS Array with Objects", ->
@@ -1366,4 +694,4 @@ describe "Eight Ball Match", ->
       ])
       
       expect(completedGames[0].getBallsHitInByPlayer(1)).toEqual [1]
-      expect(completedGames[0].player.one.hasWon).toEqual true
+      expect(completedGames[0].playerOneWon).toEqual true

@@ -45,8 +45,8 @@
       game.player.two.ballType = null;
       game.player.one.eightBall = [];
       game.player.two.eightBall = [];
-      game.playerOneWon = false;
-      game.playerTwoWon = false;
+      game.player.one.hasWon = false;
+      game.player.two.hasWon = false;
       game.ended = false;
       game.ballsHitIn.stripes = [];
       game.ballsHitIn.solids = [];
@@ -98,7 +98,7 @@
         game.scoreBall(1);
         expect(game.getBallsHitIn().length).toEqual(1);
         game.scoreBall(1);
-        return expect(game.getBallsHitIn().length).toEqual(2);
+        return expect(game.getBallsHitIn().length).toEqual(1);
       });
       it("should be able to get the number of balls types each player has hit in", function() {
         game.scoreBall(1);
@@ -113,7 +113,7 @@
         game.hitScratchOnEight();
         expect(game.scratchOnEight).toEqual(true);
         expect(game.ended).toEqual(true);
-        expect(game.playerTwoWon).toEqual(true);
+        expect(game.player.two.hasWon).toEqual(true);
         return expect(player.two.currentlyUp).toEqual(true);
       });
       it("should be able to keep track if player one had 8 on snap", function() {
@@ -277,20 +277,20 @@
         game.scoreBall(2);
         game.scoreBall(3);
         game.scoreBall(4);
-        expect(game.playerOneWon).toEqual(false);
+        expect(game.player.one.hasWon).toEqual(false);
         game.scoreBall(5);
         game.scoreBall(6);
         game.scoreBall(7);
         game.scoreBall(8);
         expect(game.getBallsHitInByPlayer(1).indexOf(8) >= 0).toEqual(true);
-        return expect(game.playerOneWon).toEqual(true);
+        return expect(game.player.one.hasWon).toEqual(true);
       });
       it("should be able to find out if there is a winner if player two wins and set that player to won", function() {
         game.scoreBall(1);
         game.breakIsOver();
         game.nextPlayerIsUp();
         game.checkForWinner();
-        expect(game.playerOneWon).toEqual(false);
+        expect(game.player.one.hasWon).toEqual(false);
         game.scoreBall(9);
         game.scoreBall(10);
         game.scoreBall(11);
@@ -299,7 +299,7 @@
         game.scoreBall(14);
         game.scoreBall(15);
         game.scoreBall(8);
-        return expect(game.playerTwoWon).toEqual(true);
+        return expect(game.player.two.hasWon).toEqual(true);
       });
       it("should be able to find out if there is a winner after ball type has been selected and set that player to won", function() {
         game.scoreBall(1);
@@ -307,7 +307,7 @@
         game.breakIsOver();
         game.nextPlayerIsUp();
         game.checkForWinner();
-        expect(game.playerOneWon).toEqual(false);
+        expect(game.player.one.hasWon).toEqual(false);
         game.scoreBall(9);
         game.setBallTypeByPlayer(2, 'solids');
         game.scoreBall(11);
@@ -316,7 +316,7 @@
         game.scoreBall(14);
         game.scoreBall(15);
         game.scoreBall(8);
-        return expect(game.playerOneWon).toEqual(true);
+        return expect(game.player.one.hasWon).toEqual(true);
       });
       it("should be able to return a list of all balls that have been hit in", function() {
         game.scoreBall(1);
@@ -426,21 +426,21 @@
       });
       it("should be able to make a player win and add one to games won", function() {
         game.setPlayerWon(1);
-        expect(game.playerOneWon).toEqual(true);
-        expect(game.playerTwoWon).toEqual(false);
+        expect(game.player.one.hasWon).toEqual(true);
+        expect(game.player.two.hasWon).toEqual(false);
         expect(game.player.one.callback().gamesWon).toEqual(1);
         expect(game.player.two.callback().gamesWon).toEqual(0);
         game.setPlayerWon(2);
-        expect(game.playerOneWon).toEqual(true);
-        expect(game.playerTwoWon).toEqual(true);
+        expect(game.player.one.hasWon).toEqual(true);
+        expect(game.player.two.hasWon).toEqual(true);
         expect(game.player.one.callback().gamesWon).toEqual(1);
         return expect(game.player.two.callback().gamesWon).toEqual(1);
       });
       it("should end the game and give currently player up the win if they pocket the 8 ball on break", function() {
-        expect(game.playerOneWon).toEqual(false);
+        expect(game.player.one.hasWon).toEqual(false);
         game.scoreBall(8);
-        expect(game.playerOneWon).toEqual(true);
-        return expect(game.playerTwoWon).toEqual(false);
+        expect(game.player.one.hasWon).toEqual(true);
+        return expect(game.player.two.hasWon).toEqual(false);
       });
       it("should know the match has completed when the 8 his hit in", function() {
         expect(game.ended).toEqual(false);
@@ -455,7 +455,7 @@
         game.scoreBall(8);
         expect(game.player.two.eightBall).toEqual([8]);
         expect(game.ended).toEqual(true);
-        return expect(game.playerOneWon).toEqual(true);
+        return expect(game.player.one.hasWon).toEqual(true);
       });
     });
     describe("Player Timeouts", function() {
@@ -502,27 +502,27 @@
     return describe("toJSON/fromJSON", function() {
       it("should be able to take a new Game and turn it into a JSON object", function() {
         return expect(game.toJSON()).toEqual({
-          playerOneTimeoutsTaken: 0,
-          playerTwoTimeoutsTaken: 0,
-          playerOneEightOnSnap: false,
-          playerOneBreakAndRun: false,
-          playerTwoEightOnSnap: false,
-          playerTwoBreakAndRun: false,
-          playerOneBallType: null,
-          playerTwoBallType: null,
-          playerOneEightBall: [],
-          playerTwoEightBall: [],
-          playerOneWon: false,
-          playerTwoWon: false,
-          numberOfInnings: 0,
-          earlyEight: false,
-          scratchOnEight: false,
           breakingPlayerStillShooting: true,
-          stripedBallsHitIn: [],
-          solidBallsHitIn: [],
+          earlyEight: false,
+          ended: false,
           lastBallHitIn: null,
+          numberOfInnings: 0,
           onBreak: true,
-          ended: false
+          playerOneBallType: null,
+          playerOneBreakAndRun: false,
+          playerOneEightBall: [],
+          playerOneEightOnSnap: false,
+          playerOneTimeoutsTaken: 2,
+          playerOneWon: false,
+          playerTwoBallType: null,
+          playerTwoBreakAndRun: false,
+          playerTwoEightBall: [],
+          playerTwoEightOnSnap: false,
+          playerTwoTimeoutsTaken: 0,
+          playerTwoWon: false,
+          scratchOnEight: false,
+          solidBallsHitIn: [],
+          stripedBallsHitIn: []
         });
       });
       it("should be able to take a filled up Game and turn it into a JSON object", function() {
@@ -535,8 +535,8 @@
         game.player.two.ballType = 2;
         game.player.one.eightBall = [];
         game.player.two.eightBall = [8];
-        game.playerOneWon = true;
-        game.playerTwoWon = false;
+        game.player.one.hasWon = true;
+        game.player.two.hasWon = false;
         game.ended = true;
         game.ballsHitIn.stripes = [1, 2];
         game.ballsHitIn.solids = [9, 10];
@@ -546,27 +546,27 @@
         game.player.one.callback().currentlyUp = true;
         game.takeTimeout();
         return expect(game.toJSON()).toEqual({
-          playerOneTimeoutsTaken: 1,
-          playerTwoTimeoutsTaken: 0,
-          playerOneEightOnSnap: true,
-          playerOneBreakAndRun: false,
-          playerTwoEightOnSnap: true,
-          playerTwoBreakAndRun: true,
-          playerOneBallType: 1,
-          playerTwoBallType: 2,
-          playerOneEightBall: [],
-          playerTwoEightBall: [8],
-          playerOneWon: true,
-          playerTwoWon: false,
-          numberOfInnings: 2,
-          earlyEight: false,
-          scratchOnEight: false,
           breakingPlayerStillShooting: false,
-          stripedBallsHitIn: [1, 2],
-          solidBallsHitIn: [9, 10],
+          earlyEight: false,
+          ended: true,
           lastBallHitIn: 1,
+          numberOfInnings: 2,
           onBreak: false,
-          ended: true
+          playerOneBallType: 1,
+          playerOneBreakAndRun: false,
+          playerOneEightBall: [],
+          playerOneEightOnSnap: true,
+          playerOneTimeoutsTaken: 2,
+          playerOneWon: true,
+          playerTwoBallType: 2,
+          playerTwoBreakAndRun: true,
+          playerTwoEightBall: [8],
+          playerTwoEightOnSnap: true,
+          playerTwoTimeoutsTaken: 0,
+          playerTwoWon: false,
+          scratchOnEight: false,
+          solidBallsHitIn: [9, 10],
+          stripedBallsHitIn: [1, 2]
         });
       });
       return it("should be able to take a Game JSON and fill a Game object with it", function() {
@@ -604,8 +604,8 @@
         expect(game.player.two.ballType).toEqual(2);
         expect(game.player.one.eightBall).toEqual([]);
         expect(game.player.two.eightBall).toEqual([8]);
-        expect(game.playerOneWon).toEqual(true);
-        expect(game.playerTwoWon).toEqual(false);
+        expect(game.player.one.hasWon).toEqual(true);
+        expect(game.player.two.hasWon).toEqual(false);
         expect(game.ended).toEqual(true);
         expect(game.ballsHitIn.stripes).toEqual([2]);
         expect(game.ballsHitIn.solids).toEqual([10]);

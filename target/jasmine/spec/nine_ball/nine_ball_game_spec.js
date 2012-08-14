@@ -43,7 +43,7 @@
         game.scoreBall(2);
         return expect(playerTwo.Score).toEqual(1);
       });
-      it("should only allow each ball to be scored/deadball one time", function() {
+      return it("should only allow each ball to be scored/deadball one time", function() {
         expect(playerOne.Score).toEqual(0);
         game.scoreBall(1);
         expect(playerOne.Score).toEqual(1);
@@ -51,9 +51,6 @@
         expect(playerOne.Score).toEqual(1);
         game.hitDeadBall(1);
         return expect(game.PlayerOneDeadBalls.length).toEqual(0);
-      });
-      return it("should return the correct score ratio based on the BallCount", function() {
-        return expect(getScoreRatio(1, 2)).toEqual(.5);
       });
     });
     describe("Innings", function() {

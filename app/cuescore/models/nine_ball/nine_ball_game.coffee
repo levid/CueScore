@@ -46,6 +46,9 @@ class Game extends $CS.Models.NineBall
       else
         @PlayerTwoDeadBalls.push ballNumber
       @checkIfAllBallsAreHitIn()
+      
+  getScoreRatio = (playerScore, playerBallCount) ->
+    playerScore / playerBallCount
 
   checkIfAllBallsAreHitIn: ->
     allBallsHitIn = @getBallsHitIn()

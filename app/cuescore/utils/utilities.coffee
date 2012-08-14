@@ -11,9 +11,6 @@ class Utilities
       return true  if this[i] is search
       i++
     false
-
-  getScoreRatio = (playerScore, playerBallCount) ->
-    playerScore / playerBallCount
     
   getPlatformWidth: ->
     Ti.Platform.displayCaps.platformWidth

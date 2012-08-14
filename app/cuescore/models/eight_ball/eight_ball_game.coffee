@@ -14,6 +14,8 @@ class Game extends $CS.Models.EightBall
     breakingPlayerStillShooting: true
     scratchOnEight: false
     earlyEight: false
+    playerOneWon: false
+    playerTwoWon: false
     player:
       one:
         eightBall: []
@@ -22,7 +24,6 @@ class Game extends $CS.Models.EightBall
         timeoutsTaken: 0
         callback: ->
         ballType: null
-        hasWon: false
       two:
         eightBall: []
         eightOnSnap: false
@@ -30,7 +31,6 @@ class Game extends $CS.Models.EightBall
         timeoutsTaken: 0
         callback: ->
         ballType: null
-        hasWon: false
 
   constructor: (options) ->
     _.extend @, @defaults
@@ -39,8 +39,8 @@ class Game extends $CS.Models.EightBall
     @player.two.callback  = options.addToPlayerTwo
     @matchEndedCallback = options.callback
     
-    @player.one.callback().timeoutsTaken = 0;
-    @player.two.callback().timeoutsTaken = 0;
+    @player.one.timeoutsTaken = 0;
+    @player.two.timeoutsTaken = 0;
 
   # Getters
   
@@ -49,9 +49,9 @@ class Game extends $CS.Models.EightBall
     @player.two.callback()
     
   getWinningPlayer: ->
-    if @player.one.hasWon is true
+    if @playerOneWon is true
       return @player.one
-    else if @player.two.hasWon is true
+    else if @playerTwoWon is true
       return @player.two
   
   getWinningPlayerName: ->
@@ -82,15 +82,18 @@ class Game extends $CS.Models.EightBall
       return (@player.one.callback().timeouts_allowed - @player.one.timeoutsTaken)
     else
       return (@player.two.callback().timeouts_allowed - @player.two.timeoutsTaken)
+      
+  getScoreRatio = (playerScore, playerBallCount) ->
+    playerScore / playerBallCount
     
   # Setters
   
   setPlayerWon: (playerNum) ->
     if playerNum == 1
-      @player.one.hasWon = true
+      @playerOneWon = true
       @player.one.callback().gamesWon += 1
     else if playerNum == 2
-      @player.two.hasWon = true
+      @playerTwoWon = true
       @player.two.callback().gamesWon += 1
       
   setEightOnSnapByPlayer: (playerNum) ->
@@ -110,19 +113,19 @@ class Game extends $CS.Models.EightBall
       @player.two.breakAndRun = true
 
   setBallTypeByPlayer: (playerNum, type) ->
-    if playerNum == 1 && type == "stripes"
+    if playerNum is 1 and type is "stripes"
       @player.one.ballType = @stripes
       @player.two.ballType = @solids
       @checkForWinner()
-    else if playerNum == 2 && type == "stripes"
+    else if playerNum is 2 and type is "stripes"
       @player.two.ballType = @stripes
       @player.one.ballType = @solids
       @checkForWinner()
-    else if playerNum == 1 && type == "solids"
+    else if playerNum is 1 && type is "solids"
       @player.one.ballType = @solids
       @player.two.ballType = @stripes
       @checkForWinner()
-    else if playerNum == 2 && type == "solids"
+    else if playerNum is 2 && type is "solids"
       @player.two.ballType = @solids
       @player.one.ballType = @stripes
       @checkForWinner()
@@ -138,11 +141,11 @@ class Game extends $CS.Models.EightBall
     @ended = true
     
     if @player.one.callback().currentlyUp is true
-      @player.two.hasWon = true
+      @playerTwoWon = true
       @player.one.callback().currentlyUp = false
       @player.two.callback().currentlyUp = true
     else
-      @player.one.hasWon = true
+      @playerOneWon = true
       @player.two.callback().currentlyUp = false
       @player.one.callback().currentlyUp = true
       
@@ -168,7 +171,7 @@ class Game extends $CS.Models.EightBall
     @ended = true
     
   scoreBall: (ballNumber) ->
-    unless @getBallsHitIn().indexOf(ballNumber) >= 0
+    unless @getBallsHitIn().indexOf(ballNumber) > 0
       @lastBallHitIn = ballNumber
       
       if ballNumber > 0 and ballNumber < 8
@@ -299,8 +302,8 @@ class Game extends $CS.Models.EightBall
     playerTwoBallType:              @player.two.ballType
     playerOneEightBall:             @player.one.eightBall
     playerTwoEightBall:             @player.two.eightBall
-    playerOneWon:                   @player.one.hasWon
-    playerTwoWon:                   @player.two.hasWon
+    playerOneWon:                   @playerOneWon
+    playerTwoWon:                   @playerTwoWon
     numberOfInnings:                @numberOfInnings
     earlyEight:                     @earlyEight
     scratchOnEight:                 @scratchOnEight
@@ -322,8 +325,8 @@ class Game extends $CS.Models.EightBall
     @player.two.ballType            = gameJSON.playerTwoBallType
     @player.one.eightBall           = gameJSON.playerOneEightBall
     @player.two.eightBall           = gameJSON.playerTwoEightBall
-    @player.one.hasWon              = gameJSON.playerOneWon
-    @player.two.hasWon              = gameJSON.playerTwoWon
+    @playerOneWon                   = gameJSON.playerOneWon
+    @playerTwoWon                    = gameJSON.playerTwoWon
     @numberOfInnings                = gameJSON.numberOfInnings
     @breakingPlayerStillShooting    = gameJSON.breakingPlayerStillShooting
     @ballsHitIn.solids              = gameJSON.solidBallsHitIn

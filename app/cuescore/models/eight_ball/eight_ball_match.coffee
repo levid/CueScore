@@ -74,7 +74,7 @@ class Match extends $CS.Models.EightBall
       while i <= (@completedGames.length - 1)
         totalInnings += @completedGames[i].numberOfInnings
         i++
-    totalInnings.toString()
+    totalInnings
     
   getTotalSafeties: ->
     @player.one.getSafeties() + " to " + @player.two.getSafeties()
@@ -89,8 +89,10 @@ class Match extends $CS.Models.EightBall
     0
     
   getWinningPlayer: ->
-    return @player.one if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) > (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
-    @player.two
+    if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) > (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
+      return @player.one
+    else
+      return @player.two
     
   getRemainingGamesNeededToWinByPlayer: (playerNum) ->
     if playerNum == 1
@@ -101,28 +103,34 @@ class Match extends $CS.Models.EightBall
   getGamesWonByPlayer: (playerNum) ->
     i = 0
     if playerNum == 1
-      gamesWon = (if (@currentGame.player.one.hasWon is true) then 1 else 0)
+      gamesWon = (if (@currentGame.playerOneWon is true) then 1 else 0)
       while i <= (@completedGames.length - 1)
-        gamesWon = gamesWon + 1  if @completedGames[i].player.one.hasWon is true
+        gamesWon = gamesWon + 1  if @completedGames[i].playerOneWon is true
         i++
     else if playerNum == 2
-      gamesWon = (if (@currentGame.player.two.hasWon is true) then 1 else 0)
+      gamesWon = (if (@currentGame.playerTwoWon is true) then 1 else 0)
       while i <= (@completedGames.length - 1)
-        gamesWon = gamesWon + 1  if @completedGames[i].player.two.hasWon is true
+        gamesWon = gamesWon + 1  if @completedGames[i].playerTwoWon is true
         i++
     gamesWon
     
   getMatchPointsByPlayer: (playerNum) ->
-    if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) > (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
-      return 1 
-    else
-      return 0
+    if playerNum is 1
+      if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) > (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
+        return 1 
+      else
+        return 0
+     else if playerNum is 2
+      if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) < (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
+        return 1 
+      else
+        return 0
     
   getMatchPoints: ->
     if @getMatchPointsByPlayer(1) is @getMatchPointsByPlayer(2)
       return "TIE"
     else
-      @getMatchPointsByPlayer(1) + "-" + @getMatchPointsByPlayer(2)
+      return @getMatchPointsByPlayer(1) + "-" + @getMatchPointsByPlayer(2)
     
   # Setters
   
@@ -130,7 +138,6 @@ class Match extends $CS.Models.EightBall
     @suddenDeath = true
     @player.one.gamesNeededToWin = 1
     @player.two.gamesNeededToWin = 1
-  
   
   # Methods
   
@@ -169,11 +176,15 @@ class Match extends $CS.Models.EightBall
 
   isPlayerWinning: (playerNum) ->
     if playerNum == 1
-      return true  if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) > (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
-      false
+      if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) > (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
+        return true
+      else
+        return false
     else if playerNum == 2
-      return true  if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) < (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
-      false
+      if (@getGamesWonByPlayer(1) / @player.one.gamesNeededToWin) < (@getGamesWonByPlayer(2) / @player.two.gamesNeededToWin)
+        return true
+      else
+        return false
       
   # JSON Data
   
