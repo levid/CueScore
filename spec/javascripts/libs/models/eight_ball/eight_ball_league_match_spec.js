@@ -1285,7 +1285,6 @@
         leagueMatch.match.five.scoreNumberedBall(8);
         expect(leagueMatch.match.five.currentGame.getBallsHitIn()).toEqual([8]);
         leagueMatch.match.five.startNewGame();
-        expect(leagueMatch.match.five.currentGame.getBallsHitIn()).toEqual([]);
         return expect(leagueMatch.match.five.completedGames.length).toEqual(1);
       });
       return it("should be able to take a small json object and fill its own values", function() {
