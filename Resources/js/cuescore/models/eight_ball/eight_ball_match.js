@@ -57,9 +57,9 @@
     }
 
     Match.prototype.getNewGame = function() {
-      var options,
+      var newGame, options,
         _this = this;
-      return new $CS.Models.EightBall.Game(options = {
+      newGame = new $CS.Models.EightBall.Game(options = {
         addToPlayerOne: function() {
           return _this.player.one;
         },
@@ -76,6 +76,7 @@
           }
         }
       });
+      return newGame;
     };
 
     Match.prototype.getTotalInnings = function() {

@@ -13,7 +13,6 @@
       stripes: 1,
       solids: 2,
       innings: 0,
-      matchEndedCallback: function() {},
       numberOfInnings: 0,
       ended: false,
       ballsHitIn: {
@@ -27,22 +26,23 @@
       earlyEight: false,
       playerOneWon: false,
       playerTwoWon: false,
+      matchEndedCallback: function() {},
       player: {
         one: {
           eightBall: [],
           eightOnSnap: false,
           breakAndRun: false,
           timeoutsTaken: 0,
-          callback: function() {},
-          ballType: null
+          ballType: null,
+          callback: function() {}
         },
         two: {
           eightBall: [],
           eightOnSnap: false,
           breakAndRun: false,
           timeoutsTaken: 0,
-          callback: function() {},
-          ballType: null
+          ballType: null,
+          callback: function() {}
         }
       }
     };
@@ -59,8 +59,17 @@
     Game.prototype.getCurrentlyUpPlayer = function() {
       if (this.player.one.callback().currentlyUp === true) {
         return this.player.one.callback();
+      } else {
+        return this.player.two.callback();
       }
-      return this.player.two.callback();
+    };
+
+    Game.prototype.getCurrentlyUpTeamNumber = function() {
+      if (this.player.one.callback().currentlyUp === true) {
+        return this.player.one.callback().teamNumber;
+      } else {
+        return this.player.two.callback().teamNumber;
+      }
     };
 
     Game.prototype.getWinningPlayer = function() {

@@ -6,7 +6,6 @@ class DataService extends $CS.Utilities
     
     email: "i.wooten@gmail.com"
     @db = @openDatabase()
-    @matchIdCounter = 1
     
   undoMatch: (originalId) ->
     try
@@ -67,8 +66,7 @@ class DataService extends $CS.Utilities
       @db.close()
       return
     catch e
-      id = @matchIdCounter++
-      setLeagueMatchIdCallback(id)
+      setLeagueMatchIdCallback(1)
       @db.close() 
 
   sendSignature: (imageData) ->

@@ -19,7 +19,6 @@
         email: "i.wooten@gmail.com"
       });
       this.db = this.openDatabase();
-      this.matchIdCounter = 1;
     }
 
     DataService.prototype.undoMatch = function(originalId) {
@@ -79,7 +78,6 @@
     };
 
     DataService.prototype.saveLeagueMatch = function(leagueMatch, setLeagueMatchIdCallback) {
-      var id;
       try {
         if (typeof Ti !== "undefined" && Ti !== null) {
           Ti.API.log(this.convertToJSONString(leagueMatch));
@@ -95,8 +93,7 @@
         setLeagueMatchIdCallback(this.db.lastInsertRowId);
         this.db.close();
       } catch (e) {
-        id = this.matchIdCounter++;
-        setLeagueMatchIdCallback(id);
+        setLeagueMatchIdCallback(1);
         return this.db.close();
       }
     };

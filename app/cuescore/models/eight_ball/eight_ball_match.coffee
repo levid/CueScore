@@ -52,7 +52,7 @@ class Match extends $CS.Models.EightBall
   # Getters
   
   getNewGame: ->
-    new $CS.Models.EightBall.Game(
+    newGame = new $CS.Models.EightBall.Game(
       options = 
         addToPlayerOne: =>
           @player.one
@@ -66,6 +66,7 @@ class Match extends $CS.Models.EightBall
             @playerTwoWon = true
             @ended = true
     )
+    newGame
     
   getTotalInnings: ->
     totalInnings = @currentGame.numberOfInnings

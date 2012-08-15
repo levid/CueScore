@@ -19,7 +19,7 @@ class Player extends $CS.Models.EightBall
     @name             = options.name ?= null
     @rank             = options.rank ?= null
     @number           = options.playerNumber ?= null
-    @teamNumber      = options.teamNumber ?= null
+    @teamNumber       = options.teamNumber ?= null
     
     @timeouts_allowed = new $CS.Models.EightBall.Ranks().getTimeouts(@rank)
     

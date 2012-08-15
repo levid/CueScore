@@ -28,6 +28,7 @@ class LeagueMatch extends $CS.Models.EightBall
     @awayTeamName     = options.awayTeamName ?= null
     @startTime        = options.startTime ?= null
     @tableType        = options.tableType ?= null
+    @staticId         = options.staticId?
     
     @DataService = new $CS.Utilities.DataService
     @DataService.saveLeagueMatch @, (id) =>
@@ -68,9 +69,9 @@ class LeagueMatch extends $CS.Models.EightBall
       
     @match[matchNumString] = matchData
     @match[matchNumString].leagueMatchId = matchNum
-    if not @match[matchNumString].original_id? or @match[matchNumString].original_id is 0
+    if not @match[matchNumString].originalId? or @match[matchNumString].originalId is 0
       @DataService.saveMatch @match[matchNumString], (id) ->
-        @match[matchNumString].original_id = id
+        @match[matchNumString].originalId = id
 
   getMatchPointsByTeam: (team) ->
     if team == "home"
@@ -78,7 +79,7 @@ class LeagueMatch extends $CS.Models.EightBall
       names = ['one', 'two', 'three', 'four', 'five']
     
       for name in names then do (name) =>
-        name = name.toString()
+        name = name
         if @match[name].player.one.teamNumber = @homeTeamNumber
           homeScore += @match[name].getMatchPointsByPlayer(1)
         else
@@ -112,45 +113,84 @@ class LeagueMatch extends $CS.Models.EightBall
   toJSON: ->
     return @toSmallJSON() if @smallJson is true
     
-    matchOne:          @match.one.toJSON()
-    matchTwo:          @match.two.toJSON()
-    matchThree:        @match.three.toJSON()
-    matchFour:         @match.four.toJSON()
-    matchFive:         @match.five.toJSON()
+    match:          
+      one:             @match.one.toJSON()
+      two:             @match.two.toJSON()
+      three:           @match.three.toJSON()
+      four:            @match.four.toJSON()
+      five:            @match.five.toJSON()
     teamNumber:        @teamNumber
     homeTeamNumber:    @homeTeamNumber
     awayTeamNumber:    @awayTeamNumber
+    homeTeamName:      @homeTeamName
+    awayTeamName:      @awayTeamName
     startTime:         @startTime
     endTime:           @endTime
     tableType:         @tableType
     leagueMatchId:     @leagueMatchId
 
   fromJSON: (jsonLeagueMatch) ->
-    matchOne    = new $CS.Models.EightBall.LeagueMatch()
-    matchTwo    = new $CS.Models.EightBall.LeagueMatch()
-    matchThree  = new $CS.Models.EightBall.LeagueMatch()
-    matchFour   = new $CS.Models.EightBall.LeagueMatch()
-    matchFive   = new $CS.Models.EightBall.LeagueMatch()
-    
-    matchOne.fromJSON jsonLeagueMatch.matchOne
-    matchTwo.fromJSON jsonLeagueMatch.matchTwo
-    matchThree.fromJSON jsonLeagueMatch.matchThree
-    matchFour.fromJSON jsonLeagueMatch.matchFour
-    matchFive.fromJSON jsonLeagueMatch.matchFive
-    
-    @match.one        = matchOne
-    @match.two        = matchTwo
-    @match.three      = matchThree
-    @match.four       = matchFour
-    @match.five       = matchFive
-    
-    @teamNumber       = jsonLeagueMatch.TeamNumber
-    @homeTeamNumber   = jsonLeagueMatch.HomeTeamNumber
-    @awayTeamNumber   = jsonLeagueMatch.AwayTeamNumber
-    @startTime        = jsonLeagueMatch.StartTime
-    @endTime          = jsonLeagueMatch.EndTime
-    @tableType        = jsonLeagueMatch.TableType
-    @leagueMatchId    = jsonLeagueMatch.LeagueMatchId
+    unless jsonLeagueMatch?
+      matchOne = new $CS.Models.EightBall.LeagueMatch(
+          homeTeamNumber: jsonLeagueMatch.homeTeamNumber
+          awayTeamNumber: jsonLeagueMatch.awayTeamNumber
+          homeTeamName: jsonLeagueMatch.homeTeamName
+          awayTeamName: jsonLeagueMatch.awayTeamName
+          startTime: jsonLeagueMatch.startTime
+          tableType: jsonLeagueMatch.tableType
+      )
+      matchTwo = new $CS.Models.EightBall.LeagueMatch(
+          homeTeamNumber: jsonLeagueMatch.homeTeamNumber
+          awayTeamNumber: jsonLeagueMatch.awayTeamNumber
+          homeTeamName: jsonLeagueMatch.homeTeamName
+          awayTeamName: jsonLeagueMatch.awayTeamName
+          startTime: jsonLeagueMatch.startTime
+          tableType: jsonLeagueMatch.tableType
+      )
+      matchThree = new $CS.Models.EightBall.LeagueMatch(
+          homeTeamNumber: jsonLeagueMatch.homeTeamNumber
+          awayTeamNumber: jsonLeagueMatch.awayTeamNumber
+          homeTeamName: jsonLeagueMatch.homeTeamName
+          awayTeamName: jsonLeagueMatch.awayTeamName
+          startTime: jsonLeagueMatch.startTime
+          tableType: jsonLeagueMatch.tableType
+      )
+      matchFour = new $CS.Models.EightBall.LeagueMatch(
+          homeTeamNumber: jsonLeagueMatch.homeTeamNumber
+          awayTeamNumber: jsonLeagueMatch.awayTeamNumber
+          homeTeamName: jsonLeagueMatch.homeTeamName
+          awayTeamName: jsonLeagueMatch.awayTeamName
+          startTime: jsonLeagueMatch.startTime
+          tableType: jsonLeagueMatch.tableType
+      )
+      matchFive = new $CS.Models.EightBall.LeagueMatch(
+          homeTeamNumber: jsonLeagueMatch.homeTeamNumber
+          awayTeamNumber: jsonLeagueMatch.awayTeamNumber
+          homeTeamName: jsonLeagueMatch.homeTeamName
+          awayTeamName: jsonLeagueMatch.awayTeamName
+          startTime: jsonLeagueMatch.startTime
+          tableType: jsonLeagueMatch.tableType
+      )
+  
+      matchOne.fromJSON jsonLeagueMatch.matchOne
+      matchTwo.fromJSON jsonLeagueMatch.matchTwo
+      matchThree.fromJSON jsonLeagueMatch.matchThree
+      matchFour.fromJSON jsonLeagueMatch.matchFour
+      matchFive.fromJSON jsonLeagueMatch.matchFive
+      
+      @match.one        = matchOne
+      @match.two        = matchTwo
+      @match.three      = matchThree
+      @match.four       = matchFour
+      @match.five       = matchFive
+      
+      @teamNumber       = jsonLeagueMatch.teamNumber
+      @homeTeamNumber   = jsonLeagueMatch.homeTeamNumber
+      @awayTeamNumber   = jsonLeagueMatch.awayTeamNumber
+      @startTime        = jsonLeagueMatch.startTime
+      @endTime          = jsonLeagueMatch.endTime
+      @tableType        = jsonLeagueMatch.tableType
+      @leagueMatchId    = jsonLeagueMatch.leagueMatchId
     
   toSmallJSON: ->
     teamNumber:       @teamNumber

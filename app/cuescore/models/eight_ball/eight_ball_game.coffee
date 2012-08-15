@@ -3,7 +3,6 @@ class Game extends $CS.Models.EightBall
     stripes: 1
     solids: 2
     innings: 0
-    matchEndedCallback: ->
     numberOfInnings: 0
     ended: false
     ballsHitIn:
@@ -16,21 +15,22 @@ class Game extends $CS.Models.EightBall
     earlyEight: false
     playerOneWon: false
     playerTwoWon: false
+    matchEndedCallback: ->
     player:
       one:
         eightBall: []
         eightOnSnap: false
         breakAndRun: false
         timeoutsTaken: 0
-        callback: ->
         ballType: null
+        callback: ->
       two:
         eightBall: []
         eightOnSnap: false
         breakAndRun: false
         timeoutsTaken: 0
-        callback: ->
         ballType: null
+        callback: ->
 
   constructor: (options) ->
     _.extend @, @defaults
@@ -45,8 +45,16 @@ class Game extends $CS.Models.EightBall
   # Getters
   
   getCurrentlyUpPlayer: ->
-    return @player.one.callback() if @player.one.callback().currentlyUp is true
-    @player.two.callback()
+    if @player.one.callback().currentlyUp is true
+      return @player.one.callback()
+    else
+      return @player.two.callback()
+    
+  getCurrentlyUpTeamNumber: ->
+    if @player.one.callback().currentlyUp is true
+      return @player.one.callback().teamNumber
+    else
+      return @player.two.callback().teamNumber
     
   getWinningPlayer: ->
     if @playerOneWon is true
@@ -76,7 +84,7 @@ class Game extends $CS.Models.EightBall
 
   getBallsHitIn: ->
     @ballsHitIn.solids.concat(@ballsHitIn.stripes.concat(@player.two.eightBall.concat(@player.one.eightBall)))
-
+    
   getCurrentPlayerRemainingTimeouts: ->
     if @player.one.callback().currentlyUp is true
       return (@player.one.callback().timeouts_allowed - @player.one.timeoutsTaken)
@@ -203,41 +211,6 @@ class Game extends $CS.Models.EightBall
       @checkForWinner()
       
   checkForWinner: ->
-    # @ended = true  if @getBallsHitIn().exists(8)
-    # if @ended is true
-      # if @breakingPlayerStillShooting is true and (@ballsHitIn.solids.length is 7 or @ballsHitIn.stripes.length is 7)
-        # if @player.one.callback().currentlyUp is true
-          # @setBreakAndRunByPlayer(1)
-          # if @ballsHitIn.solids.length is 7
-            # @player.one.ballType = @solids
-            # @player.two.ballType = @stripes
-          # else
-            # @player.one.ballType = @stripes
-            # @player.two.ballType = @solids
-        # else if @@player.two.callback().currentlyUp is true
-          # @setBreakAndRunByPlayer(2)
-          # if @ballsHitIn.solids.length is 7
-            # @player.two.ballType = @solids
-            # @player.one.ballType = @stripes
-          # else
-            # @player.one.ballType = @solids
-            # @player.two.ballType = @stripes
-      # if @player.one.eightBall.exists(8) and @onBreak is false
-        # if @getBallsHitInByPlayer(1).length isnt 8
-          # @setPlayerWon(2)
-        # else
-          # @setPlayerWon(1)
-      # else if @player.two.eightBall.exists(8) and @onBreak is false
-        # if @getBallsHitInByPlayer(1).length isnt 8
-          # @setPlayerWon(1)
-        # else
-          # @setPlayerWon(2)
-      # else
-        # if @player.one.callback().currentlyUp is true
-          # @setPlayerWon(1)
-        # else
-          # @setPlayerWon(2)  if @@player.two.callback().currentlyUp is true
-      # @matchEndedCallback()
     @ended = true if @getBallsHitIn().indexOf(8) >= 0
     if @ended is true
      
