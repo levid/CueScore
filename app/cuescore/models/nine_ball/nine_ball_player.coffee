@@ -1,89 +1,95 @@
 class Player extends $CS.Models.NineBall
-  defaults: {}
+  defaults:
+    name: null
+    rank: null
+    number: null
+    teamNumber: null
+    ballCount: null
+    score: 0
+    safeties: 0
+    currentlyUp: 0
+    nineOnSnaps: 0
+    breakAndRuns: 0
+    timeoutsTaken: 0
+    timeoutsAllowed: 0
+    isCaptain: false
   
-  constructor: (name, rank, number, teamNumber) ->
+  constructor: (options) ->
     _.extend @, @defaults
       
-    @Name = name
-    @Rank = rank
-    @Number = number
-    @TeamNumber = teamNumber
-    @BallCount = new NineBallRanks().getBallCount(rank).toString()
-    @Score = 0
-    @Safeties = 0
-    @CurrentlyUp = false
-    @NineOnSnaps = 0
-    @BreakAndRuns = 0
-    @TimeoutsTaken = 0
-    @TimeoutsAllowed = new NineBallRanks().getTimeouts(rank)
-    @IsCaptain = false
+    @name             = options.name ?= null
+    @rank             = options.rank ?= null
+    @number           = options.number ?= null
+    @teamNumber       = options.teamNumber ?= null
+    @ballCount        = new $CS.Models.NineBall.Ranks().getBallCount(@rank).toString()
+    @timeoutsAllowed  = new $CS.Models.NineBall.Ranks().getTimeouts(@rank)
     
   resetPlayerRankStats: ->
-    @BallCount = new NineBallRanks().getBallCount(@Rank).toString()
-    @TimeoutsAllowed = new NineBallRanks().getTimeouts(@Rank)
+    @ballCount        = new $CS.Models.NineBall.Ranks().getBallCount(@rank).toString()
+    @timeoutsAllowed  = new $CS.Models.NineBall.Ranks().getTimeouts(@rank)
 
   addToScore: (addToScore) ->
-    @Score += addToScore
+    @score += addToScore
 
-  addOneToSafeties: ->
-    @Safeties += 1
+  addToSafeties: (num) ->
+    @safeties += num
 
   hasWon: ->
-    @Score >= @BallCount
+    @score >= @ballCount
 
-  addOneToNineOnSnaps: ->
-    @NineOnSnaps += 1
+  addToNineOnSnaps: (num) ->
+    @nineOnSnaps += num
 
-  addOneToBreakAndRuns: ->
-    @BreakAndRuns += 1
+  addToBreakAndRuns: (num) ->
+    @breakAndRuns += num
 
   getRemainingBallCount: ->
-    (@BallCount - @Score).toString()
+    (@ballCount - @score).toString()
 
   getFirstNameWithInitials: ->
-    spaceIndex = @Name.indexOf(" ")
-    return @Name  if spaceIndex is -1
-    nameToReturn = @Name.substr(0, spaceIndex)
-    nameToReturn + " " + @Name[spaceIndex + 1] + "."
+    spaceIndex = @name.indexOf(" ")
+    return @name if spaceIndex is -1
+    nameToReturn = @name.substr(0, spaceIndex)
+    nameToReturn + " " + @name[spaceIndex + 1] + "."
 
   getSafeties: ->
-    @Safeties.toString()
+    @safeties.toString()
 
   getScore: ->
-    @Score.toString()
+    @score.toString()
 
   getRatioScore: ->
-    @Score / @BallCount
+    @score / @ballCount
 
   getNineOnSnaps: ->
-    @NineOnSnaps.toString()
+    @nineOnSnaps.toString()
 
   getBreakAndRuns: ->
-    @BreakAndRuns.toString()
+    @breakAndRuns.toString()
 
   toJSON: ->
-    Name: @Name
-    Rank: @Rank
-    BallCount: @BallCount
-    Number: @Number
-    TeamNumber: @TeamNumber
-    Score: @Score
-    Safeties: @Safeties
-    NineOnSnaps: @NineOnSnaps
-    BreakAndRuns: @BreakAndRuns
-    CurrentlyUp: @CurrentlyUp
+    name:         @name
+    rank:         @rank
+    ballCount:    @ballCount
+    number:       @number
+    teamNumber:   @teamNumber
+    score:        @score
+    safeties:     @safeties
+    nineOnSnaps:  @nineOnSnaps
+    breakAndRuns: @breakAndRuns
+    currentlyUp:  @currentlyUp
 
   fromJSON: (playerJSON) ->
-    @Name = playerJSON.Name
-    @Rank = playerJSON.Rank
-    @BallCount = playerJSON.BallCount
-    @Number = playerJSON.Number
-    @TeamNumber = playerJSON.TeamNumber
-    @Score = playerJSON.Score
-    @Safeties = playerJSON.Safeties
-    @NineOnSnaps = playerJSON.NineOnSnaps
-    @BreakAndRuns = playerJSON.BreakAndRuns
-    @CurrentlyUp = playerJSON.CurrentlyUp
+    @name         = playerJSON.name
+    @rank         = playerJSON.rank
+    @ballCount    = playerJSON.ballCount
+    @number       = playerJSON.number
+    @teamNumber   = playerJSON.teamNumber
+    @score        = playerJSON.score
+    @safeties     = playerJSON.safeties
+    @nineOnSnaps  = playerJSON.nineOnSnaps
+    @breakAndRuns = playerJSON.breakAndRuns
+    @currentlyUp  = playerJSON.currentlyUp
     @resetPlayerRankStats()
 
 $CS.Models.NineBall.Player = Player
