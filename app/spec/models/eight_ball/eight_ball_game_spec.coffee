@@ -98,7 +98,7 @@ describe "Eight Ball Game", ->
       game.scoreBall 1
       expect(game.getBallsHitIn().length).toEqual 1
       game.scoreBall 1
-      expect(game.getBallsHitIn().length).toEqual 2
+      expect(game.getBallsHitIn().length).toEqual 1
 
     it "should be able to get the number of balls types each player has hit in", ->
       

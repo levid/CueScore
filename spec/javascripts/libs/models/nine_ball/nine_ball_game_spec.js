@@ -2,96 +2,149 @@
 (function() {
 
   describe("Nine Ball Game", function() {
-    var game, matchCallback, playerOne, playerTwo;
+    var game, matchCallback, player;
     game = void 0;
-    playerOne = void 0;
-    playerTwo = void 0;
+    player = {};
+    player.one = void 0;
+    player.two = void 0;
     matchCallback = void 0;
     beforeEach(function() {
+      var options;
       matchCallback = jasmine.createSpy();
-      playerOne = new NineBallPlayer("Isaac Wooten", 1, "123", "123");
-      playerTwo = new NineBallPlayer("James Armstead", 1, "1", "1");
-      playerOne.CurrentlyUp = true;
-      return game = new NineBallGame(function() {
-        return playerOne;
-      }, function() {
-        return playerTwo;
-      }, matchCallback);
+      player.one = new $CS.Models.NineBall.Player(options = {
+        name: "Isaac Wooten",
+        rank: 1,
+        number: "123",
+        teamNumber: "123"
+      });
+      player.two = new $CS.Models.NineBall.Player(options = {
+        name: "James Armstead",
+        rank: 1,
+        number: "1",
+        teamNumber: "1"
+      });
+      player.one.currentlyUp = true;
+      return game = new $CS.Models.NineBall.Game(options = {
+        addToPlayerOne: function() {
+          return player.one;
+        },
+        addToPlayerTwo: function() {
+          return player.two;
+        },
+        callback: matchCallback
+      });
+    });
+    afterEach(function() {
+      game.player.one.score = 0;
+      game.player.one.nineOnSnap = false;
+      game.player.one.breakAndRun = false;
+      game.player.one.ballsHitIn = [];
+      game.player.one.deadBalls = [];
+      game.player.one.lastBall = null;
+      game.player.one.timeoutsTaken = 0;
+      game.player.two.score = 0;
+      game.player.two.nineOnSnap = false;
+      game.player.two.breakAndRun = false;
+      game.player.two.ballsHitIn = [];
+      game.player.two.deadBalls = [];
+      game.player.two.lastBall = null;
+      game.player.two.timeoutsTaken = 0;
+      return {
+        numberOfInnings: 0,
+        ended: false,
+        onBreak: true,
+        breakingPlayerStillShooting: true
+      };
     });
     describe("Scoring", function() {
       it("should be able to keep track of 2 Players scores", function() {
-        expect(game.PlayerOneScore).toNotEqual(null);
-        return expect(game.PlayerTwoScore).toNotEqual(null);
+        expect(game.player.one.score).toNotEqual(null);
+        return expect(game.player.two.score).toNotEqual(null);
       });
       it("should be able to take a ball number 1-8 and score it correctly", function() {
         game.scoreBall(1);
-        expect(game.PlayerOneScore).toEqual(1);
-        playerOne.CurrentlyUp = false;
-        playerTwo.CurrentlyUp = true;
+        expect(game.player.one.score).toEqual(1);
+        player.one.currentlyUp = false;
+        player.two.currentlyUp = true;
         game.scoreBall(2);
-        return expect(game.PlayerTwoScore).toEqual(1);
+        return expect(game.player.two.score).toEqual(1);
       });
       it("should be able to take ball number 9 and score it correctly", function() {
         game.scoreBall(9);
-        return expect(game.PlayerOneScore).toEqual(2);
+        return expect(game.player.one.score).toEqual(2);
       });
       it("should add 1 to currently up player's total score, when it adds 1 to game score", function() {
         game.scoreBall(1);
-        expect(playerOne.Score).toEqual(1);
-        playerOne.CurrentlyUp = false;
-        playerTwo.CurrentlyUp = true;
+        expect(player.one.score).toEqual(1);
+        player.one.currentlyUp = false;
+        player.two.currentlyUp = true;
         game.scoreBall(2);
-        return expect(playerTwo.Score).toEqual(1);
+        return expect(player.two.score).toEqual(1);
       });
       it("should only allow each ball to be scored/deadball one time", function() {
-        expect(playerOne.Score).toEqual(0);
+        expect(player.one.score).toEqual(0);
         game.scoreBall(1);
-        expect(playerOne.Score).toEqual(1);
+        expect(player.one.score).toEqual(1);
         game.scoreBall(1);
-        expect(playerOne.Score).toEqual(1);
+        expect(player.one.score).toEqual(1);
         game.hitDeadBall(1);
-        return expect(game.PlayerOneDeadBalls.length).toEqual(0);
+        return expect(game.player.one.deadBalls.length).toEqual(0);
       });
       return it("should return the correct score ratio based on the BallCount", function() {
-        return expect(getScoreRatio(1, 2)).toEqual(.5);
+        return expect(game.getScoreRatio(1, 2)).toEqual(.5);
       });
     });
     describe("Innings", function() {
       it("should keep track of the number of innings", function() {
-        return expect(game.NumberOfInnings).toEqual(0);
+        return expect(game.numberOfInnings).toEqual(0);
       });
       it("should be able to add 1 to the number of innings", function() {
-        game.addOneToNumberOfInnings();
-        return expect(game.NumberOfInnings).toEqual(1);
+        game.addToNumberOfInnings(1);
+        return expect(game.numberOfInnings).toEqual(1);
       });
       return it("should be able to add 1 to the innings when player2's turn is over", function() {
-        expect(game.NumberOfInnings).toEqual(0);
+        expect(game.numberOfInnings).toEqual(0);
         game.nextPlayerIsUp();
-        expect(game.NumberOfInnings).toEqual(0);
-        expect(playerTwo.CurrentlyUp).toEqual(true);
+        expect(game.numberOfInnings).toEqual(0);
+        expect(player.two.currentlyUp).toEqual(true);
         game.nextPlayerIsUp();
-        return expect(game.NumberOfInnings).toEqual(1);
+        return expect(game.numberOfInnings).toEqual(1);
       });
     });
     describe("Game Ending", function() {
       it("should be able to be ended", function() {
-        expect(game.Ended).toBeFalsy();
-        game.End();
-        return expect(game.Ended).toBeTruthy();
+        expect(game.ended).toBeFalsy();
+        game.end();
+        return expect(game.ended).toBeTruthy();
       });
       it("should know when the match is completed with 1 point and end the game", function() {
-        playerOne = new NineBallPlayer("Isaac Wooten", 1, "123", "123");
-        playerOne.Score = 13;
-        playerTwo = new NineBallPlayer("James Armstead", 1, "1", "1");
-        playerOne.CurrentlyUp = true;
-        game = new NineBallGame(function() {
-          return playerOne;
-        }, function() {
-          return playerTwo;
-        }, function() {});
-        expect(game.Ended).toEqual(false);
+        var options;
+        player.one = new $CS.Models.NineBall.Player(options = {
+          name: "Isaac Wooten",
+          rank: 1,
+          number: "123",
+          teamNumber: "123"
+        });
+        player.one.score = 13;
+        player.two = new $CS.Models.NineBall.Player(options = {
+          name: "James Armstead",
+          rank: 1,
+          number: "1",
+          teamNumber: "1"
+        });
+        player.one.currentlyUp = true;
+        game = new $CS.Models.NineBall.Game(options = {
+          addToPlayerOne: function() {
+            return player.one;
+          },
+          addToPlayerTwo: function() {
+            return player.two;
+          },
+          callback: matchCallback
+        });
+        expect(game.ended).toEqual(false);
         game.scoreBall(1);
-        return expect(game.Ended).toEqual(true);
+        return expect(game.ended).toEqual(true);
       });
       it("should know when the match is completed with 2 points and end the game", function() {
         var i;
@@ -100,35 +153,50 @@
           game.scoreBall(1);
           i++;
         }
-        expect(game.Ended).toEqual(false);
+        expect(game.ended).toEqual(false);
         game.scoreBall(9);
-        return expect(game.Ended).toEqual(true);
+        return expect(game.ended).toEqual(true);
       });
       it("should execute matchEndedCallBack if match is completed", function() {
-        playerOne = new NineBallPlayer("Isaac Wooten", 1, "123", "123");
-        playerOne.Score = 13;
-        playerTwo = new NineBallPlayer("James Armstead", 1, "1", "1");
-        playerOne.CurrentlyUp = true;
-        game = new NineBallGame(function() {
-          return playerOne;
-        }, function() {
-          return playerTwo;
-        }, matchCallback);
+        var options;
+        player.one = new $CS.Models.NineBall.Player(options = {
+          name: "Isaac Wooten",
+          rank: 1,
+          number: "123",
+          teamNumber: "123"
+        });
+        player.one.score = 13;
+        player.two = new $CS.Models.NineBall.Player(options = {
+          name: "James Armstead",
+          rank: 1,
+          number: "1",
+          teamNumber: "1"
+        });
+        player.one.currentlyUp = true;
+        game = new $CS.Models.NineBall.Game(options = {
+          addToPlayerOne: function() {
+            return player.one;
+          },
+          addToPlayerTwo: function() {
+            return player.two;
+          },
+          callback: matchCallback
+        });
         game.scoreBall(1);
         return expect(matchCallback).wasCalled();
       });
       return it("should set all balls left on the table to deadballs and end the game if the Nine ball is hit in before the table is cleared", function() {
         game.scoreBall(9);
-        expect(game.PlayerOneBallsHitIn[0]).toEqual(9);
-        expect(game.PlayerOneDeadBalls[0]).toEqual(1);
-        expect(game.PlayerOneDeadBalls[1]).toEqual(2);
-        expect(game.PlayerOneDeadBalls[2]).toEqual(3);
-        expect(game.PlayerOneDeadBalls[3]).toEqual(4);
-        expect(game.PlayerOneDeadBalls[4]).toEqual(5);
-        expect(game.PlayerOneDeadBalls[5]).toEqual(6);
-        expect(game.PlayerOneDeadBalls[6]).toEqual(7);
-        expect(game.PlayerOneDeadBalls[7]).toEqual(8);
-        return expect(game.Ended).toEqual(true);
+        expect(game.player.one.ballsHitIn[0]).toEqual(9);
+        expect(game.player.one.deadBalls[0]).toEqual(1);
+        expect(game.player.one.deadBalls[1]).toEqual(2);
+        expect(game.player.one.deadBalls[2]).toEqual(3);
+        expect(game.player.one.deadBalls[3]).toEqual(4);
+        expect(game.player.one.deadBalls[4]).toEqual(5);
+        expect(game.player.one.deadBalls[5]).toEqual(6);
+        expect(game.player.one.deadBalls[6]).toEqual(7);
+        expect(game.player.one.deadBalls[7]).toEqual(8);
+        return expect(game.ended).toEqual(true);
       });
     });
     describe("Player Timeouts", function() {
@@ -160,92 +228,92 @@
         game.hitDeadBall(2);
         return expect(game.getDeadBalls()).toEqual(2);
       });
-      it("should be able to keep track of which deadballs PlayerOne hit", function() {
-        expect(game.PlayerOneDeadBalls.length).toEqual(0);
+      it("should be able to keep track of which deadballs player.one hit", function() {
+        expect(game.player.one.deadBalls.length).toEqual(0);
         game.hitDeadBall(1);
         game.hitDeadBall(2);
         game.hitDeadBall(3);
         game.hitDeadBall(4);
-        expect(game.PlayerOneDeadBalls.length).toEqual(4);
-        expect(game.PlayerOneDeadBalls[0]).toEqual(1);
-        expect(game.PlayerOneDeadBalls[1]).toEqual(2);
-        expect(game.PlayerOneDeadBalls[2]).toEqual(3);
-        return expect(game.PlayerOneDeadBalls[3]).toEqual(4);
+        expect(game.player.one.deadBalls.length).toEqual(4);
+        expect(game.player.one.deadBalls[0]).toEqual(1);
+        expect(game.player.one.deadBalls[1]).toEqual(2);
+        expect(game.player.one.deadBalls[2]).toEqual(3);
+        return expect(game.player.one.deadBalls[3]).toEqual(4);
       });
-      it("should be able to keep track of which deadballs PlayerTwo hit", function() {
+      it("should be able to keep track of which deadballs player.two hit", function() {
         game.nextPlayerIsUp();
-        expect(game.PlayerTwoDeadBalls.length).toEqual(0);
+        expect(game.player.two.deadBalls.length).toEqual(0);
         game.hitDeadBall(1);
         game.hitDeadBall(2);
         game.hitDeadBall(3);
         game.hitDeadBall(4);
-        expect(game.PlayerTwoDeadBalls.length).toEqual(4);
-        expect(game.PlayerTwoDeadBalls[0]).toEqual(1);
-        expect(game.PlayerTwoDeadBalls[1]).toEqual(2);
-        expect(game.PlayerTwoDeadBalls[2]).toEqual(3);
-        return expect(game.PlayerTwoDeadBalls[3]).toEqual(4);
+        expect(game.player.two.deadBalls.length).toEqual(4);
+        expect(game.player.two.deadBalls[0]).toEqual(1);
+        expect(game.player.two.deadBalls[1]).toEqual(2);
+        expect(game.player.two.deadBalls[2]).toEqual(3);
+        return expect(game.player.two.deadBalls[3]).toEqual(4);
       });
       return it("should not allow the nineball to be a deadball", function() {
         game.hitDeadBall(9);
-        return expect(game.PlayerOneDeadBalls.length).toEqual(0);
+        return expect(game.player.one.deadBalls.length).toEqual(0);
       });
     });
-    it("should be able to change who is currentlyup", function() {
+    it("should be able to change who is currentlyUp", function() {
       game.nextPlayerIsUp();
-      expect(playerTwo.CurrentlyUp).toEqual(true);
+      expect(player.two.currentlyUp).toEqual(true);
       game.nextPlayerIsUp();
-      return expect(playerOne.CurrentlyUp).toEqual(true);
+      return expect(player.one.currentlyUp).toEqual(true);
     });
     it("should be able to know if a player is still breaking(balls scored) when they use NextPlayerIsUp while breaking", function() {
-      expect(game.OnBreak).toEqual(true);
+      expect(game.onBreak).toEqual(true);
       game.scoreBall(1);
       game.nextPlayerIsUp();
-      expect(playerTwo.CurrentlyUp).toEqual(false);
-      return expect(playerOne.CurrentlyUp).toEqual(true);
+      expect(player.two.currentlyUp).toEqual(false);
+      return expect(player.one.currentlyUp).toEqual(true);
     });
     it("should be able to know if a players turn is over(deadball) when they use NextPlayerIsUp while breaking", function() {
-      expect(game.OnBreak).toEqual(true);
+      expect(game.onBreak).toEqual(true);
       game.hitDeadBall(1);
       game.nextPlayerIsUp();
-      expect(playerTwo.CurrentlyUp).toEqual(true);
-      return expect(playerOne.CurrentlyUp).toEqual(false);
+      expect(player.two.currentlyUp).toEqual(true);
+      return expect(player.one.currentlyUp).toEqual(false);
     });
     it("should be able to know if a players turn is over(no balls scored) when they use NextPlayerIsUp while breaking", function() {
-      expect(game.OnBreak).toEqual(true);
+      expect(game.onBreak).toEqual(true);
       game.nextPlayerIsUp();
-      expect(playerTwo.CurrentlyUp).toEqual(true);
-      return expect(playerOne.CurrentlyUp).toEqual(false);
+      expect(player.two.currentlyUp).toEqual(true);
+      return expect(player.one.currentlyUp).toEqual(false);
     });
     it("should be able to add one to currently up player", function() {
-      expect(game.getCurrentlyUpPlayer().Name).toEqual("Isaac Wooten");
+      expect(game.getCurrentlyUpPlayer().name).toEqual("Isaac Wooten");
       game.nextPlayerIsUp();
-      return expect(game.getCurrentlyUpPlayer().Name).toEqual("James Armstead");
+      return expect(game.getCurrentlyUpPlayer().name).toEqual("James Armstead");
     });
     it("should be able to keep track if player one had 9 on snap", function() {
-      return expect(game.PlayerOneNineOnSnap).toEqual(false);
+      return expect(game.player.one.nineOnSnap).toEqual(false);
     });
     it("should be able to keep track if player one had break and run", function() {
-      return expect(game.PlayerOneBreakAndRun).toEqual(false);
+      return expect(game.player.one.breakAndRun).toEqual(false);
     });
     it("should be able to keep track if player two had 9 on snap", function() {
-      return expect(game.PlayerTwoNineOnSnap).toEqual(false);
+      return expect(game.player.two.nineOnSnap).toEqual(false);
     });
     it("should be able to keep track if player one two break and run", function() {
-      return expect(game.PlayerTwoBreakAndRun).toEqual(false);
+      return expect(game.player.two.breakAndRun).toEqual(false);
     });
     it("should know if the 9 ball is pocketed on the break and give the current player a NineOnSnap", function() {
-      expect(game.PlayerOneNineOnSnap).toEqual(false);
+      expect(game.player.one.nineOnSnap).toEqual(false);
       game.scoreBall(9);
-      expect(game.PlayerOneNineOnSnap).toEqual(true);
-      return expect(playerOne.NineOnSnaps).toEqual(1);
+      expect(game.player.one.nineOnSnap).toEqual(true);
+      return expect(player.one.NineOnSnaps).toEqual(1);
     });
     it("should know if the 9 ball is not pocketed on the break and not give the current player a NineOnSnap", function() {
       game.scoreBall(1);
       game.breakIsOver();
-      expect(game.PlayerOneNineOnSnap).toEqual(false);
+      expect(game.player.one.nineOnSnap).toEqual(false);
       game.scoreBall(9);
-      expect(game.PlayerOneNineOnSnap).toEqual(false);
-      return expect(playerOne.NineOnSnaps).toEqual(0);
+      expect(game.player.one.nineOnSnap).toEqual(false);
+      return expect(player.one.NineOnSnaps).toEqual(0);
     });
     it("should know when a player has hit all the balls in and is still breaking and only give them a 9BR", function() {
       game.scoreBall(1);
@@ -257,43 +325,43 @@
       game.scoreBall(7);
       game.scoreBall(8);
       game.scoreBall(9);
-      expect(game.PlayerOneNineOnSnap).toEqual(false);
-      return expect(game.PlayerOneBreakAndRun).toEqual(true);
+      expect(game.player.one.nineOnSnap).toEqual(false);
+      return expect(game.player.one.breakAndRun).toEqual(true);
     });
     it("should be able to set player one to have a nine on snap and if not already true add one to that players total nine on snaps.", function() {
-      expect(game.PlayerOneNineOnSnap).toEqual(false);
-      game.setPlayerOneNineOnSnap();
-      expect(game.PlayerOneNineOnSnap).toEqual(true);
-      expect(playerOne.NineOnSnaps).toEqual(1);
-      game.setPlayerOneNineOnSnap();
-      return expect(playerOne.NineOnSnaps).toEqual(1);
+      expect(game.player.one.nineOnSnap).toEqual(false);
+      game.setNineOnSnapByPlayer(1);
+      expect(game.player.one.nineOnSnap).toEqual(true);
+      expect(player.one.NineOnSnaps).toEqual(1);
+      game.setNineOnSnapByPlayer(1);
+      return expect(player.one.NineOnSnaps).toEqual(1);
     });
     it("should be able to set player two to have a nine on snap and if not already true add one to that players total nine on snaps.", function() {
-      expect(game.PlayerTwoNineOnSnap).toEqual(false);
-      game.setPlayerTwoNineOnSnap();
-      expect(game.PlayerTwoNineOnSnap).toEqual(true);
-      expect(playerTwo.NineOnSnaps).toEqual(1);
-      game.setPlayerTwoNineOnSnap();
-      return expect(playerTwo.NineOnSnaps).toEqual(1);
+      expect(game.player.two.nineOnSnap).toEqual(false);
+      game.setNineOnSnapByPlayer(2);
+      expect(game.player.two.nineOnSnap).toEqual(true);
+      expect(player.two.NineOnSnaps).toEqual(1);
+      game.setNineOnSnapByPlayer(2);
+      return expect(player.two.NineOnSnaps).toEqual(1);
     });
     it("should be able to set player one to have a break and run and if not already true add one to that players total break and runs.", function() {
-      expect(game.PlayerOneBreakAndRun).toEqual(false);
+      expect(game.player.one.breakAndRun).toEqual(false);
       game.setPlayerOneBreakAndRun();
-      expect(game.PlayerOneBreakAndRun).toEqual(true);
-      expect(playerOne.BreakAndRuns).toEqual(1);
+      expect(game.player.one.breakAndRun).toEqual(true);
+      expect(player.one.BreakAndRuns).toEqual(1);
       game.setPlayerOneBreakAndRun();
-      return expect(playerOne.BreakAndRuns).toEqual(1);
+      return expect(player.one.BreakAndRuns).toEqual(1);
     });
     it("should be able to set player two to have a break and run and if not already true add one to that players total break and runs.", function() {
-      expect(game.PlayerTwoBreakAndRun).toEqual(false);
+      expect(game.player.two.breakAndRun).toEqual(false);
       game.setPlayerTwoBreakAndRun();
-      expect(game.PlayerTwoBreakAndRun).toEqual(true);
-      expect(playerTwo.BreakAndRuns).toEqual(1);
+      expect(game.player.two.breakAndRun).toEqual(true);
+      expect(player.two.BreakAndRuns).toEqual(1);
       game.setPlayerTwoBreakAndRun();
-      return expect(playerTwo.BreakAndRuns).toEqual(1);
+      return expect(player.two.BreakAndRuns).toEqual(1);
     });
     it("should know when the player breaks and then continues on to all the balls in without missing one or hitting a deadball", function() {
-      expect(game.OnBreak).toEqual(true);
+      expect(game.onBreak).toEqual(true);
       game.scoreBall(1);
       game.nextPlayerIsUp();
       game.scoreBall(2);
@@ -304,35 +372,35 @@
       game.scoreBall(7);
       game.scoreBall(8);
       game.scoreBall(9);
-      expect(game.OnBreak).toEqual(false);
-      expect(game.BreakingPlayerStillHitting).toEqual(true);
-      expect(game.PlayerOneBreakAndRun).toEqual(true);
-      return expect(playerOne.BreakAndRuns).toEqual(1);
+      expect(game.onBreak).toEqual(false);
+      expect(game.breakingPlayerStillShooting).toEqual(true);
+      expect(game.player.one.breakAndRun).toEqual(true);
+      return expect(player.one.BreakAndRuns).toEqual(1);
     });
     it("should be able to keep track of which balls the player one has hit in", function() {
-      expect(game.PlayerOneBallsHitIn.length).toEqual(0);
+      expect(game.player.one.ballsHitIn.length).toEqual(0);
       game.scoreBall(1);
       game.scoreBall(2);
       game.scoreBall(3);
       game.scoreBall(4);
-      expect(game.PlayerOneBallsHitIn.length).toEqual(4);
-      expect(game.PlayerOneBallsHitIn[0]).toEqual(1);
-      expect(game.PlayerOneBallsHitIn[1]).toEqual(2);
-      expect(game.PlayerOneBallsHitIn[2]).toEqual(3);
-      return expect(game.PlayerOneBallsHitIn[3]).toEqual(4);
+      expect(game.player.one.ballsHitIn.length).toEqual(4);
+      expect(game.player.one.ballsHitIn[0]).toEqual(1);
+      expect(game.player.one.ballsHitIn[1]).toEqual(2);
+      expect(game.player.one.ballsHitIn[2]).toEqual(3);
+      return expect(game.player.one.ballsHitIn[3]).toEqual(4);
     });
     it("should be able to keep track of which balls the player two has hit in", function() {
       game.nextPlayerIsUp();
-      expect(game.PlayerTwoBallsHitIn.length).toEqual(0);
+      expect(game.player.two.ballsHitIn.length).toEqual(0);
       game.scoreBall(1);
       game.scoreBall(2);
       game.scoreBall(3);
       game.scoreBall(4);
-      expect(game.PlayerTwoBallsHitIn.length).toEqual(4);
-      expect(game.PlayerTwoBallsHitIn[0]).toEqual(1);
-      expect(game.PlayerTwoBallsHitIn[1]).toEqual(2);
-      expect(game.PlayerTwoBallsHitIn[2]).toEqual(3);
-      return expect(game.PlayerTwoBallsHitIn[3]).toEqual(4);
+      expect(game.player.two.ballsHitIn.length).toEqual(4);
+      expect(game.player.two.ballsHitIn[0]).toEqual(1);
+      expect(game.player.two.ballsHitIn[1]).toEqual(2);
+      expect(game.player.two.ballsHitIn[2]).toEqual(3);
+      return expect(game.player.two.ballsHitIn[3]).toEqual(4);
     });
     it("should be able to get the winning player's name when player's ranks are the same", function() {
       game.scoreBall(1);
@@ -344,14 +412,29 @@
       return expect(game.getWinningPlayerName()).toEqual("James A.");
     });
     it("should be able to get the winning player's name(lower rank) when player's Ranks are different", function() {
-      playerOne = new NineBallPlayer("Isaac Wooten", 1, "123", "123");
-      playerTwo = new NineBallPlayer("James Armstead", 7, "1", "1");
-      playerOne.CurrentlyUp = true;
-      game = new NineBallGame(function() {
-        return playerOne;
-      }, function() {
-        return playerTwo;
-      }, matchCallback);
+      var options;
+      player.one = new $CS.Models.NineBall.Player(options = {
+        name: "Isaac Wooten",
+        rank: 1,
+        number: "123",
+        teamNumber: "123"
+      });
+      player.two = new $CS.Models.NineBall.Player(options = {
+        name: "James Armstead",
+        rank: 7,
+        number: "1",
+        teamNumber: "1"
+      });
+      player.one.currentlyUp = true;
+      game = new $CS.Models.NineBall.Game(options = {
+        addToPlayerOne: function() {
+          return player.one;
+        },
+        addToPlayerTwo: function() {
+          return player.two;
+        },
+        callback: matchCallback
+      });
       game.scoreBall(1);
       expect(game.getWinningPlayerName()).toEqual("Isaac W.");
       game.nextPlayerIsUp();
@@ -361,14 +444,30 @@
       return expect(game.getWinningPlayerName()).toEqual("Isaac W.");
     });
     it("should be able to get the winning player's name(higher rank) when player's Ranks are different", function() {
-      playerOne = new NineBallPlayer("Isaac Wooten", 1, "123", "123");
-      playerTwo = new NineBallPlayer("James Armstead", 7, "1", "1");
-      playerOne.CurrentlyUp = true;
-      game = new NineBallGame(function() {
-        return playerOne;
-      }, function() {
-        return playerTwo;
-      }, matchCallback);
+      var options;
+      player.one = new $CS.Models.NineBall.Player(options = {
+        name: "Isaac Wooten",
+        rank: 1,
+        number: "123",
+        teamNumber: "123"
+      });
+      player.one.score = 13;
+      player.two = new $CS.Models.NineBall.Player(options = {
+        name: "James Armstead",
+        rank: 7,
+        number: "1",
+        teamNumber: "1"
+      });
+      player.one.currentlyUp = true;
+      game = new $CS.Models.NineBall.Game(options = {
+        addToPlayerOne: function() {
+          return player.one;
+        },
+        addToPlayerTwo: function() {
+          return player.two;
+        },
+        callback: matchCallback
+      });
       game.scoreBall(1);
       expect(game.getWinningPlayerName()).toEqual("Isaac W.");
       game.nextPlayerIsUp();
@@ -408,14 +507,14 @@
     });
     it("should be able to hit a safety", function() {
       game.hitSafety();
-      expect(game.PlayerOneCallback().Safeties).toEqual(1);
+      expect(game.player.one.callback().safeties).toEqual(1);
       game.hitSafety();
-      return expect(game.PlayerTwoCallback().Safeties).toEqual(1);
+      return expect(game.player.two.callback().safeties).toEqual(1);
     });
     it("should end the current players turn when they hit a safety", function() {
       game.hitSafety();
-      expect(game.PlayerOneCallback().Safeties).toEqual(1);
-      return expect(game.getCurrentlyUpPlayer().Name).toEqual("James Armstead");
+      expect(game.player.one.callback().safeties).toEqual(1);
+      return expect(game.getCurrentlyUpPlayer().name).toEqual("James Armstead");
     });
     it("should be able to return the game score with player one's score first (example 2-3)", function() {
       game.scoreBall(1);
@@ -428,141 +527,159 @@
       return expect(game.getGameScore()).toEqual("2-3");
     });
     it("should be able to have a state of breaking", function() {
-      return expect(game.OnBreak).toEqual(true);
+      return expect(game.onBreak).toEqual(true);
     });
     it("should be able to have change the breaking state to false", function() {
-      expect(game.OnBreak).toEqual(true);
+      expect(game.onBreak).toEqual(true);
       game.breakIsOver();
-      return expect(game.OnBreak).toEqual(false);
+      return expect(game.onBreak).toEqual(false);
     });
     it("should know if the breaking player is still up", function() {
-      expect(game.BreakingPlayerStillHitting).toEqual(true);
+      expect(game.breakingPlayerStillShooting).toEqual(true);
       game.scoreBall(2);
       game.nextPlayerIsUp();
       game.scoreBall(3);
       game.scoreBall(5);
-      expect(game.BreakingPlayerStillHitting).toEqual(true);
+      expect(game.breakingPlayerStillShooting).toEqual(true);
       game.nextPlayerIsUp();
-      return expect(game.BreakingPlayerStillHitting).toEqual(false);
+      return expect(game.breakingPlayerStillShooting).toEqual(false);
     });
     it("should be able to keep track of the last ball scored and who scored it", function() {
-      expect(game.PlayerOneLastBall).toEqual(null);
-      expect(game.PlayerTwoLastBall).toEqual(null);
+      expect(game.player.one.lastBall).toEqual(null);
+      expect(game.player.two.lastBall).toEqual(null);
       game.scoreBall(1);
-      expect(game.PlayerOneLastBall).toEqual(1);
-      expect(game.PlayerTwoLastBall).toEqual(null);
+      expect(game.player.one.lastBall).toEqual(1);
+      expect(game.player.two.lastBall).toEqual(null);
       game.scoreBall(3);
-      expect(game.PlayerOneLastBall).toEqual(3);
-      expect(game.PlayerTwoLastBall).toEqual(null);
+      expect(game.player.one.lastBall).toEqual(3);
+      expect(game.player.two.lastBall).toEqual(null);
       game.nextPlayerIsUp();
       game.nextPlayerIsUp();
       game.scoreBall(4);
-      expect(game.PlayerOneLastBall).toEqual(null);
-      return expect(game.PlayerTwoLastBall).toEqual(4);
+      expect(game.player.one.lastBall).toEqual(null);
+      return expect(game.player.two.lastBall).toEqual(4);
     });
     return describe("toJSON/fromJSON", function() {
       it("should be able to take a new Game and turn it into a JSON object", function() {
         return expect(game.toJSON()).toEqual({
-          PlayerOneScore: 0,
-          PlayerTwoScore: 0,
-          PlayerOneTimeoutsTaken: 0,
-          PlayerTwoTimeoutsTaken: 0,
-          NumberOfInnings: 0,
-          PlayerOneNineOnSnap: false,
-          PlayerOneBreakAndRun: false,
-          PlayerTwoNineOnSnap: false,
-          PlayerTwoBreakAndRun: false,
-          Ended: false,
-          PlayerOneBallsHitIn: [],
-          PlayerTwoBallsHitIn: [],
-          PlayerOneDeadBalls: [],
-          PlayerTwoDeadBalls: [],
-          PlayerOneLastBall: null,
-          PlayerTwoLastBall: null,
-          OnBreak: true,
-          BreakingPlayerStillHitting: true
+          player: {
+            one: {
+              score: 0,
+              timeoutsTaken: 0,
+              nineOnSnap: false,
+              breakAndRun: false,
+              ballsHitIn: [],
+              deadBalls: [],
+              lastBall: null
+            },
+            two: {
+              score: 0,
+              timeoutsTaken: 0,
+              nineOnSnap: false,
+              breakAndRun: false,
+              ballsHitIn: [],
+              deadBalls: [],
+              lastBall: null
+            }
+          },
+          numberOfInnings: 0,
+          ended: false,
+          onBreak: true,
+          breakingPlayerStillShooting: true
         });
       });
       it("should be able to take a filled up Game and turn it into a JSON object", function() {
-        game.PlayerOneScore = 2;
-        game.PlayerTwoScore = 13;
-        game.NumberOfInnings = 2;
-        game.PlayerOneNineOnSnap = true;
-        game.PlayerOneBreakAndRun = false;
-        game.PlayerTwoNineOnSnap = true;
-        game.PlayerTwoBreakAndRun = true;
-        game.Ended = true;
-        game.PlayerOneBallsHitIn = [1, 2];
-        game.PlayerTwoBallsHitIn = [3, 4];
-        game.PlayerOneDeadBalls = [5, 6];
-        game.PlayerTwoDeadBalls = [];
-        game.PlayerOneLastBall = 1;
-        game.PlayerTwoLastBall = 3;
-        game.OnBreak = false;
-        game.BreakingPlayerStillHitting = false;
-        game.PlayerOneCallback().CurrentlyUp = true;
+        game.player.one.score = 2;
+        game.player.two.score = 13;
+        game.player.one.nineOnSnap = true;
+        game.player.one.breakAndRun = false;
+        game.player.two.nineOnSnap = true;
+        game.player.two.breakAndRun = true;
+        game.player.one.ballsHitIn = [1, 2];
+        game.player.two.ballsHitIn = [3, 4];
+        game.player.one.deadBalls = [5, 6];
+        game.player.two.deadBalls = [];
+        game.player.one.lastBall = 1;
+        game.player.two.lastBall = 3;
+        game.numberOfInnings = 2;
+        game.ended = true;
+        game.onBreak = false;
+        game.breakingPlayerStillShooting = false;
+        game.player.one.callback().currentlyUp = true;
         game.takeTimeout();
         return expect(game.toJSON()).toEqual({
-          PlayerOneScore: 2,
-          PlayerTwoScore: 13,
-          PlayerOneTimeoutsTaken: 1,
-          PlayerTwoTimeoutsTaken: 0,
-          NumberOfInnings: 2,
-          PlayerOneNineOnSnap: true,
-          PlayerOneBreakAndRun: false,
-          PlayerTwoNineOnSnap: true,
-          PlayerTwoBreakAndRun: true,
-          Ended: true,
-          PlayerOneBallsHitIn: [1, 2],
-          PlayerTwoBallsHitIn: [3, 4],
-          PlayerOneDeadBalls: [5, 6],
-          PlayerTwoDeadBalls: [],
-          PlayerOneLastBall: 1,
-          PlayerTwoLastBall: 3,
-          OnBreak: false,
-          BreakingPlayerStillHitting: false
+          player: {
+            one: {
+              score: 2,
+              timeoutsTaken: 1,
+              nineOnSnap: true,
+              breakAndRun: false,
+              ballsHitIn: [1, 2],
+              deadBalls: [5, 6],
+              lastBall: 1
+            },
+            two: {
+              score: 13,
+              timeoutsTaken: 0,
+              nineOnSnap: true,
+              breakAndRun: true,
+              ballsHitIn: [3, 4],
+              deadBalls: [],
+              lastBall: 3
+            }
+          },
+          numberOfInnings: 2,
+          ended: true,
+          onBreak: false,
+          breakingPlayerStillShooting: false
         });
       });
       return it("should be able to take a Game JSON and fill a Game object with it", function() {
         game.fromJSON({
-          PlayerOneScore: 4,
-          PlayerTwoScore: 10,
-          PlayerOneTimeoutsTaken: 1,
-          PlayerTwoTimeoutsTaken: 0,
-          NumberOfInnings: 3,
-          PlayerOneNineOnSnap: false,
-          PlayerOneBreakAndRun: true,
-          PlayerTwoNineOnSnap: false,
-          PlayerTwoBreakAndRun: false,
-          Ended: false,
-          PlayerOneBallsHitIn: [2],
-          PlayerTwoBallsHitIn: [4],
-          PlayerOneDeadBalls: [6],
-          PlayerTwoDeadBalls: [],
-          PlayerOneLastBall: 2,
-          PlayerTwoLastBall: 4,
-          OnBreak: false,
-          BreakingPlayerStillHitting: false
+          player: {
+            one: {
+              score: 4,
+              timeoutsTaken: 1,
+              nineOnSnap: false,
+              breakAndRun: true,
+              ballsHitIn: [2],
+              deadBalls: [6],
+              lastBall: 2
+            },
+            two: {
+              score: 10,
+              timeoutsTaken: 0,
+              nineOnSnap: false,
+              breakAndRun: false,
+              ballsHitIn: [4],
+              deadBalls: [],
+              lastBall: 4
+            }
+          },
+          numberOfInnings: 3,
+          ended: false,
+          onBreak: false,
+          breakingPlayerStillShooting: false
         });
-        expect(game.PlayerOneScore).toEqual(4);
-        expect(game.PlayerTwoScore).toEqual(10);
-        expect(game.NumberOfInnings).toEqual(3);
-        expect(game.PlayerOneTimeoutsTaken).toEqual(1);
-        expect(game.PlayerTwoTimeoutsTaken).toEqual(0);
-        expect(game.PlayerOneNineOnSnap).toEqual(false);
-        expect(game.PlayerOneBreakAndRun).toEqual(true);
-        expect(game.PlayerTwoNineOnSnap).toEqual(false);
-        expect(game.PlayerTwoBreakAndRun).toEqual(false);
-        expect(game.Ended).toEqual(false);
-        expect(game.PlayerOneBallsHitIn).toEqual([2]);
-        expect(game.PlayerTwoBallsHitIn).toEqual([4]);
-        expect(game.PlayerOneDeadBalls).toEqual([6]);
-        expect(game.PlayerTwoDeadBalls).toEqual([]);
-        expect(game.PlayerOneLastBall).toEqual(2);
-        expect(game.PlayerTwoLastBall).toEqual(4);
-        expect(game.OnBreak).toEqual(false);
-        game.addOneToNumberOfInnings();
-        return expect(game.NumberOfInnings).toEqual(4);
+        expect(game.player.one.score).toEqual(4);
+        expect(game.player.two.score).toEqual(10);
+        expect(game.numberOfInnings).toEqual(3);
+        expect(game.player.one.timeoutsTaken).toEqual(1);
+        expect(game.player.two.timeoutsTaken).toEqual(0);
+        expect(game.player.one.nineOnSnap).toEqual(false);
+        expect(game.player.one.breakAndRun).toEqual(true);
+        expect(game.player.two.nineOnSnap).toEqual(false);
+        expect(game.player.two.breakAndRun).toEqual(false);
+        expect(game.ended).toEqual(false);
+        expect(game.player.one.ballsHitIn).toEqual([2]);
+        expect(game.player.two.ballsHitIn).toEqual([4]);
+        expect(game.player.one.deadBalls).toEqual([6]);
+        expect(game.player.two.deadBalls).toEqual([]);
+        expect(game.player.one.lastBall).toEqual(2);
+        expect(game.player.two.lastBall).toEqual(4);
+        expect(game.onBreak).toEqual(false);
+        game.addToNumberOfInnings(1);
+        return expect(game.numberOfInnings).toEqual(4);
       });
     });
   });

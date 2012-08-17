@@ -203,7 +203,7 @@
     };
 
     Match.prototype.checkForWin = function() {
-      if (this.getRemainingGamesNeededToWinByPlayer(1) === 0 || this.getRemainingGamesNeededToWinByPlayer(1) === 0) {
+      if (this.getRemainingGamesNeededToWinByPlayer(1) === 0 || this.getRemainingGamesNeededToWinByPlayer(2) === 0) {
         return this.ended = true;
       }
     };

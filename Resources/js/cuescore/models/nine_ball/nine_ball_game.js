@@ -4,132 +4,229 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
+  Array.prototype.exists = function(search) {
+    var i;
+    i = 0;
+    while (i < this.length) {
+      if (this[i] === search) {
+        return true;
+      }
+      i++;
+    }
+    return false;
+  };
+
   Game = (function(_super) {
-    var getScoreRatio;
 
     __extends(Game, _super);
 
-    Game.prototype.defaults = {};
-
-    function Game(addToPlayerOne, addToPlayerTwo, callback) {
-      _.extend(this, this.defaults);
-      this.PlayerOneCallback = addToPlayerOne;
-      this.PlayerTwoCallback = addToPlayerTwo;
-      this.PlayerOneCallback().TimeoutsTaken = 0;
-      this.PlayerTwoCallback().TimeoutsTaken = 0;
-      this.MatchEndedCallback = callback;
-      this.PlayerOneScore = 0;
-      this.PlayerTwoScore = 0;
-      this.NumberOfInnings = 0;
-      this.PlayerOneNineOnSnap = false;
-      this.PlayerOneBreakAndRun = false;
-      this.PlayerTwoNineOnSnap = false;
-      this.PlayerTwoBreakAndRun = false;
-      this.Ended = false;
-      this.PlayerOneBallsHitIn = [];
-      this.PlayerTwoBallsHitIn = [];
-      this.PlayerOneDeadBalls = [];
-      this.PlayerTwoDeadBalls = [];
-      this.PlayerOneLastBall = null;
-      this.PlayerTwoLastBall = null;
-      this.OnBreak = true;
-      this.BreakingPlayerStillHitting = true;
-      this.PlayerOneTimeoutsTaken = 0;
-      this.PlayerTwoTimeoutsTaken = 0;
-      this.getCurrentlyUpPlayer = function() {
-        if (this.PlayerOneCallback().CurrentlyUp === true) {
-          return this.PlayerOneCallback();
+    Game.prototype.defaults = {
+      player: {
+        one: {
+          score: 0,
+          nineOnSnap: false,
+          breakAndRun: false,
+          ballsHitIn: [],
+          deadBalls: [],
+          lastBall: null,
+          timeoutsTaken: 0,
+          callback: function() {}
+        },
+        two: {
+          score: 0,
+          nineOnSnap: false,
+          breakAndRun: false,
+          ballsHitIn: [],
+          deadBalls: [],
+          lastBall: null,
+          timeoutsTaken: 0,
+          callback: function() {}
         }
-        return this.PlayerTwoCallback();
-      };
+      },
+      numberOfInnings: 0,
+      ended: false,
+      onBreak: true,
+      breakingPlayerStillShooting: true,
+      matchEndedCallback: function() {}
+    };
+
+    function Game(options) {
+      _.extend(this, this.defaults);
+      this.player.one.callback = options.addToPlayerOne;
+      this.player.two.callback = options.addToPlayerTwo;
+      this.matchEndedCallback = options.callback;
+      this.player.one.callback().timeoutsTaken = 0;
+      this.player.two.callback().timeoutsTaken = 0;
     }
 
-    Game.prototype.hitSafety = function() {
-      this.getCurrentlyUpPlayer().addOneToSafeties();
-      return this.nextPlayerIsUp();
+    Game.prototype.getCurrentlyUpPlayer = function() {
+      if (this.player.one.callback().currentlyUp === true) {
+        return this.player.one.callback();
+      } else {
+        return this.player.two.callback();
+      }
     };
 
     Game.prototype.getDeadBalls = function() {
-      return this.PlayerOneDeadBalls.length + this.PlayerTwoDeadBalls.length;
+      return this.player.one.deadBalls.length + this.player.two.deadBalls.length;
+    };
+
+    Game.prototype.getScoreRatio = function(playerScore, playerBallCount) {
+      return playerScore / playerBallCount;
+    };
+
+    Game.prototype.getWinningPlayerName = function() {
+      if (this.getScoreRatio(this.player.one.score, this.player.one.callback().ballCount) > this.getScoreRatio(this.player.two.score, this.player.two.callback().ballCount)) {
+        return this.player.one.callback().getFirstNameWithInitials();
+      } else if (this.getScoreRatio(this.player.one.score, this.player.one.callback().ballCount) < this.getScoreRatio(this.player.two.score, this.player.two.callback().ballCount)) {
+        return this.player.two.callback().getFirstNameWithInitials();
+      } else {
+        return "Tie";
+      }
+    };
+
+    Game.prototype.getGameScore = function() {
+      return this.player.one.score + "-" + this.player.two.score;
+    };
+
+    Game.prototype.getBallsHitInByPlayer = function(playerNum) {
+      if (playerNum === 1) {
+        return this.player.one.ballsHitIn.concat(this.player.one.deadBalls);
+      } else if (playerNum === 2) {
+        return this.player.two.ballsHitIn.concat(this.player.two.deadBalls);
+      }
+    };
+
+    Game.prototype.getBallsHitIn = function() {
+      return this.player.one.ballsHitIn.concat(this.player.two.ballsHitIn).concat(this.player.one.deadBalls).concat(this.player.two.deadBalls);
+    };
+
+    Game.prototype.getBallsScored = function() {
+      return this.player.one.ballsHitIn.concat(this.player.two.ballsHitIn);
+    };
+
+    Game.prototype.getCurrentPlayerRemainingTimeouts = function() {
+      if (this.player.one.callback().currentlyUp === true) {
+        return (this.player.one.callback().timeoutsAllowed - this.player.one.timeoutsTaken).toString();
+      } else {
+        return (this.player.two.callback().timeoutsAllowed - this.player.two.timeoutsTaken).toString();
+      }
+    };
+
+    Game.prototype.setNineOnSnapByPlayer = function(playerNum) {
+      if (playerNum === 1) {
+        if (this.player.one.nineOnSnap !== true) {
+          this.player.one.callback().addToNineOnSnaps(1);
+        }
+        return this.player.one.nineOnSnap = true;
+      } else if (playerNum === 2) {
+        if (this.player.two.nineOnSnap !== true) {
+          this.player.two.callback().addToNineOnSnaps(1);
+        }
+        return this.player.two.nineOnSnap = true;
+      }
+    };
+
+    Game.prototype.setBreakAndRunByPlayer = function(playerNum) {
+      if (playerNum === 1) {
+        if (this.player.one.breakAndRun !== true) {
+          this.player.one.callback().addToBreakAndRuns(1);
+        }
+        return this.player.one.breakAndRun = true;
+      } else if (playerNum === 2) {
+        if (this.player.two.breakAndRun !== true) {
+          this.player.two.callback().addToBreakAndRuns(1);
+        }
+        return this.player.two.breakAndRun = true;
+      }
+    };
+
+    Game.prototype.hitSafety = function() {
+      this.getCurrentlyUpPlayer().addToSafeties(1);
+      return this.nextPlayerIsUp();
     };
 
     Game.prototype.hitDeadBall = function(ballNumber) {
       if (ballNumber !== 9 && !this.getBallsHitIn().exists(ballNumber)) {
-        this.DeadBalls += 1;
-        if (this.PlayerOneCallback().CurrentlyUp === true) {
-          this.PlayerOneDeadBalls.push(ballNumber);
+        this.deadBalls += 1;
+        if (this.player.one.callback().currentlyUp === true) {
+          this.player.one.deadBalls.push(ballNumber);
         } else {
-          this.PlayerTwoDeadBalls.push(ballNumber);
+          this.player.two.deadBalls.push(ballNumber);
         }
         return this.checkIfAllBallsAreHitIn();
       }
     };
 
-    getScoreRatio = function(playerScore, playerBallCount) {
-      return playerScore / playerBallCount;
+    Game.prototype.takeTimeout = function() {
+      if (this.getCurrentPlayerRemainingTimeouts() > 0) {
+        if (this.player.one.callback().currentlyUp === true) {
+          return this.player.one.timeoutsTaken += 1;
+        } else {
+          return this.player.two.timeoutsTaken += 1;
+        }
+      }
     };
 
     Game.prototype.checkIfAllBallsAreHitIn = function() {
       var allBallsHitIn, i;
       allBallsHitIn = this.getBallsHitIn();
-      this.Ended = allBallsHitIn.length === 9;
-      if (this.Ended === false) {
+      this.ended = allBallsHitIn.length === 9;
+      if (this.ended === false) {
         if (allBallsHitIn.exists(9)) {
           i = 1;
           while (i < 9) {
             if (allBallsHitIn.exists(i) !== true) {
-              if (this.PlayerOneCallback().CurrentlyUp === true) {
-                this.PlayerOneDeadBalls.push(i);
+              if (this.player.one.callback().currentlyUp === true) {
+                this.player.one.deadBalls.push(i);
               } else {
-                this.PlayerTwoDeadBalls.push(i);
+                this.player.two.deadBalls.push(i);
               }
             }
             i++;
           }
-          this.Ended = true;
+          this.ended = true;
         }
       }
-      if (this.Ended === true && this.getBallsScored().length === 9) {
-        if (this.PlayerOneCallback().CurrentlyUp === true && this.BreakingPlayerStillHitting === true) {
-          return this.setPlayerOneBreakAndRun();
-        } else {
-          if (this.PlayerTwoCallback().CurrentlyUp === true && this.BreakingPlayerStillHitting === true) {
-            return this.setPlayerTwoBreakAndRun();
-          }
+      if (this.ended === true && this.getBallsScored().length === 9) {
+        if (this.player.one.callback().currentlyUp === true && this.breakingPlayerStillShooting === true) {
+          return this.setBreakAndRunByPlayer(1);
+        } else if (this.player.two.callback().currentlyUp === true && this.breakingPlayerStillShooting === true) {
+          return this.setBreakAndRunByPlayer(2);
         }
       }
     };
 
     Game.prototype.scoreBall = function(ballNumber) {
       if (!this.getBallsHitIn().exists(ballNumber)) {
-        if (this.PlayerOneCallback().CurrentlyUp === true) {
+        if (this.player.one.callback().currentlyUp === true) {
           if (ballNumber > 0 && ballNumber < 9) {
-            this.PlayerOneScore += 1;
-            this.PlayerOneCallback().addToScore(1);
+            this.player.one.score += 1;
+            this.player.one.callback().addToScore(1);
           } else {
-            this.PlayerOneScore += 2;
-            this.PlayerOneCallback().addToScore(2);
-            if (this.OnBreak === true && this.getBallsScored().length !== 8) {
-              this.setPlayerOneNineOnSnap();
+            this.player.one.score += 2;
+            this.player.one.callback().addToScore(2);
+            if (this.onBreak === true && this.getBallsScored().length !== 8) {
+              this.setNineOnSnapByPlayer(1);
             }
           }
-          this.PlayerOneLastBall = ballNumber;
-          this.PlayerTwoLastBall = null;
-          this.PlayerOneBallsHitIn.push(ballNumber);
+          this.player.one.lastBall = ballNumber;
+          this.player.two.lastBall = null;
+          this.player.one.ballsHitIn.push(ballNumber);
         } else {
           if (ballNumber > 0 && ballNumber < 9) {
-            this.PlayerTwoScore += 1;
-            this.PlayerTwoCallback().addToScore(1);
+            this.player.two.score += 1;
+            this.player.two.callback().addToScore(1);
           } else {
-            this.PlayerTwoScore += 2;
-            this.PlayerTwoCallback().addToScore(2);
-            if (this.OnBreak === true && this.getBallsScored().length !== 8) {
-              this.setPlayerTwoNineOnSnap();
+            this.player.two.score += 2;
+            this.player.two.callback().addToScore(2);
+            if (this.onBreak === true && this.getBallsScored().length !== 8) {
+              this.setNineOnSnapByPlayer(2);
             }
           }
-          this.PlayerTwoLastBall = ballNumber;
-          this.PlayerOneLastBall = null;
-          this.PlayerTwoBallsHitIn.push(ballNumber);
+          this.player.two.lastBall = ballNumber;
+          this.player.one.lastBall = null;
+          this.player.two.ballsHitIn.push(ballNumber);
         }
         this.checkIfAllBallsAreHitIn();
         return this.checkForWinner();
@@ -137,159 +234,89 @@
     };
 
     Game.prototype.checkForWinner = function() {
-      if (this.PlayerOneCallback().hasWon() === true || this.PlayerTwoCallback().hasWon() === true) {
-        this.End();
-        return this.MatchEndedCallback();
+      if (this.player.one.callback().hasWon() === true || this.player.two.callback().hasWon() === true) {
+        this.end();
+        return this.matchEndedCallback();
       }
     };
 
-    Game.prototype.addOneToNumberOfInnings = function() {
-      return this.NumberOfInnings += 1;
+    Game.prototype.addToNumberOfInnings = function(num) {
+      return this.numberOfInnings += num;
     };
 
     Game.prototype.nextPlayerIsUp = function() {
-      if (this.OnBreak !== true || ((this.PlayerTwoCallback().CurrentlyUp === true && this.PlayerTwoBallsHitIn.length === 0) || (this.PlayerOneCallback().CurrentlyUp === true && this.PlayerOneBallsHitIn.length === 0))) {
-        if (this.PlayerOneCallback().CurrentlyUp === true) {
-          this.PlayerTwoCallback().CurrentlyUp = true;
-          this.PlayerOneCallback().CurrentlyUp = false;
-        } else if (this.PlayerTwoCallback().CurrentlyUp === true) {
-          this.PlayerTwoCallback().CurrentlyUp = false;
-          this.PlayerOneCallback().CurrentlyUp = true;
-          this.addOneToNumberOfInnings();
+      if (this.onBreak !== true || ((this.player.two.callback().currentlyUp === true && this.player.two.ballsHitIn.length === 0) || (this.player.one.callback().currentlyUp === true && this.player.one.ballsHitIn.length === 0))) {
+        if (this.player.one.callback().currentlyUp === true) {
+          this.player.two.callback().currentlyUp = true;
+          this.player.one.callback().currentlyUp = false;
+        } else if (this.player.two.callback().currentlyUp === true) {
+          this.player.two.callback().currentlyUp = false;
+          this.player.one.callback().currentlyUp = true;
+          this.addToNumberOfInnings(1);
         } else {
-          this.PlayerOneCallback().CurrentlyUp = true;
+          this.player.one.callback().currentlyUp = true;
         }
-        this.BreakingPlayerStillHitting = false;
+        this.breakingPlayerStillShooting = false;
       }
-      return this.OnBreak = false;
-    };
-
-    Game.prototype.setPlayerOneNineOnSnap = function() {
-      if (this.PlayerOneNineOnSnap !== true) {
-        this.PlayerOneCallback().addOneToNineOnSnaps();
-      }
-      return this.PlayerOneNineOnSnap = true;
-    };
-
-    Game.prototype.setPlayerTwoNineOnSnap = function() {
-      if (this.PlayerTwoNineOnSnap !== true) {
-        this.PlayerTwoCallback().addOneToNineOnSnaps();
-      }
-      return this.PlayerTwoNineOnSnap = true;
-    };
-
-    Game.prototype.setPlayerOneBreakAndRun = function() {
-      if (this.PlayerOneBreakAndRun !== true) {
-        this.PlayerOneCallback().addOneToBreakAndRuns();
-      }
-      return this.PlayerOneBreakAndRun = true;
-    };
-
-    Game.prototype.setPlayerTwoBreakAndRun = function() {
-      if (this.PlayerTwoBreakAndRun !== true) {
-        this.PlayerTwoCallback().addOneToBreakAndRuns();
-      }
-      return this.PlayerTwoBreakAndRun = true;
-    };
-
-    Game.prototype.getWinningPlayerName = function() {
-      if (getScoreRatio(this.PlayerOneScore, this.PlayerOneCallback().BallCount) > getScoreRatio(this.PlayerTwoScore, this.PlayerTwoCallback().BallCount)) {
-        return this.PlayerOneCallback().getFirstNameWithInitials();
-      } else {
-        if (getScoreRatio(this.PlayerOneScore, this.PlayerOneCallback().BallCount) < getScoreRatio(this.PlayerTwoScore, this.PlayerTwoCallback().BallCount)) {
-          return this.PlayerTwoCallback().getFirstNameWithInitials();
-        }
-      }
-      return "Tie";
-    };
-
-    Game.prototype.getGameScore = function() {
-      return this.PlayerOneScore + "-" + this.PlayerTwoScore;
-    };
-
-    Game.prototype.getPlayerOneBallsHitIn = function() {
-      return this.PlayerOneBallsHitIn.concat(this.PlayerOneDeadBalls);
-    };
-
-    Game.prototype.getPlayerTwoBallsHitIn = function() {
-      return this.PlayerTwoBallsHitIn.concat(this.PlayerTwoDeadBalls);
-    };
-
-    Game.prototype.getBallsHitIn = function() {
-      return this.PlayerOneBallsHitIn.concat(this.PlayerTwoBallsHitIn).concat(this.PlayerOneDeadBalls).concat(this.PlayerTwoDeadBalls);
-    };
-
-    Game.prototype.getBallsScored = function() {
-      return this.PlayerOneBallsHitIn.concat(this.PlayerTwoBallsHitIn);
-    };
-
-    Game.prototype.getCurrentPlayerRemainingTimeouts = function() {
-      if (this.PlayerOneCallback().CurrentlyUp === true) {
-        return (this.PlayerOneCallback().TimeoutsAllowed - this.PlayerOneTimeoutsTaken).toString();
-      }
-      return (this.PlayerTwoCallback().TimeoutsAllowed - this.PlayerTwoTimeoutsTaken).toString();
-    };
-
-    Game.prototype.takeTimeout = function() {
-      if (this.getCurrentPlayerRemainingTimeouts() > 0) {
-        if (this.PlayerOneCallback().CurrentlyUp === true) {
-          return this.PlayerOneTimeoutsTaken += 1;
-        } else {
-          return this.PlayerTwoTimeoutsTaken += 1;
-        }
-      }
+      return this.onBreak = false;
     };
 
     Game.prototype.breakIsOver = function() {
-      return this.OnBreak = false;
+      return this.onBreak = false;
     };
 
-    Game.prototype.End = function() {
-      return this.Ended = true;
+    Game.prototype.end = function() {
+      return this.ended = true;
     };
 
     Game.prototype.toJSON = function() {
       return {
-        PlayerOneScore: this.PlayerOneScore,
-        PlayerTwoScore: this.PlayerTwoScore,
-        PlayerOneTimeoutsTaken: this.PlayerOneTimeoutsTaken,
-        PlayerTwoTimeoutsTaken: this.PlayerTwoTimeoutsTaken,
-        NumberOfInnings: this.NumberOfInnings,
-        PlayerOneNineOnSnap: this.PlayerOneNineOnSnap,
-        PlayerOneBreakAndRun: this.PlayerOneBreakAndRun,
-        PlayerTwoNineOnSnap: this.PlayerTwoNineOnSnap,
-        PlayerTwoBreakAndRun: this.PlayerTwoBreakAndRun,
-        Ended: this.Ended,
-        PlayerOneBallsHitIn: this.PlayerOneBallsHitIn,
-        PlayerTwoBallsHitIn: this.PlayerTwoBallsHitIn,
-        PlayerOneDeadBalls: this.PlayerOneDeadBalls,
-        PlayerTwoDeadBalls: this.PlayerTwoDeadBalls,
-        PlayerOneLastBall: this.PlayerOneLastBall,
-        PlayerTwoLastBall: this.PlayerTwoLastBall,
-        OnBreak: this.OnBreak,
-        BreakingPlayerStillHitting: this.BreakingPlayerStillHitting
+        player: {
+          one: {
+            score: this.player.one.score,
+            timeoutsTaken: this.player.one.timeoutsTaken,
+            nineOnSnap: this.player.one.nineOnSnap,
+            breakAndRun: this.player.one.breakAndRun,
+            ballsHitIn: this.player.one.ballsHitIn,
+            deadBalls: this.player.one.deadBalls,
+            lastBall: this.player.one.lastBall
+          },
+          two: {
+            score: this.player.two.score,
+            timeoutsTaken: this.player.two.timeoutsTaken,
+            nineOnSnap: this.player.two.nineOnSnap,
+            breakAndRun: this.player.two.breakAndRun,
+            ballsHitIn: this.player.two.ballsHitIn,
+            deadBalls: this.player.one.deadBalls,
+            lastBall: this.player.one.lastBall
+          }
+        },
+        ended: this.ended,
+        numberOfInnings: this.numberOfInnings,
+        onBreak: this.onBreak,
+        breakingPlayerStillShooting: this.breakingPlayerStillShooting
       };
     };
 
     Game.prototype.fromJSON = function(gameJSON) {
-      this.PlayerOneScore = gameJSON.PlayerOneScore;
-      this.PlayerTwoScore = gameJSON.PlayerTwoScore;
-      this.NumberOfInnings = gameJSON.NumberOfInnings;
-      this.PlayerOneTimeoutsTaken = gameJSON.PlayerOneTimeoutsTaken;
-      this.PlayerTwoTimeoutsTaken = gameJSON.PlayerTwoTimeoutsTaken;
-      this.PlayerOneNineOnSnap = gameJSON.PlayerOneNineOnSnap;
-      this.PlayerOneBreakAndRun = gameJSON.PlayerOneBreakAndRun;
-      this.PlayerTwoNineOnSnap = gameJSON.PlayerTwoNineOnSnap;
-      this.PlayerTwoBreakAndRun = gameJSON.PlayerTwoBreakAndRun;
-      this.Ended = gameJSON.Ended;
-      this.PlayerOneBallsHitIn = gameJSON.PlayerOneBallsHitIn;
-      this.PlayerTwoBallsHitIn = gameJSON.PlayerTwoBallsHitIn;
-      this.PlayerOneDeadBalls = gameJSON.PlayerOneDeadBalls;
-      this.PlayerTwoDeadBalls = gameJSON.PlayerTwoDeadBalls;
-      this.PlayerOneLastBall = gameJSON.PlayerOneLastBall;
-      this.PlayerTwoLastBall = gameJSON.PlayerTwoLastBall;
-      this.OnBreak = gameJSON.OnBreak;
-      return this.BreakingPlayerStillHitting = gameJSON.BreakingPlayerStillHitting;
+      this.player.one.score = gameJSON.player.one.score;
+      this.player.two.score = gameJSON.player.two.score;
+      this.player.one.timeoutsTaken = gameJSON.player.one.timeoutsTaken;
+      this.player.two.timeoutsTaken = gameJSON.player.two.timeoutsTaken;
+      this.player.one.nineOnSnap = gameJSON.player.one.nineOnSnap;
+      this.player.one.breakAndRun = gameJSON.player.one.breakAndRun;
+      this.player.two.nineOnSnap = gameJSON.player.two.nineOnSnap;
+      this.player.two.breakAndRun = gameJSON.player.two.breakAndRun;
+      this.player.one.ballsHitIn = gameJSON.player.one.ballsHitIn;
+      this.player.two.ballsHitIn = gameJSON.player.two.ballsHitIn;
+      this.player.one.deadBalls = gameJSON.player.one.deadBalls;
+      this.player.two.deadBalls = gameJSON.player.two.deadBalls;
+      this.player.one.lastBall = gameJSON.player.one.lastBall;
+      this.player.two.lastBall = gameJSON.player.two.lastBall;
+      this.numberOfInnings = gameJSON.numberOfInnings;
+      this.ended = gameJSON.ended;
+      this.onBreak = gameJSON.onBreak;
+      return this.breakingPlayerStillShooting = gameJSON.breakingPlayerStillShooting;
     };
 
     return Game;

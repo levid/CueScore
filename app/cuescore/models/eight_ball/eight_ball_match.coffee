@@ -106,12 +106,12 @@ class Match extends $CS.Models.EightBall
     if playerNum == 1
       gamesWon = (if (@currentGame.playerOneWon is true) then 1 else 0)
       while i <= (@completedGames.length - 1)
-        gamesWon = gamesWon + 1  if @completedGames[i].playerOneWon is true
+        gamesWon = gamesWon + 1 if @completedGames[i].playerOneWon is true
         i++
     else if playerNum == 2
       gamesWon = (if (@currentGame.playerTwoWon is true) then 1 else 0)
       while i <= (@completedGames.length - 1)
-        gamesWon = gamesWon + 1  if @completedGames[i].playerTwoWon is true
+        gamesWon = gamesWon + 1 if @completedGames[i].playerTwoWon is true
         i++
     gamesWon
     
@@ -161,7 +161,7 @@ class Match extends $CS.Models.EightBall
     @currentGame.hitSafety()
     
   checkForWin: ->
-    if @getRemainingGamesNeededToWinByPlayer(1) == 0 or @getRemainingGamesNeededToWinByPlayer(1) == 0
+    if @getRemainingGamesNeededToWinByPlayer(1) == 0 or @getRemainingGamesNeededToWinByPlayer(2) == 0
       @ended = true
 
   startNewGame: ->

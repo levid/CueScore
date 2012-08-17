@@ -1,215 +1,256 @@
+Array::exists = (search) ->
+  i = 0
+
+  while i < @length
+    return true  if this[i] is search
+    i++
+  false
+
 class Game extends $CS.Models.NineBall
-  defaults: {}
+  defaults: 
+    player:
+      one:
+        score: 0
+        nineOnSnap: false
+        breakAndRun: false
+        ballsHitIn: []
+        deadBalls: []
+        lastBall: null
+        timeoutsTaken: 0
+        callback: ->
+      two:
+        score: 0
+        nineOnSnap: false
+        breakAndRun: false
+        ballsHitIn: []
+        deadBalls: []
+        lastBall: null
+        timeoutsTaken: 0
+        callback: ->
+    numberOfInnings: 0
+    ended: false
+    onBreak: true
+    breakingPlayerStillShooting: true
+    matchEndedCallback: ->
   
-  constructor: (addToPlayerOne, addToPlayerTwo, callback) ->
+  constructor: (options) ->
     _.extend @, @defaults
     
-    @PlayerOneCallback = addToPlayerOne
-    @PlayerTwoCallback = addToPlayerTwo
-    @PlayerOneCallback().TimeoutsTaken = 0
-    @PlayerTwoCallback().TimeoutsTaken = 0
-    @MatchEndedCallback = callback
-    @PlayerOneScore = 0
-    @PlayerTwoScore = 0
-    @NumberOfInnings = 0
-    @PlayerOneNineOnSnap = false
-    @PlayerOneBreakAndRun = false
-    @PlayerTwoNineOnSnap = false
-    @PlayerTwoBreakAndRun = false
-    @Ended = false
-    @PlayerOneBallsHitIn = []
-    @PlayerTwoBallsHitIn = []
-    @PlayerOneDeadBalls = []
-    @PlayerTwoDeadBalls = []
-    @PlayerOneLastBall = null
-    @PlayerTwoLastBall = null
-    @OnBreak = true
-    @BreakingPlayerStillHitting = true
-    @PlayerOneTimeoutsTaken = 0
-    @PlayerTwoTimeoutsTaken = 0
-    @getCurrentlyUpPlayer = ->
-      return @PlayerOneCallback()  if @PlayerOneCallback().CurrentlyUp is true
-      @PlayerTwoCallback()
-
-  hitSafety: ->
-    @getCurrentlyUpPlayer().addOneToSafeties()
-    @nextPlayerIsUp()
+    @player.one.callback  = options.addToPlayerOne
+    @player.two.callback  = options.addToPlayerTwo
+    @matchEndedCallback   = options.callback
+    
+    @player.one.callback().timeoutsTaken = 0
+    @player.two.callback().timeoutsTaken = 0
+    
+  # Getters
+    
+  getCurrentlyUpPlayer: ->
+    if @player.one.callback().currentlyUp is true
+      return @player.one.callback()
+    else
+      return @player.two.callback()
 
   getDeadBalls: ->
-    @PlayerOneDeadBalls.length + @PlayerTwoDeadBalls.length
+    @player.one.deadBalls.length + @player.two.deadBalls.length
 
+  getScoreRatio: (playerScore, playerBallCount) ->
+    playerScore / playerBallCount
+    
+  getWinningPlayerName: ->
+    if @getScoreRatio(@player.one.score, @player.one.callback().ballCount) > @getScoreRatio(@player.two.score, @player.two.callback().ballCount)
+      return @player.one.callback().getFirstNameWithInitials()
+    else if @getScoreRatio(@player.one.score, @player.one.callback().ballCount) < @getScoreRatio(@player.two.score, @player.two.callback().ballCount)
+      return @player.two.callback().getFirstNameWithInitials()  
+    else
+      return "Tie"
+
+  getGameScore: ->
+    @player.one.score + "-" + @player.two.score
+
+  getBallsHitInByPlayer: (playerNum) ->
+    if playerNum is 1
+      @player.one.ballsHitIn.concat @player.one.deadBalls
+    else if playerNum is 2
+      @player.two.ballsHitIn.concat @player.two.deadBalls
+
+  getBallsHitIn: ->
+    @player.one.ballsHitIn.concat(@player.two.ballsHitIn).concat(@player.one.deadBalls).concat @player.two.deadBalls
+
+  getBallsScored: ->
+    @player.one.ballsHitIn.concat @player.two.ballsHitIn
+
+  getCurrentPlayerRemainingTimeouts: ->
+    if @player.one.callback().currentlyUp is true
+      return (@player.one.callback().timeoutsAllowed - @player.one.timeoutsTaken).toString()
+    else
+      return (@player.two.callback().timeoutsAllowed - @player.two.timeoutsTaken).toString()
+
+  # Setters
+
+  setNineOnSnapByPlayer: (playerNum) ->
+    if playerNum is 1
+      @player.one.callback().addToNineOnSnaps(1)  unless @player.one.nineOnSnap is true
+      @player.one.nineOnSnap = true
+    else if playerNum is 2
+      @player.two.callback().addToNineOnSnaps(1)  unless @player.two.nineOnSnap is true
+      @player.two.nineOnSnap = true
+
+  setBreakAndRunByPlayer: (playerNum) ->
+    if playerNum is 1
+      @player.one.callback().addToBreakAndRuns(1)  unless @player.one.breakAndRun is true
+      @player.one.breakAndRun = true
+    else if playerNum is 2
+      @player.two.callback().addToBreakAndRuns(1)  unless @player.two.breakAndRun is true
+      @player.two.breakAndRun = true
+
+  # Methods
+  
+  hitSafety: ->
+    @getCurrentlyUpPlayer().addToSafeties(1)
+    @nextPlayerIsUp()
+    
   hitDeadBall: (ballNumber) ->
     if ballNumber isnt 9 and not @getBallsHitIn().exists(ballNumber)
-      @DeadBalls += 1
-      if @PlayerOneCallback().CurrentlyUp is true
-        @PlayerOneDeadBalls.push ballNumber
+      @deadBalls += 1
+      if @player.one.callback().currentlyUp is true
+        @player.one.deadBalls.push ballNumber
       else
-        @PlayerTwoDeadBalls.push ballNumber
-      @checkIfAllBallsAreHitIn()
-      
-  getScoreRatio = (playerScore, playerBallCount) ->
-    playerScore / playerBallCount
+        @player.two.deadBalls.push ballNumber
 
+      @checkIfAllBallsAreHitIn()
+
+  takeTimeout: ->
+    if @getCurrentPlayerRemainingTimeouts() > 0
+      if @player.one.callback().currentlyUp is true
+        @player.one.timeoutsTaken += 1
+      else
+        @player.two.timeoutsTaken += 1
+        
   checkIfAllBallsAreHitIn: ->
     allBallsHitIn = @getBallsHitIn()
-    @Ended = (allBallsHitIn.length is 9)
-    if @Ended is false
+    @ended = (allBallsHitIn.length is 9)
+    if @ended is false
       if allBallsHitIn.exists(9)
         i = 1
         while i < 9
           unless allBallsHitIn.exists(i) is true
-            if @PlayerOneCallback().CurrentlyUp is true
-              @PlayerOneDeadBalls.push i
+            if @player.one.callback().currentlyUp is true
+              @player.one.deadBalls.push i
             else
-              @PlayerTwoDeadBalls.push i
+              @player.two.deadBalls.push i
           i++
-        @Ended = true
-    if @Ended is true and @getBallsScored().length is 9
-      if @PlayerOneCallback().CurrentlyUp is true and @BreakingPlayerStillHitting is true
-        @setPlayerOneBreakAndRun()
-      else @setPlayerTwoBreakAndRun()  if @PlayerTwoCallback().CurrentlyUp is true and @BreakingPlayerStillHitting is true
+        @ended = true
+    if @ended is true and @getBallsScored().length is 9
+      if @player.one.callback().currentlyUp is true and @breakingPlayerStillShooting is true
+        @setBreakAndRunByPlayer(1)
+      else if @player.two.callback().currentlyUp is true and @breakingPlayerStillShooting is true
+        @setBreakAndRunByPlayer(2) 
 
   scoreBall: (ballNumber) ->
     unless @getBallsHitIn().exists(ballNumber)
-      if @PlayerOneCallback().CurrentlyUp is true
+      if @player.one.callback().currentlyUp is true
         if ballNumber > 0 and ballNumber < 9
-          @PlayerOneScore += 1
-          @PlayerOneCallback().addToScore 1
+          @player.one.score += 1
+          @player.one.callback().addToScore 1
         else
-          @PlayerOneScore += 2
-          @PlayerOneCallback().addToScore 2
-          @setPlayerOneNineOnSnap()  if @OnBreak is true and @getBallsScored().length isnt 8
-        @PlayerOneLastBall = ballNumber
-        @PlayerTwoLastBall = null
-        @PlayerOneBallsHitIn.push ballNumber
+          @player.one.score += 2
+          @player.one.callback().addToScore 2
+          @setNineOnSnapByPlayer(1) if @onBreak is true and @getBallsScored().length isnt 8
+          
+        @player.one.lastBall = ballNumber
+        @player.two.lastBall = null
+        @player.one.ballsHitIn.push ballNumber
       else
         if ballNumber > 0 and ballNumber < 9
-          @PlayerTwoScore += 1
-          @PlayerTwoCallback().addToScore 1
+          @player.two.score += 1
+          @player.two.callback().addToScore 1
         else
-          @PlayerTwoScore += 2
-          @PlayerTwoCallback().addToScore 2
-          @setPlayerTwoNineOnSnap()  if @OnBreak is true and @getBallsScored().length isnt 8
-        @PlayerTwoLastBall = ballNumber
-        @PlayerOneLastBall = null
-        @PlayerTwoBallsHitIn.push ballNumber
+          @player.two.score += 2
+          @player.two.callback().addToScore 2
+          @setNineOnSnapByPlayer(2) if @onBreak is true and @getBallsScored().length isnt 8
+          
+        @player.two.lastBall = ballNumber
+        @player.one.lastBall = null
+        @player.two.ballsHitIn.push ballNumber
+        
       @checkIfAllBallsAreHitIn()
       @checkForWinner()
 
   checkForWinner: ->
-    if @PlayerOneCallback().hasWon() is true or @PlayerTwoCallback().hasWon() is true
-      @End()
-      @MatchEndedCallback()
+    if @player.one.callback().hasWon() is true or @player.two.callback().hasWon() is true
+      @end()
+      @matchEndedCallback()
 
-  addOneToNumberOfInnings: ->
-    @NumberOfInnings += 1
+  addToNumberOfInnings: (num) ->
+    @numberOfInnings += num
 
   nextPlayerIsUp: ->
-    if @OnBreak isnt true or ((@PlayerTwoCallback().CurrentlyUp is true and @PlayerTwoBallsHitIn.length is 0) or (@PlayerOneCallback().CurrentlyUp is true and @PlayerOneBallsHitIn.length is 0))
-      if @PlayerOneCallback().CurrentlyUp is true
-        @PlayerTwoCallback().CurrentlyUp = true
-        @PlayerOneCallback().CurrentlyUp = false
-      else if @PlayerTwoCallback().CurrentlyUp is true
-        @PlayerTwoCallback().CurrentlyUp = false
-        @PlayerOneCallback().CurrentlyUp = true
-        @addOneToNumberOfInnings()
+    if @onBreak isnt true or ((@player.two.callback().currentlyUp is true and @player.two.ballsHitIn.length is 0) or (@player.one.callback().currentlyUp is true and @player.one.ballsHitIn.length is 0))
+      if @player.one.callback().currentlyUp is true
+        @player.two.callback().currentlyUp = true
+        @player.one.callback().currentlyUp = false
+      else if @player.two.callback().currentlyUp is true
+        @player.two.callback().currentlyUp = false
+        @player.one.callback().currentlyUp = true
+        @addToNumberOfInnings(1)
       else
-        @PlayerOneCallback().CurrentlyUp = true
-      @BreakingPlayerStillHitting = false
-    @OnBreak = false
-
-  setPlayerOneNineOnSnap: ->
-    @PlayerOneCallback().addOneToNineOnSnaps()  unless @PlayerOneNineOnSnap is true
-    @PlayerOneNineOnSnap = true
-
-  setPlayerTwoNineOnSnap: ->
-    @PlayerTwoCallback().addOneToNineOnSnaps()  unless @PlayerTwoNineOnSnap is true
-    @PlayerTwoNineOnSnap = true
-
-  setPlayerOneBreakAndRun: ->
-    @PlayerOneCallback().addOneToBreakAndRuns()  unless @PlayerOneBreakAndRun is true
-    @PlayerOneBreakAndRun = true
-
-  setPlayerTwoBreakAndRun: ->
-    @PlayerTwoCallback().addOneToBreakAndRuns()  unless @PlayerTwoBreakAndRun is true
-    @PlayerTwoBreakAndRun = true
-
-  getWinningPlayerName: ->
-    if getScoreRatio(@PlayerOneScore, @PlayerOneCallback().BallCount) > getScoreRatio(@PlayerTwoScore, @PlayerTwoCallback().BallCount)
-      return @PlayerOneCallback().getFirstNameWithInitials()
-    else return @PlayerTwoCallback().getFirstNameWithInitials()  if getScoreRatio(@PlayerOneScore, @PlayerOneCallback().BallCount) < getScoreRatio(@PlayerTwoScore, @PlayerTwoCallback().BallCount)
-    "Tie"
-
-  getGameScore: ->
-    @PlayerOneScore + "-" + @PlayerTwoScore
-
-  getPlayerOneBallsHitIn: ->
-    @PlayerOneBallsHitIn.concat @PlayerOneDeadBalls
-
-  getPlayerTwoBallsHitIn: ->
-    @PlayerTwoBallsHitIn.concat @PlayerTwoDeadBalls
-
-  getBallsHitIn: ->
-    @PlayerOneBallsHitIn.concat(@PlayerTwoBallsHitIn).concat(@PlayerOneDeadBalls).concat @PlayerTwoDeadBalls
-
-  getBallsScored: ->
-    @PlayerOneBallsHitIn.concat @PlayerTwoBallsHitIn
-
-  getCurrentPlayerRemainingTimeouts: ->
-    return (@PlayerOneCallback().TimeoutsAllowed - @PlayerOneTimeoutsTaken).toString()  if @PlayerOneCallback().CurrentlyUp is true
-    (@PlayerTwoCallback().TimeoutsAllowed - @PlayerTwoTimeoutsTaken).toString()
-
-  takeTimeout: ->
-    if @getCurrentPlayerRemainingTimeouts() > 0
-      if @PlayerOneCallback().CurrentlyUp is true
-        @PlayerOneTimeoutsTaken += 1
-      else
-        @PlayerTwoTimeoutsTaken += 1
+        @player.one.callback().currentlyUp = true
+        
+      @breakingPlayerStillShooting = false
+      
+    @onBreak = false
 
   breakIsOver: ->
-    @OnBreak = false
+    @onBreak = false
 
-  End: ->
-    @Ended = true
+  end: ->
+    @ended = true
 
   toJSON: ->
-    PlayerOneScore: @PlayerOneScore
-    PlayerTwoScore: @PlayerTwoScore
-    PlayerOneTimeoutsTaken: @PlayerOneTimeoutsTaken
-    PlayerTwoTimeoutsTaken: @PlayerTwoTimeoutsTaken
-    NumberOfInnings: @NumberOfInnings
-    PlayerOneNineOnSnap: @PlayerOneNineOnSnap
-    PlayerOneBreakAndRun: @PlayerOneBreakAndRun
-    PlayerTwoNineOnSnap: @PlayerTwoNineOnSnap
-    PlayerTwoBreakAndRun: @PlayerTwoBreakAndRun
-    Ended: @Ended
-    PlayerOneBallsHitIn: @PlayerOneBallsHitIn
-    PlayerTwoBallsHitIn: @PlayerTwoBallsHitIn
-    PlayerOneDeadBalls: @PlayerOneDeadBalls
-    PlayerTwoDeadBalls: @PlayerTwoDeadBalls
-    PlayerOneLastBall: @PlayerOneLastBall
-    PlayerTwoLastBall: @PlayerTwoLastBall
-    OnBreak: @OnBreak
-    BreakingPlayerStillHitting: @BreakingPlayerStillHitting
+    player:
+      one:
+        score:                    @player.one.score
+        timeoutsTaken:            @player.one.timeoutsTaken
+        nineOnSnap:               @player.one.nineOnSnap
+        breakAndRun:              @player.one.breakAndRun
+        ballsHitIn:               @player.one.ballsHitIn
+        deadBalls:                @player.one.deadBalls
+        lastBall:                 @player.one.lastBall
+      two:
+        score:                    @player.two.score
+        timeoutsTaken:            @player.two.timeoutsTaken
+        nineOnSnap:               @player.two.nineOnSnap
+        breakAndRun:              @player.two.breakAndRun
+        ballsHitIn:               @player.two.ballsHitIn
+        deadBalls:                @player.one.deadBalls
+        lastBall:                 @player.one.lastBall
+
+    ended:                        @ended
+    numberOfInnings:              @numberOfInnings
+    onBreak:                      @onBreak
+    breakingPlayerStillShooting:  @breakingPlayerStillShooting
 
   fromJSON: (gameJSON) ->
-    @PlayerOneScore = gameJSON.PlayerOneScore
-    @PlayerTwoScore = gameJSON.PlayerTwoScore
-    @NumberOfInnings = gameJSON.NumberOfInnings
-    @PlayerOneTimeoutsTaken = gameJSON.PlayerOneTimeoutsTaken
-    @PlayerTwoTimeoutsTaken = gameJSON.PlayerTwoTimeoutsTaken
-    @PlayerOneNineOnSnap = gameJSON.PlayerOneNineOnSnap
-    @PlayerOneBreakAndRun = gameJSON.PlayerOneBreakAndRun
-    @PlayerTwoNineOnSnap = gameJSON.PlayerTwoNineOnSnap
-    @PlayerTwoBreakAndRun = gameJSON.PlayerTwoBreakAndRun
-    @Ended = gameJSON.Ended
-    @PlayerOneBallsHitIn = gameJSON.PlayerOneBallsHitIn
-    @PlayerTwoBallsHitIn = gameJSON.PlayerTwoBallsHitIn
-    @PlayerOneDeadBalls = gameJSON.PlayerOneDeadBalls
-    @PlayerTwoDeadBalls = gameJSON.PlayerTwoDeadBalls
-    @PlayerOneLastBall = gameJSON.PlayerOneLastBall
-    @PlayerTwoLastBall = gameJSON.PlayerTwoLastBall
-    @OnBreak = gameJSON.OnBreak
-    @BreakingPlayerStillHitting = gameJSON.BreakingPlayerStillHitting
+    @player.one.score             = gameJSON.player.one.score
+    @player.two.score             = gameJSON.player.two.score
+    
+    @player.one.timeoutsTaken     = gameJSON.player.one.timeoutsTaken
+    @player.two.timeoutsTaken     = gameJSON.player.two.timeoutsTaken
+    @player.one.nineOnSnap        = gameJSON.player.one.nineOnSnap
+    @player.one.breakAndRun       = gameJSON.player.one.breakAndRun
+    @player.two.nineOnSnap        = gameJSON.player.two.nineOnSnap
+    @player.two.breakAndRun       = gameJSON.player.two.breakAndRun
+    
+    @player.one.ballsHitIn        = gameJSON.player.one.ballsHitIn
+    @player.two.ballsHitIn        = gameJSON.player.two.ballsHitIn
+    @player.one.deadBalls         = gameJSON.player.one.deadBalls
+    @player.two.deadBalls         = gameJSON.player.two.deadBalls
+    @player.one.lastBall          = gameJSON.player.one.lastBall
+    @player.two.lastBall          = gameJSON.player.two.lastBall
+    @numberOfInnings              = gameJSON.numberOfInnings
+    @ended                        = gameJSON.ended
+    @onBreak                      = gameJSON.onBreak
+    @breakingPlayerStillShooting  = gameJSON.breakingPlayerStillShooting
 
 $CS.Models.NineBall.Game = Game

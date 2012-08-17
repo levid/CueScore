@@ -1,3 +1,11 @@
+Array::exists = (search) ->
+  i = 0
+
+  while i < @length
+    return true  if this[i] is search
+    i++
+  false
+
 class Game extends $CS.Models.EightBall
   defaults:
     stripes: 1
@@ -37,7 +45,7 @@ class Game extends $CS.Models.EightBall
     
     @player.one.callback  = options.addToPlayerOne
     @player.two.callback  = options.addToPlayerTwo
-    @matchEndedCallback = options.callback
+    @matchEndedCallback   = options.callback
     
     @player.one.timeoutsTaken = 0;
     @player.two.timeoutsTaken = 0;
@@ -179,7 +187,7 @@ class Game extends $CS.Models.EightBall
     @ended = true
     
   scoreBall: (ballNumber) ->
-    unless @getBallsHitIn().indexOf(ballNumber) > 0
+    unless @getBallsHitIn().exists(ballNumber)
       @lastBallHitIn = ballNumber
       
       if ballNumber > 0 and ballNumber < 8
@@ -189,14 +197,15 @@ class Game extends $CS.Models.EightBall
       else
         if @player.one.callback().currentlyUp is true
           @player.one.eightBall.push ballNumber
-        else 
-          @player.two.eightBall.push ballNumber if @player.two.callback().currentlyUp is true
+        else if @player.two.callback().currentlyUp is true
+          @player.two.eightBall.push ballNumber 
         
         if @onBreak is true
           if @ballsHitIn.solids.length isnt 7 and @ballsHitIn.stripes.length isnt 7
             if @player.one.callback().currentlyUp is true
               @setEightOnSnapByPlayer(1)
-            else @setEightOnSnapByPlayer(2)  if @player.two.callback().currentlyUp is true
+            else if @player.two.callback().currentlyUp is true
+              @setEightOnSnapByPlayer(2)  
         else
           if @ballsHitIn.solids.length isnt 7 and @ballsHitIn.stripes.length isnt 7
             @earlyEight = true
@@ -211,9 +220,8 @@ class Game extends $CS.Models.EightBall
       @checkForWinner()
       
   checkForWinner: ->
-    @ended = true if @getBallsHitIn().indexOf(8) >= 0
+    @ended = true if @getBallsHitIn().exists(8)
     if @ended is true
-     
       # Break and run
       if @breakingPlayerStillShooting is true and (@ballsHitIn.solids.length is 7 or @ballsHitIn.stripes.length is 7)
         
@@ -232,7 +240,7 @@ class Game extends $CS.Models.EightBall
           @player.one.ballType = @stripes
             
       # Player 1 made the 8 ball (not on break)
-      if @player.one.eightBall.indexOf(8) >= 0 and @onBreak is false
+      if @player.one.eightBall.exists(8) and @onBreak is false
         
         # Neither player made 8 balls so it is a loss by player 1
         if @getBallsHitInByPlayer(1).length != 8 and @getBallsHitInByPlayer(2).length != 8
@@ -242,7 +250,7 @@ class Game extends $CS.Models.EightBall
           @setPlayerWon(1)
           
       # Player 2 made the 8 ball (not on break)
-      else if @player.two.eightBall.indexOf(8) >= 0 and @onBreak is false
+      else if @player.two.eightBall.exists(8) and @onBreak is false
       
         # Neither player made 8 balls so it is a loss by player 2
         if @getBallsHitInByPlayer(1).length != 8 and @getBallsHitInByPlayer(2).length != 8
