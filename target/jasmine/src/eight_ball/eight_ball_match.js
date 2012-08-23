@@ -57,9 +57,9 @@
     }
 
     Match.prototype.getNewGame = function() {
-      var options,
+      var newGame, options,
         _this = this;
-      return new $CS.Models.EightBall.Game(options = {
+      newGame = new $CS.Models.EightBall.Game(options = {
         addToPlayerOne: function() {
           return _this.player.one;
         },
@@ -76,6 +76,7 @@
           }
         }
       });
+      return newGame;
     };
 
     Match.prototype.getTotalInnings = function() {
@@ -88,7 +89,7 @@
           i++;
         }
       }
-      return totalInnings.toString();
+      return totalInnings;
     };
 
     Match.prototype.getTotalSafeties = function() {
@@ -113,8 +114,9 @@
     Match.prototype.getWinningPlayer = function() {
       if ((this.getGamesWonByPlayer(1) / this.player.one.gamesNeededToWin) > (this.getGamesWonByPlayer(2) / this.player.two.gamesNeededToWin)) {
         return this.player.one;
+      } else {
+        return this.player.two;
       }
-      return this.player.two;
     };
 
     Match.prototype.getRemainingGamesNeededToWinByPlayer = function(playerNum) {
@@ -129,17 +131,17 @@
       var gamesWon, i;
       i = 0;
       if (playerNum === 1) {
-        gamesWon = (this.currentGame.player.one.hasWon === true ? 1 : 0);
+        gamesWon = (this.currentGame.playerOneWon === true ? 1 : 0);
         while (i <= (this.completedGames.length - 1)) {
-          if (this.completedGames[i].player.one.hasWon === true) {
+          if (this.completedGames[i].playerOneWon === true) {
             gamesWon = gamesWon + 1;
           }
           i++;
         }
       } else if (playerNum === 2) {
-        gamesWon = (this.currentGame.player.two.hasWon === true ? 1 : 0);
+        gamesWon = (this.currentGame.playerTwoWon === true ? 1 : 0);
         while (i <= (this.completedGames.length - 1)) {
-          if (this.completedGames[i].player.two.hasWon === true) {
+          if (this.completedGames[i].playerTwoWon === true) {
             gamesWon = gamesWon + 1;
           }
           i++;
@@ -149,10 +151,18 @@
     };
 
     Match.prototype.getMatchPointsByPlayer = function(playerNum) {
-      if ((this.getGamesWonByPlayer(1) / this.player.one.gamesNeededToWin) > (this.getGamesWonByPlayer(2) / this.player.two.gamesNeededToWin)) {
-        return 1;
-      } else {
-        return 0;
+      if (playerNum === 1) {
+        if ((this.getGamesWonByPlayer(1) / this.player.one.gamesNeededToWin) > (this.getGamesWonByPlayer(2) / this.player.two.gamesNeededToWin)) {
+          return 1;
+        } else {
+          return 0;
+        }
+      } else if (playerNum === 2) {
+        if ((this.getGamesWonByPlayer(1) / this.player.one.gamesNeededToWin) < (this.getGamesWonByPlayer(2) / this.player.two.gamesNeededToWin)) {
+          return 1;
+        } else {
+          return 0;
+        }
       }
     };
 
@@ -193,7 +203,7 @@
     };
 
     Match.prototype.checkForWin = function() {
-      if (this.getRemainingGamesNeededToWinByPlayer(1) === 0 || this.getRemainingGamesNeededToWinByPlayer(1) === 0) {
+      if (this.getRemainingGamesNeededToWinByPlayer(1) === 0 || this.getRemainingGamesNeededToWinByPlayer(2) === 0) {
         return this.ended = true;
       }
     };
@@ -216,13 +226,15 @@
       if (playerNum === 1) {
         if ((this.getGamesWonByPlayer(1) / this.player.one.gamesNeededToWin) > (this.getGamesWonByPlayer(2) / this.player.two.gamesNeededToWin)) {
           return true;
+        } else {
+          return false;
         }
-        return false;
       } else if (playerNum === 2) {
         if ((this.getGamesWonByPlayer(1) / this.player.one.gamesNeededToWin) < (this.getGamesWonByPlayer(2) / this.player.two.gamesNeededToWin)) {
           return true;
+        } else {
+          return false;
         }
-        return false;
       }
     };
 

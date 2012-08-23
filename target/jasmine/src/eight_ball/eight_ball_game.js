@@ -4,7 +4,20 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
+  Array.prototype.exists = function(search) {
+    var i;
+    i = 0;
+    while (i < this.length) {
+      if (this[i] === search) {
+        return true;
+      }
+      i++;
+    }
+    return false;
+  };
+
   Game = (function(_super) {
+    var getScoreRatio;
 
     __extends(Game, _super);
 
@@ -12,7 +25,6 @@
       stripes: 1,
       solids: 2,
       innings: 0,
-      matchEndedCallback: function() {},
       numberOfInnings: 0,
       ended: false,
       ballsHitIn: {
@@ -24,24 +36,25 @@
       breakingPlayerStillShooting: true,
       scratchOnEight: false,
       earlyEight: false,
+      playerOneWon: false,
+      playerTwoWon: false,
+      matchEndedCallback: function() {},
       player: {
         one: {
           eightBall: [],
           eightOnSnap: false,
           breakAndRun: false,
           timeoutsTaken: 0,
-          callback: function() {},
           ballType: null,
-          hasWon: false
+          callback: function() {}
         },
         two: {
           eightBall: [],
           eightOnSnap: false,
           breakAndRun: false,
           timeoutsTaken: 0,
-          callback: function() {},
           ballType: null,
-          hasWon: false
+          callback: function() {}
         }
       }
     };
@@ -51,21 +64,30 @@
       this.player.one.callback = options.addToPlayerOne;
       this.player.two.callback = options.addToPlayerTwo;
       this.matchEndedCallback = options.callback;
-      this.player.one.callback().timeoutsTaken = 0;
-      this.player.two.callback().timeoutsTaken = 0;
+      this.player.one.timeoutsTaken = 0;
+      this.player.two.timeoutsTaken = 0;
     }
 
     Game.prototype.getCurrentlyUpPlayer = function() {
       if (this.player.one.callback().currentlyUp === true) {
         return this.player.one.callback();
+      } else {
+        return this.player.two.callback();
       }
-      return this.player.two.callback();
+    };
+
+    Game.prototype.getCurrentlyUpTeamNumber = function() {
+      if (this.player.one.callback().currentlyUp === true) {
+        return this.player.one.callback().teamNumber;
+      } else {
+        return this.player.two.callback().teamNumber;
+      }
     };
 
     Game.prototype.getWinningPlayer = function() {
-      if (this.player.one.hasWon === true) {
+      if (this.playerOneWon === true) {
         return this.player.one;
-      } else if (this.player.two.hasWon === true) {
+      } else if (this.playerTwoWon === true) {
         return this.player.two;
       }
     };
@@ -113,12 +135,16 @@
       }
     };
 
+    getScoreRatio = function(playerScore, playerBallCount) {
+      return playerScore / playerBallCount;
+    };
+
     Game.prototype.setPlayerWon = function(playerNum) {
       if (playerNum === 1) {
-        this.player.one.hasWon = true;
+        this.playerOneWon = true;
         return this.player.one.callback().gamesWon += 1;
       } else if (playerNum === 2) {
-        this.player.two.hasWon = true;
+        this.playerTwoWon = true;
         return this.player.two.callback().gamesWon += 1;
       }
     };
@@ -180,11 +206,11 @@
       this.scratchOnEight = true;
       this.ended = true;
       if (this.player.one.callback().currentlyUp === true) {
-        this.player.two.hasWon = true;
+        this.playerTwoWon = true;
         this.player.one.callback().currentlyUp = false;
         this.player.two.callback().currentlyUp = true;
       } else {
-        this.player.one.hasWon = true;
+        this.playerOneWon = true;
         this.player.two.callback().currentlyUp = false;
         this.player.one.callback().currentlyUp = true;
       }
@@ -218,7 +244,7 @@
     };
 
     Game.prototype.scoreBall = function(ballNumber) {
-      if (!(this.getBallsHitIn().indexOf(ballNumber) >= 0)) {
+      if (!this.getBallsHitIn().exists(ballNumber)) {
         this.lastBallHitIn = ballNumber;
         if (ballNumber > 0 && ballNumber < 8) {
           this.ballsHitIn.solids.push(ballNumber);
@@ -227,19 +253,15 @@
         } else {
           if (this.player.one.callback().currentlyUp === true) {
             this.player.one.eightBall.push(ballNumber);
-          } else {
-            if (this.player.two.callback().currentlyUp === true) {
-              this.player.two.eightBall.push(ballNumber);
-            }
+          } else if (this.player.two.callback().currentlyUp === true) {
+            this.player.two.eightBall.push(ballNumber);
           }
           if (this.onBreak === true) {
             if (this.ballsHitIn.solids.length !== 7 && this.ballsHitIn.stripes.length !== 7) {
               if (this.player.one.callback().currentlyUp === true) {
                 this.setEightOnSnapByPlayer(1);
-              } else {
-                if (this.player.two.callback().currentlyUp === true) {
-                  this.setEightOnSnapByPlayer(2);
-                }
+              } else if (this.player.two.callback().currentlyUp === true) {
+                this.setEightOnSnapByPlayer(2);
               }
             }
           } else {
@@ -260,7 +282,7 @@
     };
 
     Game.prototype.checkForWinner = function() {
-      if (this.getBallsHitIn().indexOf(8) >= 0) {
+      if (this.getBallsHitIn().exists(8)) {
         this.ended = true;
       }
       if (this.ended === true) {
@@ -275,13 +297,13 @@
             this.player.one.ballType = this.stripes;
           }
         }
-        if (this.player.one.eightBall.indexOf(8) >= 0 && this.onBreak === false) {
+        if (this.player.one.eightBall.exists(8) && this.onBreak === false) {
           if (this.getBallsHitInByPlayer(1).length !== 8 && this.getBallsHitInByPlayer(2).length !== 8) {
             this.setPlayerWon(2);
           } else if (this.getBallsHitInByPlayer(1).length === 8) {
             this.setPlayerWon(1);
           }
-        } else if (this.player.two.eightBall.indexOf(8) >= 0 && this.onBreak === false) {
+        } else if (this.player.two.eightBall.exists(8) && this.onBreak === false) {
           if (this.getBallsHitInByPlayer(1).length !== 8 && this.getBallsHitInByPlayer(2).length !== 8) {
             this.setPlayerWon(1);
           } else if (this.getBallsHitInByPlayer(2).length === 8) {
@@ -345,8 +367,8 @@
         playerTwoBallType: this.player.two.ballType,
         playerOneEightBall: this.player.one.eightBall,
         playerTwoEightBall: this.player.two.eightBall,
-        playerOneWon: this.player.one.hasWon,
-        playerTwoWon: this.player.two.hasWon,
+        playerOneWon: this.playerOneWon,
+        playerTwoWon: this.playerTwoWon,
         numberOfInnings: this.numberOfInnings,
         earlyEight: this.earlyEight,
         scratchOnEight: this.scratchOnEight,
@@ -370,8 +392,8 @@
       this.player.two.ballType = gameJSON.playerTwoBallType;
       this.player.one.eightBall = gameJSON.playerOneEightBall;
       this.player.two.eightBall = gameJSON.playerTwoEightBall;
-      this.player.one.hasWon = gameJSON.playerOneWon;
-      this.player.two.hasWon = gameJSON.playerTwoWon;
+      this.playerOneWon = gameJSON.playerOneWon;
+      this.playerTwoWon = gameJSON.playerTwoWon;
       this.numberOfInnings = gameJSON.numberOfInnings;
       this.breakingPlayerStillShooting = gameJSON.breakingPlayerStillShooting;
       this.ballsHitIn.solids = gameJSON.solidBallsHitIn;

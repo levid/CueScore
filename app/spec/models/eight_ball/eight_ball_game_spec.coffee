@@ -283,7 +283,7 @@ describe "Eight Ball Game", ->
       game.scoreBall 6
       game.scoreBall 7
       game.scoreBall 8
-      expect(game.getBallsHitInByPlayer(1).indexOf(8) >= 0).toEqual true
+      expect(game.getBallsHitInByPlayer(1).exists(8)).toEqual true
       expect(game.playerOneWon).toEqual true
   
     it "should be able to find out if there is a winner if player two wins and set that player to won", ->

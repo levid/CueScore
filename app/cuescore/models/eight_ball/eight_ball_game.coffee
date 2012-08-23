@@ -119,6 +119,10 @@ class Game extends $CS.Models.EightBall
     else if playerNum == 2
       @player.two.callback().addToEightOnSnaps(1) unless @player.two.eightOnSnap is true
       @player.two.eightOnSnap = true
+      
+  clearBallsHitIn: (playerNum) ->
+    @player.one.eightBall = []
+    @player.two.eightBall = []
 
   setBreakAndRunByPlayer: (playerNum) ->
     if playerNum == 1
@@ -187,7 +191,7 @@ class Game extends $CS.Models.EightBall
     @ended = true
     
   scoreBall: (ballNumber) ->
-    unless @getBallsHitIn().exists(ballNumber)
+    unless @getBallsHitIn().indexOf(ballNumber) >= 0 and !@getBallsHitIn().exists(8)
       @lastBallHitIn = ballNumber
       
       if ballNumber > 0 and ballNumber < 8
@@ -246,7 +250,7 @@ class Game extends $CS.Models.EightBall
         if @getBallsHitInByPlayer(1).length != 8 and @getBallsHitInByPlayer(2).length != 8
           @setPlayerWon(2)
         # Player 1 made all 8 balls so they win the game
-        else if @getBallsHitInByPlayer(1).length == 8
+        else
           @setPlayerWon(1)
           
       # Player 2 made the 8 ball (not on break)
@@ -256,7 +260,7 @@ class Game extends $CS.Models.EightBall
         if @getBallsHitInByPlayer(1).length != 8 and @getBallsHitInByPlayer(2).length != 8
           @setPlayerWon(1) 
         # Player 2 made all 8 balls so they win the game
-        else if @getBallsHitInByPlayer(2).length == 8
+        else
           @setPlayerWon(2)
           
       # The 8 ball was made on the break
@@ -267,7 +271,7 @@ class Game extends $CS.Models.EightBall
         # Player 2 made the 8 on the break
         else if @player.two.callback().currentlyUp is true
           @setPlayerWon(2) 
-
+      
       @matchEndedCallback()
 
   nextPlayerIsUp: ->
