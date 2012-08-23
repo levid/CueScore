@@ -305,7 +305,7 @@
       expect(game.player.one.nineOnSnap).toEqual(false);
       game.scoreBall(9);
       expect(game.player.one.nineOnSnap).toEqual(true);
-      return expect(player.one.NineOnSnaps).toEqual(1);
+      return expect(player.one.nineOnSnaps).toEqual(1);
     });
     it("should know if the 9 ball is not pocketed on the break and not give the current player a NineOnSnap", function() {
       game.scoreBall(1);
@@ -313,7 +313,7 @@
       expect(game.player.one.nineOnSnap).toEqual(false);
       game.scoreBall(9);
       expect(game.player.one.nineOnSnap).toEqual(false);
-      return expect(player.one.NineOnSnaps).toEqual(0);
+      return expect(player.one.nineOnSnaps).toEqual(0);
     });
     it("should know when a player has hit all the balls in and is still breaking and only give them a 9BR", function() {
       game.scoreBall(1);
@@ -332,33 +332,33 @@
       expect(game.player.one.nineOnSnap).toEqual(false);
       game.setNineOnSnapByPlayer(1);
       expect(game.player.one.nineOnSnap).toEqual(true);
-      expect(player.one.NineOnSnaps).toEqual(1);
+      expect(player.one.nineOnSnaps).toEqual(1);
       game.setNineOnSnapByPlayer(1);
-      return expect(player.one.NineOnSnaps).toEqual(1);
+      return expect(player.one.nineOnSnaps).toEqual(1);
     });
     it("should be able to set player two to have a nine on snap and if not already true add one to that players total nine on snaps.", function() {
       expect(game.player.two.nineOnSnap).toEqual(false);
       game.setNineOnSnapByPlayer(2);
       expect(game.player.two.nineOnSnap).toEqual(true);
-      expect(player.two.NineOnSnaps).toEqual(1);
+      expect(player.two.nineOnSnaps).toEqual(1);
       game.setNineOnSnapByPlayer(2);
-      return expect(player.two.NineOnSnaps).toEqual(1);
+      return expect(player.two.nineOnSnaps).toEqual(1);
     });
     it("should be able to set player one to have a break and run and if not already true add one to that players total break and runs.", function() {
       expect(game.player.one.breakAndRun).toEqual(false);
-      game.setPlayerOneBreakAndRun();
+      game.setBreakAndRunByPlayer(1);
       expect(game.player.one.breakAndRun).toEqual(true);
-      expect(player.one.BreakAndRuns).toEqual(1);
-      game.setPlayerOneBreakAndRun();
-      return expect(player.one.BreakAndRuns).toEqual(1);
+      expect(player.one.breakAndRuns).toEqual(1);
+      game.setBreakAndRunByPlayer(1);
+      return expect(player.one.breakAndRuns).toEqual(1);
     });
     it("should be able to set player two to have a break and run and if not already true add one to that players total break and runs.", function() {
       expect(game.player.two.breakAndRun).toEqual(false);
-      game.setPlayerTwoBreakAndRun();
+      game.setBreakAndRunByPlayer(2);
       expect(game.player.two.breakAndRun).toEqual(true);
-      expect(player.two.BreakAndRuns).toEqual(1);
-      game.setPlayerTwoBreakAndRun();
-      return expect(player.two.BreakAndRuns).toEqual(1);
+      expect(player.two.breakAndRuns).toEqual(1);
+      game.setBreakAndRunByPlayer(2);
+      return expect(player.two.breakAndRuns).toEqual(1);
     });
     it("should know when the player breaks and then continues on to all the balls in without missing one or hitting a deadball", function() {
       expect(game.onBreak).toEqual(true);
@@ -375,7 +375,7 @@
       expect(game.onBreak).toEqual(false);
       expect(game.breakingPlayerStillShooting).toEqual(true);
       expect(game.player.one.breakAndRun).toEqual(true);
-      return expect(player.one.BreakAndRuns).toEqual(1);
+      return expect(player.one.breakAndRuns).toEqual(1);
     });
     it("should be able to keep track of which balls the player one has hit in", function() {
       expect(game.player.one.ballsHitIn.length).toEqual(0);
@@ -624,12 +624,12 @@
               nineOnSnap: true,
               breakAndRun: true,
               ballsHitIn: [3, 4],
-              deadBalls: [],
-              lastBall: 3
+              deadBalls: [5, 6],
+              lastBall: 1
             }
           },
-          numberOfInnings: 2,
           ended: true,
+          numberOfInnings: 2,
           onBreak: false,
           breakingPlayerStillShooting: false
         });

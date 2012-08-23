@@ -128,7 +128,7 @@ describe "Nine Ball Player", ->
         safeties: 0
         nineOnSnaps: 0
         breakAndRuns: 0
-        currentlyUp: 0
+        currentlyUp: false
 
 
     it "should be able to take a Player with all variables filled and turn it into a JSON object", ->

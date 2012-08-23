@@ -16,7 +16,7 @@
       ballCount: null,
       score: 0,
       safeties: 0,
-      currentlyUp: 0,
+      currentlyUp: false,
       nineOnSnaps: 0,
       breakAndRuns: 0,
       timeoutsTaken: 0,
