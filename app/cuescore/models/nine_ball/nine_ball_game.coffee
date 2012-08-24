@@ -241,11 +241,11 @@ class Game extends $CS.Models.NineBall
     @player.two.breakAndRun       = gameJSON.playerTwoBreakAndRun
     
     @player.one.ballsHitIn        = gameJSON.playerOneBallsHitIn
-    @player.two.ballsHitIn        = gameJSON.playerTwoballsHitIn
+    @player.two.ballsHitIn        = gameJSON.playerTwoBallsHitIn
     @player.one.deadBalls         = gameJSON.playerOneDeadBalls
-    @player.two.deadBalls         = gameJSON.playerTwodeadBalls
+    @player.two.deadBalls         = gameJSON.playerTwoDeadBalls
     @player.one.lastBall          = gameJSON.playerOneLastBall
-    @player.two.lastBall          = gameJSON.playerTwolastBall
+    @player.two.lastBall          = gameJSON.playerTwoLastBall
     @numberOfInnings              = gameJSON.numberOfInnings
     @ended                        = gameJSON.ended
     @onBreak                      = gameJSON.onBreak

@@ -304,11 +304,11 @@
       this.player.two.nineOnSnap = gameJSON.playerTwoNineOnSnap;
       this.player.two.breakAndRun = gameJSON.playerTwoBreakAndRun;
       this.player.one.ballsHitIn = gameJSON.playerOneBallsHitIn;
-      this.player.two.ballsHitIn = gameJSON.playerTwoballsHitIn;
+      this.player.two.ballsHitIn = gameJSON.playerTwoBallsHitIn;
       this.player.one.deadBalls = gameJSON.playerOneDeadBalls;
-      this.player.two.deadBalls = gameJSON.playerTwodeadBalls;
+      this.player.two.deadBalls = gameJSON.playerTwoDeadBalls;
       this.player.one.lastBall = gameJSON.playerOneLastBall;
-      this.player.two.lastBall = gameJSON.playerTwolastBall;
+      this.player.two.lastBall = gameJSON.playerTwoLastBall;
       this.numberOfInnings = gameJSON.numberOfInnings;
       this.ended = gameJSON.ended;
       this.onBreak = gameJSON.onBreak;

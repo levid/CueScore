@@ -571,25 +571,22 @@ describe "Nine Ball Game", ->
   describe "toJSON/fromJSON", ->
     it "should be able to take a new Game and turn it into a JSON object", ->
       expect(game.toJSON()).toEqual
-        player:
-          one:
-            score: 0
-            timeoutsTaken: 0
-            nineOnSnap: false
-            breakAndRun: false
-            ballsHitIn: []
-            deadBalls: []
-            lastBall: null
-          two:
-            score: 0
-            timeoutsTaken: 0
-            nineOnSnap: false
-            breakAndRun: false
-            ballsHitIn: []
-            deadBalls: []
-            lastBall: null
-        numberOfInnings: 0
+        playerOneScore: 0
+        playerOneTimeoutsTaken: 0
+        playerOneNineOnSnap: false
+        playerOneBreakAndRun: false
+        playerOneBallsHitIn: []
+        playerOneDeadBalls: []
+        playerOneLastBall: null
+        playerTwoScore: 0
+        playerTwoTimeoutsTaken: 0
+        playerTwoNineOnSnap: false
+        playerTwoBreakAndRun: false
+        playerTwoBallsHitIn: []
+        playerTwoDeadBalls: []
+        playerTwoLastBall: null
         ended: false
+        numberOfInnings: 0
         onBreak: true
         breakingPlayerStillShooting: true
 
@@ -615,25 +612,20 @@ describe "Nine Ball Game", ->
       game.takeTimeout()
       
       expect(game.toJSON()).toEqual
-        player:
-          one:
-            score: 2
-            timeoutsTaken: 1
-            nineOnSnap: true
-            breakAndRun: false
-            ballsHitIn: [1, 2]
-            deadBalls: [5, 6]
-            lastBall: 1
-    
-          two:
-            score: 13
-            timeoutsTaken: 0
-            nineOnSnap: true
-            breakAndRun: true
-            ballsHitIn: [3, 4]
-            deadBalls: [5, 6]
-            lastBall: 1
-    
+        playerOneScore: 2
+        playerOneTimeoutsTaken: 1
+        playerOneNineOnSnap: true
+        playerOneBreakAndRun: false
+        playerOneBallsHitIn: [1, 2]
+        playerOneDeadBalls: [5, 6]
+        playerOneLastBall: 1
+        playerTwoScore: 13
+        playerTwoTimeoutsTaken: 0
+        playerTwoNineOnSnap: true
+        playerTwoBreakAndRun: true
+        playerTwoBallsHitIn: [3, 4]
+        playerTwoDeadBalls: [5, 6]
+        playerTwoLastBall: 1
         ended: true
         numberOfInnings: 2
         onBreak: false
@@ -642,23 +634,20 @@ describe "Nine Ball Game", ->
 
     it "should be able to take a Game JSON and fill a Game object with it", ->
       game.fromJSON
-        player:
-          one:
-            score: 4
-            timeoutsTaken: 1
-            nineOnSnap: false
-            breakAndRun: true
-            ballsHitIn: [2]
-            deadBalls: [6]
-            lastBall: 2
-          two:
-            score: 10
-            timeoutsTaken: 0
-            nineOnSnap: false
-            breakAndRun: false
-            ballsHitIn: [4]
-            deadBalls: []
-            lastBall: 4
+        playerOneScore: 4
+        playerOneTimeoutsTaken: 1
+        playerOneNineOnSnap: false
+        playerOneBreakAndRun: true
+        playerOneBallsHitIn: [2]
+        playerOneDeadBalls: [6]
+        playerOneLastBall: 2
+        playerTwoScore: 10
+        playerTwoTimeoutsTaken: 0
+        playerTwoNineOnSnap: false
+        playerTwoBreakAndRun: false
+        playerTwoBallsHitIn: [4]
+        playerTwoDeadBalls: []
+        playerTwoLastBall: 4
         numberOfInnings: 3
         ended: false
         onBreak: false
