@@ -148,7 +148,7 @@ class Game extends $CS.Models.NineBall
         @setBreakAndRunByPlayer(2) 
 
   scoreBall: (ballNumber) ->
-    unless @getBallsHitIn().exists(ballNumber)
+    unless @getBallsHitIn().indexOf(ballNumber) >= 0 and !@getBallsHitIn().exists(9)
       if @player.one.callback().currentlyUp is true
         if ballNumber > 0 and ballNumber < 9
           @player.one.score += 1
@@ -208,46 +208,42 @@ class Game extends $CS.Models.NineBall
     @ended = true
 
   toJSON: ->
-    player:
-      one:
-        score:                    @player.one.score
-        timeoutsTaken:            @player.one.timeoutsTaken
-        nineOnSnap:               @player.one.nineOnSnap
-        breakAndRun:              @player.one.breakAndRun
-        ballsHitIn:               @player.one.ballsHitIn
-        deadBalls:                @player.one.deadBalls
-        lastBall:                 @player.one.lastBall
-      two:
-        score:                    @player.two.score
-        timeoutsTaken:            @player.two.timeoutsTaken
-        nineOnSnap:               @player.two.nineOnSnap
-        breakAndRun:              @player.two.breakAndRun
-        ballsHitIn:               @player.two.ballsHitIn
-        deadBalls:                @player.one.deadBalls
-        lastBall:                 @player.one.lastBall
-
+    playerOneScore:               @player.one.score
+    playerOneTimeoutsTaken:       @player.one.timeoutsTaken
+    playerOneNineOnSnap:          @player.one.nineOnSnap
+    playerOneBreakAndRun:         @player.one.breakAndRun
+    playerOneBallsHitIn:          @player.one.ballsHitIn
+    playerOneDeadBalls:           @player.one.deadBalls
+    playerOneLastBall:            @player.one.lastBall
+    playerTwoScore:               @player.two.score
+    playerTwoTimeoutsTaken:       @player.two.timeoutsTaken
+    playerTwoNineOnSnap:          @player.two.nineOnSnap
+    playerTwoBreakAndRun:         @player.two.breakAndRun
+    playerTwoBallsHitIn:          @player.two.ballsHitIn
+    playerTwoDeadBalls:           @player.one.deadBalls
+    playerTwoLastBall:            @player.one.lastBall
     ended:                        @ended
     numberOfInnings:              @numberOfInnings
     onBreak:                      @onBreak
     breakingPlayerStillShooting:  @breakingPlayerStillShooting
 
   fromJSON: (gameJSON) ->
-    @player.one.score             = gameJSON.player.one.score
-    @player.two.score             = gameJSON.player.two.score
+    @player.one.score             = gameJSON.playerOneScore
+    @player.two.score             = gameJSON.playerTwoScore
     
-    @player.one.timeoutsTaken     = gameJSON.player.one.timeoutsTaken
-    @player.two.timeoutsTaken     = gameJSON.player.two.timeoutsTaken
-    @player.one.nineOnSnap        = gameJSON.player.one.nineOnSnap
-    @player.one.breakAndRun       = gameJSON.player.one.breakAndRun
-    @player.two.nineOnSnap        = gameJSON.player.two.nineOnSnap
-    @player.two.breakAndRun       = gameJSON.player.two.breakAndRun
+    @player.one.timeoutsTaken     = gameJSON.playerOneTimeoutsTaken
+    @player.two.timeoutsTaken     = gameJSON.playerTwoTimeoutsTaken
+    @player.one.nineOnSnap        = gameJSON.playerOneNineOnSnap
+    @player.one.breakAndRun       = gameJSON.playerOneBreakAndRun
+    @player.two.nineOnSnap        = gameJSON.playerTwoNineOnSnap
+    @player.two.breakAndRun       = gameJSON.playerTwoBreakAndRun
     
-    @player.one.ballsHitIn        = gameJSON.player.one.ballsHitIn
-    @player.two.ballsHitIn        = gameJSON.player.two.ballsHitIn
-    @player.one.deadBalls         = gameJSON.player.one.deadBalls
-    @player.two.deadBalls         = gameJSON.player.two.deadBalls
-    @player.one.lastBall          = gameJSON.player.one.lastBall
-    @player.two.lastBall          = gameJSON.player.two.lastBall
+    @player.one.ballsHitIn        = gameJSON.playerOneBallsHitIn
+    @player.two.ballsHitIn        = gameJSON.playerTwoballsHitIn
+    @player.one.deadBalls         = gameJSON.playerOneDeadBalls
+    @player.two.deadBalls         = gameJSON.playerTwodeadBalls
+    @player.one.lastBall          = gameJSON.playerOneLastBall
+    @player.two.lastBall          = gameJSON.playerTwolastBall
     @numberOfInnings              = gameJSON.numberOfInnings
     @ended                        = gameJSON.ended
     @onBreak                      = gameJSON.onBreak

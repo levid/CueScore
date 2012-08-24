@@ -1,171 +1,224 @@
 class Match extends $CS.Models.NineBall
-  defaults: {}
+  defaults:
+    player:
+      one: {}
+      two: {}
+    completedGames: []
+    ended: false
+    originalId: 0
+    leagueMatchId: 0
+    playerNumberWinning: 0
+    suddenDeath: false
+    forfeit: false 
+    currentGame: null
 
-  constructor: (player1, player2, player1Rank, player2Rank, player1Number, player2Number, player1TeamNumber, player2TeamNumber) ->
+  constructor: (options) ->
     _.extend @, @defaults
     
-    @PlayerOne = new NineBallPlayer(player1, player1Rank, player1Number, player1TeamNumber)
-    @PlayerTwo = new NineBallPlayer(player2, player2Rank, player2Number, player2TeamNumber)
-    @CompletedGames = []
-    @Ended = false
-    @OriginalId = 0
-    @LeagueMatchId = 0
-    @PlayerNumberWinning = 0
-    @SuddenDeath = false
-    @Forfeit = false
-    me = this #need this for callback
+    playerOneName         = options.playerOneName
+    playerTwoName         = options.playerTwoName
+    playerOneRank         = options.playerOneRank
+    playerTwoRank         = options.playerTwoRank
+    playerOneNumber       = options.playerOneNumber
+    playerTwoNumber       = options.playerTwoNumber
+    playerOneTeamNumber   = options.playerOneTeamNumber
+    playerTwoTeamNumber   = options.playerTwoTeamNumber
     
-    getNewGame = ->
-      new NineBallGame(->
-        me.PlayerOne
-      , ->
-        me.PlayerTwo
-      , ->
-        me.Ended = true
-      )
+    @player.one = new $CS.Models.NineBall.Player(
+      options =
+        name: playerOneName
+        rank: playerOneRank
+        number: playerOneNumber
+        teamNumber: playerOneTeamNumber
+    )
+        
+    @player.two = new $CS.Models.NineBall.Player(
+      options =
+        name: playerTwoName
+        rank: playerTwoRank
+        number: playerTwoNumber
+        teamNumber: playerTwoTeamNumber
+    )
+    
+    @currentGame = @getNewGame()
   
-    @CurrentGame = @getNewGame()
+  # Getters
+  
+  getNewGame: ->
+    newGame = new $CS.Models.NineBall.Game(
+      options = 
+        addToPlayerOne: =>
+          @player.one
+        addToPlayerTwo: =>
+          @player.two
+        callback: =>
+          @ended = true
+    )
+    newGame
     
-  scoreNumberedBall: (ballNumber) ->
-    @CurrentGame.scoreBall ballNumber
-    if @isPlayerOneWinning() is true
-      @PlayerNumberWinning = 1
-    else
-      @PlayerNumberWinning = 2
-    @checkForWin()
-
-  shotMissed: ->
-    @CurrentGame.nextPlayerIsUp()
-
-  hitDeadBall: (ballNumber) ->
-    @CurrentGame.hitDeadBall ballNumber
-    @checkForWin()
-
-  hitSafety: ->
-    @CurrentGame.hitSafety()
-
-  checkForWin: ->
-
-  startNewGame: ->
-    if @CurrentGame.Ended is true
-      @CompletedGames.push me.CurrentGame
-      @CurrentGame = me.getNewGame()
-
-  setSuddenDeathMode: ->
-    @SuddenDeath = true
-    @PlayerOne.GamesNeededToWin = 1
-    @PlayerTwo.GamesNeededToWin = 1
-
-  getPlayerOneScore: ->
-    @PlayerOne.Score
+  getPlayerScore: (playerNum) ->
+    if playerNum == 1
+      return @player.one.score
+    else if playerNum == 2
+      return @player.two.score
 
   getLosingPlayer: ->
-    (if (@isPlayerOneWinning() is true) then @PlayerTwo else @PlayerOne)
+    (if (@isPlayerWinning(1) is true) then @player.two else @player.one)
 
   getWinningPlayer: ->
-    (if (@isPlayerOneWinning() is true) then @PlayerOne else @PlayerTwo)
+    (if (@isPlayerWinning(1) is true) then @player.one else @player.two)
 
   getLosingPlayersMatchPoints: ->
-    losingScore = new NineBallRanks().getLosingPlayersMatchPoints(@getLosingPlayer().Rank, @getLosingPlayer().Score)
+    losingScore = new $CS.Models.NineBall.Ranks().getLosingPlayersMatchPoints(@getLosingPlayer().rank, @getLosingPlayer().score)
     losingScore
 
   getWinningPlayersMatchPoints: ->
-    winningScore = new NineBallRanks().getWinningPlayersMatchPoints(@getLosingPlayer().Rank, @getLosingPlayer().Score)
+    winningScore = new $CS.Models.NineBall.Ranks().getWinningPlayersMatchPoints(@getLosingPlayer().rank, @getLosingPlayer().score)
     winningScore
 
-  getPlayerOneMatchPoints: ->
-    return new NineBallRanks().getWinningPlayersMatchPoints(@getLosingPlayer().Rank, @getLosingPlayer().Score)  if @isPlayerOneWinning() is true and @isPlayerTwoWinning() is false
-    new NineBallRanks().getLosingPlayersMatchPoints @getLosingPlayer().Rank, @getLosingPlayer().Score
-
-  getPlayerTwoMatchPoints: ->
-    return new NineBallRanks().getWinningPlayersMatchPoints(@getLosingPlayer().Rank, @getLosingPlayer().Score)  if @isPlayerOneWinning() is false and @isPlayerTwoWinning() is true
-    new NineBallRanks().getLosingPlayersMatchPoints @getLosingPlayer().Rank, @getLosingPlayer().Score
+  getMatchPointsByPlayer: (playerNum) ->
+    if playerNum == 1
+      if @isPlayerWinning(1) is true and @isPlayerWinning(2) is false
+        return new $CS.Models.NineBall.Ranks().getWinningPlayersMatchPoints(@getLosingPlayer().rank, @getLosingPlayer().score)  
+      else
+        return new $CS.Models.NineBall.Ranks().getLosingPlayersMatchPoints(@getLosingPlayer().rank, @getLosingPlayer().score)
+    else if playerNum == 2
+      if @isPlayerWinning(1) is false and @isPlayerWinning(2) is true
+        return new $CS.Models.NineBall.Ranks().getWinningPlayersMatchPoints(@getLosingPlayer().rank, @getLosingPlayer().score)
+      else
+        return new $CS.Models.NineBall.Ranks().getLosingPlayersMatchPoints(@getLosingPlayer().rank, @getLosingPlayer().score)
 
   getMatchPoints: ->
-    if @isPlayerOneWinning() is true
-      return new NineBallRanks().getWinningPlayersMatchPoints(@PlayerTwo.Rank, @PlayerTwo.Score) + "-" + new NineBallRanks().getLosingPlayersMatchPoints(@PlayerTwo.Rank, @PlayerTwo.Score)
-    else return new NineBallRanks().getLosingPlayersMatchPoints(@PlayerOne.Rank, @PlayerOne.Score) + "-" + new NineBallRanks().getWinningPlayersMatchPoints(@PlayerOne.Rank, @PlayerOne.Score)  if @isPlayerTwoWinning() is true
-    "Tied"
-
-  isPlayerOneWinning: ->
-    return true  if (@PlayerOne.getRatioScore() > @PlayerTwo.getRatioScore()) or (@PlayerOne.getRatioScore() is @PlayerTwo.getRatioScore() and @PlayerNumberWinning is 1)
-    false
-
-  isPlayerTwoWinning: ->
-    return true  if (@PlayerOne.getRatioScore() < @PlayerTwo.getRatioScore()) or (@PlayerOne.getRatioScore() is @PlayerTwo.getRatioScore() and @PlayerNumberWinning is 2)
-    false
-
+    if @isPlayerWinning(1) is true
+      return new $CS.Models.NineBall.Ranks().getWinningPlayersMatchPoints(@player.two.rank, @player.two.score) + "-" + new $CS.Models.NineBall.Ranks().getLosingPlayersMatchPoints(@player.two.rank, @player.two.score)
+    else if @isPlayerWinning(2) is true
+      return new $CS.Models.NineBall.Ranks().getLosingPlayersMatchPoints(@player.one.rank, @player.one.score) + "-" + new $CS.Models.NineBall.Ranks().getWinningPlayersMatchPoints(@player.one.rank, @player.one.score)
+    else
+      return "Tied"
+    
   getMatchPointsByTeamNumber: (teamNumber) ->
-    if @PlayerOne.TeamNumber is teamNumber
-      return @getPlayerOneMatchPoints()
-    else return @getPlayerTwoMatchPoints()  if @PlayerTwo.TeamNumber is teamNumber
-    0
+    if @player.one.teamNumber is teamNumber
+      return @getMatchPointsByPlayer(1)
+    else if @player.two.teamNumber is teamNumber
+      return @getMatchPointsByPlayer(2)
+    else
+      return 0
 
   getTotalInnings: ->
-    totalInnings = @CurrentGame.NumberOfInnings
-    if @CompletedGames.length > 0
+    totalInnings = @currentGame.numberOfInnings
+    if @completedGames.length > 0
       i = 0
-      while i <= (@CompletedGames.length - 1)
-        totalInnings += @CompletedGames[i].NumberOfInnings
+      while i <= (@completedGames.length - 1)
+        totalInnings += @completedGames[i].numberOfInnings
         i++
     totalInnings.toString()
 
   getTotalDeadBalls: ->
-    totalDeadBalls = @CurrentGame.getDeadBalls()
-    if @CompletedGames.length > 0
+    totalDeadBalls = @currentGame.getDeadBalls()
+    if @completedGames.length > 0
       i = 0
-      while i <= (@CompletedGames.length - 1)
-        totalDeadBalls += @CompletedGames[i].getDeadBalls()
+      while i <= (@completedGames.length - 1)
+        totalDeadBalls += @completedGames[i].getDeadBalls()
         i++
     totalDeadBalls.toString()
 
   getTotalSafeties: ->
-    @PlayerOne.getSafeties() + " to " + @PlayerTwo.getSafeties()
+    @player.one.getSafeties() + " to " + @player.two.getSafeties()
 
   getCurrentGameNumber: ->
-    (@CompletedGames.length + 1).toString()
+    (@completedGames.length + 1).toString()
+    
+  # Setters
+  
+  setSuddenDeathMode: ->
+    @suddenDeath = true
+    @player.one.gamesNeededToWin = 1
+    @player.two.gamesNeededToWin = 1
+  
+  # Methods
+  
+  scoreNumberedBall: (ballNumber) ->
+    @currentGame.scoreBall ballNumber
+    if @isPlayerWinning(1) is true
+      @playerNumberWinning = 1
+    else
+      @playerNumberWinning = 2
+      
+    @checkForWin()
+
+  shotMissed: ->
+    @currentGame.nextPlayerIsUp()
+
+  hitDeadBall: (ballNumber) ->
+    @currentGame.hitDeadBall ballNumber
+    @checkForWin()
+
+  hitSafety: ->
+    @currentGame.hitSafety()
+
+  checkForWin: ->
+
+  startNewGame: ->
+    if @currentGame.ended is true
+      @completedGames.push @currentGame
+      @currentGame = @getNewGame()
+
+  isPlayerWinning: (playerNum) ->
+    if playerNum == 1
+      if (@player.one.getRatioScore() > @player.two.getRatioScore()) or (@player.one.getRatioScore() is @player.two.getRatioScore() and @playerNumberWinning is 1)
+        return true
+      else
+        return false
+    else if playerNum == 2
+      if (@player.one.getRatioScore() < @player.two.getRatioScore()) or (@player.one.getRatioScore() is @player.two.getRatioScore() and @playerNumberWinning is 2)
+        return true
+      else
+        return false
+
 
   toJSON: ->
-    PlayerOne: @PlayerOne.toJSON()
-    PlayerTwo: @PlayerTwo.toJSON()
-    PlayerOneMatchPointsEarned: @getPlayerOneMatchPoints()
-    PlayerTwoMatchPointsEarned: @getPlayerTwoMatchPoints()
-    CurrentGame: @CurrentGame.toJSON()
-    CompletedGames: @completedGamesToJSON()
-    SuddenDeath: @SuddenDeath
-    Forfeit: @Forfeit
-    Ended: @Ended
-    OriginalId: @OriginalId
-    LeagueMatchId: @LeagueMatchId
+    player:
+      one:                      @player.one.toJSON()
+      two:                      @player.two.toJSON()
+    playerOneMatchPointsEarned: @getMatchPointsByPlayer(1)
+    playerTwoMatchPointsEarned: @getMatchPointsByPlayer(2)
+    currentGame:                @currentGame.toJSON()
+    completedGames:             @completedGamesToJSON()
+    suddenDeath:                @suddenDeath
+    forfeit:                    @forfeit
+    ended:                      @ended
+    originalId:                 @originalId
+    leagueMatchId:              @leagueMatchId
 
   completedGamesToJSON: ->
     arrayToReturn = []
     i = 0
 
-    while i <= @CompletedGames.length - 1
-      arrayToReturn[i] = @CompletedGames[i].toJSON()
+    while i <= @completedGames.length - 1
+      arrayToReturn[i] = @completedGames[i].toJSON()
       i++
     arrayToReturn
 
   fromJSON: (json) ->
-    @PlayerOneMatchPointsEarned = json.PlayerOneMatchPointsEarned
-    @PlayerTwoMatchPointsEarned = json.PlayerTwoMatchPointsEarned
-    @PlayerOne = @playerFromJSON(json.PlayerOne)
-    @PlayerTwo = @playerFromJSON(json.PlayerTwo)
-    @CompletedGames = @completedGamesFromJSON(json.CompletedGames)
-    @SuddenDeath = json.SuddenDeath
-    @Forfeit = json.Forfeit
-    @Ended = json.Ended
-    @OriginalId = json.OriginalId
-    @LeagueMatchId = json.LeagueMatchId
+    @playerOneMatchPointsEarned = json.playerOneMatchPointsEarned
+    @playerTwoMatchPointsEarned = json.playerTwoMatchPointsEarned
+    @player.one                 = @playerFromJSON(json.player.one)
+    @player.two                 = @playerFromJSON(json.player.two)
+    @completedGames             = @completedGamesFromJSON(json.completedGames)
+    @suddenDeath                = json.suddenDeath
+    @forfeit                    = json.forfeit
+    @ended                      = json.ended
+    @originalId                 = json.originalId
+    @leagueMatchId              = json.leagueMatchId
+    
     currentGame = @getNewGame()
     currentGame.fromJSON (new ->
-      json.CurrentGame
+      json.currentGame
     )
-    @CurrentGame = currentGame
+    @currentGame = currentGame
 
   playerFromJSON: (json) ->
-    player = new NineBallPlayer()
+    player = new $CS.Models.NineBall.Player(json)
     player.fromJSON (new ->
       json
     )
