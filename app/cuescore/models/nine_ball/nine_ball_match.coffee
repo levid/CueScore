@@ -97,6 +97,7 @@ class Match extends $CS.Models.NineBall
       return "Tied"
     
   getMatchPointsByTeamNumber: (teamNumber) ->
+    console.log teamNumber
     if @player.one.teamNumber is teamNumber
       return @getMatchPointsByPlayer(1)
     else if @player.two.teamNumber is teamNumber

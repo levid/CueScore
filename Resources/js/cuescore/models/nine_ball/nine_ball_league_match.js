@@ -161,7 +161,7 @@
     };
 
     LeagueMatch.prototype.toJSON = function() {
-      if (this.SmallJSON === true) {
+      if (this.smallJSON === true) {
         return this.toSmallJSON();
       }
       return {
@@ -196,7 +196,7 @@
 
     LeagueMatch.prototype.fromJSON = function(jsonLeagueMatch) {
       var matchFive, matchFour, matchOne, matchThree, matchTwo;
-      if (jsonLeagueMatch == null) {
+      if (jsonLeagueMatch.match != null) {
         matchOne = new $CS.Models.NineBall.LeagueMatch({
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber,
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber,

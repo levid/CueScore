@@ -107,7 +107,6 @@ describe "Nine Ball League Match", ->
     setUpMatchDefaults('four')
     setUpMatchDefaults('five')
 
-
   it "should have homeTeamNumber, awayTeamNumber, startTime, and tableType initialized from constructor", ->
     expect(leagueMatch.homeTeamNumber).toEqual "123"
     expect(leagueMatch.awayTeamNumber).toEqual "345"
@@ -303,265 +302,280 @@ describe "Nine Ball League Match", ->
       expect(leagueMatch.toJSON()).toEqual
         match:
           one:
-            PlayerOne:
-              name: "PlayerOne"
-              rank: 1
-              BallCount: "14"
-              number: "1"
-              teamNumber: "123"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              currentlyUp: true
-  
-            PlayerTwo:
-              name: "Player2"
-              rank: 1
-              BallCount: "14"
-              number: "2"
-              teamNumber: "345"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              currentlyUp: false
-  
-            PlayerOneMatchPointsEarned: 0
-            PlayerTwoMatchPointsEarned: 0
+            player:
+              one:
+                name: "Player1"
+                rank: 2
+                ballCount: "19"
+                number: "1"
+                teamNumber: "123"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                currentlyUp: true
+    
+              two:
+                name: "Player2"
+                rank: 2
+                ballCount: "19"
+                number: "2"
+                teamNumber: "345"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                currentlyUp: false
+    
+            playerOneMatchPointsEarned: 0
+            playerTwoMatchPointsEarned: 0
             currentGame:
-              PlayerOneScore: 0
-              PlayerTwoScore: 0
-              PlayerOneTimeoutsTaken: 0
-              PlayerTwoTimeoutsTaken: 0
-              NumberOfInnings: 0
-              PlayerOneNineOnSnap: false
-              PlayerOneBreakAndRun: false
-              PlayerTwoNineOnSnap: false
-              PlayerTwoBreakAndRun: false
+              playerOneScore: 0
+              playerOneTimeoutsTaken: 0
+              playerOneNineOnSnap: false
+              playerOneBreakAndRun: false
+              playerOneBallsHitIn: []
+              playerOneDeadBalls: []
+              playerOneLastBall: null
+              playerTwoScore: 0
+              playerTwoTimeoutsTaken: 0
+              playerTwoNineOnSnap: false
+              playerTwoBreakAndRun: false
+              playerTwoBallsHitIn: []
+              playerTwoDeadBalls: []
+              playerTwoLastBall: null
               ended: false
-              PlayerOneBallsHitIn: []
-              PlayerTwoBallsHitIn: []
-              PlayerOneDeadBalls: []
-              PlayerTwoDeadBalls: []
-              PlayerOneLastBall: null
-              PlayerTwoLastBall: null
-              OnBreak: true
-              BreakingPlayerStillHitting: true
-  
+              numberOfInnings: 0
+              onBreak: true
+              breakingPlayerStillShooting: true
+    
             completedGames: []
+            suddenDeath: false
+            forfeit: false
             ended: false
             originalId: 0
-            leagueMatchId: 1
-
+            leagueMatchId: 0
+    
           two:
-            PlayerOne:
-              name: "PlayerOne"
-              rank: 1
-              BallCount: "14"
-              number: "1"
-              teamNumber: "345"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              currentlyUp: true
-  
-            PlayerTwo:
-              name: "Player2"
-              rank: 1
-              BallCount: "14"
-              number: "2"
-              teamNumber: "123"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              currentlyUp: false
-  
-            PlayerOneMatchPointsEarned: 0
-            PlayerTwoMatchPointsEarned: 0
+            player:
+              one:
+                name: "Player1"
+                rank: 2
+                ballCount: "19"
+                number: "1"
+                teamNumber: "123"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                currentlyUp: true
+    
+              two:
+                name: "Player2"
+                rank: 2
+                ballCount: "19"
+                number: "2"
+                teamNumber: "345"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                currentlyUp: false
+    
+            playerOneMatchPointsEarned: 0
+            playerTwoMatchPointsEarned: 0
             currentGame:
-              PlayerOneScore: 0
-              PlayerTwoScore: 0
-              PlayerOneTimeoutsTaken: 0
-              PlayerTwoTimeoutsTaken: 0
-              NumberOfInnings: 0
-              PlayerOneNineOnSnap: false
-              PlayerOneBreakAndRun: false
-              PlayerTwoNineOnSnap: false
-              PlayerTwoBreakAndRun: false
+              playerOneScore: 0
+              playerOneTimeoutsTaken: 0
+              playerOneNineOnSnap: false
+              playerOneBreakAndRun: false
+              playerOneBallsHitIn: []
+              playerOneDeadBalls: []
+              playerOneLastBall: null
+              playerTwoScore: 0
+              playerTwoTimeoutsTaken: 0
+              playerTwoNineOnSnap: false
+              playerTwoBreakAndRun: false
+              playerTwoBallsHitIn: []
+              playerTwoDeadBalls: []
+              playerTwoLastBall: null
               ended: false
-              PlayerOneBallsHitIn: []
-              PlayerTwoBallsHitIn: []
-              PlayerOneDeadBalls: []
-              PlayerTwoDeadBalls: []
-              PlayerOneLastBall: null
-              PlayerTwoLastBall: null
-              OnBreak: true
-              BreakingPlayerStillHitting: true
-  
+              numberOfInnings: 0
+              onBreak: true
+              breakingPlayerStillShooting: true
+    
             completedGames: []
+            suddenDeath: false
+            forfeit: false
             ended: false
             originalId: 0
-            leagueMatchId: 1
-  
+            leagueMatchId: 0
+    
           three:
-            PlayerOne:
-              name: "PlayerOne"
-              rank: 1
-              BallCount: "14"
-              number: "1"
-              teamNumber: "123"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              currentlyUp: true
-  
-            PlayerTwo:
-              name: "Player2"
-              rank: 1
-              BallCount: "14"
-              number: "2"
-              teamNumber: "345"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              currentlyUp: false
-  
-            PlayerOneMatchPointsEarned: 0
-            PlayerTwoMatchPointsEarned: 0
+            player:
+              one:
+                name: "Player1"
+                rank: 2
+                ballCount: "19"
+                number: "1"
+                teamNumber: "123"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                currentlyUp: true
+    
+              two:
+                name: "Player2"
+                rank: 2
+                ballCount: "19"
+                number: "2"
+                teamNumber: "345"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                currentlyUp: false
+    
+            playerOneMatchPointsEarned: 0
+            playerTwoMatchPointsEarned: 0
             currentGame:
-              PlayerOneScore: 0
-              PlayerTwoScore: 0
-              PlayerOneTimeoutsTaken: 0
-              PlayerTwoTimeoutsTaken: 0
-              NumberOfInnings: 0
-              PlayerOneNineOnSnap: false
-              PlayerOneBreakAndRun: false
-              PlayerTwoNineOnSnap: false
-              PlayerTwoBreakAndRun: false
+              playerOneScore: 0
+              playerOneTimeoutsTaken: 0
+              playerOneNineOnSnap: false
+              playerOneBreakAndRun: false
+              playerOneBallsHitIn: []
+              playerOneDeadBalls: []
+              playerOneLastBall: null
+              playerTwoScore: 0
+              playerTwoTimeoutsTaken: 0
+              playerTwoNineOnSnap: false
+              playerTwoBreakAndRun: false
+              playerTwoBallsHitIn: []
+              playerTwoDeadBalls: []
+              playerTwoLastBall: null
               ended: false
-              PlayerOneBallsHitIn: []
-              PlayerTwoBallsHitIn: []
-              PlayerOneDeadBalls: []
-              PlayerTwoDeadBalls: []
-              PlayerOneLastBall: null
-              PlayerTwoLastBall: null
-              OnBreak: true
-              BreakingPlayerStillHitting: true
-  
+              numberOfInnings: 0
+              onBreak: true
+              breakingPlayerStillShooting: true
+    
             completedGames: []
+            suddenDeath: false
+            forfeit: false
             ended: false
             originalId: 0
-            leagueMatchId: 1
-  
+            leagueMatchId: 0
+    
           four:
-            PlayerOne:
-              name: "PlayerOne"
-              rank: 1
-              BallCount: "14"
-              number: "1"
-              teamNumber: "123"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              currentlyUp: true
-  
-            PlayerTwo:
-              name: "Player2"
-              rank: 1
-              BallCount: "14"
-              number: "2"
-              teamNumber: "345"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              currentlyUp: false
-  
-            PlayerOneMatchPointsEarned: 0
-            PlayerTwoMatchPointsEarned: 0
+            player:
+              one:
+                name: "Player1"
+                rank: 2
+                ballCount: "19"
+                number: "1"
+                teamNumber: "123"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                currentlyUp: true
+    
+              two:
+                name: "Player2"
+                rank: 2
+                ballCount: "19"
+                number: "2"
+                teamNumber: "345"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                currentlyUp: false
+    
+            playerOneMatchPointsEarned: 0
+            playerTwoMatchPointsEarned: 0
             currentGame:
-              PlayerOneScore: 0
-              PlayerTwoScore: 0
-              PlayerOneTimeoutsTaken: 0
-              PlayerTwoTimeoutsTaken: 0
-              NumberOfInnings: 0
-              PlayerOneNineOnSnap: false
-              PlayerOneBreakAndRun: false
-              PlayerTwoNineOnSnap: false
-              PlayerTwoBreakAndRun: false
+              playerOneScore: 0
+              playerOneTimeoutsTaken: 0
+              playerOneNineOnSnap: false
+              playerOneBreakAndRun: false
+              playerOneBallsHitIn: []
+              playerOneDeadBalls: []
+              playerOneLastBall: null
+              playerTwoScore: 0
+              playerTwoTimeoutsTaken: 0
+              playerTwoNineOnSnap: false
+              playerTwoBreakAndRun: false
+              playerTwoBallsHitIn: []
+              playerTwoDeadBalls: []
+              playerTwoLastBall: null
               ended: false
-              PlayerOneBallsHitIn: []
-              PlayerTwoBallsHitIn: []
-              PlayerOneDeadBalls: []
-              PlayerTwoDeadBalls: []
-              PlayerOneLastBall: null
-              PlayerTwoLastBall: null
-              OnBreak: true
-              BreakingPlayerStillHitting: true
-  
+              numberOfInnings: 0
+              onBreak: true
+              breakingPlayerStillShooting: true
+    
             completedGames: []
+            suddenDeath: false
+            forfeit: false
             ended: false
             originalId: 0
-            leagueMatchId: 1
-  
+            leagueMatchId: 0
+    
           five:
-            PlayerOne:
-              name: "PlayerOne"
-              rank: 1
-              BallCount: "14"
-              number: "1"
-              teamNumber: "345"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              currentlyUp: true
-  
-            PlayerTwo:
-              name: "Player2"
-              rank: 1
-              BallCount: "14"
-              number: "2"
-              teamNumber: "123"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              currentlyUp: false
-  
-            PlayerOneMatchPointsEarned: 0
-            PlayerTwoMatchPointsEarned: 0
+            player:
+              one:
+                name: "Player1"
+                rank: 2
+                ballCount: "19"
+                number: "1"
+                teamNumber: "123"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                currentlyUp: true
+    
+              two:
+                name: "Player2"
+                rank: 2
+                ballCount: "19"
+                number: "2"
+                teamNumber: "345"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                currentlyUp: false
+    
+            playerOneMatchPointsEarned: 0
+            playerTwoMatchPointsEarned: 0
             currentGame:
-              PlayerOneScore: 0
-              PlayerTwoScore: 0
-              PlayerOneTimeoutsTaken: 0
-              PlayerTwoTimeoutsTaken: 0
-              NumberOfInnings: 0
-              PlayerOneNineOnSnap: false
-              PlayerOneBreakAndRun: false
-              PlayerTwoNineOnSnap: false
-              PlayerTwoBreakAndRun: false
+              playerOneScore: 0
+              playerOneTimeoutsTaken: 0
+              playerOneNineOnSnap: false
+              playerOneBreakAndRun: false
+              playerOneBallsHitIn: []
+              playerOneDeadBalls: []
+              playerOneLastBall: null
+              playerTwoScore: 0
+              playerTwoTimeoutsTaken: 0
+              playerTwoNineOnSnap: false
+              playerTwoBreakAndRun: false
+              playerTwoBallsHitIn: []
+              playerTwoDeadBalls: []
+              playerTwoLastBall: null
               ended: false
-              PlayerOneBallsHitIn: []
-              PlayerTwoBallsHitIn: []
-              PlayerOneDeadBalls: []
-              PlayerTwoDeadBalls: []
-              PlayerOneLastBall: null
-              PlayerTwoLastBall: null
-              OnBreak: true
-              BreakingPlayerStillHitting: true
-  
+              numberOfInnings: 0
+              onBreak: true
+              breakingPlayerStillShooting: true
+    
             completedGames: []
+            suddenDeath: false
+            forfeit: false
             ended: false
             originalId: 0
-            leagueMatchId: 1
-
+            leagueMatchId: 0
+    
         teamNumber: ""
         homeTeamNumber: "123"
         awayTeamNumber: "345"
@@ -583,7 +597,7 @@ describe "Nine Ball League Match", ->
 
 
     it "should be able to set SmallJSON = true to return only the small JSON object when toJSON is called.", ->
-      leagueMatch.SmallJSON = true
+      leagueMatch.smallJSON = true
       expect(leagueMatch.toJSON()).toEqual
         teamNumber: ""
         homeTeamNumber: "123"
@@ -592,7 +606,6 @@ describe "Nine Ball League Match", ->
         endTime: ""
         tableType: "Coin-Operated"
         leagueMatchId: 1
-
 
     it "should be able to take a json object and fill its own values", ->
       leagueMatch = new $CS.Models.NineBall.LeagueMatch(
@@ -607,47 +620,47 @@ describe "Nine Ball League Match", ->
       leagueMatch.fromJSON
         match:
           one:
-            PlayerOne:
-              name: "PlayerOne"
-              rank: 1
-              number: "1"
-              teamNumber: "123"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              timeoutsTaken: 0
-              currentlyUp: true
-  
-            PlayerTwo:
-              name: "Player2"
-              rank: 1
-              number: "2"
-              teamNumber: "345"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              timeoutsTaken: 0
-              currentlyUp: false
+            player:
+              one:
+                name: "PlayerOne"
+                rank: 1
+                number: "1"
+                teamNumber: "123"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                timeoutsTaken: 0
+                currentlyUp: true
+              two:
+                name: "Player2"
+                rank: 1
+                number: "2"
+                teamNumber: "345"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                timeoutsTaken: 0
+                currentlyUp: false
   
             currentGame:
-              PlayerOneScore: 0
-              PlayerTwoScore: 0
-              NumberOfInnings: 0
-              PlayerOneNineOnSnap: false
-              PlayerOneBreakAndRun: false
-              PlayerTwoNineOnSnap: false
-              PlayerTwoBreakAndRun: false
+              playerOneScore: 0
+              playerTwoScore: 0
+              numberOfInnings: 0
+              playerOneNineOnSnap: false
+              playerOneBreakAndRun: false
+              playerTwoNineOnSnap: false
+              playerTwoBreakAndRun: false
               ended: false
-              PlayerOneBallsHitIn: []
-              PlayerTwoBallsHitIn: []
-              PlayerOneDeadBalls: []
-              PlayerTwoDeadBalls: []
-              PlayerOneLastBall: null
-              PlayerTwoLastBall: null
-              OnBreak: true
-              BreakingPlayerStillHitting: true
+              playerOneBallsHitIn: []
+              playerTwoBallsHitIn: []
+              playerOneDeadBalls: []
+              playerTwoDeadBalls: []
+              playerOneLastBall: null
+              playerTwoLastBall: null
+              onBreak: true
+              breakingPlayerStillShooting: true
   
             completedGames: []
             ended: false
@@ -655,47 +668,47 @@ describe "Nine Ball League Match", ->
             leagueMatchId: 1
   
           two:
-            PlayerOne:
-              name: "PlayerOne"
-              rank: 1
-              number: "1"
-              teamNumber: "345"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              timeoutsTaken: 0
-              currentlyUp: false
-  
-            PlayerTwo:
-              name: "Player2"
-              rank: 1
-              number: "2"
-              teamNumber: "123"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              timeoutsTaken: 0
-              currentlyUp: true
+            player:
+              one:
+                name: "PlayerOne"
+                rank: 1
+                number: "1"
+                teamNumber: "345"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                timeoutsTaken: 0
+                currentlyUp: false
+              two:
+                name: "Player2"
+                rank: 1
+                number: "2"
+                teamNumber: "123"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                timeoutsTaken: 0
+                currentlyUp: true
   
             currentGame:
-              PlayerOneScore: 0
-              PlayerTwoScore: 0
-              NumberOfInnings: 0
-              PlayerOneNineOnSnap: false
-              PlayerOneBreakAndRun: false
-              PlayerTwoNineOnSnap: false
-              PlayerTwoBreakAndRun: false
+              playerOneScore: 0
+              playerTwoScore: 0
+              numberOfInnings: 0
+              playerOneNineOnSnap: false
+              playerOneBreakAndRun: false
+              playerTwoNineOnSnap: false
+              playerTwoBreakAndRun: false
               ended: false
-              PlayerOneBallsHitIn: []
-              PlayerTwoBallsHitIn: []
-              PlayerOneDeadBalls: []
-              PlayerTwoDeadBalls: []
-              PlayerOneLastBall: null
-              PlayerTwoLastBall: null
-              OnBreak: true
-              BreakingPlayerStillHitting: true
+              playerOneBallsHitIn: []
+              playerTwoBallsHitIn: []
+              playerOneDeadBalls: []
+              playerTwoDeadBalls: []
+              playerOneLastBall: null
+              playerTwoLastBall: null
+              onBreak: true
+              breakingPlayerStillShooting: true
   
             completedGames: []
             ended: false
@@ -703,47 +716,47 @@ describe "Nine Ball League Match", ->
             leagueMatchId: 1
   
           three:
-            PlayerOne:
-              name: "PlayerOne"
-              rank: 1
-              number: "1"
-              teamNumber: "123"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              timeoutsTaken: 0
-              currentlyUp: true
-  
-            PlayerTwo:
-              name: "Player2"
-              rank: 1
-              number: "2"
-              teamNumber: "345"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              timeoutsTaken: 0
-              currentlyUp: false
+            player:
+              one:
+                name: "PlayerOne"
+                rank: 1
+                number: "1"
+                teamNumber: "123"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                timeoutsTaken: 0
+                currentlyUp: true
+              two:
+                name: "Player2"
+                rank: 1
+                number: "2"
+                teamNumber: "345"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                timeoutsTaken: 0
+                currentlyUp: false
   
             currentGame:
-              PlayerOneScore: 0
-              PlayerTwoScore: 0
-              NumberOfInnings: 0
-              PlayerOneNineOnSnap: false
-              PlayerOneBreakAndRun: false
-              PlayerTwoNineOnSnap: false
-              PlayerTwoBreakAndRun: false
+              playerOneScore: 0
+              playerTwoScore: 0
+              numberOfInnings: 0
+              playerOneNineOnSnap: false
+              playerOneBreakAndRun: false
+              playerTwoNineOnSnap: false
+              playerTwoBreakAndRun: false
               ended: false
-              PlayerOneBallsHitIn: []
-              PlayerTwoBallsHitIn: []
-              PlayerOneDeadBalls: []
-              PlayerTwoDeadBalls: []
-              PlayerOneLastBall: null
-              PlayerTwoLastBall: null
-              OnBreak: true
-              BreakingPlayerStillHitting: true
+              playerOneBallsHitIn: []
+              playerTwoBallsHitIn: []
+              playerOneDeadBalls: []
+              playerTwoDeadBalls: []
+              playerOneLastBall: null
+              playerTwoLastBall: null
+              onBreak: true
+              breakingPlayerStillShooting: true
   
             completedGames: []
             ended: false
@@ -751,47 +764,47 @@ describe "Nine Ball League Match", ->
             leagueMatchId: 1
   
           four:
-            PlayerOne:
-              name: "PlayerOne"
-              rank: 1
-              number: "1"
-              teamNumber: "123"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              timeoutsTaken: 0
-              currentlyUp: true
-  
-            PlayerTwo:
-              name: "Player2"
-              rank: 1
-              number: "2"
-              teamNumber: "345"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              timeoutsTaken: 0
-              currentlyUp: false
-  
+            player:
+              one:
+                name: "PlayerOne"
+                rank: 1
+                number: "1"
+                teamNumber: "123"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                timeoutsTaken: 0
+                currentlyUp: true
+              two:
+                name: "Player2"
+                rank: 1
+                number: "2"
+                teamNumber: "345"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                timeoutsTaken: 0
+                currentlyUp: false
+    
             currentGame:
-              PlayerOneScore: 0
-              PlayerTwoScore: 0
-              NumberOfInnings: 0
-              PlayerOneNineOnSnap: false
-              PlayerOneBreakAndRun: false
-              PlayerTwoNineOnSnap: false
-              PlayerTwoBreakAndRun: false
+              playerOneScore: 0
+              playerTwoScore: 0
+              numberOfInnings: 0
+              playerOneNineOnSnap: false
+              playerOneBreakAndRun: false
+              playerTwoNineOnSnap: false
+              playerTwoBreakAndRun: false
               ended: false
-              PlayerOneBallsHitIn: []
-              PlayerTwoBallsHitIn: []
-              PlayerOneDeadBalls: []
-              PlayerTwoDeadBalls: []
-              PlayerOneLastBall: null
-              PlayerTwoLastBall: null
-              OnBreak: true
-              BreakingPlayerStillHitting: true
+              playerOneBallsHitIn: []
+              playerTwoBallsHitIn: []
+              playerOneDeadBalls: []
+              playerTwoDeadBalls: []
+              playerOneLastBall: null
+              playerTwoLastBall: null
+              onBreak: true
+              breakingPlayerStillShooting: true
   
             completedGames: []
             ended: false
@@ -799,47 +812,47 @@ describe "Nine Ball League Match", ->
             leagueMatchId: 1
   
           five:
-            PlayerOne:
-              name: "TestPlayer"
-              rank: 1
-              number: "1"
-              teamNumber: "345"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              timeoutsTaken: 0
-              currentlyUp: true
-  
-            PlayerTwo:
-              name: "Player2"
-              rank: 1
-              number: "2"
-              teamNumber: "123"
-              score: 0
-              safeties: 0
-              nineOnSnaps: 0
-              breakAndRuns: 0
-              timeoutsTaken: 0
-              currentlyUp: false
+            Player:
+              one:
+                name: "TestPlayer"
+                rank: 1
+                number: "1"
+                teamNumber: "345"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                timeoutsTaken: 0
+                currentlyUp: true
+              two:
+                name: "Player2"
+                rank: 1
+                number: "2"
+                teamNumber: "123"
+                score: 0
+                safeties: 0
+                nineOnSnaps: 0
+                breakAndRuns: 0
+                timeoutsTaken: 0
+                currentlyUp: false
   
             currentGame:
-              PlayerOneScore: 0
-              PlayerTwoScore: 0
-              NumberOfInnings: 0
-              PlayerOneNineOnSnap: false
-              PlayerOneBreakAndRun: false
-              PlayerTwoNineOnSnap: false
-              PlayerTwoBreakAndRun: false
+              playerOneScore: 0
+              playerTwoScore: 0
+              numberOfInnings: 0
+              playerOneNineOnSnap: false
+              playerOneBreakAndRun: false
+              playerTwoNineOnSnap: false
+              playerTwoBreakAndRun: false
               ended: false
-              PlayerOneBallsHitIn: []
-              PlayerTwoBallsHitIn: []
-              PlayerOneDeadBalls: []
-              PlayerTwoDeadBalls: []
-              PlayerOneLastBall: null
-              PlayerTwoLastBall: null
-              OnBreak: true
-              BreakingPlayerStillHitting: true
+              playerOneBallsHitIn: []
+              playerTwoBallsHitIn: []
+              playerOneDeadBalls: []
+              playerTwoDeadBalls: []
+              playerOneLastBall: null
+              playerTwoLastBall: null
+              onBreak: true
+              breakingPlayerStillShooting: true
   
             completedGames: []
             ended: false
@@ -852,7 +865,7 @@ describe "Nine Ball League Match", ->
         startTime: "10:00 pm"
         endTime: ""
         tableType: "Coin-Operated"
-        leagueMatchId: null
+        leagueMatchId: 1
 
       expect(leagueMatch.teamNumber).toEqual ""
       expect(leagueMatch.homeTeamNumber).toEqual "123"
@@ -861,7 +874,7 @@ describe "Nine Ball League Match", ->
       expect(leagueMatch.endTime).toEqual ""
       expect(leagueMatch.tableType).toEqual "Coin-Operated"
       expect(leagueMatch.leagueMatchId).toEqual null
-      expect(leagueMatch.match.five.PlayerOne.name).toEqual "TestPlayer"
+      expect(leagueMatch.match.five.playerOneName).toEqual "TestPlayer"
       leagueMatch.match.five.scoreNumberedBall 9
       expect(leagueMatch.match.five.currentGame.getBallsScored()).toEqual [9]
       leagueMatch.match.five.startNewGame()

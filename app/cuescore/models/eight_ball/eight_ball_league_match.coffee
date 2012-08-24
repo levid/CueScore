@@ -145,7 +145,7 @@ class LeagueMatch extends $CS.Models.EightBall
     leagueMatchId:    @leagueMatchId
 
   fromJSON: (jsonLeagueMatch) ->
-    unless jsonLeagueMatch?
+    if jsonLeagueMatch.match?
       matchOne = new $CS.Models.EightBall.LeagueMatch(
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber

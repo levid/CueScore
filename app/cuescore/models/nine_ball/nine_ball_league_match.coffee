@@ -126,7 +126,7 @@ class LeagueMatch extends $CS.Models.NineBall
       return @homeTeamNumber
 
   toJSON: ->
-    return @toSmallJSON() if @SmallJSON is true
+    return @toSmallJSON() if @smallJSON is true
     
     match:
       one:            @match.one.toJSON()
@@ -152,7 +152,7 @@ class LeagueMatch extends $CS.Models.NineBall
     leagueMatchId:    @leagueMatchId
 
   fromJSON: (jsonLeagueMatch) ->
-    unless jsonLeagueMatch?
+    if jsonLeagueMatch.match?
       matchOne = new $CS.Models.NineBall.LeagueMatch(
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber

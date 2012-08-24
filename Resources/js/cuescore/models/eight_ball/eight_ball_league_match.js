@@ -191,7 +191,7 @@
 
     LeagueMatch.prototype.fromJSON = function(jsonLeagueMatch) {
       var matchFive, matchFour, matchOne, matchThree, matchTwo;
-      if (jsonLeagueMatch == null) {
+      if (jsonLeagueMatch.match != null) {
         matchOne = new $CS.Models.EightBall.LeagueMatch({
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber,
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber,

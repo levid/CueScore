@@ -129,6 +129,7 @@
     };
 
     Match.prototype.getMatchPointsByTeamNumber = function(teamNumber) {
+      console.log(teamNumber);
       if (this.player.one.teamNumber === teamNumber) {
         return this.getMatchPointsByPlayer(1);
       } else if (this.player.two.teamNumber === teamNumber) {
