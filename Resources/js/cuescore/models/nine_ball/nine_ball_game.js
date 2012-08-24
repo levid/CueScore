@@ -55,8 +55,10 @@
       this.player.one.callback = options.addToPlayerOne;
       this.player.two.callback = options.addToPlayerTwo;
       this.matchEndedCallback = options.callback;
-      this.player.one.callback().timeoutsTaken = 0;
-      this.player.two.callback().timeoutsTaken = 0;
+      this.player.one.deadBalls = [];
+      this.player.two.deadBalls = [];
+      this.player.one.timeoutsTaken = 0;
+      this.player.two.timeoutsTaken = 0;
     }
 
     Game.prototype.getCurrentlyUpPlayer = function() {

@@ -444,6 +444,7 @@ describe "Nine Ball Match", ->
             nineOnSnaps: 0
             breakAndRuns: 0
             currentlyUp: true
+    
           two:
             name: "Player2"
             rank: 7
@@ -455,34 +456,32 @@ describe "Nine Ball Match", ->
             nineOnSnaps: 0
             breakAndRuns: 0
             currentlyUp: false
-
+    
         playerOneMatchPointsEarned: 0
         playerTwoMatchPointsEarned: 0
         currentGame:
-          player:
-            one:
-              score: 0
-              timeoutsTaken: 0
-              nineOnSnap: false
-              breakAndRun: false
-              ballsHitIn: []
-              deadBalls: []
-              lastBall: null
-            two:
-              score: 0
-              timeoutsTaken: 0
-              nineOnSnap: false
-              breakAndRun: false
-              ballsHitIn: []
-              deadBalls: []
-              lastBall: null
-
-          numberOfInnings: 0
+          playerOneScore: 0
+          playerOneTimeoutsTaken: 0
+          playerOneNineOnSnap: false
+          playerOneBreakAndRun: false
+          playerOneBallsHitIn: []
+          playerOneDeadBalls: []
+          playerOneLastBall: null
+          playerTwoScore: 0
+          playerTwoTimeoutsTaken: 0
+          playerTwoNineOnSnap: false
+          playerTwoBreakAndRun: false
+          playerTwoBallsHitIn: []
+          playerTwoDeadBalls: []
+          playerTwoLastBall: null
           ended: false
+          numberOfInnings: 0
           onBreak: true
           breakingPlayerStillShooting: true
-
+    
         completedGames: []
+        suddenDeath: false
+        forfeit: false
         ended: false
         originalId: 0
         leagueMatchId: 0
@@ -508,6 +507,7 @@ describe "Nine Ball Match", ->
             nineOnSnaps: 0
             breakAndRuns: 0
             currentlyUp: false
+    
           two:
             name: "Player2"
             rank: 7
@@ -519,57 +519,51 @@ describe "Nine Ball Match", ->
             nineOnSnaps: 0
             breakAndRuns: 0
             currentlyUp: true
-
+    
         playerOneMatchPointsEarned: 20
         playerTwoMatchPointsEarned: 0
         currentGame:
-          player:
-            one:
-              score: 0
-              timeoutsTaken: 0
-              nineOnSnap: false
-              breakAndRun: false
-              ballsHitIn: []
-              deadBalls: []
-              lastBall: null
-            two:
-              score: 0
-              timeoutsTaken: 0
-              nineOnSnap: false
-              breakAndRun: false
-              ballsHitIn: []
-              deadBalls: []
-              lastBall: null
-
-          numberOfInnings: 0
+          playerOneScore: 1
+          playerOneTimeoutsTaken: 0
+          playerOneNineOnSnap: false
+          playerOneBreakAndRun: false
+          playerOneBallsHitIn: [1]
+          playerOneDeadBalls: []
+          playerOneLastBall: null
+          playerTwoScore: 2
+          playerTwoTimeoutsTaken: 0
+          playerTwoNineOnSnap: false
+          playerTwoBreakAndRun: false
+          playerTwoBallsHitIn: [9]
+          playerTwoDeadBalls: []
+          playerTwoLastBall: null
           ended: false
+          numberOfInnings: 0
           onBreak: true
           breakingPlayerStillShooting: true
-
+    
         completedGames: [
-          player:
-            one:
-              score: 1
-              timeoutsTaken: 0
-              nineOnSnap: false
-              breakAndRun: false
-              ballsHitIn: [1]
-              deadBalls: [2]
-              lastBall: null
-            two:
-              score: 2
-              timeoutsTaken: 0
-              nineOnSnap: false
-              breakAndRun: false
-              ballsHitIn: [9]
-              deadBalls: [3, 4, 5, 6, 7, 8]
-              lastBall: 9
-
-          numberOfInnings: 0
+          playerOneScore: 1
+          playerOneTimeoutsTaken: 0
+          playerOneNineOnSnap: false
+          playerOneBreakAndRun: false
+          playerOneBallsHitIn: [1]
+          playerOneDeadBalls: []
+          playerOneLastBall: null
+          playerTwoScore: 2
+          playerTwoTimeoutsTaken: 0
+          playerTwoNineOnSnap: false
+          playerTwoBreakAndRun: false
+          playerTwoBallsHitIn: [9]
+          playerTwoDeadBalls: []
+          playerTwoLastBall: null
           ended: true
+          numberOfInnings: 0
           onBreak: false
           breakingPlayerStillShooting: false
         ]
+        suddenDeath: false
+        forfeit: false
         ended: false
         originalId: 0
         leagueMatchId: 0
@@ -583,26 +577,22 @@ describe "Nine Ball Match", ->
       match.scoreNumberedBall 9
       match.startNewGame()
       expect(match.completedGamesToJSON()).toEqual [
-        player:
-          one:
-            score: 1
-            timeoutsTaken: 0
-            nineOnSnap: false
-            breakAndRun: false
-            ballsHitIn: [1]
-            deadBalls: [2]
-            lastBall: null
-          two:
-            score: 2
-            timeoutsTaken: 0
-            nineOnSnap: false
-            breakAndRun: false
-            ballsHitIn: [9]
-            deadBalls: [3, 4, 5, 6, 7, 8]
-            lastBall: 9
-
-        numberOfInnings: 0
+        playerOneScore: 1
+        playerOneTimeoutsTaken: 0
+        playerOneNineOnSnap: false
+        playerOneBreakAndRun: false
+        playerOneBallsHitIn: [1]
+        playerOneDeadBalls: []
+        playerOneLastBall: null
+        playerTwoScore: 2
+        playerTwoTimeoutsTaken: 0
+        playerTwoNineOnSnap: false
+        playerTwoBreakAndRun: false
+        playerTwoBallsHitIn: [9]
+        playerTwoDeadBalls: []
+        playerTwoLastBall: null
         ended: true
+        numberOfInnings: 0
         onBreak: false
         breakingPlayerStillShooting: false
       ]
@@ -673,48 +663,40 @@ describe "Nine Ball Match", ->
         playerOneMatchPointsEarned: 20
         playerTwoMatchPointsEarned: 0
         currentGame:
-          player:
-            one:
-              score: 0
-              timeoutsTaken: 0
-              nineOnSnap: false
-              breakAndRun: false
-              ballsHitIn: []
-              deadBalls: []
-              lastBall: null
-            two:
-              score: 0
-              timeoutsTaken: 0
-              nineOnSnap: false
-              breakAndRun: false
-              ballsHitIn: []
-              deadBalls: []
-              lastBall: null
-
+          playerOneScore: 0
+          playerOneTimeoutsTaken: 0
+          playerOneNineOnSnap: false
+          playerOneBreakAndRun: false
+          playerOneBallsHitIn: []
+          playerOneDeadBalls: []
+          playerOneLastBall: null
+          playerTwoScore: 0
+          playerTwoTimeoutsTaken: 0
+          playerTwoNineOnSnap: false
+          playerTwoBreakAndRun: false
+          playerTwoBallsHitIn: []
+          playerTwoDeadBalls: []
+          playerTwoLastBall: null
           numberOfInnings: 0
           ended: false
           onBreak: false
           breakingPlayerStillShooting: false
 
         completedGames: [
-          player:
-            one:
-              score: 1
-              timeoutsTaken: 0
-              nineOnSnap: false
-              breakAndRun: false
-              ballsHitIn: [1]
-              deadBalls: [2]
-              lastBall: null
-            two:
-              score: 2
-              timeoutsTaken: 0
-              nineOnSnap: false
-              breakAndRun: false
-              ballsHitIn: [9]
-              deadBalls: [3, 4, 5, 6, 7, 8]
-              lastBall: 9
-
+          playerOneScore: 1
+          playerOneTimeoutsTaken: 0
+          playerOneNineOnSnap: false
+          playerOneBreakAndRun: false
+          playerOneBallsHitIn: [1]
+          playerOneDeadBalls: [2]
+          playerOneLastBall: null
+          playerTwoScore: 2
+          playerTwoTimeoutsTaken: 0
+          playerTwoNineOnSnap: false
+          playerTwoBreakAndRun: false
+          playerTwoBallsHitIn: [9]
+          playerTwoDeadBalls: [3, 4, 5, 6, 7, 8]
+          playerTwoLastBall: 9
           numberOfInnings: 0
           ended: true
           onBreak: false
@@ -736,24 +718,20 @@ describe "Nine Ball Match", ->
 
     it "should be able to take a completedGames JSON array and convert it to JS Array with Objects", ->
       completedGames = match.completedGamesFromJSON([
-        player:
-          one:
-            score: 1
-            timeoutsTaken: 0
-            nineOnSnap: false
-            breakAndRun: false
-            ballsHitIn: [1]
-            deadBalls: [2]
-            lastBall: null
-          two:
-            score: 2
-            timeoutsTaken: 0
-            nineOnSnap: false
-            breakAndRun: false
-            ballsHitIn: [9]
-            deadBalls: [3, 4, 5, 6, 7, 8]
-            lastBall: 9
-
+        playerOneScore: 1
+        playerOneTimeoutsTaken: 0
+        playerOneNineOnSnap: false
+        playerOneBreakAndRun: false
+        playerOneBallsHitIn: [1]
+        playerOneDeadBalls: [2]
+        playerOneLastBall: null
+        playerTwoScore: 2
+        playerTwoTimeoutsTaken: 0
+        playerTwoNineOnSnap: false
+        playerTwoBreakAndRun: false
+        playerTwoBallsHitIn: [9]
+        playerTwoDeadBalls: [3, 4, 5, 6, 7, 8]
+        playerTwoLastBall: 9
         numberOfInnings: 0
         ended: true
         onBreak: false

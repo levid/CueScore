@@ -40,8 +40,10 @@ class Game extends $CS.Models.NineBall
     @player.two.callback  = options.addToPlayerTwo
     @matchEndedCallback   = options.callback
     
-    @player.one.callback().timeoutsTaken = 0
-    @player.two.callback().timeoutsTaken = 0
+    @player.one.deadBalls = []
+    @player.two.deadBalls = []
+    @player.one.timeoutsTaken = 0
+    @player.two.timeoutsTaken = 0
     
   # Getters
     
