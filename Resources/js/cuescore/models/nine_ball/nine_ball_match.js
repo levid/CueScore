@@ -129,7 +129,6 @@
     };
 
     Match.prototype.getMatchPointsByTeamNumber = function(teamNumber) {
-      console.log(teamNumber);
       if (this.player.one.teamNumber === teamNumber) {
         return this.getMatchPointsByPlayer(1);
       } else if (this.player.two.teamNumber === teamNumber) {
@@ -258,10 +257,10 @@
 
     Match.prototype.fromJSON = function(json) {
       var currentGame;
-      this.playerOneMatchPointsEarned = json.playerOneMatchPointsEarned;
-      this.playerTwoMatchPointsEarned = json.playerTwoMatchPointsEarned;
       this.player.one = this.playerFromJSON(json.player.one);
       this.player.two = this.playerFromJSON(json.player.two);
+      this.playerOneMatchPointsEarned = json.playerOneMatchPointsEarned;
+      this.playerTwoMatchPointsEarned = json.playerTwoMatchPointsEarned;
       this.completedGames = this.completedGamesFromJSON(json.completedGames);
       this.suddenDeath = json.suddenDeath;
       this.forfeit = json.forfeit;

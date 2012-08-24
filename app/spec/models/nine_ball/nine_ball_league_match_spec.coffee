@@ -194,11 +194,13 @@ describe "Nine Ball League Match", ->
     leagueMatch.match.two.scoreNumberedBall 1
     leagueMatch.match.two.scoreNumberedBall 2
     leagueMatch.match.two.scoreNumberedBall 3
+    leagueMatch.match.two.currentGame.breakIsOver()
     leagueMatch.match.two.shotMissed()
     leagueMatch.match.two.scoreNumberedBall 4
     leagueMatch.match.two.scoreNumberedBall 5
     leagueMatch.match.two.scoreNumberedBall 6
     leagueMatch.match.two.scoreNumberedBall 7
+    leagueMatch.match.three.currentGame.breakIsOver()
     leagueMatch.match.three.shotMissed()
     leagueMatch.match.three.scoreNumberedBall 1
     leagueMatch.match.three.scoreNumberedBall 2
@@ -207,6 +209,7 @@ describe "Nine Ball League Match", ->
     leagueMatch.match.three.scoreNumberedBall 5
     leagueMatch.match.three.scoreNumberedBall 6
     leagueMatch.match.three.scoreNumberedBall 7
+    leagueMatch.match.four.currentGame.breakIsOver()
     leagueMatch.match.four.shotMissed()
     leagueMatch.match.four.scoreNumberedBall 1
     leagueMatch.match.four.scoreNumberedBall 2
@@ -234,6 +237,7 @@ describe "Nine Ball League Match", ->
     leagueMatch.match.one.scoreNumberedBall 3
     leagueMatch.match.one.scoreNumberedBall 4
     expect(leagueMatch.getWinningTeamNumber()).toEqual "123"
+    leagueMatch.match.two.currentGame.breakIsOver()
     leagueMatch.match.two.scoreNumberedBall 1
     leagueMatch.match.two.scoreNumberedBall 2
     leagueMatch.match.two.scoreNumberedBall 3
@@ -242,6 +246,7 @@ describe "Nine Ball League Match", ->
     leagueMatch.match.two.scoreNumberedBall 5
     leagueMatch.match.two.scoreNumberedBall 6
     leagueMatch.match.two.scoreNumberedBall 7
+    leagueMatch.match.three.currentGame.breakIsOver()
     leagueMatch.match.three.shotMissed()
     leagueMatch.match.three.scoreNumberedBall 1
     leagueMatch.match.three.scoreNumberedBall 2
@@ -250,6 +255,7 @@ describe "Nine Ball League Match", ->
     leagueMatch.match.three.scoreNumberedBall 5
     leagueMatch.match.three.scoreNumberedBall 6
     leagueMatch.match.three.scoreNumberedBall 7
+    leagueMatch.match.four.currentGame.breakIsOver()
     leagueMatch.match.four.shotMissed()
     leagueMatch.match.four.scoreNumberedBall 1
     leagueMatch.match.four.scoreNumberedBall 2
@@ -272,10 +278,10 @@ describe "Nine Ball League Match", ->
 
   it "should be able to set each match and set the leagueMatchId for each", ->
     expect(leagueMatch.match.one.leagueMatchId).toEqual 1
-    expect(leagueMatch.match.two.leagueMatchId).toEqual 1
-    expect(leagueMatch.match.three.leagueMatchId).toEqual 1
-    expect(leagueMatch.match.four.leagueMatchId).toEqual 1
-    expect(leagueMatch.match.five.leagueMatchId).toEqual 1
+    expect(leagueMatch.match.two.leagueMatchId).toEqual 2
+    expect(leagueMatch.match.three.leagueMatchId).toEqual 3
+    expect(leagueMatch.match.four.leagueMatchId).toEqual 4
+    expect(leagueMatch.match.five.leagueMatchId).toEqual 5
 
   it "should be able to keep team names", ->
     expect(leagueMatch.homeTeamName).toEqual "HomeTeam"
@@ -812,7 +818,7 @@ describe "Nine Ball League Match", ->
             leagueMatchId: 1
   
           five:
-            Player:
+            player:
               one:
                 name: "TestPlayer"
                 rank: 1
@@ -865,7 +871,7 @@ describe "Nine Ball League Match", ->
         startTime: "10:00 pm"
         endTime: ""
         tableType: "Coin-Operated"
-        leagueMatchId: 1
+        leagueMatchId: null
 
       expect(leagueMatch.teamNumber).toEqual ""
       expect(leagueMatch.homeTeamNumber).toEqual "123"
@@ -874,7 +880,7 @@ describe "Nine Ball League Match", ->
       expect(leagueMatch.endTime).toEqual ""
       expect(leagueMatch.tableType).toEqual "Coin-Operated"
       expect(leagueMatch.leagueMatchId).toEqual null
-      expect(leagueMatch.match.five.playerOneName).toEqual "TestPlayer"
+      expect(leagueMatch.match.five.player.one.name).toEqual "TestPlayer"
       leagueMatch.match.five.scoreNumberedBall 9
       expect(leagueMatch.match.five.currentGame.getBallsScored()).toEqual [9]
       leagueMatch.match.five.startNewGame()

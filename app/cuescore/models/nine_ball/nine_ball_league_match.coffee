@@ -28,6 +28,7 @@ class LeagueMatch extends $CS.Models.NineBall
     @awayTeamName     = options.awayTeamName    ?= null
     @startTime        = options.startTime       ?= null
     @tableType        = options.tableType       ?= null
+    @staticId         = options.staticId        ?= null
     
     @DataService = new $CS.Utilities.DataService
     @DataService.saveLeagueMatch @, (id) =>
@@ -153,7 +154,7 @@ class LeagueMatch extends $CS.Models.NineBall
 
   fromJSON: (jsonLeagueMatch) ->
     if jsonLeagueMatch.match?
-      matchOne = new $CS.Models.NineBall.LeagueMatch(
+      matchOne = new $CS.Models.NineBall.Match(
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber
           homeTeamName: jsonLeagueMatch.homeTeamName
@@ -161,7 +162,7 @@ class LeagueMatch extends $CS.Models.NineBall
           startTime: jsonLeagueMatch.startTime
           tableType: jsonLeagueMatch.tableType
       )
-      matchTwo = new $CS.Models.NineBall.LeagueMatch(
+      matchTwo = new $CS.Models.NineBall.Match(
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber
           homeTeamName: jsonLeagueMatch.homeTeamName
@@ -169,7 +170,7 @@ class LeagueMatch extends $CS.Models.NineBall
           startTime: jsonLeagueMatch.startTime
           tableType: jsonLeagueMatch.tableType
       )
-      matchThree = new $CS.Models.NineBall.LeagueMatch(
+      matchThree = new $CS.Models.NineBall.Match(
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber
           homeTeamName: jsonLeagueMatch.homeTeamName
@@ -177,7 +178,7 @@ class LeagueMatch extends $CS.Models.NineBall
           startTime: jsonLeagueMatch.startTime
           tableType: jsonLeagueMatch.tableType
       )
-      matchFour = new $CS.Models.NineBall.LeagueMatch(
+      matchFour = new $CS.Models.NineBall.Match(
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber
           homeTeamName: jsonLeagueMatch.homeTeamName
@@ -185,7 +186,7 @@ class LeagueMatch extends $CS.Models.NineBall
           startTime: jsonLeagueMatch.startTime
           tableType: jsonLeagueMatch.tableType
       )
-      matchFive = new $CS.Models.NineBall.LeagueMatch(
+      matchFive = new $CS.Models.NineBall.Match(
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber
           homeTeamName: jsonLeagueMatch.homeTeamName
@@ -193,7 +194,6 @@ class LeagueMatch extends $CS.Models.NineBall
           startTime: jsonLeagueMatch.startTime
           tableType: jsonLeagueMatch.tableType
       )
-      
       matchOne.fromJSON jsonLeagueMatch.match.one
       matchTwo.fromJSON jsonLeagueMatch.match.two
       matchThree.fromJSON jsonLeagueMatch.match.three

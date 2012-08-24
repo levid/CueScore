@@ -12,7 +12,6 @@
 
     function PracticeMatch() {
       _.extend(this, this.defaults);
-      console.log(this);
     }
 
     return PracticeMatch;

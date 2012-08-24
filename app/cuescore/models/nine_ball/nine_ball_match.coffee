@@ -97,7 +97,6 @@ class Match extends $CS.Models.NineBall
       return "Tied"
     
   getMatchPointsByTeamNumber: (teamNumber) ->
-    console.log teamNumber
     if @player.one.teamNumber is teamNumber
       return @getMatchPointsByPlayer(1)
     else if @player.two.teamNumber is teamNumber
@@ -201,10 +200,10 @@ class Match extends $CS.Models.NineBall
     arrayToReturn
 
   fromJSON: (json) ->
-    @playerOneMatchPointsEarned = json.playerOneMatchPointsEarned
-    @playerTwoMatchPointsEarned = json.playerTwoMatchPointsEarned
     @player.one                 = @playerFromJSON(json.player.one)
     @player.two                 = @playerFromJSON(json.player.two)
+    @playerOneMatchPointsEarned = json.playerOneMatchPointsEarned
+    @playerTwoMatchPointsEarned = json.playerTwoMatchPointsEarned
     @completedGames             = @completedGamesFromJSON(json.completedGames)
     @suddenDeath                = json.suddenDeath
     @forfeit                    = json.forfeit

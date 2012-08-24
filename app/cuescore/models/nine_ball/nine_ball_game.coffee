@@ -44,6 +44,8 @@ class Game extends $CS.Models.NineBall
     @player.two.deadBalls = []
     @player.one.timeoutsTaken = 0
     @player.two.timeoutsTaken = 0
+    @player.one.ballsHitIn = []
+    @player.two.ballsHitIn = []
     
   # Getters
     

@@ -374,11 +374,12 @@
       match.startNewGame();
       match.hitDeadBall(1);
       match.hitDeadBall(2);
-      expect(match.getTotalDeadBalls()).toEqual("10");
       match.hitDeadBall(3);
       match.hitDeadBall(4);
       match.hitDeadBall(5);
+      expect(match.getTotalDeadBalls()).toEqual("10");
       match.hitDeadBall(6);
+      match.hitDeadBall(7);
       return expect(match.getTotalDeadBalls()).toEqual("14");
     });
     it("should be able to hold on to the originalId from the database", function() {
@@ -530,14 +531,14 @@
             playerOneTimeoutsTaken: 0,
             playerOneNineOnSnap: false,
             playerOneBreakAndRun: false,
-            playerOneBallsHitIn: [1],
+            playerOneBallsHitIn: [],
             playerOneDeadBalls: [],
             playerOneLastBall: null,
             playerTwoScore: 2,
             playerTwoTimeoutsTaken: 0,
             playerTwoNineOnSnap: false,
             playerTwoBreakAndRun: false,
-            playerTwoBallsHitIn: [9],
+            playerTwoBallsHitIn: [],
             playerTwoDeadBalls: [],
             playerTwoLastBall: null,
             ended: false,
@@ -551,14 +552,14 @@
               playerOneTimeoutsTaken: 0,
               playerOneNineOnSnap: false,
               playerOneBreakAndRun: false,
-              playerOneBallsHitIn: [1],
+              playerOneBallsHitIn: [],
               playerOneDeadBalls: [],
               playerOneLastBall: null,
               playerTwoScore: 2,
               playerTwoTimeoutsTaken: 0,
               playerTwoNineOnSnap: false,
               playerTwoBreakAndRun: false,
-              playerTwoBallsHitIn: [9],
+              playerTwoBallsHitIn: [],
               playerTwoDeadBalls: [],
               playerTwoLastBall: null,
               ended: true,
@@ -587,14 +588,14 @@
             playerOneTimeoutsTaken: 0,
             playerOneNineOnSnap: false,
             playerOneBreakAndRun: false,
-            playerOneBallsHitIn: [1],
+            playerOneBallsHitIn: [],
             playerOneDeadBalls: [],
             playerOneLastBall: null,
             playerTwoScore: 2,
             playerTwoTimeoutsTaken: 0,
             playerTwoNineOnSnap: false,
             playerTwoBreakAndRun: false,
-            playerTwoBallsHitIn: [9],
+            playerTwoBallsHitIn: [],
             playerTwoDeadBalls: [],
             playerTwoLastBall: null,
             ended: true,
@@ -673,7 +674,7 @@
           playerOneMatchPointsEarned: 20,
           playerTwoMatchPointsEarned: 0,
           currentGame: {
-            playerOneScore: 0,
+            playerOneScore: 1,
             playerOneTimeoutsTaken: 0,
             playerOneNineOnSnap: false,
             playerOneBreakAndRun: false,

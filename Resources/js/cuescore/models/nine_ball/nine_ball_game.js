@@ -59,6 +59,8 @@
       this.player.two.deadBalls = [];
       this.player.one.timeoutsTaken = 0;
       this.player.two.timeoutsTaken = 0;
+      this.player.one.ballsHitIn = [];
+      this.player.two.ballsHitIn = [];
     }
 
     Game.prototype.getCurrentlyUpPlayer = function() {
