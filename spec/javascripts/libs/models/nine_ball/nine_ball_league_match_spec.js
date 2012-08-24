@@ -291,6 +291,7 @@
     });
     return describe("toJSON/fromJSON", function() {
       it("should be able to take a new League Match and turn it into a JSON object", function() {
+        leagueMatch.smallJSON = false;
         return expect(leagueMatch.toJSON()).toEqual({
           match: {
             one: {

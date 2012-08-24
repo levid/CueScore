@@ -305,6 +305,7 @@ describe "Nine Ball League Match", ->
 
   describe "toJSON/fromJSON", ->
     it "should be able to take a new League Match and turn it into a JSON object", ->
+      leagueMatch.smallJSON = false
       expect(leagueMatch.toJSON()).toEqual
         match:
           one:

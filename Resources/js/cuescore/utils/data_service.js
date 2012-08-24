@@ -45,7 +45,7 @@
     DataService.prototype.saveMatch = function(match, setOriginalIdCallback) {
       try {
         if (!(match.OriginalId != null) || match.OriginalId === 0) {
-          leagueMatch.SmallJSON = true;
+          leagueMatch.smallJSON = true;
           this.db.execute("INSERT INTO Matches (Match, EnteredDateTime) VALUES(?, ?)", this.convertToJSONString(match), "DATETIME(NOW)");
           setOriginalIdCallback(this.db.lastInsertRowId);
           this.db.execute("UPDATE Matches SET OriginalId = " + this.db.lastInsertRowId + " WHERE ID = " + this.db.lastInsertRowId);
@@ -67,7 +67,7 @@
       try {
         row = this.db.execute("SELECT LeagueMatch FROM LeagueMatches WHERE ID = " + leagueMatchId);
         leagueMatch = new Function("return" + row.fieldByName("LeagueMatch"))();
-        leagueMatch.LeagueMatchId = leagueMatchId;
+        leagueMatch.leagueMatchId = leagueMatchId;
         row.close();
         this.db.close();
         return leagueMatch;
@@ -82,14 +82,14 @@
         if (typeof Ti !== "undefined" && Ti !== null) {
           Ti.API.log(this.convertToJSONString(leagueMatch));
         }
-        if (!(leagueMatch.LeagueMatchId != null) || leagueMatch.LeagueMatchId === 0) {
-          leagueMatch.SmallJSON = true;
+        if (!(leagueMatch.leagueMatchId != null) || leagueMatch.leagueMatchId === 0) {
+          leagueMatch.smallJSON = true;
           this.db.execute("INSERT INTO LeagueMatches (LeagueMatch, EnteredDateTime) VALUES(?, ?)", this.convertToJSONString(leagueMatch), "DATETIME(NOW)");
           setLeagueMatchIdCallback(this.db.lastInsertRowId);
           this.db.close();
           return;
         }
-        this.db.execute("UPDATE LeagueMatches SET SET LeagueMatch = " + this.convertToJSONString(leagueMatch) + " WHERE ID = " + leagueMatch.LeagueMatchId);
+        this.db.execute("UPDATE LeagueMatches SET SET LeagueMatch = " + this.convertToJSONString(leagueMatch) + " WHERE ID = " + leagueMatch.leagueMatchId);
         setLeagueMatchIdCallback(this.db.lastInsertRowId);
         this.db.close();
       } catch (e) {
@@ -181,7 +181,7 @@
     DataService.prototype.setupLocalDatabase = function() {
       this.db = this.openDatabase();
       this.db.execute("CREATE TABLE IF NOT EXISTS LeagueMatches (ID INTEGER PRIMARY KEY, LeagueMatch BLOB, Sent BOOLEAN, EnteredDateTime DATETIME)");
-      this.db.execute("CREATE TABLE IF NOT EXISTS Matches (ID INTEGER PRIMARY KEY, OriginalId Integer, LeagueMatchId Integer, Match BLOB, EnteredDateTime DATETIME)");
+      this.db.execute("CREATE TABLE IF NOT EXISTS Matches (ID INTEGER PRIMARY KEY, OriginalId Integer, leagueMatchId Integer, Match BLOB, EnteredDateTime DATETIME)");
       this.db.execute("DELETE FROM LeagueMatches");
       this.db.execute("DELETE FROM Matches");
       return this.db.close();

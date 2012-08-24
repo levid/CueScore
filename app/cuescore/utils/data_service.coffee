@@ -27,7 +27,7 @@ class DataService extends $CS.Utilities
   saveMatch: (match, setOriginalIdCallback) ->
     try
       if not match.OriginalId? or match.OriginalId is 0
-        leagueMatch.SmallJSON = true
+        leagueMatch.smallJSON = true
         @db.execute "INSERT INTO Matches (Match, EnteredDateTime) VALUES(?, ?)", @convertToJSONString(match), "DATETIME(NOW)"
         setOriginalIdCallback @db.lastInsertRowId
         @db.execute "UPDATE Matches SET OriginalId = " + @db.lastInsertRowId + " WHERE ID = " + @db.lastInsertRowId
@@ -44,7 +44,7 @@ class DataService extends $CS.Utilities
     try
       row = @db.execute("SELECT LeagueMatch FROM LeagueMatches WHERE ID = " + leagueMatchId)
       leagueMatch = (new Function("return" + row.fieldByName("LeagueMatch"))())
-      leagueMatch.LeagueMatchId = leagueMatchId
+      leagueMatch.leagueMatchId = leagueMatchId
       row.close()
       @db.close()
       return leagueMatch
@@ -55,13 +55,13 @@ class DataService extends $CS.Utilities
   saveLeagueMatch: (leagueMatch, setLeagueMatchIdCallback) ->
     try
       Ti?.API.log @convertToJSONString(leagueMatch)
-      if not leagueMatch.LeagueMatchId? or leagueMatch.LeagueMatchId is 0
-        leagueMatch.SmallJSON = true
+      if not leagueMatch.leagueMatchId? or leagueMatch.leagueMatchId is 0
+        leagueMatch.smallJSON = true
         @db.execute "INSERT INTO LeagueMatches (LeagueMatch, EnteredDateTime) VALUES(?, ?)", @convertToJSONString(leagueMatch), "DATETIME(NOW)"
         setLeagueMatchIdCallback @db.lastInsertRowId
         @db.close()
         return
-      @db.execute "UPDATE LeagueMatches SET SET LeagueMatch = " + @convertToJSONString(leagueMatch) + " WHERE ID = " + leagueMatch.LeagueMatchId
+      @db.execute "UPDATE LeagueMatches SET SET LeagueMatch = " + @convertToJSONString(leagueMatch) + " WHERE ID = " + leagueMatch.leagueMatchId
       setLeagueMatchIdCallback @db.lastInsertRowId
       @db.close()
       return
@@ -128,7 +128,7 @@ class DataService extends $CS.Utilities
   setupLocalDatabase: ->
     @db = @openDatabase()
     @db.execute "CREATE TABLE IF NOT EXISTS LeagueMatches (ID INTEGER PRIMARY KEY, LeagueMatch BLOB, Sent BOOLEAN, EnteredDateTime DATETIME)"
-    @db.execute "CREATE TABLE IF NOT EXISTS Matches (ID INTEGER PRIMARY KEY, OriginalId Integer, LeagueMatchId Integer, Match BLOB, EnteredDateTime DATETIME)"
+    @db.execute "CREATE TABLE IF NOT EXISTS Matches (ID INTEGER PRIMARY KEY, OriginalId Integer, leagueMatchId Integer, Match BLOB, EnteredDateTime DATETIME)"
     @db.execute "DELETE FROM LeagueMatches"
     @db.execute "DELETE FROM Matches"
     @db.close()
