@@ -1,158 +1,227 @@
 class LeagueMatch extends $CS.Models.NineBall
-  defaults: {}
+  defaults: 
+    match:
+      one: null
+      two: null
+      three: null
+      four: null
+      five: null
+    teamNumber: ""
+    homeTeamNumber: null
+    homeTeamName: null
+    homeTeamSigned: false
+    awayTeamNumber: null
+    awayTeamName: null
+    awayTeamSigned: false
+    startTime: null
+    endTime: ""
+    tableType: null
+    smallJson: false
+    leagueMatchId: 0
 
-  constructor: (HomeTeamNumber, AwayTeamNumber, HomeTeamName, AwayTeamName, StartTime, TableType) ->
+  constructor: (options) ->
     _.extend @, @defaults
+    
+    @homeTeamNumber   = options.homeTeamNumber ?= null
+    @homeTeamName     = options.homeTeamName ?= null
+    @awayTeamNumber   = options.awayTeamNumber ?= null
+    @awayTeamName     = options.awayTeamName ?= null
+    @startTime        = options.startTime ?= null
+    @tableType        = options.tableType ?= null
+    
+    @DataService = new $CS.Utilities.DataService
+    @DataService.saveLeagueMatch @, (id) =>
+      @leagueMatchId = id
+      
+  # Getters
 
-    @GameType = "NineBall"
-    @MatchOne = null
-    @MatchTwo = null
-    @MatchThree = null
-    @MatchFour = null
-    @MatchFive = null
-    @TeamNumber = ""
-    @HomeTeamNumber = HomeTeamNumber
-    @AwayTeamNumber = AwayTeamNumber
-    @HomeTeamName = HomeTeamName
-    @AwayTeamName = AwayTeamName
-    @HomeTeamSigned = false
-    @AwayTeamSigned = false
-    @StartTime = StartTime
-    @EndTime = ""
-    @TableType = TableType
-    @SmallJSON = false
-    @LeagueMatchId = 0
-    me = this
-    DataService.saveLeagueMatch this, (id) ->
-      me.LeagueMatchId = id
-
-  getHomeTeamMatchPoints: ->
+  getHomeTeamScore: ->
     totalScore = 0
-    totalScore = @MatchOne.getMatchPointsByTeamNumber(@HomeTeamNumber)
-    totalScore += @MatchTwo.getMatchPointsByTeamNumber(@HomeTeamNumber)
-    totalScore += @MatchThree.getMatchPointsByTeamNumber(@HomeTeamNumber)
-    totalScore += @MatchFour.getMatchPointsByTeamNumber(@HomeTeamNumber)
-    totalScore += @MatchFive.getMatchPointsByTeamNumber(@HomeTeamNumber)
+    totalScore = @match.one.getMatchPointsByTeamNumber(@homeTeamNumber)
+    totalScore += @match.two.getMatchPointsByTeamNumber(@homeTeamNumber)
+    totalScore += @match.three.getMatchPointsByTeamNumber(@homeTeamNumber)
+    totalScore += @match.four.getMatchPointsByTeamNumber(@homeTeamNumber)
+    totalScore += @match.five.getMatchPointsByTeamNumber(@homeTeamNumber)
     totalScore
 
-  getAwayTeamMatchPoints: ->
-    totalScore = @MatchOne.getMatchPointsByTeamNumber(@AwayTeamNumber)
-    totalScore += @MatchTwo.getMatchPointsByTeamNumber(@AwayTeamNumber)
-    totalScore += @MatchThree.getMatchPointsByTeamNumber(@AwayTeamNumber)
-    totalScore += @MatchFour.getMatchPointsByTeamNumber(@AwayTeamNumber)
-    totalScore += @MatchFive.getMatchPointsByTeamNumber(@AwayTeamNumber)
+  getAwayTeamScore: ->
+    totalScore = @match.one.getMatchPointsByTeamNumber(@awayTeamNumber)
+    totalScore += @match.two.getMatchPointsByTeamNumber(@awayTeamNumber)
+    totalScore += @match.three.getMatchPointsByTeamNumber(@awayTeamNumber)
+    totalScore += @match.four.getMatchPointsByTeamNumber(@awayTeamNumber)
+    totalScore += @match.five.getMatchPointsByTeamNumber(@awayTeamNumber)
     totalScore
+    
+  getWinningTeamNumber: ->
+    return @awayTeamNumber  if @getMatchPointsByTeam('home') < @getMatchPointsByTeam('away')
+    @homeTeamNumber
+    
+  # Setters
+  
+  setMatch: (matchData, matchNum) ->
+    matchNumString = null
+    
+    if matchNum == 1
+      matchNumString = "one"
+    else if matchNum == 2
+      matchNumString = "two"
+    else if matchNum == 3
+      matchNumString = "three"
+    else if matchNum == 4
+      matchNumString = "four"
+    else if matchNum == 5
+      matchNumString = "five"
+      
+    @match[matchNumString] = matchData
+    @match[matchNumString].leagueMatchId = matchNum
+    if not @match[matchNumString].originalId? or @match[matchNumString].originalId is 0
+      @DataService.saveMatch @match[matchNumString], (id) ->
+        @match[matchNumString].originalId = id
+        
+  getMatchPointsByTeam: (team) ->
+    if team == "home"
+      homeScore = 0
+      names = ['one', 'two', 'three', 'four', 'five']
+    
+      for name in names then do (name) =>
+        name = name
+        if @match[name].player.one.teamNumber = @homeTeamNumber
+          homeScore += @match[name].getMatchPointsByPlayer(1)
+        else
+          homeScore += @match[name].getMatchPointsByPlayer(2)
+      homeScore
+      
+    else if team == "away"
+      awayScore = 0
+      names = ['one', 'two', 'three', 'four', 'five']
+    
+      for name in names then do (name) =>
+        name = name.toString()
+        if @match[name].player.one.teamNumber is @awayTeamNumber
+          awayScore += @match[name].getMatchPointsByPlayer(1)
+        else
+          awayScore += @match[name].getMatchPointsByPlayer(2)
+      awayScore
 
+  # Methods
+  
   isHomeTeamWinning: ->
-    return true  if @getHomeTeamMatchPoints() > @getAwayTeamMatchPoints()
-    false
+    if @getMatchPointsByTeam('home') > @getMatchPointsByTeam('away')
+      return true
+    else
+      return false
 
   isAwayTeamWinning: ->
-    return true  if @getHomeTeamMatchPoints() < @getAwayTeamMatchPoints()
-    false
-
+    if @getMatchPointsByTeam('home') < @getMatchPointsByTeam('away')
+      return true
+    else
+      return false
+      
   getWinningTeamNumber: ->
-    return @AwayTeamNumber  if @getHomeTeamMatchPoints() < @getAwayTeamMatchPoints()
-    @HomeTeamNumber
-
-  setMatchOne: (match) ->
-    @MatchOne = match
-    @MatchOne.LeagueMatchId = @LeagueMatchId
-    if not @MatchOne.OriginalId? or @MatchOne.OriginalId is 0
-      DataService.saveMatch @MatchOne, (id) ->
-        me.MatchOne.OriginalId = id
-
-
-  setMatchTwo: (match) ->
-    @MatchTwo = match
-    @MatchTwo.LeagueMatchId = @LeagueMatchId
-    if not @MatchTwo.OriginalId? or @MatchTwo.OriginalId is 0
-      DataService.saveMatch @MatchTwo, (id) ->
-        me.MatchTwo.OriginalId = id
-
-
-  setMatchThree: (match) ->
-    @MatchThree = match
-    @MatchThree.LeagueMatchId = @LeagueMatchId
-    if not @MatchThree.OriginalId? or @MatchThree.OriginalId is 0
-      DataService.saveMatch @MatchThree, (id) ->
-        me.MatchThree.OriginalId = id
-
-
-  setMatchFour: (match) ->
-    @MatchFour = match
-    @MatchFour.LeagueMatchId = @LeagueMatchId
-    if not @MatchFour.OriginalId? or @MatchFour.OriginalId is 0
-      DataService.saveMatch @MatchFour, (id) ->
-        me.MatchFour.OriginalId = id
-
-
-  setMatchFive: (match) ->
-    @MatchFive = match
-    @MatchFive.LeagueMatchId = @LeagueMatchId
-    if not @MatchFive.OriginalId? or @MatchFive.OriginalId is 0
-      DataService.saveMatch @MatchFive, (id) ->
-        me.MatchFive.OriginalId = id
-
+    if @getMatchPointsByTeam('home') < @getMatchPointsByTeam('away')
+      return @awayTeamNumber
+    else
+      return @homeTeamNumber
 
   toJSON: ->
-    return @toSmallJSON()  if @SmallJSON is true
-    MatchOne: @MatchOne.toJSON()
-    MatchTwo: @MatchTwo.toJSON()
-    MatchThree: @MatchThree.toJSON()
-    MatchFour: @MatchFour.toJSON()
-    MatchFive: @MatchFive.toJSON()
-    TeamNumber: @TeamNumber
-    HomeTeamNumber: @HomeTeamNumber
-    AwayTeamNumber: @AwayTeamNumber
-    StartTime: @StartTime
-    EndTime: @EndTime
-    TableType: @TableType
-    LeagueMatchId: @LeagueMatchId
+    return @toSmallJSON() if @SmallJSON is true
+    
+    match:
+      one:            @match.one.toJSON()
+      two:            @match.two.toJSON()
+      three:          @match.three.toJSON()
+      four:           @match.four.toJSON()
+      five:           @match.five.toJSON()
+    teamNumber:       @teamNumber
+    homeTeamNumber:   @homeTeamNumber
+    awayTeamNumber:   @awayTeamNumber
+    startTime:        @startTime
+    endTime:          @endTime
+    tableType:        @tableType
+    leagueMatchId:    @leagueMatchId
 
   toSmallJSON: ->
-    TeamNumber: @TeamNumber
-    HomeTeamNumber: @HomeTeamNumber
-    AwayTeamNumber: @AwayTeamNumber
-    StartTime: @StartTime
-    EndTime: @EndTime
-    TableType: @TableType
-    LeagueMatchId: @LeagueMatchId
+    teamNumber:       @teamNumber
+    homeTeamNumber:   @homeTeamNumber
+    awayTeamNumber:   @awayTeamNumber
+    startTime:        @startTime
+    endTime:          @endTime
+    tableType:        @tableType
+    leagueMatchId:    @leagueMatchId
 
   fromJSON: (jsonLeagueMatch) ->
-    matchOne = new NineBallMatch()
-    matchOne.fromJSON jsonLeagueMatch.MatchOne
-    matchTwo = new NineBallMatch()
-    matchTwo.fromJSON jsonLeagueMatch.MatchTwo
-    matchThree = new NineBallMatch()
-    matchThree.fromJSON jsonLeagueMatch.MatchThree
-    matchFour = new NineBallMatch()
-    matchFour.fromJSON jsonLeagueMatch.MatchFour
-    matchFive = new NineBallMatch()
-    matchFive.fromJSON jsonLeagueMatch.MatchFive
-    @MatchOne = matchOne
-    @MatchTwo = matchTwo
-    @MatchThree = matchThree
-    @MatchFour = matchFour
-    @MatchFive = matchFive
-    @TeamNumber = jsonLeagueMatch.TeamNumber
-    @HomeTeamNumber = jsonLeagueMatch.HomeTeamNumber
-    @AwayTeamNumber = jsonLeagueMatch.AwayTeamNumber
-    @StartTime = jsonLeagueMatch.StartTime
-    @EndTime = jsonLeagueMatch.EndTime
-    @TableType = jsonLeagueMatch.TableType
-    @LeagueMatchId = jsonLeagueMatch.LeagueMatchId
+    unless jsonLeagueMatch?
+      matchOne = new $CS.Models.NineBall.LeagueMatch(
+          homeTeamNumber: jsonLeagueMatch.homeTeamNumber
+          awayTeamNumber: jsonLeagueMatch.awayTeamNumber
+          homeTeamName: jsonLeagueMatch.homeTeamName
+          awayTeamName: jsonLeagueMatch.awayTeamName
+          startTime: jsonLeagueMatch.startTime
+          tableType: jsonLeagueMatch.tableType
+      )
+      matchTwo = new $CS.Models.NineBall.LeagueMatch(
+          homeTeamNumber: jsonLeagueMatch.homeTeamNumber
+          awayTeamNumber: jsonLeagueMatch.awayTeamNumber
+          homeTeamName: jsonLeagueMatch.homeTeamName
+          awayTeamName: jsonLeagueMatch.awayTeamName
+          startTime: jsonLeagueMatch.startTime
+          tableType: jsonLeagueMatch.tableType
+      )
+      matchThree = new $CS.Models.NineBall.LeagueMatch(
+          homeTeamNumber: jsonLeagueMatch.homeTeamNumber
+          awayTeamNumber: jsonLeagueMatch.awayTeamNumber
+          homeTeamName: jsonLeagueMatch.homeTeamName
+          awayTeamName: jsonLeagueMatch.awayTeamName
+          startTime: jsonLeagueMatch.startTime
+          tableType: jsonLeagueMatch.tableType
+      )
+      matchFour = new $CS.Models.NineBall.LeagueMatch(
+          homeTeamNumber: jsonLeagueMatch.homeTeamNumber
+          awayTeamNumber: jsonLeagueMatch.awayTeamNumber
+          homeTeamName: jsonLeagueMatch.homeTeamName
+          awayTeamName: jsonLeagueMatch.awayTeamName
+          startTime: jsonLeagueMatch.startTime
+          tableType: jsonLeagueMatch.tableType
+      )
+      matchFive = new $CS.Models.NineBall.LeagueMatch(
+          homeTeamNumber: jsonLeagueMatch.homeTeamNumber
+          awayTeamNumber: jsonLeagueMatch.awayTeamNumber
+          homeTeamName: jsonLeagueMatch.homeTeamName
+          awayTeamName: jsonLeagueMatch.awayTeamName
+          startTime: jsonLeagueMatch.startTime
+          tableType: jsonLeagueMatch.tableType
+      )
+      
+      matchOne.fromJSON jsonLeagueMatch.match.one
+      matchTwo.fromJSON jsonLeagueMatch.match.two
+      matchThree.fromJSON jsonLeagueMatch.match.three
+      matchFour.fromJSON jsonLeagueMatch.match.four
+      matchFive.fromJSON jsonLeagueMatch.match.five
+      
+      @match.one      = matchOne
+      @match.two      = matchTwo
+      @match.three    = matchThree
+      @match.four     = matchFour
+      @match.five     = matchFive
+      
+      @teamNumber     = jsonLeagueMatch.teamNumber
+      @homeTeamNumber = jsonLeagueMatch.homeTeamNumber
+      @awayTeamNumber = jsonLeagueMatch.awayTeamNumber
+      @startTime      = jsonLeagueMatch.startTime
+      @endTime        = jsonLeagueMatch.endTime
+      @tableType      = jsonLeagueMatch.tableType
+      @leagueMatchId  = jsonLeagueMatch.leagueMatchId
 
   fromSmallJSON: (jsonLeagueMatch) ->
-    @TeamNumber = jsonLeagueMatch.TeamNumber
-    @HomeTeamNumber = jsonLeagueMatch.HomeTeamNumber
-    @AwayTeamNumber = jsonLeagueMatch.AwayTeamNumber
-    @StartTime = jsonLeagueMatch.StartTime
-    @EndTime = jsonLeagueMatch.EndTime
-    @TableType = jsonLeagueMatch.TableType
-    @LeagueMatchId = jsonLeagueMatch.LeagueMatchId
+    @teamNumber       = jsonLeagueMatch.teamNumber
+    @homeTeamNumber   = jsonLeagueMatch.homeTeamNumber
+    @awayTeamNumber   = jsonLeagueMatch.awayTeamNumber
+    @startTime        = jsonLeagueMatch.startTime
+    @endTime          = jsonLeagueMatch.endTime
+    @tableType        = jsonLeagueMatch.tableType
+    @leagueMatchId    = jsonLeagueMatch.leagueMatchId
 
-  Ended: ->
-    @MatchOne.Ended and @MatchTwo.Ended and @MatchThree.Ended and @MatchFour.Ended and @MatchFive.Ended
+  ended: ->
+    @match.one.ended and @match.two.ended and @match.three.ended and @match.four.ended and @match.five.ended
 
 $CS.Models.NineBall.LeagueMatch = LeagueMatch

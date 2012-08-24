@@ -132,22 +132,25 @@
     LeagueMatch.prototype.isHomeTeamWinning = function() {
       if (this.getMatchPointsByTeam('home') > this.getMatchPointsByTeam('away')) {
         return true;
+      } else {
+        return false;
       }
-      return false;
     };
 
     LeagueMatch.prototype.isAwayTeamWinning = function() {
       if (this.getMatchPointsByTeam('home') < this.getMatchPointsByTeam('away')) {
         return true;
+      } else {
+        return false;
       }
-      return false;
     };
 
     LeagueMatch.prototype.getWinningTeamNumber = function() {
       if (this.getMatchPointsByTeam('home') < this.getMatchPointsByTeam('away')) {
         return this.awayTeamNumber;
+      } else {
+        return this.homeTeamNumber;
       }
-      return this.homeTeamNumber;
     };
 
     LeagueMatch.prototype.toJSON = function() {
@@ -167,6 +170,18 @@
         awayTeamNumber: this.awayTeamNumber,
         homeTeamName: this.homeTeamName,
         awayTeamName: this.awayTeamName,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        tableType: this.tableType,
+        leagueMatchId: this.leagueMatchId
+      };
+    };
+
+    LeagueMatch.prototype.toSmallJSON = function() {
+      return {
+        teamNumber: this.teamNumber,
+        homeTeamNumber: this.homeTeamNumber,
+        awayTeamNumber: this.awayTeamNumber,
         startTime: this.startTime,
         endTime: this.endTime,
         tableType: this.tableType,
@@ -235,18 +250,6 @@
         this.tableType = jsonLeagueMatch.tableType;
         return this.leagueMatchId = jsonLeagueMatch.leagueMatchId;
       }
-    };
-
-    LeagueMatch.prototype.toSmallJSON = function() {
-      return {
-        teamNumber: this.teamNumber,
-        homeTeamNumber: this.homeTeamNumber,
-        awayTeamNumber: this.awayTeamNumber,
-        startTime: this.startTime,
-        endTime: this.endTime,
-        tableType: this.tableType,
-        leagueMatchId: this.leagueMatchId
-      };
     };
 
     LeagueMatch.prototype.fromSmallJSON = function(jsonLeagueMatch) {

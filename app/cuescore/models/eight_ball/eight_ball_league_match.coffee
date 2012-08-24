@@ -99,16 +99,22 @@ class LeagueMatch extends $CS.Models.EightBall
       awayScore
     
   isHomeTeamWinning: ->
-    return true if @getMatchPointsByTeam('home') > @getMatchPointsByTeam('away')
-    false
+    if @getMatchPointsByTeam('home') > @getMatchPointsByTeam('away')
+      return true
+    else
+      return false
 
   isAwayTeamWinning: ->
-    return true if @getMatchPointsByTeam('home') < @getMatchPointsByTeam('away')
-    false
+    if @getMatchPointsByTeam('home') < @getMatchPointsByTeam('away')
+      return true
+    else
+      return false
 
   getWinningTeamNumber: ->
-    return @awayTeamNumber if @getMatchPointsByTeam('home') < @getMatchPointsByTeam('away')
-    @homeTeamNumber
+    if @getMatchPointsByTeam('home') < @getMatchPointsByTeam('away')
+      return @awayTeamNumber
+    else
+      return @homeTeamNumber
 
   toJSON: ->
     return @toSmallJSON() if @smallJson is true
@@ -128,6 +134,15 @@ class LeagueMatch extends $CS.Models.EightBall
     endTime:           @endTime
     tableType:         @tableType
     leagueMatchId:     @leagueMatchId
+    
+  toSmallJSON: ->
+    teamNumber:       @teamNumber
+    homeTeamNumber:   @homeTeamNumber
+    awayTeamNumber:   @awayTeamNumber
+    startTime:        @startTime
+    endTime:          @endTime
+    tableType:        @tableType
+    leagueMatchId:    @leagueMatchId
 
   fromJSON: (jsonLeagueMatch) ->
     unless jsonLeagueMatch?
@@ -178,28 +193,19 @@ class LeagueMatch extends $CS.Models.EightBall
       matchFour.fromJSON jsonLeagueMatch.matchFour
       matchFive.fromJSON jsonLeagueMatch.matchFive
       
-      @match.one        = matchOne
-      @match.two        = matchTwo
-      @match.three      = matchThree
-      @match.four       = matchFour
-      @match.five       = matchFive
+      @match.one      = matchOne
+      @match.two      = matchTwo
+      @match.three    = matchThree
+      @match.four     = matchFour
+      @match.five     = matchFive
       
-      @teamNumber       = jsonLeagueMatch.teamNumber
-      @homeTeamNumber   = jsonLeagueMatch.homeTeamNumber
-      @awayTeamNumber   = jsonLeagueMatch.awayTeamNumber
-      @startTime        = jsonLeagueMatch.startTime
-      @endTime          = jsonLeagueMatch.endTime
-      @tableType        = jsonLeagueMatch.tableType
-      @leagueMatchId    = jsonLeagueMatch.leagueMatchId
-    
-  toSmallJSON: ->
-    teamNumber:       @teamNumber
-    homeTeamNumber:   @homeTeamNumber
-    awayTeamNumber:   @awayTeamNumber
-    startTime:        @startTime
-    endTime:          @endTime
-    tableType:        @tableType
-    leagueMatchId:    @leagueMatchId
+      @teamNumber     = jsonLeagueMatch.teamNumber
+      @homeTeamNumber = jsonLeagueMatch.homeTeamNumber
+      @awayTeamNumber = jsonLeagueMatch.awayTeamNumber
+      @startTime      = jsonLeagueMatch.startTime
+      @endTime        = jsonLeagueMatch.endTime
+      @tableType      = jsonLeagueMatch.tableType
+      @leagueMatchId  = jsonLeagueMatch.leagueMatchId
 
   fromSmallJSON: (jsonLeagueMatch) ->
     @teamNumber       = jsonLeagueMatch.teamNumber
