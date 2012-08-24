@@ -191,7 +191,7 @@ class Game extends $CS.Models.EightBall
     @ended = true
     
   scoreBall: (ballNumber) ->
-    unless @getBallsHitIn().indexOf(ballNumber) >= 0 and !@getBallsHitIn().exists(8)
+    unless @getBallsHitIn().indexOf(ballNumber) >= 0 and not @getBallsHitIn().exists(8)
       @lastBallHitIn = ballNumber
       
       if ballNumber > 0 and ballNumber < 8
@@ -247,7 +247,7 @@ class Game extends $CS.Models.EightBall
       if @player.one.eightBall.exists(8) and @onBreak is false
         
         # Neither player made 8 balls so it is a loss by player 1
-        if @getBallsHitInByPlayer(1).length != 8 and @getBallsHitInByPlayer(2).length != 8
+        if @getBallsHitInByPlayer(1).length isnt 8 and @getBallsHitInByPlayer(2).length isnt 8
           @setPlayerWon(2)
         # Player 1 made all 8 balls so they win the game
         else
@@ -257,7 +257,7 @@ class Game extends $CS.Models.EightBall
       else if @player.two.eightBall.exists(8) and @onBreak is false
       
         # Neither player made 8 balls so it is a loss by player 2
-        if @getBallsHitInByPlayer(1).length != 8 and @getBallsHitInByPlayer(2).length != 8
+        if @getBallsHitInByPlayer(1).length isnt 8 and @getBallsHitInByPlayer(2).length isnt 8
           @setPlayerWon(1) 
         # Player 2 made all 8 balls so they win the game
         else

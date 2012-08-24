@@ -150,7 +150,7 @@ class Game extends $CS.Models.NineBall
         @setBreakAndRunByPlayer(2) 
 
   scoreBall: (ballNumber) ->
-    unless @getBallsHitIn().indexOf(ballNumber) >= 0 and !@getBallsHitIn().exists(9)
+    unless @getBallsHitIn().indexOf(ballNumber) >= 0 and not @getBallsHitIn().exists(9)
       if @player.one.callback().currentlyUp is true
         if ballNumber > 0 and ballNumber < 9
           @player.one.score += 1

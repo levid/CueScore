@@ -26,7 +26,7 @@ class Ranks extends $CS.Models.NineBall
 
   getWinningPlayersMatchPoints: (loserRank, loserScore) ->
     losingMatchPoints = @losersMatchPoints[loserRank][loserScore]
-    winningMatchPoints = 20 - @losersMatchPoints[loserRank][loserScore]
+    winningMatchPoints = (20 - @losersMatchPoints[loserRank][loserScore])
     winningMatchPoints
 
   getTimeouts: (rank) ->

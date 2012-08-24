@@ -31,7 +31,7 @@
     };
 
     function LeagueMatch(options) {
-      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5,
+      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6,
         _this = this;
       _.extend(this, this.defaults);
       this.homeTeamNumber = (_ref = options.homeTeamNumber) != null ? _ref : options.homeTeamNumber = null;
@@ -40,7 +40,7 @@
       this.awayTeamName = (_ref3 = options.awayTeamName) != null ? _ref3 : options.awayTeamName = null;
       this.startTime = (_ref4 = options.startTime) != null ? _ref4 : options.startTime = null;
       this.tableType = (_ref5 = options.tableType) != null ? _ref5 : options.tableType = null;
-      this.staticId = options.staticId != null;
+      this.staticId = (_ref6 = options.staticId) != null ? _ref6 : options.staticId = null;
       this.DataService = new $CS.Utilities.DataService;
       this.DataService.saveLeagueMatch(this, function(id) {
         return _this.leagueMatchId = id;

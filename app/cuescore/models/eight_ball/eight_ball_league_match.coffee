@@ -22,13 +22,13 @@ class LeagueMatch extends $CS.Models.EightBall
   constructor: (options) ->
     _.extend @, @defaults
     
-    @homeTeamNumber   = options.homeTeamNumber ?= null
-    @homeTeamName     = options.homeTeamName ?= null
-    @awayTeamNumber   = options.awayTeamNumber ?= null
-    @awayTeamName     = options.awayTeamName ?= null
-    @startTime        = options.startTime ?= null
-    @tableType        = options.tableType ?= null
-    @staticId         = options.staticId?
+    @homeTeamNumber   = options.homeTeamNumber  ?= null
+    @homeTeamName     = options.homeTeamName    ?= null
+    @awayTeamNumber   = options.awayTeamNumber  ?= null
+    @awayTeamName     = options.awayTeamName    ?= null
+    @startTime        = options.startTime       ?= null
+    @tableType        = options.tableType       ?= null
+    @staticId         = options.staticId        ?= null
     
     @DataService = new $CS.Utilities.DataService
     @DataService.saveLeagueMatch @, (id) =>

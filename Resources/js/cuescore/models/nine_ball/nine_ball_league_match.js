@@ -70,8 +70,9 @@
     LeagueMatch.prototype.getWinningTeamNumber = function() {
       if (this.getMatchPointsByTeam('home') < this.getMatchPointsByTeam('away')) {
         return this.awayTeamNumber;
+      } else {
+        return this.homeTeamNumber;
       }
-      return this.homeTeamNumber;
     };
 
     LeagueMatch.prototype.setMatch = function(matchData, matchNum) {

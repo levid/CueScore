@@ -17,10 +17,11 @@ class Player extends $CS.Models.NineBall
   constructor: (options) ->
     _.extend @, @defaults
       
-    @name             = options.name ?= null
-    @rank             = options.rank ?= null
-    @number           = options.number ?= null
-    @teamNumber       = options.teamNumber ?= null
+    @name             = options.name        ?= null
+    @rank             = options.rank        ?= null
+    @number           = options.number      ?= null
+    @teamNumber       = options.teamNumber  ?= null
+    
     @ballCount        = new $CS.Models.NineBall.Ranks().getBallCount(@rank).toString()
     @timeoutsAllowed  = new $CS.Models.NineBall.Ranks().getTimeouts(@rank)
     

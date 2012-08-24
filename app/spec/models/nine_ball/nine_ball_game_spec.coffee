@@ -36,6 +36,7 @@ describe "Nine Ball Game", ->
     )
     
   afterEach ->
+    game.numberOfInnings: 0
     game.player.one.score = 0
     game.player.one.nineOnSnap = false
     game.player.one.breakAndRun = false
@@ -50,11 +51,9 @@ describe "Nine Ball Game", ->
     game.player.two.deadBalls = []
     game.player.two.lastBall = null
     game.player.two.timeoutsTaken = 0
-    
-    numberOfInnings: 0
-    ended: false
-    onBreak: true
-    breakingPlayerStillShooting: true
+    game.ended: false
+    game.onBreak: true
+    game.breakingPlayerStillShooting: true
     
   describe "Scoring", ->
     it "should be able to keep track of 2 Players scores", ->

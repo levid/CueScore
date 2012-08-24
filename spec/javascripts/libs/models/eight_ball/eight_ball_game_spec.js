@@ -35,7 +35,6 @@
       });
     });
     afterEach(function() {
-      var breakingPlayerStillShooting, earlyEight, ended, lastBallHitIn, numberOfInnings, onBreak, playerOneBallType, playerOneBreakAndRun, playerOneEightBall, playerOneEightOnSnap, playerOneTimeoutsTaken, playerOneWon, playerTwoBallType, playerTwoBreakAndRun, playerTwoEightBall, playerTwoEightOnSnap, playerTwoTimeoutsTaken, playerTwoWon, scratchOnEight, solidBallsHitIn, stripedBallsHitIn;
       game.numberOfInnings = 0;
       game.player.one.eightOnSnap = false;
       game.player.one.breakAndRun = false;
@@ -54,28 +53,7 @@
       game.onBreak = true;
       game.breakingPlayerStillShooting = true;
       game.player.one.callback().currentlyUp = true;
-      game.player.two.callback().currentlyUp = false;
-      breakingPlayerStillShooting = true;
-      earlyEight = false;
-      ended = false;
-      lastBallHitIn = null;
-      numberOfInnings = 0;
-      onBreak = true;
-      playerOneBallType = null;
-      playerOneBreakAndRun = false;
-      playerOneEightBall = [];
-      playerOneEightOnSnap = false;
-      playerOneTimeoutsTaken = 0;
-      playerOneWon = false;
-      playerTwoBallType = null;
-      playerTwoBreakAndRun = false;
-      playerTwoEightBall = [];
-      playerTwoEightOnSnap = false;
-      playerTwoTimeoutsTaken = 0;
-      playerTwoWon = false;
-      scratchOnEight = false;
-      solidBallsHitIn = [];
-      return stripedBallsHitIn = [];
+      return game.player.two.callback().currentlyUp = false;
     });
     describe("Scoring", function() {
       it("should be able to take a ball number 1-7 and 9-15 and score it correctly", function() {

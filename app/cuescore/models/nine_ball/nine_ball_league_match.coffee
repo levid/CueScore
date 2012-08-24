@@ -22,12 +22,12 @@ class LeagueMatch extends $CS.Models.NineBall
   constructor: (options) ->
     _.extend @, @defaults
     
-    @homeTeamNumber   = options.homeTeamNumber ?= null
-    @homeTeamName     = options.homeTeamName ?= null
-    @awayTeamNumber   = options.awayTeamNumber ?= null
-    @awayTeamName     = options.awayTeamName ?= null
-    @startTime        = options.startTime ?= null
-    @tableType        = options.tableType ?= null
+    @homeTeamNumber   = options.homeTeamNumber  ?= null
+    @homeTeamName     = options.homeTeamName    ?= null
+    @awayTeamNumber   = options.awayTeamNumber  ?= null
+    @awayTeamName     = options.awayTeamName    ?= null
+    @startTime        = options.startTime       ?= null
+    @tableType        = options.tableType       ?= null
     
     @DataService = new $CS.Utilities.DataService
     @DataService.saveLeagueMatch @, (id) =>
@@ -53,8 +53,10 @@ class LeagueMatch extends $CS.Models.NineBall
     totalScore
     
   getWinningTeamNumber: ->
-    return @awayTeamNumber  if @getMatchPointsByTeam('home') < @getMatchPointsByTeam('away')
-    @homeTeamNumber
+    if @getMatchPointsByTeam('home') < @getMatchPointsByTeam('away')
+      return @awayTeamNumber
+    else
+      return @homeTeamNumber
     
   # Setters
   

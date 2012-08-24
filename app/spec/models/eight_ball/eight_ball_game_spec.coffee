@@ -53,28 +53,6 @@ describe "Eight Ball Game", ->
     game.breakingPlayerStillShooting = true
     game.player.one.callback().currentlyUp = true
     game.player.two.callback().currentlyUp = false
-    
-    breakingPlayerStillShooting = true
-    earlyEight = false
-    ended = false
-    lastBallHitIn = null
-    numberOfInnings = 0
-    onBreak = true
-    playerOneBallType = null
-    playerOneBreakAndRun = false
-    playerOneEightBall = []
-    playerOneEightOnSnap = false
-    playerOneTimeoutsTaken = 0
-    playerOneWon = false
-    playerTwoBallType = null
-    playerTwoBreakAndRun = false
-    playerTwoEightBall = []
-    playerTwoEightOnSnap = false
-    playerTwoTimeoutsTaken = 0
-    playerTwoWon = false
-    scratchOnEight = false
-    solidBallsHitIn = []
-    stripedBallsHitIn = []
    
 
   describe "Scoring", ->
