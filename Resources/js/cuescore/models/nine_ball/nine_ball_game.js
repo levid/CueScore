@@ -51,10 +51,11 @@
     };
 
     function Game(options) {
+      var _ref, _ref1, _ref2;
       _.extend(this, this.defaults);
-      this.player.one.callback = options.addToPlayerOne;
-      this.player.two.callback = options.addToPlayerTwo;
-      this.matchEndedCallback = options.callback;
+      this.player.one.callback = (_ref = options.addToPlayerOne) != null ? _ref : options.addToPlayerOne = {};
+      this.player.two.callback = (_ref1 = options.addToPlayerTwo) != null ? _ref1 : options.addToPlayerTwo = {};
+      this.matchEndedCallback = (_ref2 = options.callback) != null ? _ref2 : options.callback = {};
       this.player.one.deadBalls = [];
       this.player.two.deadBalls = [];
       this.player.one.timeoutsTaken = 0;

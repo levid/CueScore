@@ -36,9 +36,9 @@ class Game extends $CS.Models.NineBall
   constructor: (options) ->
     _.extend @, @defaults
     
-    @player.one.callback  = options.addToPlayerOne
-    @player.two.callback  = options.addToPlayerTwo
-    @matchEndedCallback   = options.callback
+    @player.one.callback  = options.addToPlayerOne ?= {}
+    @player.two.callback  = options.addToPlayerTwo ?= {}
+    @matchEndedCallback   = options.callback       ?= {}
     
     @player.one.deadBalls = []
     @player.two.deadBalls = []
@@ -202,7 +202,6 @@ class Game extends $CS.Models.NineBall
         @player.one.callback().currentlyUp = true
         
       @breakingPlayerStillShooting = false
-      
     @onBreak = false
 
   breakIsOver: ->

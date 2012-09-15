@@ -10,11 +10,11 @@
 
     LeagueMatch.prototype.defaults = {
       match: {
-        one: null,
-        two: null,
-        three: null,
-        four: null,
-        five: null
+        one: {},
+        two: {},
+        three: {},
+        four: {},
+        five: {}
       },
       teamNumber: "",
       homeTeamNumber: null,
@@ -26,7 +26,7 @@
       startTime: null,
       endTime: "",
       tableType: null,
-      smallJson: false,
+      smallJSON: false,
       leagueMatchId: 0
     };
 
@@ -99,10 +99,10 @@
       }
     };
 
-    LeagueMatch.prototype.getMatchPointsByTeam = function(team) {
+    LeagueMatch.prototype.getMatchPointsByTeam = function(type) {
       var awayScore, homeScore, name, names, _fn, _fn1, _i, _j, _len, _len1,
         _this = this;
-      if (team === "home") {
+      if (type === "home") {
         homeScore = 0;
         names = ['one', 'two', 'three', 'four', 'five'];
         _fn = function(name) {
@@ -118,7 +118,7 @@
           _fn(name);
         }
         return homeScore;
-      } else if (team === "away") {
+      } else if (type === "away") {
         awayScore = 0;
         names = ['one', 'two', 'three', 'four', 'five'];
         _fn1 = function(name) {

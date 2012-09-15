@@ -44,7 +44,7 @@
 
     DataService.prototype.saveMatch = function(match, setOriginalIdCallback) {
       try {
-        if (!(match.OriginalId != null) || match.OriginalId === 0) {
+        if (!(match.originalId != null) || match.originalId === 0) {
           leagueMatch.smallJSON = true;
           this.db.execute("INSERT INTO Matches (Match, EnteredDateTime) VALUES(?, ?)", this.convertToJSONString(match), "DATETIME(NOW)");
           setOriginalIdCallback(this.db.lastInsertRowId);
@@ -53,9 +53,9 @@
           return;
         }
         if (typeof Ti !== "undefined" && Ti !== null) {
-          Ti.API.log("@db rounded OId", parseInt(match.OriginalId));
+          Ti.API.log("@db rounded OId", parseInt(match.originalId));
         }
-        this.db.execute("INSERT INTO Matches (OriginalId, Match, EnteredDateTime) VALUES(?, ?, ?)", match.OriginalId.toString(), this.convertToJSONString(match), "DATETIME(NOW)");
+        this.db.execute("INSERT INTO Matches (OriginalId, Match, EnteredDateTime) VALUES(?, ?, ?)", match.originalId.toString(), this.convertToJSONString(match), "DATETIME(NOW)");
         this.db.close();
       } catch (e) {
         return this.db.close();

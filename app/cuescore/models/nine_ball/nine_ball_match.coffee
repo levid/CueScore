@@ -43,7 +43,7 @@ class Match extends $CS.Models.NineBall
     @currentGame = @getNewGame()
   
   # Getters
-  
+
   getNewGame: ->
     newGame = new $CS.Models.NineBall.Game(
       options = 

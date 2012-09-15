@@ -1,11 +1,11 @@
 class LeagueMatch extends $CS.Models.NineBall
   defaults: 
     match:
-      one: null
-      two: null
-      three: null
-      four: null
-      five: null
+      one: {}
+      two: {}
+      three: {}
+      four: {}
+      five: {}
     teamNumber: ""
     homeTeamNumber: null
     homeTeamName: null
@@ -16,7 +16,7 @@ class LeagueMatch extends $CS.Models.NineBall
     startTime: null
     endTime: ""
     tableType: null
-    smallJson: false
+    smallJSON: false
     leagueMatchId: 0
 
   constructor: (options) ->
@@ -81,8 +81,8 @@ class LeagueMatch extends $CS.Models.NineBall
       @DataService.saveMatch @match[matchNumString], (id) ->
         @match[matchNumString].originalId = id
         
-  getMatchPointsByTeam: (team) ->
-    if team == "home"
+  getMatchPointsByTeam: (type) ->
+    if type == "home"
       homeScore = 0
       names = ['one', 'two', 'three', 'four', 'five']
     
@@ -94,7 +94,7 @@ class LeagueMatch extends $CS.Models.NineBall
           homeScore += @match[name].getMatchPointsByPlayer(2)
       homeScore
       
-    else if team == "away"
+    else if type == "away"
       awayScore = 0
       names = ['one', 'two', 'three', 'four', 'five']
     
@@ -157,48 +157,48 @@ class LeagueMatch extends $CS.Models.NineBall
       matchOne = new $CS.Models.NineBall.Match(
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber
-          homeTeamName: jsonLeagueMatch.homeTeamName
-          awayTeamName: jsonLeagueMatch.awayTeamName
-          startTime: jsonLeagueMatch.startTime
-          tableType: jsonLeagueMatch.tableType
+          homeTeamName:   jsonLeagueMatch.homeTeamName
+          awayTeamName:   jsonLeagueMatch.awayTeamName
+          startTime:      jsonLeagueMatch.startTime
+          tableType:      jsonLeagueMatch.tableType
       )
       matchTwo = new $CS.Models.NineBall.Match(
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber
-          homeTeamName: jsonLeagueMatch.homeTeamName
-          awayTeamName: jsonLeagueMatch.awayTeamName
-          startTime: jsonLeagueMatch.startTime
-          tableType: jsonLeagueMatch.tableType
+          homeTeamName:   jsonLeagueMatch.homeTeamName
+          awayTeamName:   jsonLeagueMatch.awayTeamName
+          startTime:      jsonLeagueMatch.startTime
+          tableType:      jsonLeagueMatch.tableType
       )
       matchThree = new $CS.Models.NineBall.Match(
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber
-          homeTeamName: jsonLeagueMatch.homeTeamName
-          awayTeamName: jsonLeagueMatch.awayTeamName
-          startTime: jsonLeagueMatch.startTime
-          tableType: jsonLeagueMatch.tableType
+          homeTeamName:   jsonLeagueMatch.homeTeamName
+          awayTeamName:   jsonLeagueMatch.awayTeamName
+          startTime:      jsonLeagueMatch.startTime
+          tableType:      jsonLeagueMatch.tableType
       )
       matchFour = new $CS.Models.NineBall.Match(
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber
-          homeTeamName: jsonLeagueMatch.homeTeamName
-          awayTeamName: jsonLeagueMatch.awayTeamName
-          startTime: jsonLeagueMatch.startTime
-          tableType: jsonLeagueMatch.tableType
+          homeTeamName:   jsonLeagueMatch.homeTeamName
+          awayTeamName:   jsonLeagueMatch.awayTeamName
+          startTime:      jsonLeagueMatch.startTime
+          tableType:      jsonLeagueMatch.tableType
       )
       matchFive = new $CS.Models.NineBall.Match(
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber
-          homeTeamName: jsonLeagueMatch.homeTeamName
-          awayTeamName: jsonLeagueMatch.awayTeamName
-          startTime: jsonLeagueMatch.startTime
-          tableType: jsonLeagueMatch.tableType
+          homeTeamName:   jsonLeagueMatch.homeTeamName
+          awayTeamName:   jsonLeagueMatch.awayTeamName
+          startTime:      jsonLeagueMatch.startTime
+          tableType:      jsonLeagueMatch.tableType
       )
-      matchOne.fromJSON jsonLeagueMatch.match.one
-      matchTwo.fromJSON jsonLeagueMatch.match.two
+      matchOne.fromJSON   jsonLeagueMatch.match.one
+      matchTwo.fromJSON   jsonLeagueMatch.match.two
       matchThree.fromJSON jsonLeagueMatch.match.three
-      matchFour.fromJSON jsonLeagueMatch.match.four
-      matchFive.fromJSON jsonLeagueMatch.match.five
+      matchFour.fromJSON  jsonLeagueMatch.match.four
+      matchFive.fromJSON  jsonLeagueMatch.match.five
       
       @match.one      = matchOne
       @match.two      = matchTwo

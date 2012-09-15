@@ -55,8 +55,12 @@
       this.player.one.callback = options.addToPlayerOne;
       this.player.two.callback = options.addToPlayerTwo;
       this.matchEndedCallback = options.callback;
-      this.player.one.callback().timeoutsTaken = 0;
-      this.player.two.callback().timeoutsTaken = 0;
+      this.player.one.deadBalls = [];
+      this.player.two.deadBalls = [];
+      this.player.one.timeoutsTaken = 0;
+      this.player.two.timeoutsTaken = 0;
+      this.player.one.ballsHitIn = [];
+      this.player.two.ballsHitIn = [];
     }
 
     Game.prototype.getCurrentlyUpPlayer = function() {
@@ -198,7 +202,7 @@
     };
 
     Game.prototype.scoreBall = function(ballNumber) {
-      if (!this.getBallsHitIn().exists(ballNumber)) {
+      if (!(this.getBallsHitIn().indexOf(ballNumber) >= 0 && !this.getBallsHitIn().exists(9))) {
         if (this.player.one.callback().currentlyUp === true) {
           if (ballNumber > 0 && ballNumber < 9) {
             this.player.one.score += 1;
@@ -271,26 +275,20 @@
 
     Game.prototype.toJSON = function() {
       return {
-        player: {
-          one: {
-            score: this.player.one.score,
-            timeoutsTaken: this.player.one.timeoutsTaken,
-            nineOnSnap: this.player.one.nineOnSnap,
-            breakAndRun: this.player.one.breakAndRun,
-            ballsHitIn: this.player.one.ballsHitIn,
-            deadBalls: this.player.one.deadBalls,
-            lastBall: this.player.one.lastBall
-          },
-          two: {
-            score: this.player.two.score,
-            timeoutsTaken: this.player.two.timeoutsTaken,
-            nineOnSnap: this.player.two.nineOnSnap,
-            breakAndRun: this.player.two.breakAndRun,
-            ballsHitIn: this.player.two.ballsHitIn,
-            deadBalls: this.player.one.deadBalls,
-            lastBall: this.player.one.lastBall
-          }
-        },
+        playerOneScore: this.player.one.score,
+        playerOneTimeoutsTaken: this.player.one.timeoutsTaken,
+        playerOneNineOnSnap: this.player.one.nineOnSnap,
+        playerOneBreakAndRun: this.player.one.breakAndRun,
+        playerOneBallsHitIn: this.player.one.ballsHitIn,
+        playerOneDeadBalls: this.player.one.deadBalls,
+        playerOneLastBall: this.player.one.lastBall,
+        playerTwoScore: this.player.two.score,
+        playerTwoTimeoutsTaken: this.player.two.timeoutsTaken,
+        playerTwoNineOnSnap: this.player.two.nineOnSnap,
+        playerTwoBreakAndRun: this.player.two.breakAndRun,
+        playerTwoBallsHitIn: this.player.two.ballsHitIn,
+        playerTwoDeadBalls: this.player.one.deadBalls,
+        playerTwoLastBall: this.player.one.lastBall,
         ended: this.ended,
         numberOfInnings: this.numberOfInnings,
         onBreak: this.onBreak,
@@ -299,20 +297,20 @@
     };
 
     Game.prototype.fromJSON = function(gameJSON) {
-      this.player.one.score = gameJSON.player.one.score;
-      this.player.two.score = gameJSON.player.two.score;
-      this.player.one.timeoutsTaken = gameJSON.player.one.timeoutsTaken;
-      this.player.two.timeoutsTaken = gameJSON.player.two.timeoutsTaken;
-      this.player.one.nineOnSnap = gameJSON.player.one.nineOnSnap;
-      this.player.one.breakAndRun = gameJSON.player.one.breakAndRun;
-      this.player.two.nineOnSnap = gameJSON.player.two.nineOnSnap;
-      this.player.two.breakAndRun = gameJSON.player.two.breakAndRun;
-      this.player.one.ballsHitIn = gameJSON.player.one.ballsHitIn;
-      this.player.two.ballsHitIn = gameJSON.player.two.ballsHitIn;
-      this.player.one.deadBalls = gameJSON.player.one.deadBalls;
-      this.player.two.deadBalls = gameJSON.player.two.deadBalls;
-      this.player.one.lastBall = gameJSON.player.one.lastBall;
-      this.player.two.lastBall = gameJSON.player.two.lastBall;
+      this.player.one.score = gameJSON.playerOneScore;
+      this.player.two.score = gameJSON.playerTwoScore;
+      this.player.one.timeoutsTaken = gameJSON.playerOneTimeoutsTaken;
+      this.player.two.timeoutsTaken = gameJSON.playerTwoTimeoutsTaken;
+      this.player.one.nineOnSnap = gameJSON.playerOneNineOnSnap;
+      this.player.one.breakAndRun = gameJSON.playerOneBreakAndRun;
+      this.player.two.nineOnSnap = gameJSON.playerTwoNineOnSnap;
+      this.player.two.breakAndRun = gameJSON.playerTwoBreakAndRun;
+      this.player.one.ballsHitIn = gameJSON.playerOneBallsHitIn;
+      this.player.two.ballsHitIn = gameJSON.playerTwoBallsHitIn;
+      this.player.one.deadBalls = gameJSON.playerOneDeadBalls;
+      this.player.two.deadBalls = gameJSON.playerTwoDeadBalls;
+      this.player.one.lastBall = gameJSON.playerOneLastBall;
+      this.player.two.lastBall = gameJSON.playerTwoLastBall;
       this.numberOfInnings = gameJSON.numberOfInnings;
       this.ended = gameJSON.ended;
       this.onBreak = gameJSON.onBreak;

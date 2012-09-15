@@ -163,6 +163,11 @@
       }
     };
 
+    Game.prototype.clearBallsHitIn = function(playerNum) {
+      this.player.one.eightBall = [];
+      return this.player.two.eightBall = [];
+    };
+
     Game.prototype.setBreakAndRunByPlayer = function(playerNum) {
       if (playerNum === 1) {
         if (this.player.one.breakAndRun !== true) {
@@ -244,7 +249,7 @@
     };
 
     Game.prototype.scoreBall = function(ballNumber) {
-      if (!this.getBallsHitIn().exists(ballNumber)) {
+      if (!(this.getBallsHitIn().indexOf(ballNumber) >= 0 && !this.getBallsHitIn().exists(8))) {
         this.lastBallHitIn = ballNumber;
         if (ballNumber > 0 && ballNumber < 8) {
           this.ballsHitIn.solids.push(ballNumber);
@@ -300,13 +305,13 @@
         if (this.player.one.eightBall.exists(8) && this.onBreak === false) {
           if (this.getBallsHitInByPlayer(1).length !== 8 && this.getBallsHitInByPlayer(2).length !== 8) {
             this.setPlayerWon(2);
-          } else if (this.getBallsHitInByPlayer(1).length === 8) {
+          } else {
             this.setPlayerWon(1);
           }
         } else if (this.player.two.eightBall.exists(8) && this.onBreak === false) {
           if (this.getBallsHitInByPlayer(1).length !== 8 && this.getBallsHitInByPlayer(2).length !== 8) {
             this.setPlayerWon(1);
-          } else if (this.getBallsHitInByPlayer(2).length === 8) {
+          } else {
             this.setPlayerWon(2);
           }
         } else {

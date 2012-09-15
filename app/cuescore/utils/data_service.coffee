@@ -26,15 +26,15 @@ class DataService extends $CS.Utilities
 
   saveMatch: (match, setOriginalIdCallback) ->
     try
-      if not match.OriginalId? or match.OriginalId is 0
+      if not match.originalId? or match.originalId is 0
         leagueMatch.smallJSON = true
         @db.execute "INSERT INTO Matches (Match, EnteredDateTime) VALUES(?, ?)", @convertToJSONString(match), "DATETIME(NOW)"
         setOriginalIdCallback @db.lastInsertRowId
         @db.execute "UPDATE Matches SET OriginalId = " + @db.lastInsertRowId + " WHERE ID = " + @db.lastInsertRowId
         @db.close()
         return
-      Ti?.API.log "@db rounded OId", parseInt(match.OriginalId)
-      @db.execute "INSERT INTO Matches (OriginalId, Match, EnteredDateTime) VALUES(?, ?, ?)", match.OriginalId.toString(), @convertToJSONString(match), "DATETIME(NOW)"
+      Ti?.API.log "@db rounded OId", parseInt(match.originalId)
+      @db.execute "INSERT INTO Matches (OriginalId, Match, EnteredDateTime) VALUES(?, ?, ?)", match.originalId.toString(), @convertToJSONString(match), "DATETIME(NOW)"
       @db.close()
       return
     catch e

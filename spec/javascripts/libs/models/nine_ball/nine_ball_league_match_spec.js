@@ -5,7 +5,7 @@
     var leagueMatch;
     leagueMatch = void 0;
     beforeEach(function() {
-      var options, setUpMatchDefaults;
+      var options;
       leagueMatch = new $CS.Models.NineBall.LeagueMatch(options = {
         homeTeamNumber: "123",
         awayTeamNumber: "345",
@@ -68,40 +68,7 @@
         playerOneTeamNumber: "123",
         playerTwoTeamNumber: "345"
       }), 5);
-      leagueMatch.match.five.player.one.currentlyUp = true;
-      setUpMatchDefaults = function(matchNum) {
-        leagueMatch.match[matchNum].player.one.currentlyUp = true;
-        leagueMatch.match[matchNum].completedGames = [];
-        leagueMatch.match[matchNum].ended = false;
-        leagueMatch.match[matchNum].originalId = 0;
-        leagueMatch.match[matchNum].leagueMatchId = 0;
-        leagueMatch.match[matchNum].playerNumberWinning = 0;
-        leagueMatch.match[matchNum].suddenDeath = false;
-        leagueMatch.match[matchNum].forfeit = false;
-        leagueMatch.match[matchNum].currentGame.player.one.score = 0;
-        leagueMatch.match[matchNum].currentGame.player.one.nineOnSnap = false;
-        leagueMatch.match[matchNum].currentGame.player.one.breakAndRun = false;
-        leagueMatch.match[matchNum].currentGame.player.one.ballsHitIn = [];
-        leagueMatch.match[matchNum].currentGame.player.one.deadBalls = [];
-        leagueMatch.match[matchNum].currentGame.player.one.lastBall = null;
-        leagueMatch.match[matchNum].currentGame.player.one.timeoutsTaken = 0;
-        leagueMatch.match[matchNum].currentGame.player.two.score = 0;
-        leagueMatch.match[matchNum].currentGame.player.two.nineOnSnap = false;
-        leagueMatch.match[matchNum].currentGame.player.two.breakAndRun = false;
-        leagueMatch.match[matchNum].currentGame.player.two.ballsHitIn = [];
-        leagueMatch.match[matchNum].currentGame.player.two.deadBalls = [];
-        leagueMatch.match[matchNum].currentGame.player.two.lastBall = null;
-        leagueMatch.match[matchNum].currentGame.player.two.timeoutsTaken = 0;
-        leagueMatch.match[matchNum].currentGame.numberOfInnings = 0;
-        leagueMatch.match[matchNum].currentGame.ended = false;
-        leagueMatch.match[matchNum].currentGame.onBreak = true;
-        return leagueMatch.match[matchNum].currentGame.breakingPlayerStillShooting = true;
-      };
-      setUpMatchDefaults('one');
-      setUpMatchDefaults('two');
-      setUpMatchDefaults('three');
-      setUpMatchDefaults('four');
-      return setUpMatchDefaults('five');
+      return leagueMatch.match.five.player.one.currentlyUp = true;
     });
     it("should have homeTeamNumber, awayTeamNumber, startTime, and tableType initialized from constructor", function() {
       expect(leagueMatch.homeTeamNumber).toEqual("123");
@@ -127,12 +94,20 @@
       return expect(leagueMatch.endTime).toEqual("");
     });
     it("should be able to calculate home and away teams scores", function() {
+      leagueMatch.match.one.currentGame.breakIsOver();
       leagueMatch.match.one.scoreNumberedBall(1);
       leagueMatch.match.one.scoreNumberedBall(2);
       leagueMatch.match.one.scoreNumberedBall(3);
       leagueMatch.match.one.scoreNumberedBall(4);
-      expect(leagueMatch.getMatchPointsByTeam('home')).toEqual(20);
-      expect(leagueMatch.getMatchPointsByTeam('away')).toEqual(0);
+      leagueMatch.match.one.scoreNumberedBall(5);
+      leagueMatch.match.one.scoreNumberedBall(6);
+      leagueMatch.match.one.shotMissed();
+      leagueMatch.match.one.scoreNumberedBall(7);
+      leagueMatch.match.one.scoreNumberedBall(8);
+      leagueMatch.match.one.scoreNumberedBall(9);
+      expect(leagueMatch.getMatchPointsByTeam('home')).toEqual(95);
+      expect(leagueMatch.getMatchPointsByTeam('away')).toEqual(5);
+      leagueMatch.match.two.currentGame.breakIsOver();
       leagueMatch.match.two.scoreNumberedBall(1);
       leagueMatch.match.two.scoreNumberedBall(2);
       leagueMatch.match.two.scoreNumberedBall(3);
@@ -141,6 +116,7 @@
       leagueMatch.match.two.scoreNumberedBall(5);
       leagueMatch.match.two.scoreNumberedBall(6);
       leagueMatch.match.two.scoreNumberedBall(7);
+      leagueMatch.match.three.currentGame.breakIsOver();
       leagueMatch.match.three.scoreNumberedBall(1);
       leagueMatch.match.three.scoreNumberedBall(2);
       leagueMatch.match.three.scoreNumberedBall(3);
@@ -149,6 +125,7 @@
       leagueMatch.match.three.scoreNumberedBall(5);
       leagueMatch.match.three.scoreNumberedBall(6);
       leagueMatch.match.three.scoreNumberedBall(7);
+      leagueMatch.match.four.currentGame.breakIsOver();
       leagueMatch.match.four.scoreNumberedBall(1);
       leagueMatch.match.four.scoreNumberedBall(2);
       leagueMatch.match.four.scoreNumberedBall(3);
@@ -167,8 +144,8 @@
       leagueMatch.match.five.scoreNumberedBall(5);
       leagueMatch.match.five.scoreNumberedBall(6);
       leagueMatch.match.five.scoreNumberedBall(9);
-      expect(leagueMatch.getMatchPointsByTeam('home')).toEqual(60);
-      return expect(leagueMatch.getMatchPointsByTeam('away')).toEqual(40);
+      expect(leagueMatch.getMatchPointsByTeam('home')).toEqual(65);
+      return expect(leagueMatch.getMatchPointsByTeam('away')).toEqual(35);
     });
     it("should know which team is winning the match", function() {
       leagueMatch.match.one.scoreNumberedBall(1);
@@ -324,17 +301,17 @@
               playerOneMatchPointsEarned: 0,
               playerTwoMatchPointsEarned: 0,
               currentGame: {
-                playerOneScore: 0,
+                playerOneScore: 35,
                 playerOneTimeoutsTaken: 0,
                 playerOneNineOnSnap: false,
                 playerOneBreakAndRun: false,
                 playerOneBallsHitIn: [],
                 playerOneDeadBalls: [],
                 playerOneLastBall: null,
-                playerTwoScore: 0,
+                playerTwoScore: 43,
                 playerTwoTimeoutsTaken: 0,
                 playerTwoNineOnSnap: false,
-                playerTwoBreakAndRun: false,
+                playerTwoBreakAndRun: true,
                 playerTwoBallsHitIn: [],
                 playerTwoDeadBalls: [],
                 playerTwoLastBall: null,
@@ -348,7 +325,7 @@
               forfeit: false,
               ended: false,
               originalId: 0,
-              leagueMatchId: 0
+              leagueMatchId: 1
             },
             two: {
               player: {
@@ -380,17 +357,17 @@
               playerOneMatchPointsEarned: 0,
               playerTwoMatchPointsEarned: 0,
               currentGame: {
-                playerOneScore: 0,
+                playerOneScore: 35,
                 playerOneTimeoutsTaken: 0,
                 playerOneNineOnSnap: false,
                 playerOneBreakAndRun: false,
                 playerOneBallsHitIn: [],
                 playerOneDeadBalls: [],
                 playerOneLastBall: null,
-                playerTwoScore: 0,
+                playerTwoScore: 43,
                 playerTwoTimeoutsTaken: 0,
                 playerTwoNineOnSnap: false,
-                playerTwoBreakAndRun: false,
+                playerTwoBreakAndRun: true,
                 playerTwoBallsHitIn: [],
                 playerTwoDeadBalls: [],
                 playerTwoLastBall: null,
@@ -404,7 +381,7 @@
               forfeit: false,
               ended: false,
               originalId: 0,
-              leagueMatchId: 0
+              leagueMatchId: 2
             },
             three: {
               player: {
@@ -436,17 +413,17 @@
               playerOneMatchPointsEarned: 0,
               playerTwoMatchPointsEarned: 0,
               currentGame: {
-                playerOneScore: 0,
+                playerOneScore: 35,
                 playerOneTimeoutsTaken: 0,
                 playerOneNineOnSnap: false,
                 playerOneBreakAndRun: false,
                 playerOneBallsHitIn: [],
                 playerOneDeadBalls: [],
                 playerOneLastBall: null,
-                playerTwoScore: 0,
+                playerTwoScore: 43,
                 playerTwoTimeoutsTaken: 0,
                 playerTwoNineOnSnap: false,
-                playerTwoBreakAndRun: false,
+                playerTwoBreakAndRun: true,
                 playerTwoBallsHitIn: [],
                 playerTwoDeadBalls: [],
                 playerTwoLastBall: null,
@@ -460,7 +437,7 @@
               forfeit: false,
               ended: false,
               originalId: 0,
-              leagueMatchId: 0
+              leagueMatchId: 3
             },
             four: {
               player: {
@@ -492,17 +469,17 @@
               playerOneMatchPointsEarned: 0,
               playerTwoMatchPointsEarned: 0,
               currentGame: {
-                playerOneScore: 0,
+                playerOneScore: 35,
                 playerOneTimeoutsTaken: 0,
                 playerOneNineOnSnap: false,
                 playerOneBreakAndRun: false,
                 playerOneBallsHitIn: [],
                 playerOneDeadBalls: [],
                 playerOneLastBall: null,
-                playerTwoScore: 0,
+                playerTwoScore: 43,
                 playerTwoTimeoutsTaken: 0,
                 playerTwoNineOnSnap: false,
-                playerTwoBreakAndRun: false,
+                playerTwoBreakAndRun: true,
                 playerTwoBallsHitIn: [],
                 playerTwoDeadBalls: [],
                 playerTwoLastBall: null,
@@ -516,7 +493,7 @@
               forfeit: false,
               ended: false,
               originalId: 0,
-              leagueMatchId: 0
+              leagueMatchId: 4
             },
             five: {
               player: {
@@ -548,17 +525,17 @@
               playerOneMatchPointsEarned: 0,
               playerTwoMatchPointsEarned: 0,
               currentGame: {
-                playerOneScore: 0,
+                playerOneScore: 35,
                 playerOneTimeoutsTaken: 0,
                 playerOneNineOnSnap: false,
                 playerOneBreakAndRun: false,
                 playerOneBallsHitIn: [],
                 playerOneDeadBalls: [],
                 playerOneLastBall: null,
-                playerTwoScore: 0,
+                playerTwoScore: 43,
                 playerTwoTimeoutsTaken: 0,
                 playerTwoNineOnSnap: false,
-                playerTwoBreakAndRun: false,
+                playerTwoBreakAndRun: true,
                 playerTwoBallsHitIn: [],
                 playerTwoDeadBalls: [],
                 playerTwoLastBall: null,
@@ -572,7 +549,7 @@
               forfeit: false,
               ended: false,
               originalId: 0,
-              leagueMatchId: 0
+              leagueMatchId: 5
             }
           },
           teamNumber: "",

@@ -11,6 +11,7 @@ describe "Nine Ball League Match", ->
         startTime: "10:00 pm"
         tableType: "Coin-Operated"
     )
+
     leagueMatch.setMatch new $CS.Models.NineBall.Match(
       options = 
         playerOneName: "Player1"
@@ -71,41 +72,6 @@ describe "Nine Ball League Match", ->
         playerTwoTeamNumber: "345"
     ), 5
     leagueMatch.match.five.player.one.currentlyUp = true
-    
-    setUpMatchDefaults = (matchNum) ->
-      leagueMatch.match[matchNum].player.one.currentlyUp = true
-      leagueMatch.match[matchNum].completedGames = []
-      leagueMatch.match[matchNum].ended = false
-      leagueMatch.match[matchNum].originalId = 0
-      leagueMatch.match[matchNum].leagueMatchId = 0
-      leagueMatch.match[matchNum].playerNumberWinning = 0
-      leagueMatch.match[matchNum].suddenDeath = false
-      leagueMatch.match[matchNum].forfeit = false
-  
-      leagueMatch.match[matchNum].currentGame.player.one.score = 0
-      leagueMatch.match[matchNum].currentGame.player.one.nineOnSnap = false
-      leagueMatch.match[matchNum].currentGame.player.one.breakAndRun = false
-      leagueMatch.match[matchNum].currentGame.player.one.ballsHitIn = []
-      leagueMatch.match[matchNum].currentGame.player.one.deadBalls = []
-      leagueMatch.match[matchNum].currentGame.player.one.lastBall = null
-      leagueMatch.match[matchNum].currentGame.player.one.timeoutsTaken = 0
-      leagueMatch.match[matchNum].currentGame.player.two.score = 0
-      leagueMatch.match[matchNum].currentGame.player.two.nineOnSnap = false
-      leagueMatch.match[matchNum].currentGame.player.two.breakAndRun = false
-      leagueMatch.match[matchNum].currentGame.player.two.ballsHitIn = []
-      leagueMatch.match[matchNum].currentGame.player.two.deadBalls = []
-      leagueMatch.match[matchNum].currentGame.player.two.lastBall = null
-      leagueMatch.match[matchNum].currentGame.player.two.timeoutsTaken = 0
-      leagueMatch.match[matchNum].currentGame.numberOfInnings = 0
-      leagueMatch.match[matchNum].currentGame.ended = false
-      leagueMatch.match[matchNum].currentGame.onBreak = true
-      leagueMatch.match[matchNum].currentGame.breakingPlayerStillShooting = true
-      
-    setUpMatchDefaults('one')
-    setUpMatchDefaults('two')
-    setUpMatchDefaults('three')
-    setUpMatchDefaults('four')
-    setUpMatchDefaults('five')
 
   it "should have homeTeamNumber, awayTeamNumber, startTime, and tableType initialized from constructor", ->
     expect(leagueMatch.homeTeamNumber).toEqual "123"
@@ -133,14 +99,22 @@ describe "Nine Ball League Match", ->
   it "should be able to calculate home and away teams scores", ->
     
     #Player1 20 points (Home)
+    leagueMatch.match.one.currentGame.breakIsOver()
     leagueMatch.match.one.scoreNumberedBall 1
     leagueMatch.match.one.scoreNumberedBall 2
     leagueMatch.match.one.scoreNumberedBall 3
     leagueMatch.match.one.scoreNumberedBall 4
-    expect(leagueMatch.getMatchPointsByTeam('home')).toEqual 20
-    expect(leagueMatch.getMatchPointsByTeam('away')).toEqual 0
+    leagueMatch.match.one.scoreNumberedBall 5
+    leagueMatch.match.one.scoreNumberedBall 6
+    leagueMatch.match.one.shotMissed()
+    leagueMatch.match.one.scoreNumberedBall 7
+    leagueMatch.match.one.scoreNumberedBall 8
+    leagueMatch.match.one.scoreNumberedBall 9
+    expect(leagueMatch.getMatchPointsByTeam('home')).toEqual 95
+    expect(leagueMatch.getMatchPointsByTeam('away')).toEqual 5
     
     #PlayerTwo 19 points (Home)
+    leagueMatch.match.two.currentGame.breakIsOver()
     leagueMatch.match.two.scoreNumberedBall 1
     leagueMatch.match.two.scoreNumberedBall 2
     leagueMatch.match.two.scoreNumberedBall 3
@@ -151,6 +125,7 @@ describe "Nine Ball League Match", ->
     leagueMatch.match.two.scoreNumberedBall 7
     
     #PlayerTwo 19 Points (Away)
+    leagueMatch.match.three.currentGame.breakIsOver()
     leagueMatch.match.three.scoreNumberedBall 1
     leagueMatch.match.three.scoreNumberedBall 2
     leagueMatch.match.three.scoreNumberedBall 3
@@ -161,6 +136,7 @@ describe "Nine Ball League Match", ->
     leagueMatch.match.three.scoreNumberedBall 7
     
     #PlayerTwo 18 points (Away)
+    leagueMatch.match.four.currentGame.breakIsOver()
     leagueMatch.match.four.scoreNumberedBall 1
     leagueMatch.match.four.scoreNumberedBall 2
     leagueMatch.match.four.scoreNumberedBall 3
@@ -181,8 +157,9 @@ describe "Nine Ball League Match", ->
     leagueMatch.match.five.scoreNumberedBall 5
     leagueMatch.match.five.scoreNumberedBall 6
     leagueMatch.match.five.scoreNumberedBall 9
-    expect(leagueMatch.getMatchPointsByTeam('home')).toEqual 60
-    expect(leagueMatch.getMatchPointsByTeam('away')).toEqual 40
+    
+    expect(leagueMatch.getMatchPointsByTeam('home')).toEqual 65
+    expect(leagueMatch.getMatchPointsByTeam('away')).toEqual 35
 
   it "should know which team is winning the match", ->
     leagueMatch.match.one.scoreNumberedBall 1
@@ -337,17 +314,17 @@ describe "Nine Ball League Match", ->
             playerOneMatchPointsEarned: 0
             playerTwoMatchPointsEarned: 0
             currentGame:
-              playerOneScore: 0
+              playerOneScore: 35
               playerOneTimeoutsTaken: 0
               playerOneNineOnSnap: false
               playerOneBreakAndRun: false
               playerOneBallsHitIn: []
               playerOneDeadBalls: []
               playerOneLastBall: null
-              playerTwoScore: 0
+              playerTwoScore: 43
               playerTwoTimeoutsTaken: 0
               playerTwoNineOnSnap: false
-              playerTwoBreakAndRun: false
+              playerTwoBreakAndRun: true
               playerTwoBallsHitIn: []
               playerTwoDeadBalls: []
               playerTwoLastBall: null
@@ -361,7 +338,7 @@ describe "Nine Ball League Match", ->
             forfeit: false
             ended: false
             originalId: 0
-            leagueMatchId: 0
+            leagueMatchId: 1
     
           two:
             player:
@@ -392,17 +369,17 @@ describe "Nine Ball League Match", ->
             playerOneMatchPointsEarned: 0
             playerTwoMatchPointsEarned: 0
             currentGame:
-              playerOneScore: 0
+              playerOneScore: 35
               playerOneTimeoutsTaken: 0
               playerOneNineOnSnap: false
               playerOneBreakAndRun: false
               playerOneBallsHitIn: []
               playerOneDeadBalls: []
               playerOneLastBall: null
-              playerTwoScore: 0
+              playerTwoScore: 43
               playerTwoTimeoutsTaken: 0
               playerTwoNineOnSnap: false
-              playerTwoBreakAndRun: false
+              playerTwoBreakAndRun: true
               playerTwoBallsHitIn: []
               playerTwoDeadBalls: []
               playerTwoLastBall: null
@@ -416,7 +393,7 @@ describe "Nine Ball League Match", ->
             forfeit: false
             ended: false
             originalId: 0
-            leagueMatchId: 0
+            leagueMatchId: 2
     
           three:
             player:
@@ -447,17 +424,17 @@ describe "Nine Ball League Match", ->
             playerOneMatchPointsEarned: 0
             playerTwoMatchPointsEarned: 0
             currentGame:
-              playerOneScore: 0
+              playerOneScore: 35
               playerOneTimeoutsTaken: 0
               playerOneNineOnSnap: false
               playerOneBreakAndRun: false
               playerOneBallsHitIn: []
               playerOneDeadBalls: []
               playerOneLastBall: null
-              playerTwoScore: 0
+              playerTwoScore: 43
               playerTwoTimeoutsTaken: 0
               playerTwoNineOnSnap: false
-              playerTwoBreakAndRun: false
+              playerTwoBreakAndRun: true
               playerTwoBallsHitIn: []
               playerTwoDeadBalls: []
               playerTwoLastBall: null
@@ -471,7 +448,7 @@ describe "Nine Ball League Match", ->
             forfeit: false
             ended: false
             originalId: 0
-            leagueMatchId: 0
+            leagueMatchId: 3
     
           four:
             player:
@@ -502,17 +479,17 @@ describe "Nine Ball League Match", ->
             playerOneMatchPointsEarned: 0
             playerTwoMatchPointsEarned: 0
             currentGame:
-              playerOneScore: 0
+              playerOneScore: 35
               playerOneTimeoutsTaken: 0
               playerOneNineOnSnap: false
               playerOneBreakAndRun: false
               playerOneBallsHitIn: []
               playerOneDeadBalls: []
               playerOneLastBall: null
-              playerTwoScore: 0
+              playerTwoScore: 43
               playerTwoTimeoutsTaken: 0
               playerTwoNineOnSnap: false
-              playerTwoBreakAndRun: false
+              playerTwoBreakAndRun: true
               playerTwoBallsHitIn: []
               playerTwoDeadBalls: []
               playerTwoLastBall: null
@@ -526,7 +503,7 @@ describe "Nine Ball League Match", ->
             forfeit: false
             ended: false
             originalId: 0
-            leagueMatchId: 0
+            leagueMatchId: 4
     
           five:
             player:
@@ -557,17 +534,17 @@ describe "Nine Ball League Match", ->
             playerOneMatchPointsEarned: 0
             playerTwoMatchPointsEarned: 0
             currentGame:
-              playerOneScore: 0
+              playerOneScore: 35
               playerOneTimeoutsTaken: 0
               playerOneNineOnSnap: false
               playerOneBreakAndRun: false
               playerOneBallsHitIn: []
               playerOneDeadBalls: []
               playerOneLastBall: null
-              playerTwoScore: 0
+              playerTwoScore: 43
               playerTwoTimeoutsTaken: 0
               playerTwoNineOnSnap: false
-              playerTwoBreakAndRun: false
+              playerTwoBreakAndRun: true
               playerTwoBallsHitIn: []
               playerTwoDeadBalls: []
               playerTwoLastBall: null
@@ -581,7 +558,7 @@ describe "Nine Ball League Match", ->
             forfeit: false
             ended: false
             originalId: 0
-            leagueMatchId: 0
+            leagueMatchId: 5
     
         teamNumber: ""
         homeTeamNumber: "123"

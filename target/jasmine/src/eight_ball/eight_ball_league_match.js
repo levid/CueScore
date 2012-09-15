@@ -31,7 +31,7 @@
     };
 
     function LeagueMatch(options) {
-      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5,
+      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6,
         _this = this;
       _.extend(this, this.defaults);
       this.homeTeamNumber = (_ref = options.homeTeamNumber) != null ? _ref : options.homeTeamNumber = null;
@@ -40,7 +40,7 @@
       this.awayTeamName = (_ref3 = options.awayTeamName) != null ? _ref3 : options.awayTeamName = null;
       this.startTime = (_ref4 = options.startTime) != null ? _ref4 : options.startTime = null;
       this.tableType = (_ref5 = options.tableType) != null ? _ref5 : options.tableType = null;
-      this.staticId = options.staticId != null;
+      this.staticId = (_ref6 = options.staticId) != null ? _ref6 : options.staticId = null;
       this.DataService = new $CS.Utilities.DataService;
       this.DataService.saveLeagueMatch(this, function(id) {
         return _this.leagueMatchId = id;
@@ -132,22 +132,25 @@
     LeagueMatch.prototype.isHomeTeamWinning = function() {
       if (this.getMatchPointsByTeam('home') > this.getMatchPointsByTeam('away')) {
         return true;
+      } else {
+        return false;
       }
-      return false;
     };
 
     LeagueMatch.prototype.isAwayTeamWinning = function() {
       if (this.getMatchPointsByTeam('home') < this.getMatchPointsByTeam('away')) {
         return true;
+      } else {
+        return false;
       }
-      return false;
     };
 
     LeagueMatch.prototype.getWinningTeamNumber = function() {
       if (this.getMatchPointsByTeam('home') < this.getMatchPointsByTeam('away')) {
         return this.awayTeamNumber;
+      } else {
+        return this.homeTeamNumber;
       }
-      return this.homeTeamNumber;
     };
 
     LeagueMatch.prototype.toJSON = function() {
@@ -174,10 +177,22 @@
       };
     };
 
+    LeagueMatch.prototype.toSmallJSON = function() {
+      return {
+        teamNumber: this.teamNumber,
+        homeTeamNumber: this.homeTeamNumber,
+        awayTeamNumber: this.awayTeamNumber,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        tableType: this.tableType,
+        leagueMatchId: this.leagueMatchId
+      };
+    };
+
     LeagueMatch.prototype.fromJSON = function(jsonLeagueMatch) {
       var matchFive, matchFour, matchOne, matchThree, matchTwo;
-      if (jsonLeagueMatch == null) {
-        matchOne = new $CS.Models.EightBall.LeagueMatch({
+      if (jsonLeagueMatch.match != null) {
+        matchOne = new $CS.Models.EightBall.Match({
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber,
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber,
           homeTeamName: jsonLeagueMatch.homeTeamName,
@@ -185,7 +200,7 @@
           startTime: jsonLeagueMatch.startTime,
           tableType: jsonLeagueMatch.tableType
         });
-        matchTwo = new $CS.Models.EightBall.LeagueMatch({
+        matchTwo = new $CS.Models.EightBall.Match({
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber,
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber,
           homeTeamName: jsonLeagueMatch.homeTeamName,
@@ -193,7 +208,7 @@
           startTime: jsonLeagueMatch.startTime,
           tableType: jsonLeagueMatch.tableType
         });
-        matchThree = new $CS.Models.EightBall.LeagueMatch({
+        matchThree = new $CS.Models.EightBall.Match({
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber,
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber,
           homeTeamName: jsonLeagueMatch.homeTeamName,
@@ -201,7 +216,7 @@
           startTime: jsonLeagueMatch.startTime,
           tableType: jsonLeagueMatch.tableType
         });
-        matchFour = new $CS.Models.EightBall.LeagueMatch({
+        matchFour = new $CS.Models.EightBall.Match({
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber,
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber,
           homeTeamName: jsonLeagueMatch.homeTeamName,
@@ -209,7 +224,7 @@
           startTime: jsonLeagueMatch.startTime,
           tableType: jsonLeagueMatch.tableType
         });
-        matchFive = new $CS.Models.EightBall.LeagueMatch({
+        matchFive = new $CS.Models.EightBall.Match({
           homeTeamNumber: jsonLeagueMatch.homeTeamNumber,
           awayTeamNumber: jsonLeagueMatch.awayTeamNumber,
           homeTeamName: jsonLeagueMatch.homeTeamName,
@@ -217,11 +232,11 @@
           startTime: jsonLeagueMatch.startTime,
           tableType: jsonLeagueMatch.tableType
         });
-        matchOne.fromJSON(jsonLeagueMatch.matchOne);
-        matchTwo.fromJSON(jsonLeagueMatch.matchTwo);
-        matchThree.fromJSON(jsonLeagueMatch.matchThree);
-        matchFour.fromJSON(jsonLeagueMatch.matchFour);
-        matchFive.fromJSON(jsonLeagueMatch.matchFive);
+        matchOne.fromJSON(jsonLeagueMatch.match.one);
+        matchTwo.fromJSON(jsonLeagueMatch.match.two);
+        matchThree.fromJSON(jsonLeagueMatch.match.three);
+        matchFour.fromJSON(jsonLeagueMatch.match.four);
+        matchFive.fromJSON(jsonLeagueMatch.match.five);
         this.match.one = matchOne;
         this.match.two = matchTwo;
         this.match.three = matchThree;
@@ -235,18 +250,6 @@
         this.tableType = jsonLeagueMatch.tableType;
         return this.leagueMatchId = jsonLeagueMatch.leagueMatchId;
       }
-    };
-
-    LeagueMatch.prototype.toSmallJSON = function() {
-      return {
-        teamNumber: this.teamNumber,
-        homeTeamNumber: this.homeTeamNumber,
-        awayTeamNumber: this.awayTeamNumber,
-        startTime: this.startTime,
-        endTime: this.endTime,
-        tableType: this.tableType,
-        leagueMatchId: this.leagueMatchId
-      };
     };
 
     LeagueMatch.prototype.fromSmallJSON = function(jsonLeagueMatch) {
