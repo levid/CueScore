@@ -1,0 +1,380 @@
+<!DOCTYPE html><html><head><title>match_controller.coffee</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="../../docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="../../index.html" class="source"><span class="file_name">README</span></a><a href="../../app.coffee.html" class="source "><span class="base_path">. / </span><span class="file_name">app.coffee</span></a><a href="../../cuescore/api.coffee.html" class="source "><span class="base_path">cuescore / </span><span class="file_name">api.coffee</span></a><a href="../../cuescore/app.coffee.html" class="source "><span class="base_path">cuescore / </span><span class="file_name">app.coffee</span></a><a href="../../cuescore/controllers/dashboard_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">dashboard_controller.coffee</span></a><a href="../../cuescore/controllers/match_controller.coffee.html" class="source selected"><span class="base_path">cuescore / controllers / </span><span class="file_name">match_controller.coffee</span></a><a href="../../cuescore/controllers/match_setup_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">match_setup_controller.coffee</span></a><a href="../../cuescore/controllers/play.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">play.coffee</span></a><a href="../../cuescore/controllers/posts_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">posts_controller.coffee</span></a><a href="../../cuescore/helpers/application.coffee.html" class="source "><span class="base_path">cuescore / helpers / </span><span class="file_name">application.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_game.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_game.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_league.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_league.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_league_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_league_match.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_match.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_player.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_player.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_practice_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_practice_match.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_ranks.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_ranks.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_tournament_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_tournament_match.coffee</span></a><a href="../../cuescore/models/game.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">game.coffee</span></a><a href="../../cuescore/models/league.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">league.coffee</span></a><a href="../../cuescore/models/leagues/double_jeopardy_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">double_jeopardy_league.coffee</span></a><a href="../../cuescore/models/leagues/doubles_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">doubles_league.coffee</span></a><a href="../../cuescore/models/leagues/masters_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">masters_league.coffee</span></a><a href="../../cuescore/models/leagues/mixed_doubles_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">mixed_doubles_league.coffee</span></a><a href="../../cuescore/models/leagues/womens_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">womens_league.coffee</span></a><a href="../../cuescore/models/match.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">match.coffee</span></a><a href="../../cuescore/models/nine_ball/nine_ball_game.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_game.coffee</span></a><a href="../../cuescore/models/nine_ball/nine_ball_league.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_league.coffee</span></a><a href="../../cuescore/models/nine_ball/nine_ball_league_match.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_league_match.coffee</span></a><a href="../../cuescore/models/nine_ball/nine_ball_match.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_match.coffee</span></a><a href="../../cuescore/models/nine_ball/nine_ball_player.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_player.coffee</span></a><a href="../../cuescore/models/nine_ball/nine_ball_ranks.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_ranks.coffee</span></a><a href="../../cuescore/models/player.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">player.coffee</span></a><a href="../../cuescore/models/post_model.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">post_model.coffee</span></a><a href="../../cuescore/models/rank.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">rank.coffee</span></a><a href="../../cuescore/models/team.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">team.coffee</span></a><a href="../../cuescore/utils/appsync.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">appsync.coffee</span></a><a href="../../cuescore/utils/base_64.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">base_64.coffee</span></a><a href="../../cuescore/utils/contains.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">contains.coffee</span></a><a href="../../cuescore/utils/data_service.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">data_service.coffee</span></a><a href="../../cuescore/utils/device_fix.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">device_fix.coffee</span></a><a href="../../cuescore/utils/extras.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">extras.coffee</span></a><a href="../../cuescore/utils/query_string_builder.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">query_string_builder.coffee</span></a><a href="../../cuescore/utils/template.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">template.coffee</span></a><a href="../../cuescore/utils/utilities.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">utilities.coffee</span></a><a href="../../cuescore/views/dashboard/dashboard_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / </span><span class="file_name">dashboard_view.coffee</span></a><a href="../../cuescore/views/dashboard/title_bar_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / </span><span class="file_name">title_bar_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/activity_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">activity_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/events_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">events_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/grid_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">grid_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/list_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">list_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/live_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">live_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/menu_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">menu_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/news_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">news_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/profile_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">profile_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/rules_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">rules_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/settings_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">settings_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/teams_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">teams_view.coffee</span></a><a href="../../cuescore/views/login/main.coffee.html" class="source "><span class="base_path">cuescore / views / login / </span><span class="file_name">main.coffee</span></a><a href="../../cuescore/views/posts/post_view_controller.coffee.html" class="source "><span class="base_path">cuescore / views / posts / </span><span class="file_name">post_view_controller.coffee</span></a><a href="../../cuescore/views/posts/posts_view_controller.coffee.html" class="source "><span class="base_path">cuescore / views / posts / </span><span class="file_name">posts_view_controller.coffee</span></a><a href="../../cuescore/views/sample/main.coffee.html" class="source "><span class="base_path">cuescore / views / sample / </span><span class="file_name">main.coffee</span></a><a href="../../cuescore/views/settings/main.coffee.html" class="source "><span class="base_path">cuescore / views / settings / </span><span class="file_name">main.coffee</span></a><a href="../../cuescore/window/main.coffee.html" class="source "><span class="base_path">cuescore / window / </span><span class="file_name">main.coffee</span></a><a href="../../cuescore/window/second.coffee.html" class="source "><span class="base_path">cuescore / window / </span><span class="file_name">second.coffee</span></a><a href="../../spec/models/eight_ball/eight_ball_game_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_game_spec.coffee</span></a><a href="../../spec/models/eight_ball/eight_ball_league_match_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_league_match_spec.coffee</span></a><a href="../../spec/models/eight_ball/eight_ball_match_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_match_spec.coffee</span></a><a href="../../spec/models/eight_ball/eight_ball_player_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_player_spec.coffee</span></a><a href="../../spec/models/eight_ball/eight_ball_ranks_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_ranks_spec.coffee</span></a><a href="../../spec/models/game_spec.coffee.html" class="source "><span class="base_path">spec / models / </span><span class="file_name">game_spec.coffee</span></a><a href="../../spec/models/league_spec.coffee.html" class="source "><span class="base_path">spec / models / </span><span class="file_name">league_spec.coffee</span></a><a href="../../spec/models/nine_ball/nine_ball_game_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_game_spec.coffee</span></a><a href="../../spec/models/nine_ball/nine_ball_league_match_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_league_match_spec.coffee</span></a><a href="../../spec/models/nine_ball/nine_ball_match_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_match_spec.coffee</span></a><a href="../../spec/models/nine_ball/nine_ball_player_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_player_spec.coffee</span></a><a href="../../spec/models/nine_ball/nine_ball_ranks_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_ranks_spec.coffee</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"><h1>match_controller.coffee</h1><div class="filepath">cuescore/controllers/</div></th><th class="code"></th></tr></thead><tbody><tr id="section-1"><td class="docs"><div class="pilwrap"><a href="#section-1" class="pilcrow">&#182;</a></div>
+</td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nx">MatchController</span>
+  <span class="nv">opts: </span><span class="p">{}</span>
+  
+  <span class="nv">constructor: </span><span class="nf">(@options) -&gt;</span>
+    <span class="vi">@options = </span><span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">@opts</span><span class="p">,</span> <span class="nx">@options</span><span class="p">)</span>
+
+    <span class="vi">@leagueMatch = </span><span class="nx">match</span>
+    <span class="vi">@currentMatchNumber = </span><span class="mi">1</span>
+    <span class="vi">@matchStarted = </span><span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span> <span class="p">]</span>
+    <span class="vi">@atMatchResults = </span><span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span> <span class="p">]</span>
+    <span class="vi">@hasSentPDF = </span><span class="kc">false</span>
+    <span class="vi">@currentMatch = </span><span class="nx">@leagueMatch</span><span class="p">.</span><span class="nx">MatchOne</span>
+    <span class="vi">@currentMatch.PlayerOne.Score = </span><span class="mi">0</span>
+    <span class="vi">@playerOnePocketBg = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createImageView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/pocket-noglow-player1.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">0</span>
+      <span class="nv">left: </span><span class="mi">0</span>
+      <span class="nv">width: </span><span class="mi">282</span>
+      <span class="nv">height: </span><span class="mi">300</span>
+      <span class="nv">visible: </span><span class="kc">true</span>
+      <span class="nv">isNinePatch: </span><span class="kc">false</span>
+    <span class="p">)</span>
+    <span class="vi">@playerTwoPocketBg = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createImageView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/pocket-noglow-player2.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">0</span>
+      <span class="nv">right: </span><span class="mi">0</span>
+      <span class="nv">width: </span><span class="mi">292</span>
+      <span class="nv">height: </span><span class="mi">300</span>
+      <span class="nv">visible: </span><span class="kc">true</span>
+      <span class="nv">isNinePatch: </span><span class="kc">false</span>
+    <span class="p">)</span>
+    <span class="vi">@playerOnePocketBgGlow = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createImageView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/pocket-glow-player1.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">0</span>
+      <span class="nv">left: </span><span class="mi">0</span>
+      <span class="nv">width: </span><span class="mi">293</span>
+      <span class="nv">height: </span><span class="mi">300</span>
+      <span class="nv">visible: </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">CurrentlyUp</span>
+      <span class="nv">isNinePatch: </span><span class="kc">false</span>
+    <span class="p">)</span>
+    <span class="vi">@playerTwoPocketBgGlow = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createImageView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/pocket-glow-player2.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">0</span>
+      <span class="nv">right: </span><span class="mi">0</span>
+      <span class="nv">width: </span><span class="mi">292</span>
+      <span class="nv">height: </span><span class="mi">300</span>
+      <span class="nv">visible: </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">CurrentlyUp</span>
+      <span class="nv">isNinePatch: </span><span class="kc">false</span>
+    <span class="p">)</span>
+      
+    <span class="vi">@matchWindow = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createWindow</span><span class="p">(</span><span class="nv">orientationModes: </span><span class="p">[</span> <span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">PORTRAIT</span> <span class="p">])</span>
+    <span class="vi">@view = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nx">Ti</span><span class="p">.</span><span class="nx">Platform</span><span class="p">.</span><span class="nx">name</span> <span class="o">isnt</span> <span class="s">&quot;android&quot;</span><span class="p">)</span> <span class="k">then</span> <span class="s">&quot;images/match/background-iphone-wpockets.png&quot;</span> <span class="k">else</span> <span class="s">&quot;images/match/background-android-wpockets.png&quot;</span><span class="p">)</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">0</span>
+      <span class="nv">isNinePatch: </span><span class="kc">false</span>
+    <span class="p">)</span>
+    <span class="nx">@view</span><span class="p">.</span><span class="nx">add</span> <span class="nx">playerOnePocketBg</span>
+    <span class="nx">@view</span><span class="p">.</span><span class="nx">add</span> <span class="nx">playerTwoPocketBg</span>
+    <span class="nx">@view</span><span class="p">.</span><span class="nx">add</span> <span class="nx">playerOnePocketBgGlow</span>
+    <span class="nx">@view</span><span class="p">.</span><span class="nx">add</span> <span class="nx">playerTwoPocketBgGlow</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/pages/matchViews/header.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/pages/matchViews/footer.js&quot;</span>
+    <span class="k">if</span> <span class="nx">@leagueMatch</span><span class="p">.</span><span class="nx">GameType</span> <span class="o">is</span> <span class="s">&quot;NineBall&quot;</span>
+      <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/pages/matchViews/ballDisplayNine.js&quot;</span>
+      <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/pages/matchViews/rackOfBallsNine.js&quot;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">@leagueMatch</span><span class="p">.</span><span class="nx">GameType</span> <span class="o">is</span> <span class="s">&quot;EightBall&quot;</span>
+      <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/pages/matchViews/ballDisplayEight.js&quot;</span>
+      <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/pages/matchViews/rackOfBallsEight.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/pages/matchViews/ballSelector.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/pages/matchViews/questionsOverlay.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/pages/matchViews/overlays.js&quot;</span>
+    <span class="nx">unless</span> <span class="nx">Ti</span><span class="p">.</span><span class="nx">Platform</span><span class="p">.</span><span class="nx">name</span> <span class="o">is</span> <span class="s">&quot;android&quot;</span>
+      <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/pages/matchViews/signatureView-iPhone.js&quot;</span>
+    <span class="k">else</span>
+      <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/pages/matchViews/signatureView.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">setBackgroundColor</span> <span class="s">&quot;</span><span class="err">#</span><span class="s">000000&quot;</span>
+    
+    <span class="nx">@matchWindow</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@view</span>
+    
+    <span class="nv">showMatch: </span><span class="o">=&gt;</span>
+      <span class="nx">unless</span> <span class="nx">Ti</span><span class="p">.</span><span class="nx">Platform</span><span class="p">.</span><span class="nx">name</span> <span class="o">is</span> <span class="s">&quot;android&quot;</span>
+        <span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">iPhone</span><span class="p">.</span><span class="nx">showStatusBar</span><span class="p">()</span>
+        <span class="nx">@matchWindow</span><span class="p">.</span><span class="nx">open</span> <span class="nv">fullscreen: </span><span class="kc">false</span>
+        <span class="nx">@updateUI</span><span class="p">()</span>
+      <span class="k">else</span>
+        <span class="nx">@matchWindow</span><span class="p">.</span><span class="nx">open</span> <span class="nv">fullscreen: </span><span class="kc">true</span>
+        <span class="nx">@updateUI</span><span class="p">()</span>
+  
+    <span class="nx">showMatch</span><span class="p">()</span>
+    <span class="nx">hideIndicator</span><span class="p">()</span>
+  
+  <span class="nv">setPlayerUpImages: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">CurrentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@OnBreak</span> <span class="o">is</span> <span class="kc">false</span> <span class="o">and</span> <span class="nx">@playerOneBallsRemainingLabel</span><span class="p">.</span><span class="nx">color</span> <span class="o">isnt</span> <span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+        <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@Ended</span> <span class="o">is</span> <span class="kc">false</span>
+          <span class="nx">showOverlay</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getCurrentlyUpPlayer</span><span class="p">().</span><span class="nx">getFirstNameWithInitials</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot; is now up!&quot;</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="o">-&gt;</span>
+            <span class="vi">@playerOneBallsRemainingBox.backgroundImage = </span><span class="s">&quot;images/match/layout/indicator-pointsneededtowin-currentplayer.png&quot;</span>
+            <span class="vi">@playerOneBallsRemainingLabel.color = </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+            <span class="vi">@playerTwoBallsRemainingBox.backgroundImage = </span><span class="s">&quot;images/match/layout/indicator-pointsneededtowin.png&quot;</span>
+            <span class="vi">@playerTwoBallsRemainingLabel.color = </span><span class="s">&quot;</span><span class="err">#</span><span class="s">c4eca3&quot;</span>
+        <span class="k">else</span>
+          <span class="vi">@playerOneBallsRemainingBox.backgroundImage = </span><span class="s">&quot;images/match/layout/indicator-pointsneededtowin-currentplayer.png&quot;</span>
+          <span class="vi">@playerOneBallsRemainingLabel.color = </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+          <span class="vi">@playerTwoBallsRemainingBox.backgroundImage = </span><span class="s">&quot;images/match/layout/indicator-pointsneededtowin.png&quot;</span>
+          <span class="vi">@playerTwoBallsRemainingLabel.color = </span><span class="s">&quot;</span><span class="err">#</span><span class="s">c4eca3&quot;</span>
+      <span class="k">else</span>
+        <span class="vi">@playerOneBallsRemainingBox.backgroundImage = </span><span class="s">&quot;images/match/layout/indicator-pointsneededtowin-currentplayer.png&quot;</span>
+        <span class="vi">@playerOneBallsRemainingLabel.color = </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+        <span class="vi">@playerTwoBallsRemainingBox.backgroundImage = </span><span class="s">&quot;images/match/layout/indicator-pointsneededtowin.png&quot;</span>
+        <span class="vi">@playerTwoBallsRemainingLabel.color = </span><span class="s">&quot;</span><span class="err">#</span><span class="s">c4eca3&quot;</span>
+    <span class="k">else</span>
+      <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@OnBreak</span> <span class="o">is</span> <span class="kc">false</span> <span class="o">and</span> <span class="nx">playerTwoBallsRemainingLabel</span><span class="p">.</span><span class="nx">color</span> <span class="o">isnt</span> <span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+        <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@Ended</span> <span class="o">is</span> <span class="kc">false</span>
+          <span class="nx">showOverlay</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getCurrentlyUpPlayer</span><span class="p">().</span><span class="nx">getFirstNameWithInitials</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot; is now up!&quot;</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="o">-&gt;</span>
+            <span class="vi">@playerOneBallsRemainingBox.backgroundImage = </span><span class="s">&quot;images/match/layout/indicator-pointsneededtowin.png&quot;</span>
+            <span class="vi">@playerOneBallsRemainingLabel.color = </span><span class="s">&quot;</span><span class="err">#</span><span class="s">c4eca3&quot;</span>
+            <span class="vi">@playerTwoBallsRemainingBox.backgroundImage = </span><span class="s">&quot;images/match/layout/indicator-pointsneededtowin-currentplayer.png&quot;</span>
+            <span class="vi">@playerTwoBallsRemainingLabel.color = </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+        <span class="k">else</span>
+          <span class="vi">@playerOneBallsRemainingBox.backgroundImage = </span><span class="s">&quot;images/match/layout/indicator-pointsneededtowin.png&quot;</span>
+          <span class="vi">@playerOneBallsRemainingLabel.color = </span><span class="s">&quot;</span><span class="err">#</span><span class="s">c4eca3&quot;</span>
+          <span class="vi">@playerTwoBallsRemainingBox.backgroundImage = </span><span class="s">&quot;images/match/layout/indicator-pointsneededtowin-currentplayer.png&quot;</span>
+          <span class="vi">@playerTwoBallsRemainingLabel.color = </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="k">else</span>
+        <span class="vi">@playerOneBallsRemainingBox.backgroundImage = </span><span class="s">&quot;images/match/layout/indicator-pointsneededtowin.png&quot;</span>
+        <span class="vi">@playerOneBallsRemainingLabel.color = </span><span class="s">&quot;</span><span class="err">#</span><span class="s">c4eca3&quot;</span>
+        <span class="vi">@playerTwoBallsRemainingBox.backgroundImage = </span><span class="s">&quot;images/match/layout/indicator-pointsneededtowin-currentplayer.png&quot;</span>
+        <span class="vi">@playerTwoBallsRemainingLabel.color = </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+
+  <span class="nv">setEndStartOverlays: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@OnBreak</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="vi">@shotMissedButton.title = </span><span class="s">&quot;End Break&quot;</span>
+      <span class="vi">@shotMissedButton.backgroundImage = </span><span class="s">&quot;images/match/buttons/btn-endbreak.png&quot;</span>
+      <span class="vi">@statusBarInformationLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getCurrentlyUpPlayer</span><span class="p">().</span><span class="nx">getFirstNameWithInitials</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot; is currently breaking in game &quot;</span> <span class="o">+</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getCurrentGameNumber</span><span class="p">()</span>
+      <span class="nx">@statusBarInformationGreen</span><span class="p">.</span><span class="nx">remove</span> <span class="nx">@statusBarInformationLabel</span>
+      <span class="nx">@statusBarInformation</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@statusBarInformationLabel</span>
+      <span class="vi">@statusBarInformation.visible = </span><span class="kc">true</span>
+      <span class="vi">@statusBarInformationGreen.visible = </span><span class="kc">false</span>
+      <span class="vi">@statusBar.visible = </span><span class="kc">false</span>
+      <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getCurrentGameNumber</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">and</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getBallsHitIn</span><span class="p">().</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">1</span>
+        <span class="nx">@hideStartMatchOverlay</span><span class="p">()</span>
+        <span class="nx">@showOverlay</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getCurrentlyUpPlayer</span><span class="p">().</span><span class="nx">getFirstNameWithInitials</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot; is breaking!&quot;</span><span class="p">,</span> <span class="mi">400</span>
+    <span class="k">else</span>
+      <span class="nx">@hideStartMatchOverlay</span><span class="p">()</span>
+      <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@BreakingPlayerStillHitting</span> <span class="o">is</span> <span class="kc">true</span>
+        <span class="vi">@shotMissedButton.title = </span><span class="s">&quot;Shot Missed&quot;</span>
+        <span class="vi">@shotMissedButton.backgroundImage = </span><span class="s">&quot;images/match/buttons/btn-shotmissed.png&quot;</span>
+        <span class="vi">@statusBarInformationLabel.text = </span><span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nx">@leagueMatch</span><span class="p">.</span><span class="nx">GameType</span> <span class="o">is</span> <span class="s">&quot;NineBall&quot;</span><span class="p">)</span> <span class="k">then</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getCurrentlyUpPlayer</span><span class="p">().</span><span class="nx">getFirstNameWithInitials</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot; is now in 9BR contention.&quot;</span> <span class="k">else</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getCurrentlyUpPlayer</span><span class="p">().</span><span class="nx">getFirstNameWithInitials</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot; is now in 8BR contention.&quot;</span><span class="p">)</span>
+        <span class="nx">@statusBarInformation</span><span class="p">.</span><span class="nx">remove</span> <span class="nx">@statusBarInformationLabel</span>
+        <span class="nx">@statusBarInformationGreen</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@statusBarInformationLabel</span>
+        <span class="vi">@statusBarInformationGreen.visible = </span><span class="kc">true</span>
+        <span class="vi">@statusBarInformation.visible = </span><span class="kc">false</span>
+        <span class="vi">@statusBar.visible = </span><span class="kc">false</span>
+      <span class="k">else</span>
+        <span class="vi">@shotMissedButton.title = </span><span class="s">&quot;Shot Missed&quot;</span>
+        <span class="vi">@shotMissedButton.backgroundImage = </span><span class="s">&quot;images/match/buttons/btn-shotmissed.png&quot;</span>
+        <span class="vi">@statusBarInformation.visible = </span><span class="kc">false</span>
+        <span class="vi">@statusBarInformationGreen.visible = </span><span class="kc">false</span>
+        <span class="vi">@statusBar.visible = </span><span class="kc">true</span>
+
+  <span class="nv">turnAndroidSignatureLabels: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">Ti</span><span class="p">.</span><span class="nx">Platform</span><span class="p">.</span><span class="nx">name</span> <span class="o">is</span> <span class="s">&quot;android&quot;</span>
+      <span class="k">if</span> <span class="nx">@isSignatureTeamNameTurned</span> <span class="o">is</span> <span class="kc">false</span>
+        <span class="nv">signatureTeamNumberT = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">create2DMatrix</span><span class="p">().</span><span class="nx">setFillAfter</span><span class="p">(</span><span class="kc">true</span><span class="p">).</span><span class="nx">rotate</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+        <span class="nx">@signatureTeamNa@animate</span>
+          <span class="nv">transform: </span><span class="nx">signatureTeamNumberT</span>
+          <span class="nv">duration: </span><span class="mi">1</span>
+      <span class="k">if</span> <span class="nx">@isSignatureTeamNumberTurned</span> <span class="o">is</span> <span class="kc">false</span>
+        <span class="nv">signatureTeamNumberT = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">create2DMatrix</span><span class="p">().</span><span class="nx">setFillAfter</span><span class="p">(</span><span class="kc">true</span><span class="p">).</span><span class="nx">rotate</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+        <span class="nx">@signatureTeamNumber</span><span class="p">.</span><span class="nx">animate</span>
+          <span class="nv">transform: </span><span class="nx">signatureTeamNumberT</span>
+          <span class="nv">duration: </span><span class="mi">1</span>
+
+  <span class="nv">updateNineBallUI: </span><span class="o">-&gt;</span>
+    <span class="nx">@turnAndroidSignatureLabels</span><span class="p">()</span>
+    <span class="vi">@matchNumberLabel.text = </span><span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">Ended</span> <span class="o">isnt</span> <span class="kc">true</span><span class="p">)</span> <span class="k">then</span> <span class="s">&quot;Match &quot;</span> <span class="o">+</span> <span class="nx">@currentMatchNumber</span> <span class="k">else</span> <span class="s">&quot;Finished&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">Ended</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="nx">@hideStartMatchOverlay</span><span class="p">()</span>
+      <span class="k">if</span> <span class="nx">@atMatchResults</span><span class="p">[</span><span class="nx">@currentMatchNumber</span><span class="p">]</span> <span class="o">is</span> <span class="kc">true</span>
+        <span class="nx">@showMatchResultsOverlay</span><span class="p">()</span>
+        <span class="nx">@hideMatchFinishedOverlay</span><span class="p">()</span>
+      <span class="k">else</span>
+        <span class="nx">@showMatchFinishedOverlay</span><span class="p">()</span>
+        <span class="nx">@hideMatchResultsOverlay</span><span class="p">()</span>
+      <span class="k">if</span> <span class="nx">@leagueMatch</span><span class="p">.</span><span class="nx">Ended</span><span class="p">()</span> <span class="o">is</span> <span class="kc">true</span> <span class="o">and</span> <span class="nx">@hasSentPDF</span> <span class="o">is</span> <span class="kc">false</span>
+        <span class="vi">@hasSentPDF = </span><span class="kc">true</span>
+        <span class="nv">leagueMatch.SmallJSON = </span><span class="kc">false</span>
+        <span class="nx">DataService</span><span class="p">.</span><span class="nx">sendLeagueMatch</span> <span class="nx">@leagueMatch</span>
+        <span class="nx">@matchResultsShowSignatureButton</span><span class="p">()</span>
+    <span class="k">else</span>
+      <span class="vi">@matchResultsOverlayContainer.visible = </span><span class="kc">false</span>
+      <span class="nx">@hideMatchResultsOverlay</span><span class="p">()</span>
+      <span class="nx">@hideMatchFinishedOverlay</span><span class="p">()</span>
+      <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getBallsHitIn</span><span class="p">().</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">and</span> <span class="nx">@isCurrentMatchStarted</span><span class="p">()</span> <span class="o">is</span> <span class="kc">false</span>
+        <span class="nx">@showStartMatchOverlay</span><span class="p">()</span>
+      <span class="k">else</span>
+        <span class="nx">@hideStartMatchOverlay</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@Ended</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="nx">@showFinishedGameOverlay</span><span class="p">()</span>
+        <span class="k">else</span>
+          <span class="nx">@hideFinishedGameOverlay</span><span class="p">()</span>
+        <span class="vi">@playerOneNameLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">getFirstNameWithInitials</span><span class="p">()</span>
+        <span class="vi">@playerTwoNameLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">getFirstNameWithInitials</span><span class="p">()</span>
+        <span class="vi">@playerOneBallCountLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">BallCount</span>
+        <span class="vi">@playerTwoBallCountLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">BallCount</span>
+        <span class="vi">@gameNumberLabel.text = </span><span class="s">&quot;Game &quot;</span> <span class="o">+</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getCurrentGameNumber</span><span class="p">()</span>
+        <span class="vi">@playerOneScoreLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">getScore</span><span class="p">()</span>
+        <span class="vi">@playerTwoScoreLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">getScore</span><span class="p">()</span>
+        <span class="vi">@playerOneBallsRemainingLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">getRemainingBallCount</span><span class="p">()</span>
+        <span class="vi">@playerTwoBallsRemainingLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">getRemainingBallCount</span><span class="p">()</span>
+        <span class="nx">@setPlayerUpImages</span><span class="p">()</span>
+        <span class="vi">@playerOne9BLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">getNineOnSnaps</span><span class="p">()</span>
+        <span class="vi">@playerTwo9BLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">getNineOnSnaps</span><span class="p">()</span>
+        <span class="vi">@playerOne9BRLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">getBreakAndRuns</span><span class="p">()</span>
+        <span class="vi">@playerTwo9BRLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">getBreakAndRuns</span><span class="p">()</span>
+        <span class="vi">@matchScorePointsLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getMatchPoints</span><span class="p">()</span>
+        <span class="vi">@playerOneCurrentlyShootingBall.visible = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">CurrentlyUp</span>
+        <span class="vi">@playerTwoCurrentlyShootingBall.visible = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">CurrentlyUp</span>
+        <span class="vi">@playerOnePocketBgGlow.visible = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">CurrentlyUp</span>
+        <span class="vi">@playerTwoPocketBgGlow.visible = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">CurrentlyUp</span>
+        <span class="vi">@safetyButtonNumberLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getTotalSafeties</span><span class="p">()</span>
+        <span class="vi">@timeoutButtonNumberLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getCurrentPlayerRemainingTimeouts</span><span class="p">()</span>
+        <span class="vi">@gameScoreLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getGameScore</span><span class="p">()</span>
+        <span class="vi">@inningsNumberLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getTotalInnings</span><span class="p">()</span>
+        <span class="vi">@deadBallNumberLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getTotalDeadBalls</span><span class="p">()</span>
+        <span class="nx">@updateShownBalls</span><span class="p">()</span>
+        <span class="nx">@setEndStartOverlays</span><span class="p">()</span>
+
+  <span class="nv">updateEightBallUI: </span><span class="o">-&gt;</span>
+    <span class="nx">@turnAndroidSignatureLabels</span><span class="p">()</span>
+    <span class="vi">@matchNumberLabel.text = </span><span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">Ended</span> <span class="o">isnt</span> <span class="kc">true</span><span class="p">)</span> <span class="k">then</span> <span class="s">&quot;Match &quot;</span> <span class="o">+</span> <span class="nx">@currentMatchNumber</span> <span class="k">else</span> <span class="s">&quot;Finished&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">Ended</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="nx">unless</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@PlayerOneBallType</span><span class="o">?</span>
+        <span class="nx">@showBallCategorySelector</span><span class="p">()</span>
+      <span class="k">else</span>
+        <span class="nx">@hideBallCategorySelector</span><span class="p">()</span>
+        <span class="nx">@hideStartMatchOverlay</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nx">@atMatchResults</span><span class="p">[</span><span class="nx">@currentMatchNumber</span><span class="p">]</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="nx">@showMatchResultsOverlay</span><span class="p">()</span>
+          <span class="nx">@hideMatchFinishedOverlay</span><span class="p">()</span>
+        <span class="k">else</span>
+          <span class="nx">@showMatchFinishedOverlay</span><span class="p">()</span>
+          <span class="nx">@hideMatchResultsOverlay</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nx">@leagueMatch</span><span class="p">.</span><span class="nx">Ended</span><span class="p">()</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="nv">leagueMatch.SmallJSON = </span><span class="kc">false</span>
+          <span class="nx">DataService</span><span class="p">.</span><span class="nx">sendLeagueMatch</span> <span class="nx">@leagueMatch</span>
+          <span class="nx">@matchResultsShowSignatureButton</span><span class="p">()</span>
+    <span class="k">else</span>
+      <span class="k">if</span> <span class="o">not</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@PlayerOneBallType</span><span class="o">?</span> <span class="o">and</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">ArePlayersSwitching</span> <span class="o">is</span> <span class="kc">true</span> <span class="o">and</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getBallsHitIn</span><span class="p">().</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="nx">@showBallCategorySelector</span><span class="p">()</span>
+      <span class="k">else</span> <span class="nx">@hideBallCategorySelector</span><span class="p">()</span>  <span class="k">if</span> <span class="nx">@ballCategorySelector</span><span class="p">.</span><span class="nx">visible</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="vi">@matchResultsOverlayContainer.visible = </span><span class="kc">false</span>
+      <span class="nx">@hideMatchResultsOverlay</span><span class="p">()</span>
+      <span class="nx">@hideMatchFinishedOverlay</span><span class="p">()</span>
+      <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getBallsHitIn</span><span class="p">().</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">and</span> <span class="nx">@isCurrentMatchStarted</span><span class="p">()</span> <span class="o">is</span> <span class="kc">false</span>
+        <span class="nx">@showStartMatchOverlay</span><span class="p">()</span>
+      <span class="k">else</span>
+        <span class="nx">@hideStartMatchOverlay</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@Ended</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="nx">@showFinishedGameOverlay</span><span class="p">()</span>
+        <span class="k">else</span>
+          <span class="nx">@hideFinishedGameOverlay</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@PlayerOneBallType</span><span class="o">?</span> <span class="o">and</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@PlayerTwoBallType</span><span class="o">?</span>
+          <span class="k">if</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@PlayerOneBallType</span> <span class="o">is</span> <span class="mi">1</span>
+            <span class="vi">@stripedBallViewTransformation = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">create2DMatrix</span><span class="p">().</span><span class="nx">setFillBefore</span><span class="p">(</span><span class="kc">true</span><span class="p">).</span><span class="nx">translate</span><span class="p">(</span><span class="o">-</span><span class="nx">@stripedBallView</span><span class="p">.</span><span class="nx">left</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="vi">@solidBallViewTransformation = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">create2DMatrix</span><span class="p">().</span><span class="nx">setFillBefore</span><span class="p">(</span><span class="kc">true</span><span class="p">).</span><span class="nx">translate</span><span class="p">(</span><span class="nx">@getPlatformWidth</span><span class="p">()</span> <span class="o">-</span> <span class="mi">36</span> <span class="o">-</span> <span class="nx">@solidBallView</span><span class="p">.</span><span class="nx">left</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="nx">@stripedBallView</span><span class="p">.</span><span class="nx">animate</span>
+              <span class="nv">transform: </span><span class="nx">stripedBallViewTransformation</span>
+              <span class="nv">duration: </span><span class="mi">1</span>
+            <span class="p">,</span> <span class="o">-&gt;</span>
+              <span class="vi">@stripedBallView.left = </span><span class="mi">0</span>  <span class="k">if</span> <span class="nx">Ti</span><span class="p">.</span><span class="nx">Platform</span><span class="p">.</span><span class="nx">name</span> <span class="o">is</span> <span class="s">&quot;android&quot;</span>
+
+            <span class="nx">@solidBallView</span><span class="p">.</span><span class="nx">animate</span>
+              <span class="nv">transform: </span><span class="nx">solidBallViewTransformation</span>
+              <span class="nv">duration: </span><span class="mi">1</span>
+            <span class="p">,</span> <span class="o">-&gt;</span>
+              <span class="vi">@solidBallView.left = </span><span class="p">(</span><span class="nx">@getPlatformWidth</span><span class="p">()</span> <span class="o">-</span> <span class="mi">36</span><span class="p">)</span>  <span class="k">if</span> <span class="nx">Ti</span><span class="p">.</span><span class="nx">Platform</span><span class="p">.</span><span class="nx">name</span> <span class="o">is</span> <span class="s">&quot;android&quot;</span>
+          <span class="k">else</span>
+            <span class="vi">@stripedBallViewTransformation = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">create2DMatrix</span><span class="p">().</span><span class="nx">setFillBefore</span><span class="p">(</span><span class="kc">true</span><span class="p">).</span><span class="nx">translate</span><span class="p">(</span><span class="nx">@getPlatformWidth</span><span class="p">()</span> <span class="o">-</span> <span class="mi">36</span> <span class="o">-</span> <span class="nx">@stripedBallView</span><span class="p">.</span><span class="nx">left</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="vi">@solidBallViewTransformation = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">create2DMatrix</span><span class="p">().</span><span class="nx">setFillBefore</span><span class="p">(</span><span class="kc">true</span><span class="p">).</span><span class="nx">translate</span><span class="p">(</span><span class="o">-</span><span class="nx">@solidBallView</span><span class="p">.</span><span class="nx">left</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="nx">@stripedBallView</span><span class="p">.</span><span class="nx">animate</span>
+              <span class="nv">transform: </span><span class="nx">stripedBallViewTransformation</span>
+              <span class="nv">duration: </span><span class="mi">1</span>
+            <span class="p">,</span> <span class="o">-&gt;</span>
+              <span class="vi">@stripedBallView.left = </span><span class="p">(</span><span class="nx">@getPlatformWidth</span><span class="p">()</span> <span class="o">-</span> <span class="mi">36</span><span class="p">)</span>  <span class="k">if</span> <span class="nx">Ti</span><span class="p">.</span><span class="nx">Platform</span><span class="p">.</span><span class="nx">name</span> <span class="o">is</span> <span class="s">&quot;android&quot;</span>
+
+            <span class="nx">@solidBallView</span><span class="p">.</span><span class="nx">animate</span>
+              <span class="nv">transform: </span><span class="nx">solidBallViewTransformation</span>
+              <span class="nv">duration: </span><span class="mi">1</span>
+            <span class="p">,</span> <span class="o">-&gt;</span>
+              <span class="vi">@solidBallView.left = </span><span class="mi">0</span>  <span class="k">if</span> <span class="nx">Ti</span><span class="p">.</span><span class="nx">Platform</span><span class="p">.</span><span class="nx">name</span> <span class="o">is</span> <span class="s">&quot;android&quot;</span>
+          <span class="vi">@stripedBallView.visible = </span><span class="kc">true</span>
+          <span class="vi">@solidBallView.visible = </span><span class="kc">true</span>
+        <span class="vi">@playerOneNameLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">getFirstNameWithInitials</span><span class="p">()</span>
+        <span class="vi">@playerTwoNameLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">getFirstNameWithInitials</span><span class="p">()</span>
+        <span class="vi">@playerOneBallCountLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">getGamesNeededToWin</span><span class="p">()</span>
+        <span class="vi">@playerTwoBallCountLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">getGamesNeededToWin</span><span class="p">()</span>
+        <span class="vi">@gameNumberLabel.text = </span><span class="s">&quot;Game &quot;</span> <span class="o">+</span> <span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getCurrentGameNumber</span><span class="p">()</span>
+        <span class="vi">@playerOneScoreLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getPlayerOneGamesWon</span><span class="p">().</span><span class="nx">toString</span><span class="p">()</span>
+        <span class="vi">@playerTwoScoreLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getPlayerTwoGamesWon</span><span class="p">().</span><span class="nx">toString</span><span class="p">()</span>
+        <span class="vi">@playerOneBallsRemainingLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getPlayerOneRemainingGamesNeededToWin</span><span class="p">()</span>
+        <span class="vi">@playerTwoBallsRemainingLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getPlayerTwoRemainingGamesNeededToWin</span><span class="p">()</span>
+        <span class="nx">@setPlayerUpImages</span><span class="p">()</span>
+        <span class="vi">@playerOne9BLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">getEightOnSnaps</span><span class="p">()</span>
+        <span class="vi">@playerTwo9BLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">getEightOnSnaps</span><span class="p">()</span>
+        <span class="vi">@playerOne9BRLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">getBreakAndRuns</span><span class="p">()</span>
+        <span class="vi">@playerTwo9BRLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">getBreakAndRuns</span><span class="p">()</span>
+        <span class="vi">@matchScorePointsLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getMatchPoints</span><span class="p">()</span>
+        <span class="vi">@playerOneCurrentlyShootingBall.visible = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">CurrentlyUp</span>
+        <span class="vi">@playerTwoCurrentlyShootingBall.visible = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">CurrentlyUp</span>
+        <span class="vi">@playerOnePocketBgGlow.visible = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerOne</span><span class="p">.</span><span class="nx">CurrentlyUp</span>
+        <span class="vi">@playerTwoPocketBgGlow.visible = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">PlayerTwo</span><span class="p">.</span><span class="nx">CurrentlyUp</span>
+        <span class="vi">@safetyButtonNumberLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getTotalSafeties</span><span class="p">()</span>
+        <span class="vi">@timeoutButtonNumberLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getCurrentPlayerRemainingTimeouts</span><span class="p">()</span>
+        <span class="vi">@gameScoreLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">CurrentGa@getGameScore</span><span class="p">()</span>
+        <span class="vi">@inningsNumberLabel.text = </span><span class="nx">@currentMatch</span><span class="p">.</span><span class="nx">getTotalInnings</span><span class="p">()</span>
+        <span class="nx">@updateShownBalls</span><span class="p">()</span>
+        <span class="vi">@matchResultsOverlayContainer.visible = </span><span class="kc">false</span>
+        <span class="nx">@hideMatchResultsOverlay</span><span class="p">()</span>
+        <span class="nx">@hideMatchFinishedOverlay</span><span class="p">()</span>
+        <span class="nx">@setEndStartOverlays</span><span class="p">()</span>
+
+  <span class="nv">updateUI: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">@leagueMatch</span><span class="p">.</span><span class="nx">GameType</span> <span class="o">is</span> <span class="s">&quot;NineBall&quot;</span>
+      <span class="nx">@updateNineBallUI</span><span class="p">()</span>
+    <span class="k">else</span> <span class="nx">@updateEightBallUI</span><span class="p">()</span>  <span class="k">if</span> <span class="nx">@leagueMatch</span><span class="p">.</span><span class="nx">GameType</span> <span class="o">is</span> <span class="s">&quot;EightBall&quot;</span>
+
+  <span class="nv">startCurrentMatch: </span><span class="o">-&gt;</span>
+    <span class="nx">@matchStarted</span><span class="p">[</span><span class="nx">@currentMatchNumber</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span>
+
+  <span class="nv">currentMatchAtResults: </span><span class="o">-&gt;</span>
+    <span class="nx">@atMatchResults</span><span class="p">[</span><span class="nx">@currentMatchNumber</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span>
+
+  <span class="nv">isCurrentMatchStarted: </span><span class="o">-&gt;</span>
+    <span class="nx">@matchStarted</span><span class="p">[</span><span class="nx">@currentMatchNumber</span><span class="p">]</span>
+
+  <span class="nv">resetCurrentMatch: </span><span class="o">-&gt;</span>
+    <span class="k">switch</span> <span class="nx">@currentMatchNumber</span>
+      <span class="k">when</span> <span class="mi">1</span>
+        <span class="vi">@currentMatch = </span><span class="nx">@leagueMatch</span><span class="p">.</span><span class="nx">MatchOne</span>
+      <span class="k">when</span> <span class="mi">2</span>
+        <span class="vi">@currentMatch = </span><span class="nx">@leagueMatch</span><span class="p">.</span><span class="nx">MatchTwo</span>
+      <span class="k">when</span> <span class="mi">3</span>
+        <span class="vi">@currentMatch = </span><span class="nx">@leagueMatch</span><span class="p">.</span><span class="nx">MatchThree</span>
+      <span class="k">when</span> <span class="mi">4</span>
+        <span class="vi">@currentMatch = </span><span class="nx">@leagueMatch</span><span class="p">.</span><span class="nx">MatchFour</span>
+      <span class="k">when</span> <span class="mi">5</span>
+        <span class="vi">@currentMatch = </span><span class="nx">@leagueMatch</span><span class="p">.</span><span class="nx">MatchFive</span>
+    <span class="nx">@updateUI</span><span class="p">()</span>
+
+  <span class="nv">setCurrentMatch: </span><span class="nf">(match) -&gt;</span>
+    <span class="k">switch</span> <span class="nx">@currentMatchNumber</span>
+      <span class="k">when</span> <span class="mi">1</span>
+        <span class="vi">@leagueMatch.MatchOne = </span><span class="nx">match</span>
+      <span class="k">when</span> <span class="mi">2</span>
+        <span class="vi">@leagueMatch.MatchTwo = </span><span class="nx">match</span>
+      <span class="k">when</span> <span class="mi">3</span>
+        <span class="vi">@leagueMatch.MatchThree = </span><span class="nx">match</span>
+      <span class="k">when</span> <span class="mi">4</span>
+        <span class="vi">@leagueMatch.MatchFour = </span><span class="nx">match</span>
+      <span class="k">when</span> <span class="mi">5</span>
+        <span class="vi">@leagueMatch.MatchFive = </span><span class="nx">match</span>
+    <span class="nx">@updateUI</span><span class="p">()</span>
+
+  <span class="nv">save: </span><span class="o">-&gt;</span>
+    <span class="nx">DataService</span><span class="p">.</span><span class="nx">saveMatch</span> <span class="nx">@currentMatch</span><span class="p">,</span> <span class="nf">(id) -&gt;</span>
+      <span class="vi">@currentMatch.OriginalId = </span><span class="nx">id</span>
+
+  <span class="nv">saveAndUpdateUI: </span><span class="o">-&gt;</span>
+    <span class="nx">@save</span><span class="p">()</span>
+    <span class="nx">@updateUI</span><span class="p">()</span>
+
+  <span class="nv">setCurrentMatchOriginalId: </span><span class="nf">(id) -&gt;</span>
+    <span class="vi">@currentMatch.OriginalId = </span><span class="nx">id</span>
+
+<span class="nv">$CS.Controllers.MatchController = </span><span class="nx">MatchController</span>
+
+</pre></div></td></tr></tbody></table><div id="projectname"><a href="../../index.html">CueScore Mobile</a></div></div></body></html>

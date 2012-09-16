@@ -1,0 +1,9 @@
+{
+	"docco_husky": {
+		"css": "docs/docco.css",
+		"output_dir": "docs",
+		"content_dir": "app",
+		"project_name": "CueScore Mobile",
+		"show_timestamp": false
+	}
+}

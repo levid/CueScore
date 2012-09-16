@@ -1,0 +1,1571 @@
+<!DOCTYPE html><html><head><title>match_setup_controller.coffee</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="../../docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="../../index.html" class="source"><span class="file_name">README</span></a><a href="../../app.coffee.html" class="source "><span class="base_path">. / </span><span class="file_name">app.coffee</span></a><a href="../../cuescore/api.coffee.html" class="source "><span class="base_path">cuescore / </span><span class="file_name">api.coffee</span></a><a href="../../cuescore/app.coffee.html" class="source "><span class="base_path">cuescore / </span><span class="file_name">app.coffee</span></a><a href="../../cuescore/controllers/dashboard_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">dashboard_controller.coffee</span></a><a href="../../cuescore/controllers/match_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">match_controller.coffee</span></a><a href="../../cuescore/controllers/match_setup_controller.coffee.html" class="source selected"><span class="base_path">cuescore / controllers / </span><span class="file_name">match_setup_controller.coffee</span></a><a href="../../cuescore/controllers/play.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">play.coffee</span></a><a href="../../cuescore/controllers/posts_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">posts_controller.coffee</span></a><a href="../../cuescore/helpers/application.coffee.html" class="source "><span class="base_path">cuescore / helpers / </span><span class="file_name">application.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_game.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_game.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_league.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_league.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_league_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_league_match.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_match.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_player.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_player.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_practice_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_practice_match.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_ranks.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_ranks.coffee</span></a><a href="../../cuescore/models/eight_ball/eight_ball_tournament_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_tournament_match.coffee</span></a><a href="../../cuescore/models/game.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">game.coffee</span></a><a href="../../cuescore/models/league.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">league.coffee</span></a><a href="../../cuescore/models/leagues/double_jeopardy_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">double_jeopardy_league.coffee</span></a><a href="../../cuescore/models/leagues/doubles_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">doubles_league.coffee</span></a><a href="../../cuescore/models/leagues/masters_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">masters_league.coffee</span></a><a href="../../cuescore/models/leagues/mixed_doubles_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">mixed_doubles_league.coffee</span></a><a href="../../cuescore/models/leagues/womens_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">womens_league.coffee</span></a><a href="../../cuescore/models/match.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">match.coffee</span></a><a href="../../cuescore/models/nine_ball/nine_ball_game.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_game.coffee</span></a><a href="../../cuescore/models/nine_ball/nine_ball_league.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_league.coffee</span></a><a href="../../cuescore/models/nine_ball/nine_ball_league_match.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_league_match.coffee</span></a><a href="../../cuescore/models/nine_ball/nine_ball_match.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_match.coffee</span></a><a href="../../cuescore/models/nine_ball/nine_ball_player.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_player.coffee</span></a><a href="../../cuescore/models/nine_ball/nine_ball_ranks.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_ranks.coffee</span></a><a href="../../cuescore/models/player.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">player.coffee</span></a><a href="../../cuescore/models/post_model.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">post_model.coffee</span></a><a href="../../cuescore/models/rank.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">rank.coffee</span></a><a href="../../cuescore/models/team.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">team.coffee</span></a><a href="../../cuescore/utils/appsync.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">appsync.coffee</span></a><a href="../../cuescore/utils/base_64.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">base_64.coffee</span></a><a href="../../cuescore/utils/contains.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">contains.coffee</span></a><a href="../../cuescore/utils/data_service.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">data_service.coffee</span></a><a href="../../cuescore/utils/device_fix.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">device_fix.coffee</span></a><a href="../../cuescore/utils/extras.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">extras.coffee</span></a><a href="../../cuescore/utils/query_string_builder.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">query_string_builder.coffee</span></a><a href="../../cuescore/utils/template.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">template.coffee</span></a><a href="../../cuescore/utils/utilities.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">utilities.coffee</span></a><a href="../../cuescore/views/dashboard/dashboard_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / </span><span class="file_name">dashboard_view.coffee</span></a><a href="../../cuescore/views/dashboard/title_bar_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / </span><span class="file_name">title_bar_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/activity_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">activity_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/events_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">events_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/grid_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">grid_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/list_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">list_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/live_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">live_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/menu_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">menu_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/news_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">news_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/profile_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">profile_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/rules_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">rules_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/settings_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">settings_view.coffee</span></a><a href="../../cuescore/views/dashboard/tools/teams_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">teams_view.coffee</span></a><a href="../../cuescore/views/login/main.coffee.html" class="source "><span class="base_path">cuescore / views / login / </span><span class="file_name">main.coffee</span></a><a href="../../cuescore/views/posts/post_view_controller.coffee.html" class="source "><span class="base_path">cuescore / views / posts / </span><span class="file_name">post_view_controller.coffee</span></a><a href="../../cuescore/views/posts/posts_view_controller.coffee.html" class="source "><span class="base_path">cuescore / views / posts / </span><span class="file_name">posts_view_controller.coffee</span></a><a href="../../cuescore/views/sample/main.coffee.html" class="source "><span class="base_path">cuescore / views / sample / </span><span class="file_name">main.coffee</span></a><a href="../../cuescore/views/settings/main.coffee.html" class="source "><span class="base_path">cuescore / views / settings / </span><span class="file_name">main.coffee</span></a><a href="../../cuescore/window/main.coffee.html" class="source "><span class="base_path">cuescore / window / </span><span class="file_name">main.coffee</span></a><a href="../../cuescore/window/second.coffee.html" class="source "><span class="base_path">cuescore / window / </span><span class="file_name">second.coffee</span></a><a href="../../spec/models/eight_ball/eight_ball_game_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_game_spec.coffee</span></a><a href="../../spec/models/eight_ball/eight_ball_league_match_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_league_match_spec.coffee</span></a><a href="../../spec/models/eight_ball/eight_ball_match_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_match_spec.coffee</span></a><a href="../../spec/models/eight_ball/eight_ball_player_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_player_spec.coffee</span></a><a href="../../spec/models/eight_ball/eight_ball_ranks_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_ranks_spec.coffee</span></a><a href="../../spec/models/game_spec.coffee.html" class="source "><span class="base_path">spec / models / </span><span class="file_name">game_spec.coffee</span></a><a href="../../spec/models/league_spec.coffee.html" class="source "><span class="base_path">spec / models / </span><span class="file_name">league_spec.coffee</span></a><a href="../../spec/models/nine_ball/nine_ball_game_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_game_spec.coffee</span></a><a href="../../spec/models/nine_ball/nine_ball_league_match_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_league_match_spec.coffee</span></a><a href="../../spec/models/nine_ball/nine_ball_match_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_match_spec.coffee</span></a><a href="../../spec/models/nine_ball/nine_ball_player_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_player_spec.coffee</span></a><a href="../../spec/models/nine_ball/nine_ball_ranks_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_ranks_spec.coffee</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"><h1>match_setup_controller.coffee</h1><div class="filepath">cuescore/controllers/</div></th><th class="code"></th></tr></thead><tbody><tr id="section-1"><td class="docs"><div class="pilwrap"><a href="#section-1" class="pilcrow">&#182;</a></div>
+</td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nx">MatchSetupController</span>
+  <span class="nv">opts: </span><span class="p">{}</span>
+  
+  <span class="nv">constructor: </span><span class="nf">(@options) -&gt;</span>
+    <span class="vi">@options = </span><span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">@opts</span><span class="p">,</span> <span class="nx">@options</span><span class="p">)</span></pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>_.extend @, @defaults</p>
+</td><td class="code"><div class="highlight"><pre>  
+  <span class="nv">showIndicator = </span><span class="nf">(title) -&gt;</span>
+    <span class="nv">indicatorShowing = </span><span class="kc">true</span>
+    <span class="nv">indWin = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createWindow</span><span class="p">(</span>
+      <span class="nv">width: </span><span class="mi">150</span>
+      <span class="nv">height: </span><span class="mi">150</span>
+    <span class="p">)</span>
+    <span class="nv">indView = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">width: </span><span class="mi">150</span>
+      <span class="nv">height: </span><span class="mi">150</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">000&quot;</span>
+      <span class="nv">borderRadius: </span><span class="mi">10</span>
+      <span class="nv">opacity: </span><span class="mf">0.7</span>
+    <span class="p">)</span>
+    <span class="nx">indWin</span><span class="p">.</span><span class="nx">add</span> <span class="nx">indView</span>
+    <span class="nv">actInd = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createImageView</span><span class="p">(</span>
+      <span class="nv">top: </span><span class="mi">20</span>
+      <span class="nv">duration: </span><span class="mi">300</span>
+      <span class="nv">defaultImage: </span><span class="s">&quot;images/dashboard/loading/loading1.png&quot;</span>
+      <span class="nv">images: </span><span class="p">[</span> <span class="s">&quot;images/dashboard/loading/loading1.png&quot;</span><span class="p">,</span> <span class="s">&quot;images/dashboard/loading/loading2.png&quot;</span><span class="p">,</span> <span class="s">&quot;images/dashboard/loading/loading3.png&quot;</span><span class="p">,</span> <span class="s">&quot;images/dashboard/loading/loading4.png&quot;</span><span class="p">,</span> <span class="s">&quot;images/dashboard/loading/loading5.png&quot;</span> <span class="p">]</span>
+      <span class="nv">height: </span><span class="mi">88</span>
+      <span class="nv">width: </span><span class="mi">88</span>
+    <span class="p">)</span>
+    <span class="nx">indWin</span><span class="p">.</span><span class="nx">add</span> <span class="nx">actInd</span>
+    <span class="nv">message = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="nx">title</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">fff&quot;</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">20</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+  
+      <span class="nv">top: </span><span class="mi">110</span>
+      <span class="nv">left: </span><span class="mi">30</span>
+    <span class="p">)</span>
+    <span class="nx">indWin</span><span class="p">.</span><span class="nx">add</span> <span class="nx">message</span>
+    <span class="nx">actInd</span><span class="p">.</span><span class="nx">start</span><span class="p">()</span>
+    <span class="nx">indWin</span><span class="p">.</span><span class="nx">open</span><span class="p">()</span>
+    
+  <span class="nv">hideIndicator: </span><span class="o">-&gt;</span>
+    <span class="nx">actInd</span><span class="p">.</span><span class="nx">stop</span><span class="p">()</span>
+    <span class="nx">indWin</span><span class="p">.</span><span class="nx">close</span>
+      <span class="nv">opacity: </span><span class="mi">0</span>
+      <span class="nv">duration: </span><span class="mi">500</span>
+  
+    <span class="nv">indicatorShowing = </span><span class="kc">false</span>
+    
+  <span class="nv">stopIndicator: </span><span class="o">-&gt;</span>
+    <span class="nx">actInd</span><span class="p">.</span><span class="nx">stop</span><span class="p">()</span>
+    
+  <span class="nv">matchSetup: </span><span class="o">-&gt;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/js/json2.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/js/NineBall/NineBallGa@js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/js/NineBall/NineBallPlayer.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/js/NineBall/NineBallLeagueMatch.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/js/NineBall/NineBallMatch.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/js/NineBall/NineBallRanks.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/js/EightBall/EightBallGa@js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/js/EightBall/EightBallPlayer.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/js/EightBall/EightBallLeagueMatch.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/js/EightBall/EightBallMatch.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/js/EightBall/EightBallRanks.js&quot;</span>
+    <span class="nx">Ti</span><span class="p">.</span><span class="nx">include</span> <span class="s">&quot;/js/Services/DataService.js&quot;</span>
+
+    <span class="vi">@matchSetupWindow = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createWindow</span><span class="p">(</span>
+      <span class="nv">orientationModes: </span><span class="p">[</span> <span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">PORTRAIT</span> <span class="p">]</span>
+      <span class="nv">title: </span><span class="s">&quot;Play&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTitleBar = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/titlebar-matches.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">0</span>
+      <span class="nv">left: </span><span class="mi">0</span>
+      <span class="nv">width: </span><span class="nx">getPlatformWidth</span><span class="p">()</span>
+      <span class="nv">height: </span><span class="mi">44</span>
+    <span class="p">)</span>
+    <span class="vi">@playLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;Play&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">shadowColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">000000&quot;</span>
+      <span class="nv">textAlign: </span><span class="s">&quot;center&quot;</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">20</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@dashboardButton = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/buttons/btn-tabmenu-backto-dashboard.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">7</span>
+      <span class="nv">left: </span><span class="mi">8</span>
+      <span class="nv">width: </span><span class="mi">93</span>
+      <span class="nv">height: </span><span class="mi">30</span>
+    <span class="p">)</span>
+    <span class="vi">@dashboardButtonLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;Dashboard&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">shadowColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">000000&quot;</span>
+      <span class="nv">left: </span><span class="mi">13</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@dashboardButton</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@dashboardButtonLabel</span>
+    <span class="nx">@dashboardButton</span><span class="p">.</span><span class="nx">addEventListener</span> <span class="s">&quot;click&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">@matchSetupWindow</span><span class="p">.</span><span class="nx">close</span><span class="p">()</span>
+      <span class="nx">@dashboardWindow</span><span class="p">.</span><span class="nx">show</span><span class="p">()</span>
+  
+    <span class="vi">@matchSetupDoneButton = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/buttons/btn-done.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">7</span>
+      <span class="nv">right: </span><span class="mi">8</span>
+      <span class="nv">width: </span><span class="mi">60</span>
+      <span class="nv">height: </span><span class="mi">30</span>
+    <span class="p">)</span>
+    
+    <span class="nx">@matchSetupDoneButton</span><span class="p">.</span><span class="nx">addEventListener</span> <span class="s">&quot;click&quot;</span><span class="p">,</span> <span class="nx">@doneButtonClick</span>
+    <span class="nx">@matchSetupTitleBar</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupDoneButton</span>
+    <span class="nx">@matchSetupTitleBar</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@playLabel</span>
+    <span class="nx">@matchSetupTitleBar</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@dashboardButton</span>
+    <span class="vi">@matchSetupFooter = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-tabmenu.png&quot;</span>
+      <span class="nv">bottom: </span><span class="mi">0</span>
+      <span class="nv">width: </span><span class="nx">@getPlatformWidth</span><span class="p">()</span>
+      <span class="nv">height: </span><span class="mi">49</span>
+    <span class="p">)</span>
+    <span class="vi">@selectedButtonBackground = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/buttons/btn-tabmenu-active.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">3</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">width: </span><span class="mi">73</span>
+      <span class="nv">height: </span><span class="mi">44</span>
+    <span class="p">)</span>
+    <span class="vi">@playButton = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">3</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">width: </span><span class="mi">73</span>
+      <span class="nv">height: </span><span class="mi">44</span>
+    <span class="p">)</span>
+    <span class="vi">@playButtonIcon = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/icons/icon-tabmenu-play-active.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">8</span>
+      <span class="nv">left: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">32</span>
+      <span class="nv">height: </span><span class="mi">21</span>
+    <span class="p">)</span>
+    <span class="vi">@playButtonLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;Play&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">shadowColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">000000&quot;</span>
+      <span class="nv">width: </span><span class="mi">73</span>
+      <span class="nv">bottom: </span><span class="mi">1</span>
+      <span class="nv">textAlign: </span><span class="s">&quot;center&quot;</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">9</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@playButton</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@playButtonIcon</span>
+    <span class="nx">@playButton</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@playButtonLabel</span>
+    <span class="nx">@matchSetupFooter</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@selectedButtonBackground</span>
+    <span class="nx">@matchSetupFooter</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@playButton</span>
+    <span class="nx">@matchSetupWindow</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupFooter</span>
+    <span class="vi">@matchSetupContainer = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nx">Ti</span><span class="p">.</span><span class="nx">Platform</span><span class="p">.</span><span class="nx">name</span> <span class="o">isnt</span> <span class="s">&quot;android&quot;</span><span class="p">)</span> <span class="k">then</span> <span class="s">&quot;images/match/layout/bg-menus-iphone.png&quot;</span> <span class="k">else</span> <span class="s">&quot;images/match/layout/bg-menus-android.png&quot;</span><span class="p">)</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">44</span>
+      <span class="nv">left: </span><span class="mi">0</span>
+      <span class="nv">height: </span><span class="p">(</span><span class="nx">@getPlatformHeight</span><span class="p">()</span> <span class="o">-</span> <span class="mi">95</span><span class="p">)</span>
+      <span class="nv">width: </span><span class="nx">@getPlatformWidth</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupView = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createScrollView</span><span class="p">(</span>
+      <span class="nv">contentWidth: </span><span class="s">&quot;auto&quot;</span>
+      <span class="nv">contentHeight: </span><span class="s">&quot;auto&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">12</span>
+      <span class="nv">height: </span><span class="mi">340</span>
+      <span class="nv">width: </span><span class="mi">295</span>
+      <span class="nv">showPagingControl: </span><span class="kc">true</span>
+    <span class="p">)</span>
+    <span class="vi">@gameTypeLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;Select Game Type&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">height: </span><span class="mi">40</span>
+      <span class="nv">width: </span><span class="mi">295</span>
+      <span class="nv">top: </span><span class="mi">0</span>
+      <span class="nv">textAlign: </span><span class="s">&quot;center&quot;</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">20</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchTypeContainer = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-dashboard-buttons-listview.png&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">40</span>
+      <span class="nv">left: </span><span class="mi">16</span>
+      <span class="nv">height: </span><span class="mi">145</span>
+      <span class="nv">width: </span><span class="mi">262</span>
+    <span class="p">)</span>
+    <span class="vi">@eightBallTypeButton = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createImageView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg_play_gamebutton.png&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">9</span>
+      <span class="nv">left: </span><span class="mi">5</span>
+      <span class="nv">height: </span><span class="mi">126</span>
+      <span class="nv">width: </span><span class="mi">124</span>
+    <span class="p">)</span>
+    <span class="vi">@eightBallTypeButtonActive = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg_play_gamebutton_active.png&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">9</span>
+      <span class="nv">left: </span><span class="mi">5</span>
+      <span class="nv">height: </span><span class="mi">126</span>
+      <span class="nv">width: </span><span class="mi">124</span>
+    <span class="p">)</span>
+    <span class="vi">@eightBallTypeButtonActive.visible = </span><span class="kc">false</span>
+    <span class="vi">@eightBallTypeButtonIcon = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createImageView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/icons/icon_gamebutton_8ball.png&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">16</span>
+      <span class="nv">left: </span><span class="mi">21</span>
+      <span class="nv">height: </span><span class="mi">88</span>
+      <span class="nv">width: </span><span class="mi">88</span>
+    <span class="p">)</span>
+    <span class="vi">@eightBallTypeButtonLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;8-Ball&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">94</span>
+      <span class="nv">left: </span><span class="mi">3</span>
+      <span class="nv">height: </span><span class="mi">25</span>
+      <span class="nv">width: </span><span class="mi">124</span>
+      <span class="nv">textAlign: </span><span class="s">&quot;center&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">20</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchTypeContainer</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@eightBallTypeButtonActive</span>
+    <span class="nx">@matchTypeContainer</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@eightBallTypeButton</span>
+    <span class="nx">@matchTypeContainer</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@eightBallTypeButtonIcon</span>
+    <span class="nx">@matchTypeContainer</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@eightBallTypeButtonLabel</span>
+    <span class="vi">@nineBallTypeButton = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createImageView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg_play_gamebutton.png&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">9</span>
+      <span class="nv">left: </span><span class="mi">132</span>
+      <span class="nv">height: </span><span class="mi">126</span>
+      <span class="nv">width: </span><span class="mi">124</span>
+    <span class="p">)</span>
+    <span class="vi">@nineBallTypeButton.visible = </span><span class="kc">false</span>
+    <span class="vi">@nineBallTypeButtonActive = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg_play_gamebutton_active.png&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">9</span>
+      <span class="nv">left: </span><span class="mi">132</span>
+      <span class="nv">height: </span><span class="mi">126</span>
+      <span class="nv">width: </span><span class="mi">124</span>
+    <span class="p">)</span>
+    <span class="vi">@nineBallTypeButtonActive.visible = </span><span class="kc">true</span>
+    <span class="vi">@nineBallTypeButtonIcon = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/icons/icon_gamebutton_9ball.png&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">16</span>
+      <span class="nv">left: </span><span class="mi">152</span>
+      <span class="nv">height: </span><span class="mi">88</span>
+      <span class="nv">width: </span><span class="mi">88</span>
+    <span class="p">)</span>
+    <span class="vi">@nineBallTypeButtonLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;9-Ball&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">96</span>
+      <span class="nv">left: </span><span class="mi">134</span>
+      <span class="nv">height: </span><span class="mi">25</span>
+      <span class="nv">width: </span><span class="mi">124</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">textAlign: </span><span class="s">&quot;center&quot;</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">20</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchTypeContainer</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@nineBallTypeButtonActive</span>
+    <span class="nx">@matchTypeContainer</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@nineBallTypeButton</span>
+    <span class="nx">@matchTypeContainer</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@nineBallTypeButtonIcon</span>
+    <span class="nx">@matchTypeContainer</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@nineBallTypeButtonLabel</span>
+    <span class="vi">@eightBallTypeClick = </span><span class="o">=&gt;</span>
+      <span class="k">if</span> <span class="nx">@eightBallTypeButtonActive</span><span class="p">.</span><span class="nx">visible</span> <span class="o">is</span> <span class="kc">false</span>
+        <span class="vi">@eightBallTypeButtonActive.visible = </span><span class="kc">true</span>
+        <span class="vi">@eightBallTypeButton.visible = </span><span class="kc">false</span>
+        <span class="vi">@nineBallTypeButtonActive.visible = </span><span class="kc">false</span>
+        <span class="vi">@nineBallTypeButton.visible = </span><span class="kc">true</span>
+  
+    <span class="vi">@nineBallTypeClick = </span><span class="o">=&gt;</span>
+      <span class="k">if</span> <span class="nx">@nineBallTypeButtonActive</span><span class="p">.</span><span class="nx">visible</span> <span class="o">is</span> <span class="kc">false</span>
+        <span class="vi">@eightBallTypeButtonActive.visible = </span><span class="kc">false</span>
+        <span class="vi">@eightBallTypeButton.visible = </span><span class="kc">true</span>
+        <span class="vi">@nineBallTypeButtonActive.visible = </span><span class="kc">true</span>
+        <span class="vi">@nineBallTypeButton.visible = </span><span class="kc">false</span>
+  
+    <span class="nx">@eightBallTypeButtonIcon</span><span class="p">.</span><span class="nx">addEventListener</span> <span class="s">&quot;click&quot;</span><span class="p">,</span> <span class="nx">@eightBallTypeClick</span>
+    <span class="nx">@eightBallTypeButton</span><span class="p">.</span><span class="nx">addEventListener</span> <span class="s">&quot;click&quot;</span><span class="p">,</span> <span class="nx">@eightBallTypeClick</span>
+    <span class="nx">@nineBallTypeButton</span><span class="p">.</span><span class="nx">addEventListener</span> <span class="s">&quot;click&quot;</span><span class="p">,</span> <span class="nx">@nineBallTypeClick</span>
+    <span class="nx">@nineBallTypeButtonIcon</span><span class="p">.</span><span class="nx">addEventListener</span> <span class="s">&quot;click&quot;</span><span class="p">,</span> <span class="nx">@nineBallTypeClick</span>
+    <span class="vi">@matchSetupTableExtender = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">192</span>
+      <span class="nv">left: </span><span class="mi">18</span>
+      <span class="nv">height: </span><span class="mi">1452</span>
+      <span class="nv">width: </span><span class="mi">262</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTable = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;transparent&quot;</span>
+      <span class="nv">top: </span><span class="mi">0</span>
+      <span class="nv">left: </span><span class="mi">0</span>
+      <span class="nv">height: </span><span class="mi">1399</span>
+      <span class="nv">width: </span><span class="mi">262</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTableContainer = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">0e1115&quot;</span>
+      <span class="nv">top: </span><span class="mi">7</span>
+      <span class="nv">left: </span><span class="mi">0</span>
+      <span class="nv">height: </span><span class="mi">1385</span>
+      <span class="nv">width: </span><span class="mi">262</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTableContainerTop = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg_menu_container_top.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">0</span>
+      <span class="nv">left: </span><span class="mi">0</span>
+      <span class="nv">height: </span><span class="mi">7</span>
+      <span class="nv">width: </span><span class="mi">262</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTableContainerBottom = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg_menu_container_bottom.png&quot;</span>
+      <span class="nv">bottom: </span><span class="mi">0</span>
+      <span class="nv">left: </span><span class="mi">0</span>
+      <span class="nv">height: </span><span class="mi">7</span>
+      <span class="nv">width: </span><span class="mi">262</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTable</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTableContainerBottom</span>
+    <span class="nx">@matchSetupTable</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTableContainerTop</span>
+    <span class="nx">@matchSetupTable</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTableContainer</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTable</span>
+    <span class="vi">@matchSetupEmail = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">3</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupEmailLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;E-mail&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupEmailText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;i.wooten@gmail.com&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupEmail</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupEmailLabel</span>
+    <span class="nx">@matchSetupEmail</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupEmailText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupEmail</span>
+    <span class="vi">@matchSetupTeamOneNumber = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">48</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOneNumberLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 Number&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOneNumberText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Team One Number&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOneNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOneNumberLabel</span>
+    <span class="nx">@matchSetupTeamOneNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOneNumberText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOneNumber</span>
+    <span class="vi">@matchSetupTeamTwoNumber = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">93</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoNumberLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 Number&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoNumberText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Team Two Number&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoNumberLabel</span>
+    <span class="nx">@matchSetupTeamTwoNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoNumberText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoNumber</span>
+    <span class="vi">@matchSetupTeamOnePlayerOneName = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">138</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerOneNameLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P1 Name&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerOneNameText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player One Name&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerOneNa@add</span> <span class="nx">@matchSetupTeamOnePlayerOneNameLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerOneNa@add</span> <span class="nx">@matchSetupTeamOnePlayerOneNameText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerOneName</span>
+    <span class="vi">@matchSetupTeamOnePlayerOneNumber = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">183</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerOneNumberLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P1 Num&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerOneNumberText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player One Number&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerOneNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerOneNumberLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerOneNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerOneNumberText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerOneNumber</span>
+    <span class="vi">@matchSetupTeamOnePlayerOneRank = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">228</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerOneRankLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P1 Rank&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerOneRankText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player One Rank&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerOneRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerOneRankLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerOneRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerOneRankText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerOneRank</span>
+    <span class="vi">@matchSetupTeamTwoPlayerOneName = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">273</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerOneNameLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P1 Name&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerOneNameText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player One Name&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerOneNa@add</span> <span class="nx">@matchSetupTeamTwoPlayerOneNameLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerOneNa@add</span> <span class="nx">@matchSetupTeamTwoPlayerOneNameText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerOneName</span>
+    <span class="vi">@matchSetupTeamTwoPlayerOneNumber = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">318</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerOneNumberLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P1 Num&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerOneNumberText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player One Number&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerOneNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerOneNumberLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerOneNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerOneNumberText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerOneNumber</span>
+    <span class="vi">@matchSetupTeamTwoPlayerOneRank = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">363</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerOneRankLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P1 Rank&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerOneRankText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player One Rank&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerOneRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerOneRankLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerOneRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerOneRankText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerOneRank</span>
+    <span class="vi">@matchSetupTeamOnePlayerTwoName = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">408</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerTwoNameLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P2 Name&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerTwoNameText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Two Name&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerTwoNa@add</span> <span class="nx">@matchSetupTeamOnePlayerTwoNameLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerTwoNa@add</span> <span class="nx">@matchSetupTeamOnePlayerTwoNameText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerTwoName</span>
+    <span class="vi">@matchSetupTeamOnePlayerTwoNumber = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">453</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerTwoNumberLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P2 Num&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerTwoNumberText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Two Number&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerTwoNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerTwoNumberLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerTwoNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerTwoNumberText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerTwoNumber</span>
+    <span class="vi">@matchSetupTeamOnePlayerTwoRank = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">498</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerTwoRankLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P2 Rank&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerTwoRankText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Two Rank&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerTwoRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerTwoRankLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerTwoRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerTwoRankText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerTwoRank</span>
+    <span class="vi">@matchSetupTeamTwoPlayerTwoName = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">543</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerTwoNameLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P2 Name&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerTwoNameText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Two Name&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerTwoNa@add</span> <span class="nx">@matchSetupTeamTwoPlayerTwoNameLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerTwoNa@add</span> <span class="nx">@matchSetupTeamTwoPlayerTwoNameText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerTwoName</span>
+    <span class="vi">@matchSetupTeamTwoPlayerTwoNumber = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">588</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerTwoNumberLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P2 Num&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerTwoNumberText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Two Number&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerTwoNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerTwoNumberLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerTwoNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerTwoNumberText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerTwoNumber</span>
+    <span class="vi">@matchSetupTeamTwoPlayerTwoRank = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">633</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerTwoRankLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P2 Rank&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerTwoRankText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Two Rank&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerTwoRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerTwoRankLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerTwoRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerTwoRankText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerTwoRank</span>
+    <span class="vi">@matchSetupTeamOnePlayerThreeName = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">678</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerThreeNameLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P3 Name&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerThreeNameText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Three Name&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerThreeNa@add</span> <span class="nx">@matchSetupTeamOnePlayerThreeNameLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerThreeNa@add</span> <span class="nx">@matchSetupTeamOnePlayerThreeNameText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerThreeName</span>
+    <span class="vi">@matchSetupTeamOnePlayerThreeNumber = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">723</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerThreeNumberLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P3 Num&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerThreeNumberText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Three Number&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerThreeNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerThreeNumberLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerThreeNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerThreeNumberText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerThreeNumber</span>
+    <span class="vi">@matchSetupTeamOnePlayerThreeRank = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">768</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerThreeRankLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P3 Rank&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerThreeRankText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Three Rank&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerThreeRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerThreeRankLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerThreeRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerThreeRankText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerThreeRank</span>
+    <span class="vi">@matchSetupTeamTwoPlayerThreeName = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">813</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerThreeNameLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P3 Name&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerThreeNameText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Three Name&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerThreeNa@add</span> <span class="nx">@matchSetupTeamTwoPlayerThreeNameLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerThreeNa@add</span> <span class="nx">@matchSetupTeamTwoPlayerThreeNameText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerThreeName</span>
+    <span class="vi">@matchSetupTeamTwoPlayerThreeNumber = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">858</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerThreeNumberLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P3 Num&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerThreeNumberText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Three Number&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerThreeNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerThreeNumberLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerThreeNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerThreeNumberText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerThreeNumber</span>
+    <span class="vi">@matchSetupTeamTwoPlayerThreeRank = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">903</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerThreeRankLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P3 Rank&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerThreeRankText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Three Rank&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerThreeRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerThreeRankLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerThreeRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerThreeRankText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerThreeRank</span>
+    <span class="vi">@matchSetupTeamOnePlayerFourName = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">948</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerFourNameLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P4 Name&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerFourNameText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Four Name&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerFourNa@add</span> <span class="nx">@matchSetupTeamOnePlayerFourNameLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerFourNa@add</span> <span class="nx">@matchSetupTeamOnePlayerFourNameText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFourName</span>
+    <span class="vi">@matchSetupTeamOnePlayerFourNumber = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">993</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerFourNumberLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P4 Num&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerFourNumberText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Four Number&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerFourNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFourNumberLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerFourNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFourNumberText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFourNumber</span>
+    <span class="vi">@matchSetupTeamOnePlayerFourRank = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">1038</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerFourRankLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P4 Rank&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerFourRankText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Four Rank&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerFourRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFourRankLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerFourRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFourRankText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFourRank</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFourName = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">1083</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFourNameLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P4 Name&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFourNameText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Four Name&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerFourNa@add</span> <span class="nx">@matchSetupTeamTwoPlayerFourNameLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerFourNa@add</span> <span class="nx">@matchSetupTeamTwoPlayerFourNameText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFourName</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFourNumber = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">1128</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFourNumberLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P4 Num&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFourNumberText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Four Number&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerFourNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFourNumberLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerFourNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFourNumberText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFourNumber</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFourRank = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">1173</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFourRankLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P4 Rank&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFourRankText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Four Rank&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerFourRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFourRankLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerFourRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFourRankText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFourRank</span>
+    <span class="vi">@matchSetupTeamOnePlayerFiveName = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">1218</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerFiveNameLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P5 Name&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerFiveNameText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Five Name&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerFiveNa@add</span> <span class="nx">@matchSetupTeamOnePlayerFiveNameLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerFiveNa@add</span> <span class="nx">@matchSetupTeamOnePlayerFiveNameText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFiveName</span>
+    <span class="vi">@matchSetupTeamOnePlayerFiveNumber = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">1263</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerFiveNumberLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P5 Num&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerFiveNumberText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Five Number&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerFiveNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFiveNumberLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerFiveNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFiveNumberText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFiveNumber</span>
+    <span class="vi">@matchSetupTeamOnePlayerFiveRank = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">1308</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerFiveRankLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T1 P5 Rank&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamOnePlayerFiveRankText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Five Rank&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamOnePlayerFiveRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFiveRankLabel</span>
+    <span class="nx">@matchSetupTeamOnePlayerFiveRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFiveRankText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamOnePlayerFiveRank</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFiveName = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">1353</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFiveNameLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P5 Name&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFiveNameText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Five Name&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerFiveNa@add</span> <span class="nx">@matchSetupTeamTwoPlayerFiveNameLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerFiveNa@add</span> <span class="nx">@matchSetupTeamTwoPlayerFiveNameText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFiveName</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFiveNumber = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">1398</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFiveNumberLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P5 Num&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFiveNumberText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Five Number&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerFiveNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFiveNumberLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerFiveNumber</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFiveNumberText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFiveNumber</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFiveRank = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createView</span><span class="p">(</span>
+      <span class="nv">backgroundImage: </span><span class="s">&quot;images/match/layout/bg-demosetup-field.png&quot;</span>
+      <span class="nv">top: </span><span class="mi">1443</span>
+      <span class="nv">left: </span><span class="mi">2</span>
+      <span class="nv">height: </span><span class="mi">42</span>
+      <span class="nv">width: </span><span class="mi">258</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFiveRankLabel = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createLabel</span><span class="p">(</span>
+      <span class="nv">text: </span><span class="s">&quot;T2 P5 Rank&quot;</span>
+      <span class="nv">color: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffff00&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">6</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">100</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="vi">@matchSetupTeamTwoPlayerFiveRankText = </span><span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">createTextField</span><span class="p">(</span>
+      <span class="nv">hintText: </span><span class="s">&quot;Player Five Rank&quot;</span>
+      <span class="nv">backgroundColor: </span><span class="s">&quot;</span><span class="err">#</span><span class="s">ffffff&quot;</span>
+      <span class="nv">top: </span><span class="mi">12</span>
+      <span class="nv">left: </span><span class="mi">110</span>
+      <span class="nv">height: </span><span class="mi">20</span>
+      <span class="nv">width: </span><span class="mi">130</span>
+      <span class="nv">suppressReturn: </span><span class="kc">true</span>
+      <span class="nv">font:</span>
+        <span class="nv">fontSize: </span><span class="mi">13</span>
+        <span class="nv">fontWeight: </span><span class="s">&quot;bold&quot;</span>
+        <span class="nv">fontFamily: </span><span class="s">&quot;HelveticaNeue-Bold&quot;</span>
+    <span class="p">)</span>
+    <span class="nx">@matchSetupTeamTwoPlayerFiveRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFiveRankLabel</span>
+    <span class="nx">@matchSetupTeamTwoPlayerFiveRank</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFiveRankText</span>
+    <span class="nx">@matchSetupTableExtender</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTeamTwoPlayerFiveRank</span>
+    <span class="nx">@matchSetupView</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTableExtender</span>
+    <span class="nx">@matchSetupView</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@gameTypeLabel</span>
+    <span class="nx">@matchSetupView</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchTypeContainer</span>
+    <span class="nx">@matchSetupContainer</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupView</span>
+    <span class="nx">@matchSetupWindow</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupTitleBar</span>
+    <span class="nx">@matchSetupWindow</span><span class="p">.</span><span class="nx">add</span> <span class="nx">@matchSetupContainer</span>
+    <span class="vi">@showMatchSetup = </span><span class="o">-&gt;</span>
+      <span class="nx">unless</span> <span class="nx">Ti</span><span class="p">.</span><span class="nx">Platform</span><span class="p">.</span><span class="nx">name</span> <span class="o">is</span> <span class="s">&quot;android&quot;</span>
+        <span class="nx">Ti</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">iPhone</span><span class="p">.</span><span class="nx">showStatusBar</span><span class="p">()</span>
+        <span class="nx">@matchSetupWindow</span><span class="p">.</span><span class="nx">open</span> <span class="nv">fullscreen: </span><span class="kc">false</span>
+      <span class="k">else</span>
+        <span class="nx">@matchSetupWindow</span><span class="p">.</span><span class="nx">open</span> <span class="nv">fullscreen: </span><span class="kc">true</span>
+  
+    <span class="nx">showMatchSetup</span><span class="p">()</span>
+    <span class="k">this</span>
+  
+    <span class="nv">indWin = </span><span class="kc">null</span>
+    <span class="nv">actInd = </span><span class="kc">null</span>
+    
+  <span class="nv">doneButtonClick: </span><span class="o">-&gt;</span>
+    <span class="nv">leagueMatch = </span><span class="kc">null</span>
+    <span class="nx">showIndicator</span> <span class="s">&quot;Loading...&quot;</span>
+    <span class="nx">DataService</span><span class="p">.</span><span class="nx">setupLocalDatabase</span><span class="p">()</span>
+    <span class="nv">DataService.email = </span><span class="nx">@matchSetupEmailText</span><span class="p">.</span><span class="nx">value</span>  <span class="nx">unless</span> <span class="nx">@matchSetupEmailText</span><span class="p">.</span><span class="nx">value</span> <span class="o">is</span> <span class="s">&quot;&quot;</span>
+    <span class="k">if</span> <span class="nx">@nineBallTypeButtonActive</span><span class="p">.</span><span class="nx">visible</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="k">if</span> <span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span> <span class="o">is</span> <span class="s">&quot;&quot;</span>
+        <span class="nv">leagueMatch = </span><span class="k">new</span> <span class="nx">NineBallLeagueMatch</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">,</span> <span class="s">&quot;456&quot;</span><span class="p">,</span> <span class="s">&quot;HomeTeam&quot;</span><span class="p">,</span> <span class="s">&quot;AwayTeam&quot;</span><span class="p">,</span> <span class="s">&quot;1:00 am&quot;</span><span class="p">,</span> <span class="s">&quot;Coin-Operated&quot;</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchOne</span> <span class="k">new</span> <span class="nx">NineBallMatch</span><span class="p">(</span><span class="s">&quot;Isaac Wooten&quot;</span><span class="p">,</span> <span class="s">&quot;James Armstead&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;123456&quot;</span><span class="p">,</span> <span class="s">&quot;234567&quot;</span><span class="p">,</span> <span class="s">&quot;123&quot;</span><span class="p">,</span> <span class="s">&quot;456&quot;</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchTwo</span> <span class="k">new</span> <span class="nx">NineBallMatch</span><span class="p">(</span><span class="s">&quot;Dude 1&quot;</span><span class="p">,</span> <span class="s">&quot;Chick 1&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;123456&quot;</span><span class="p">,</span> <span class="s">&quot;234567&quot;</span><span class="p">,</span> <span class="s">&quot;123&quot;</span><span class="p">,</span> <span class="s">&quot;456&quot;</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchThree</span> <span class="k">new</span> <span class="nx">NineBallMatch</span><span class="p">(</span><span class="s">&quot;Dude 2&quot;</span><span class="p">,</span> <span class="s">&quot;Chick 2&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;234567&quot;</span><span class="p">,</span> <span class="s">&quot;123456&quot;</span><span class="p">,</span> <span class="s">&quot;123&quot;</span><span class="p">,</span> <span class="s">&quot;456&quot;</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchFour</span> <span class="k">new</span> <span class="nx">NineBallMatch</span><span class="p">(</span><span class="s">&quot;Dude 3&quot;</span><span class="p">,</span> <span class="s">&quot;Chick 3&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;123456&quot;</span><span class="p">,</span> <span class="s">&quot;234567&quot;</span><span class="p">,</span> <span class="s">&quot;123&quot;</span><span class="p">,</span> <span class="s">&quot;456&quot;</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchFive</span> <span class="k">new</span> <span class="nx">NineBallMatch</span><span class="p">(</span><span class="s">&quot;Dude 4&quot;</span><span class="p">,</span> <span class="s">&quot;Chick 4&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;234567&quot;</span><span class="p">,</span> <span class="s">&quot;123456&quot;</span><span class="p">,</span> <span class="s">&quot;123&quot;</span><span class="p">,</span> <span class="s">&quot;456&quot;</span><span class="p">)</span>
+      <span class="k">else</span>
+        <span class="nv">leagueMatch = </span><span class="k">new</span> <span class="nx">NineBallLeagueMatch</span><span class="p">(</span><span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="s">&quot;HomeTeam&quot;</span><span class="p">,</span> <span class="s">&quot;AwayTeam&quot;</span><span class="p">,</span> <span class="s">&quot;1:00 am&quot;</span><span class="p">,</span> <span class="s">&quot;Coin-Operated&quot;</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchOne</span> <span class="k">new</span> <span class="nx">NineBallMatch</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerOneNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerOneNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerOneRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamTwoPlayerOneRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nx">@matchSetupTeamOnePlayerOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchTwo</span> <span class="k">new</span> <span class="nx">NineBallMatch</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerTwoNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerTwoNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerTwoRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamTwoPlayerTwoRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nx">@matchSetupTeamOnePlayerTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchThree</span> <span class="k">new</span> <span class="nx">NineBallMatch</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerThreeNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerThreeNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerThreeRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamTwoPlayerThreeRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nx">@matchSetupTeamOnePlayerThreeNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerThreeNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchFour</span> <span class="k">new</span> <span class="nx">NineBallMatch</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerFourNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerFourNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerFourRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamTwoPlayerFourRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nx">@matchSetupTeamOnePlayerFourNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerFourNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchFive</span> <span class="k">new</span> <span class="nx">NineBallMatch</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerFiveNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerFiveNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerFiveRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamTwoPlayerFiveRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nx">@matchSetupTeamOnePlayerFiveNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerFiveNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="k">if</span> <span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span> <span class="o">is</span> <span class="s">&quot;&quot;</span>
+        <span class="nv">leagueMatch = </span><span class="k">new</span> <span class="nx">EightBallLeagueMatch</span><span class="p">(</span><span class="s">&quot;123&quot;</span><span class="p">,</span> <span class="s">&quot;345&quot;</span><span class="p">,</span> <span class="s">&quot;HomeTeam&quot;</span><span class="p">,</span> <span class="s">&quot;AwayTeam&quot;</span><span class="p">,</span> <span class="s">&quot;1:00 am&quot;</span><span class="p">,</span> <span class="s">&quot;Coin-Operated&quot;</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchOne</span> <span class="k">new</span> <span class="nx">EightBallMatch</span><span class="p">(</span><span class="s">&quot;Isaac Wooten&quot;</span><span class="p">,</span> <span class="s">&quot;James Armstead&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;1&quot;</span><span class="p">,</span> <span class="s">&quot;2&quot;</span><span class="p">,</span> <span class="s">&quot;123&quot;</span><span class="p">,</span> <span class="s">&quot;345&quot;</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchTwo</span> <span class="k">new</span> <span class="nx">EightBallMatch</span><span class="p">(</span><span class="s">&quot;Dude 1&quot;</span><span class="p">,</span> <span class="s">&quot;Chick 1&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;3&quot;</span><span class="p">,</span> <span class="s">&quot;4&quot;</span><span class="p">,</span> <span class="s">&quot;123&quot;</span><span class="p">,</span> <span class="s">&quot;345&quot;</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchThree</span> <span class="k">new</span> <span class="nx">EightBallMatch</span><span class="p">(</span><span class="s">&quot;Dude 2&quot;</span><span class="p">,</span> <span class="s">&quot;Chick 2&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;5&quot;</span><span class="p">,</span> <span class="s">&quot;6&quot;</span><span class="p">,</span> <span class="s">&quot;123&quot;</span><span class="p">,</span> <span class="s">&quot;345&quot;</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchFour</span> <span class="k">new</span> <span class="nx">EightBallMatch</span><span class="p">(</span><span class="s">&quot;Dude 3&quot;</span><span class="p">,</span> <span class="s">&quot;Chick 3&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;7&quot;</span><span class="p">,</span> <span class="s">&quot;8&quot;</span><span class="p">,</span> <span class="s">&quot;123&quot;</span><span class="p">,</span> <span class="s">&quot;345&quot;</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchFive</span> <span class="k">new</span> <span class="nx">EightBallMatch</span><span class="p">(</span><span class="s">&quot;Dude 4&quot;</span><span class="p">,</span> <span class="s">&quot;Chick 4&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;9&quot;</span><span class="p">,</span> <span class="s">&quot;10&quot;</span><span class="p">,</span> <span class="s">&quot;123&quot;</span><span class="p">,</span> <span class="s">&quot;345&quot;</span><span class="p">)</span>
+      <span class="k">else</span>
+        <span class="nv">leagueMatch = </span><span class="k">new</span> <span class="nx">EightBallLeagueMatch</span><span class="p">(</span><span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="s">&quot;HomeTeam&quot;</span><span class="p">,</span> <span class="s">&quot;AwayTeam&quot;</span><span class="p">,</span> <span class="s">&quot;1:00 am&quot;</span><span class="p">,</span> <span class="s">&quot;Coin-Operated&quot;</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchOne</span> <span class="k">new</span> <span class="nx">EightBallMatch</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerOneNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerOneNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerOneRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamTwoPlayerOneRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nx">@matchSetupTeamOnePlayerOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchTwo</span> <span class="k">new</span> <span class="nx">EightBallMatch</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerTwoNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerTwoNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerTwoRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamTwoPlayerTwoRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nx">@matchSetupTeamOnePlayerTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchThree</span> <span class="k">new</span> <span class="nx">EightBallMatch</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerThreeNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerThreeNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerThreeRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamTwoPlayerThreeRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nx">@matchSetupTeamOnePlayerThreeNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerThreeNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchFour</span> <span class="k">new</span> <span class="nx">EightBallMatch</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerFourNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerFourNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerFourRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamTwoPlayerFourRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nx">@matchSetupTeamOnePlayerFourNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerFourNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+        <span class="nx">leagueMatch</span><span class="p">.</span><span class="nx">setMatchFive</span> <span class="k">new</span> <span class="nx">EightBallMatch</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerFiveNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerFiveNameText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamOnePlayerFiveRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">@matchSetupTeamTwoPlayerFiveRankText</span><span class="p">.</span><span class="nx">value</span><span class="p">),</span> <span class="nx">@matchSetupTeamOnePlayerFiveNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoPlayerFiveNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamOneNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">@matchSetupTeamTwoNumberText</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+    <span class="nx">play</span> <span class="nx">leagueMatch</span>
+  
+    
+  
+<span class="nv">$CS.Controllers.MatchSetupController = </span><span class="nx">MatchSetupController</span>
+
+</pre></div></td></tr></tbody></table><div id="projectname"><a href="../../index.html">CueScore Mobile</a></div></div></body></html>

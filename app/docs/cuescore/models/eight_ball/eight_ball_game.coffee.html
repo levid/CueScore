@@ -1,0 +1,342 @@
+<!DOCTYPE html><html><head><title>eight_ball_game.coffee</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="../../../docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="../../../index.html" class="source"><span class="file_name">README</span></a><a href="../../../app.coffee.html" class="source "><span class="base_path">. / </span><span class="file_name">app.coffee</span></a><a href="../../../cuescore/api.coffee.html" class="source "><span class="base_path">cuescore / </span><span class="file_name">api.coffee</span></a><a href="../../../cuescore/app.coffee.html" class="source "><span class="base_path">cuescore / </span><span class="file_name">app.coffee</span></a><a href="../../../cuescore/controllers/dashboard_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">dashboard_controller.coffee</span></a><a href="../../../cuescore/controllers/match_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">match_controller.coffee</span></a><a href="../../../cuescore/controllers/match_setup_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">match_setup_controller.coffee</span></a><a href="../../../cuescore/controllers/play.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">play.coffee</span></a><a href="../../../cuescore/controllers/posts_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">posts_controller.coffee</span></a><a href="../../../cuescore/helpers/application.coffee.html" class="source "><span class="base_path">cuescore / helpers / </span><span class="file_name">application.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_game.coffee.html" class="source selected"><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_game.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_league.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_league.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_league_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_league_match.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_match.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_player.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_player.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_practice_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_practice_match.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_ranks.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_ranks.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_tournament_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_tournament_match.coffee</span></a><a href="../../../cuescore/models/game.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">game.coffee</span></a><a href="../../../cuescore/models/league.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">league.coffee</span></a><a href="../../../cuescore/models/leagues/double_jeopardy_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">double_jeopardy_league.coffee</span></a><a href="../../../cuescore/models/leagues/doubles_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">doubles_league.coffee</span></a><a href="../../../cuescore/models/leagues/masters_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">masters_league.coffee</span></a><a href="../../../cuescore/models/leagues/mixed_doubles_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">mixed_doubles_league.coffee</span></a><a href="../../../cuescore/models/leagues/womens_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">womens_league.coffee</span></a><a href="../../../cuescore/models/match.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">match.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_game.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_game.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_league.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_league.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_league_match.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_league_match.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_match.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_match.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_player.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_player.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_ranks.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_ranks.coffee</span></a><a href="../../../cuescore/models/player.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">player.coffee</span></a><a href="../../../cuescore/models/post_model.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">post_model.coffee</span></a><a href="../../../cuescore/models/rank.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">rank.coffee</span></a><a href="../../../cuescore/models/team.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">team.coffee</span></a><a href="../../../cuescore/utils/appsync.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">appsync.coffee</span></a><a href="../../../cuescore/utils/base_64.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">base_64.coffee</span></a><a href="../../../cuescore/utils/contains.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">contains.coffee</span></a><a href="../../../cuescore/utils/data_service.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">data_service.coffee</span></a><a href="../../../cuescore/utils/device_fix.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">device_fix.coffee</span></a><a href="../../../cuescore/utils/extras.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">extras.coffee</span></a><a href="../../../cuescore/utils/query_string_builder.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">query_string_builder.coffee</span></a><a href="../../../cuescore/utils/template.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">template.coffee</span></a><a href="../../../cuescore/utils/utilities.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">utilities.coffee</span></a><a href="../../../cuescore/views/dashboard/dashboard_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / </span><span class="file_name">dashboard_view.coffee</span></a><a href="../../../cuescore/views/dashboard/title_bar_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / </span><span class="file_name">title_bar_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/activity_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">activity_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/events_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">events_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/grid_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">grid_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/list_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">list_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/live_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">live_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/menu_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">menu_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/news_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">news_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/profile_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">profile_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/rules_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">rules_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/settings_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">settings_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/teams_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">teams_view.coffee</span></a><a href="../../../cuescore/views/login/main.coffee.html" class="source "><span class="base_path">cuescore / views / login / </span><span class="file_name">main.coffee</span></a><a href="../../../cuescore/views/posts/post_view_controller.coffee.html" class="source "><span class="base_path">cuescore / views / posts / </span><span class="file_name">post_view_controller.coffee</span></a><a href="../../../cuescore/views/posts/posts_view_controller.coffee.html" class="source "><span class="base_path">cuescore / views / posts / </span><span class="file_name">posts_view_controller.coffee</span></a><a href="../../../cuescore/views/sample/main.coffee.html" class="source "><span class="base_path">cuescore / views / sample / </span><span class="file_name">main.coffee</span></a><a href="../../../cuescore/views/settings/main.coffee.html" class="source "><span class="base_path">cuescore / views / settings / </span><span class="file_name">main.coffee</span></a><a href="../../../cuescore/window/main.coffee.html" class="source "><span class="base_path">cuescore / window / </span><span class="file_name">main.coffee</span></a><a href="../../../cuescore/window/second.coffee.html" class="source "><span class="base_path">cuescore / window / </span><span class="file_name">second.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_game_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_game_spec.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_league_match_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_league_match_spec.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_match_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_match_spec.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_player_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_player_spec.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_ranks_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_ranks_spec.coffee</span></a><a href="../../../spec/models/game_spec.coffee.html" class="source "><span class="base_path">spec / models / </span><span class="file_name">game_spec.coffee</span></a><a href="../../../spec/models/league_spec.coffee.html" class="source "><span class="base_path">spec / models / </span><span class="file_name">league_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_game_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_game_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_league_match_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_league_match_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_match_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_match_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_player_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_player_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_ranks_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_ranks_spec.coffee</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"><h1>eight_ball_game.coffee</h1><div class="filepath">cuescore/models/eight_ball/</div></th><th class="code"></th></tr></thead><tbody><tr id="section-1"><td class="docs"><div class="pilwrap"><a href="#section-1" class="pilcrow">&#182;</a></div>
+</td><td class="code"><div class="highlight"><pre><span class="nb">Array</span><span class="o">::</span><span class="nv">exists = </span><span class="nf">(search) -&gt;</span>
+  <span class="nv">i = </span><span class="mi">0</span>
+
+  <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">@length</span>
+    <span class="k">return</span> <span class="kc">true</span>  <span class="k">if</span> <span class="k">this</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">is</span> <span class="nx">search</span>
+    <span class="nx">i</span><span class="o">++</span>
+  <span class="kc">false</span>
+
+<span class="k">class</span> <span class="nx">Game</span> <span class="k">extends</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">EightBall</span>
+  <span class="nv">defaults:</span>
+    <span class="nv">stripes: </span><span class="mi">1</span>
+    <span class="nv">solids: </span><span class="mi">2</span>
+    <span class="nv">innings: </span><span class="mi">0</span>
+    <span class="nv">numberOfInnings: </span><span class="mi">0</span>
+    <span class="nv">ended: </span><span class="kc">false</span>
+    <span class="nv">ballsHitIn:</span>
+      <span class="nv">stripes: </span><span class="p">[]</span>
+      <span class="nv">solids: </span><span class="p">[]</span>
+    <span class="nv">lastBallHitIn: </span><span class="kc">null</span>
+    <span class="nv">onBreak: </span><span class="kc">true</span>
+    <span class="nv">breakingPlayerStillShooting: </span><span class="kc">true</span>
+    <span class="nv">scratchOnEight: </span><span class="kc">false</span>
+    <span class="nv">earlyEight: </span><span class="kc">false</span>
+    <span class="nv">playerOneWon: </span><span class="kc">false</span>
+    <span class="nv">playerTwoWon: </span><span class="kc">false</span>
+    <span class="nv">matchEndedCallback: </span><span class="o">-&gt;</span>
+    <span class="nv">player:</span>
+      <span class="nv">one:</span>
+        <span class="nv">eightBall: </span><span class="p">[]</span>
+        <span class="nv">eightOnSnap: </span><span class="kc">false</span>
+        <span class="nv">breakAndRun: </span><span class="kc">false</span>
+        <span class="nv">timeoutsTaken: </span><span class="mi">0</span>
+        <span class="nv">ballType: </span><span class="kc">null</span>
+        <span class="nv">callback: </span><span class="o">-&gt;</span>
+      <span class="nv">two:</span>
+        <span class="nv">eightBall: </span><span class="p">[]</span>
+        <span class="nv">eightOnSnap: </span><span class="kc">false</span>
+        <span class="nv">breakAndRun: </span><span class="kc">false</span>
+        <span class="nv">timeoutsTaken: </span><span class="mi">0</span>
+        <span class="nv">ballType: </span><span class="kc">null</span>
+        <span class="nv">callback: </span><span class="o">-&gt;</span>
+
+  <span class="nv">constructor: </span><span class="nf">(options) -&gt;</span>
+    <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="nx">@</span><span class="p">,</span> <span class="nx">@defaults</span>
+    
+    <span class="vi">@player.one.callback  = </span><span class="nx">options</span><span class="p">.</span><span class="nx">addToPlayerOne</span>
+    <span class="vi">@player.two.callback  = </span><span class="nx">options</span><span class="p">.</span><span class="nx">addToPlayerTwo</span>
+    <span class="vi">@matchEndedCallback   = </span><span class="nx">options</span><span class="p">.</span><span class="nx">callback</span>
+    
+    <span class="vi">@player.one.timeoutsTaken = </span><span class="mi">0</span><span class="p">;</span>
+    <span class="vi">@player.two.timeoutsTaken = </span><span class="mi">0</span><span class="p">;</span></pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>Getters</p>
+</td><td class="code"><div class="highlight"><pre>  
+  <span class="nv">getCurrentlyUpPlayer: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="k">return</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">()</span>
+    <span class="k">else</span>
+      <span class="k">return</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">()</span>
+    
+  <span class="nv">getCurrentlyUpTeamNumber: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="k">return</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">teamNumber</span>
+    <span class="k">else</span>
+      <span class="k">return</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">teamNumber</span>
+    
+  <span class="nv">getWinningPlayer: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">@playerOneWon</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="k">return</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">@playerTwoWon</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="k">return</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span>
+  
+  <span class="nv">getWinningPlayerName: </span><span class="o">-&gt;</span>
+    <span class="nx">@getWinningPlayer</span><span class="p">().</span><span class="nx">callback</span><span class="p">().</span><span class="nx">getFirstNameWithInitials</span><span class="p">()</span>
+    
+  <span class="nv">getBallsHitInByPlayer: </span><span class="nf">(playerNum) -&gt;</span>
+    <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span> <span class="o">is</span> <span class="nx">@stripes</span>
+        <span class="k">return</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightBall</span><span class="p">)</span>
+      <span class="k">else</span> 
+        <span class="k">return</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightBall</span><span class="p">)</span> <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span> <span class="o">is</span> <span class="nx">@solids</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">2</span>
+      <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">ballType</span> <span class="o">is</span> <span class="nx">@stripes</span>
+        <span class="k">return</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightBall</span><span class="p">)</span>
+      <span class="k">else</span> 
+        <span class="k">return</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightBall</span><span class="p">)</span> <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">ballType</span> <span class="o">is</span> <span class="nx">@solids</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+  <span class="nv">getGameScore: </span><span class="o">-&gt;</span>
+    <span class="nx">@getBallsHitInByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">length</span> <span class="o">+</span> <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="nx">@getBallsHitInByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="nx">length</span>
+
+  <span class="nv">getBallsHitIn: </span><span class="o">-&gt;</span>
+    <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightBall</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightBall</span><span class="p">)))</span>
+    
+  <span class="nv">getCurrentPlayerRemainingTimeouts: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="k">return</span> <span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">timeouts_allowed</span> <span class="o">-</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">timeoutsTaken</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="k">return</span> <span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">timeouts_allowed</span> <span class="o">-</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">timeoutsTaken</span><span class="p">)</span>
+      
+  <span class="nv">getScoreRatio = </span><span class="nf">(playerScore, playerBallCount) -&gt;</span>
+    <span class="nx">playerScore</span> <span class="o">/</span> <span class="nx">playerBallCount</span>
+    </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Setters</p>
+</td><td class="code"><div class="highlight"><pre>  
+  <span class="nv">setPlayerWon: </span><span class="nf">(playerNum) -&gt;</span>
+    <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="vi">@playerOneWon = </span><span class="kc">true</span>
+      <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">gamesWon</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">2</span>
+      <span class="vi">@playerTwoWon = </span><span class="kc">true</span>
+      <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">gamesWon</span> <span class="o">+=</span> <span class="mi">1</span>
+      
+  <span class="nv">setEightOnSnapByPlayer: </span><span class="nf">(playerNum) -&gt;</span>
+    <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">addToEightOnSnaps</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="nx">unless</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnap</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="vi">@player.one.eightOnSnap = </span><span class="kc">true</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">2</span>
+      <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">addToEightOnSnaps</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="nx">unless</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightOnSnap</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="vi">@player.two.eightOnSnap = </span><span class="kc">true</span>
+      
+  <span class="nv">clearBallsHitIn: </span><span class="nf">(playerNum) -&gt;</span>
+    <span class="vi">@player.one.eightBall = </span><span class="p">[]</span>
+    <span class="vi">@player.two.eightBall = </span><span class="p">[]</span>
+
+  <span class="nv">setBreakAndRunByPlayer: </span><span class="nf">(playerNum) -&gt;</span>
+    <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">addToBreakAndRuns</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="nx">unless</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">breakAndRun</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="vi">@player.one.breakAndRun = </span><span class="kc">true</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">2</span>
+      <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">addToBreakAndRuns</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="nx">unless</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">breakAndRun</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="vi">@player.two.breakAndRun = </span><span class="kc">true</span>
+
+  <span class="nv">setBallTypeByPlayer: </span><span class="nf">(playerNum, type) -&gt;</span>
+    <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">is</span> <span class="mi">1</span> <span class="o">and</span> <span class="nx">type</span> <span class="o">is</span> <span class="s">&quot;stripes&quot;</span>
+      <span class="vi">@player.one.ballType = </span><span class="nx">@stripes</span>
+      <span class="vi">@player.two.ballType = </span><span class="nx">@solids</span>
+      <span class="nx">@checkForWinner</span><span class="p">()</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">is</span> <span class="mi">2</span> <span class="o">and</span> <span class="nx">type</span> <span class="o">is</span> <span class="s">&quot;stripes&quot;</span>
+      <span class="vi">@player.two.ballType = </span><span class="nx">@stripes</span>
+      <span class="vi">@player.one.ballType = </span><span class="nx">@solids</span>
+      <span class="nx">@checkForWinner</span><span class="p">()</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">is</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="nx">type</span> <span class="o">is</span> <span class="s">&quot;solids&quot;</span>
+      <span class="vi">@player.one.ballType = </span><span class="nx">@solids</span>
+      <span class="vi">@player.two.ballType = </span><span class="nx">@stripes</span>
+      <span class="nx">@checkForWinner</span><span class="p">()</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">is</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="nx">type</span> <span class="o">is</span> <span class="s">&quot;solids&quot;</span>
+      <span class="vi">@player.two.ballType = </span><span class="nx">@solids</span>
+      <span class="vi">@player.one.ballType = </span><span class="nx">@stripes</span>
+      <span class="nx">@checkForWinner</span><span class="p">()</span>
+      </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Methods</p>
+</td><td class="code"><div class="highlight"><pre>  <span class="nv">hitSafety: </span><span class="o">-&gt;</span>
+    <span class="nx">@getCurrentlyUpPlayer</span><span class="p">().</span><span class="nx">addToSafeties</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nx">@nextPlayerIsUp</span><span class="p">()</span>
+
+  <span class="nv">hitScratchOnEight: </span><span class="o">-&gt;</span>
+    <span class="vi">@scratchOnEight = </span><span class="kc">true</span>
+    <span class="vi">@ended = </span><span class="kc">true</span>
+    
+    <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="vi">@playerTwoWon = </span><span class="kc">true</span>
+      <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">false</span>
+      <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">true</span>
+    <span class="k">else</span>
+      <span class="vi">@playerOneWon = </span><span class="kc">true</span>
+      <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">false</span>
+      <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">true</span>
+      
+    <span class="nx">@matchEndedCallback</span><span class="p">()</span>
+  
+  <span class="nv">shotMissed: </span><span class="o">-&gt;</span>
+    <span class="nx">@nextPlayerIsUp</span><span class="p">()</span>
+
+  <span class="nv">addToNumberOfInnings: </span><span class="nf">(num) -&gt;</span>
+    <span class="nx">@numberOfInnings</span> <span class="o">+=</span> <span class="nx">num</span>
+    
+  <span class="nv">takeTimeout: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">@getCurrentPlayerRemainingTimeouts</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span>
+      <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+        <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">timeoutsTaken</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="k">else</span>
+        <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">timeoutsTaken</span> <span class="o">+=</span> <span class="mi">1</span>
+
+  <span class="nv">breakIsOver: </span><span class="o">-&gt;</span>
+    <span class="vi">@onBreak = </span><span class="kc">false</span>
+
+  <span class="nv">end: </span><span class="o">-&gt;</span>
+    <span class="vi">@ended = </span><span class="kc">true</span>
+    
+  <span class="nv">scoreBall: </span><span class="nf">(ballNumber) -&gt;</span>
+    <span class="nx">unless</span> <span class="nx">@getBallsHitIn</span><span class="p">().</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">ballNumber</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">and</span> <span class="o">not</span> <span class="nx">@getBallsHitIn</span><span class="p">().</span><span class="nx">exists</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+      <span class="vi">@lastBallHitIn = </span><span class="nx">ballNumber</span>
+      
+      <span class="k">if</span> <span class="nx">ballNumber</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">and</span> <span class="nx">ballNumber</span> <span class="o">&lt;</span> <span class="mi">8</span>
+        <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">push</span> <span class="nx">ballNumber</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="nx">ballNumber</span> <span class="o">&gt;</span> <span class="mi">8</span> <span class="o">and</span> <span class="nx">ballNumber</span> <span class="o">&lt;</span> <span class="mi">16</span>
+        <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">.</span><span class="nx">push</span> <span class="nx">ballNumber</span>
+      <span class="k">else</span>
+        <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightBall</span><span class="p">.</span><span class="nx">push</span> <span class="nx">ballNumber</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightBall</span><span class="p">.</span><span class="nx">push</span> <span class="nx">ballNumber</span> 
+        
+        <span class="k">if</span> <span class="nx">@onBreak</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="k">if</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">length</span> <span class="o">isnt</span> <span class="mi">7</span> <span class="o">and</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">.</span><span class="nx">length</span> <span class="o">isnt</span> <span class="mi">7</span>
+            <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+              <span class="nx">@setEightOnSnapByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span> <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+              <span class="nx">@setEightOnSnapByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  
+        <span class="k">else</span>
+          <span class="k">if</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">length</span> <span class="o">isnt</span> <span class="mi">7</span> <span class="o">and</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">.</span><span class="nx">length</span> <span class="o">isnt</span> <span class="mi">7</span>
+            <span class="vi">@earlyEight = </span><span class="kc">true</span>
+            
+            <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+              <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">false</span>
+              <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">true</span>
+            <span class="k">else</span> <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+              <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">true</span>
+              <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">false</span>
+
+      <span class="nx">@checkForWinner</span><span class="p">()</span>
+      
+  <span class="nv">checkForWinner: </span><span class="o">-&gt;</span>
+    <span class="vi">@ended = </span><span class="kc">true</span> <span class="k">if</span> <span class="nx">@getBallsHitIn</span><span class="p">().</span><span class="nx">exists</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">@ended</span> <span class="o">is</span> <span class="kc">true</span></pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>Break and run</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="k">if</span> <span class="nx">@breakingPlayerStillShooting</span> <span class="o">is</span> <span class="kc">true</span> <span class="o">and</span> <span class="p">(</span><span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">7</span> <span class="o">or</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">7</span><span class="p">)</span>
+        </pre></div></td></tr><tr id="section-6"><td class="docs"><div class="pilwrap"><a href="#section-6" class="pilcrow">&#182;</a></div><p>Player 1 broke and ran out</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="nx">@setBreakAndRunByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+          
+          <span class="vi">@player.one.ballType = </span><span class="nx">@solids</span>
+          <span class="vi">@player.two.ballType = </span><span class="nx">@stripes</span>
+        </pre></div></td></tr><tr id="section-7"><td class="docs"><div class="pilwrap"><a href="#section-7" class="pilcrow">&#182;</a></div><p>Player 2 broke and ran out</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="k">else</span> <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="nx">@setBreakAndRunByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+          
+          <span class="vi">@player.two.ballType = </span><span class="nx">@solids</span>
+          <span class="vi">@player.one.ballType = </span><span class="nx">@stripes</span>
+            </pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><p>Player 1 made the 8 ball (not on break)</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightBall</span><span class="p">.</span><span class="nx">exists</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="o">and</span> <span class="nx">@onBreak</span> <span class="o">is</span> <span class="kc">false</span>
+        </pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Neither player made 8 balls so it is a loss by player 1</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="k">if</span> <span class="nx">@getBallsHitInByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">length</span> <span class="o">isnt</span> <span class="mi">8</span> <span class="o">and</span> <span class="nx">@getBallsHitInByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="nx">length</span> <span class="o">isnt</span> <span class="mi">8</span>
+          <span class="nx">@setPlayerWon</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>Player 1 made all 8 balls so they win the game</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="k">else</span>
+          <span class="nx">@setPlayerWon</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+          </pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>Player 2 made the 8 ball (not on break)</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="k">else</span> <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightBall</span><span class="p">.</span><span class="nx">exists</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="o">and</span> <span class="nx">@onBreak</span> <span class="o">is</span> <span class="kc">false</span>
+      </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>Neither player made 8 balls so it is a loss by player 2</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="k">if</span> <span class="nx">@getBallsHitInByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">length</span> <span class="o">isnt</span> <span class="mi">8</span> <span class="o">and</span> <span class="nx">@getBallsHitInByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="nx">length</span> <span class="o">isnt</span> <span class="mi">8</span>
+          <span class="nx">@setPlayerWon</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>Player 2 made all 8 balls so they win the game</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="k">else</span>
+          <span class="nx">@setPlayerWon</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+          </pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><p>The 8 ball was made on the break</p>
+</td><td class="code"><div class="highlight"><pre>      <span class="k">else</span></pre></div></td></tr><tr id="section-15"><td class="docs"><div class="pilwrap"><a href="#section-15" class="pilcrow">&#182;</a></div><p>Player 1 made the 8 on the break</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="nx">@setPlayerWon</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><p>Player 2 made the 8 on the break</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="k">else</span> <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="nx">@setPlayerWon</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> 
+      
+      <span class="nx">@matchEndedCallback</span><span class="p">()</span>
+
+  <span class="nv">nextPlayerIsUp: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">@onBreak</span> <span class="o">isnt</span> <span class="kc">true</span> <span class="o">or</span> <span class="p">((</span><span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span> <span class="o">or</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span><span class="p">)</span> <span class="o">and</span> <span class="nx">@getBallsHitIn</span><span class="p">().</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+        <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">true</span>
+        <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">false</span>
+        
+        <span class="nx">unless</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span><span class="o">?</span>
+          <span class="k">if</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">and</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
+            <span class="vi">@player.one.ballType = </span><span class="nx">@solids</span>
+            <span class="vi">@player.two.ballType = </span><span class="nx">@stripes</span>
+          <span class="k">else</span> <span class="k">if</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span> <span class="o">and</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="vi">@player.one.ballType = </span><span class="nx">@stripes</span>
+            <span class="vi">@player.two.ballType = </span><span class="nx">@solids</span>
+            
+      <span class="k">else</span> <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">currentlyUp</span> <span class="o">is</span> <span class="kc">true</span>
+        
+        <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">false</span>
+        <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">true</span>
+        <span class="nx">@addToNumberOfInnings</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="nx">unless</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">ballType</span><span class="o">?</span>
+          
+          <span class="k">if</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span> <span class="o">and</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="vi">@player.one.ballType = </span><span class="nx">@solids</span>
+            <span class="vi">@player.two.ballType = </span><span class="nx">@stripes</span>
+          <span class="k">else</span> <span class="k">if</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">and</span> <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
+            <span class="vi">@player.one.ballType = </span><span class="nx">@stripes</span>
+            <span class="vi">@player.two.ballType = </span><span class="nx">@solids</span>
+      <span class="k">else</span>
+        <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">true</span>
+        
+      <span class="vi">@breakingPlayerStillShooting = </span><span class="kc">false</span>
+      
+    <span class="vi">@onBreak = </span><span class="kc">false</span>
+    </pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><p>JSON Data</p>
+</td><td class="code"><div class="highlight"><pre>  <span class="nv">toJSON: </span><span class="o">-&gt;</span>
+    <span class="nv">playerOneTimeoutsTaken: </span>        <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">timeoutsTaken</span>
+    <span class="nv">playerTwoTimeoutsTaken: </span>        <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">timeoutsTaken</span>
+    <span class="nv">playerOneEightOnSnap: </span>          <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnap</span>
+    <span class="nv">playerOneBreakAndRun: </span>          <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">breakAndRun</span>
+    <span class="nv">playerTwoEightOnSnap: </span>          <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightOnSnap</span>
+    <span class="nv">playerTwoBreakAndRun: </span>          <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">breakAndRun</span>
+    <span class="nv">playerOneBallType: </span>             <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span>
+    <span class="nv">playerTwoBallType: </span>             <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">ballType</span>
+    <span class="nv">playerOneEightBall: </span>            <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightBall</span>
+    <span class="nv">playerTwoEightBall: </span>            <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightBall</span>
+    <span class="nv">playerOneWon: </span>                  <span class="nx">@playerOneWon</span>
+    <span class="nv">playerTwoWon: </span>                  <span class="nx">@playerTwoWon</span>
+    <span class="nv">numberOfInnings: </span>               <span class="nx">@numberOfInnings</span>
+    <span class="nv">earlyEight: </span>                    <span class="nx">@earlyEight</span>
+    <span class="nv">scratchOnEight: </span>                <span class="nx">@scratchOnEight</span>
+    <span class="nv">breakingPlayerStillShooting: </span>   <span class="nx">@breakingPlayerStillShooting</span>
+    <span class="nv">stripedBallsHitIn: </span>             <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span>
+    <span class="nv">solidBallsHitIn: </span>               <span class="nx">@ballsHitIn</span><span class="p">.</span><span class="nx">solids</span>
+    <span class="nv">lastBallHitIn: </span>                 <span class="nx">@lastBallHitIn</span>
+    <span class="nv">onBreak: </span>                       <span class="nx">@onBreak</span>
+    <span class="nv">ended: </span>                         <span class="nx">@ended</span>
+    
+  <span class="nv">fromJSON: </span><span class="nf">(gameJSON) -&gt;</span>
+    <span class="vi">@player.one.timeoutsTaken       = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">playerOneTimeoutsTaken</span>
+    <span class="vi">@player.two.timeoutsTaken       = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">playerTwoTimeoutsTaken</span>
+    <span class="vi">@player.one.eightOnSnap         = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">playerOneEightOnSnap</span>
+    <span class="vi">@player.one.breakAndRun         = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">playerOneBreakAndRun</span>
+    <span class="vi">@player.two.eightOnSnap         = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">playerTwoEightOnSnap</span>
+    <span class="vi">@player.two.breakAndRun         = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">playerTwoBreakAndRun</span>
+    <span class="vi">@player.one.ballType            = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">playerOneBallType</span>
+    <span class="vi">@player.two.ballType            = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">playerTwoBallType</span>
+    <span class="vi">@player.one.eightBall           = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">playerOneEightBall</span>
+    <span class="vi">@player.two.eightBall           = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">playerTwoEightBall</span>
+    <span class="vi">@playerOneWon                   = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">playerOneWon</span>
+    <span class="vi">@playerTwoWon                    = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">playerTwoWon</span>
+    <span class="vi">@numberOfInnings                = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">numberOfInnings</span>
+    <span class="vi">@breakingPlayerStillShooting    = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">breakingPlayerStillShooting</span>
+    <span class="vi">@ballsHitIn.solids              = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">solidBallsHitIn</span>
+    <span class="vi">@ballsHitIn.stripes             = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">stripedBallsHitIn</span>
+    <span class="vi">@lastBallHitIn                  = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">lastBallHitIn</span>
+    <span class="vi">@onBreak                        = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">onBreak</span>
+    <span class="vi">@ended                          = </span><span class="nx">gameJSON</span><span class="p">.</span><span class="nx">ended</span>
+  
+<span class="nv">$CS.Models.EightBall.Game = </span><span class="nx">Game</span>
+
+</pre></div></td></tr></tbody></table><div id="projectname"><a href="../../../index.html">CueScore Mobile</a></div></div></body></html>

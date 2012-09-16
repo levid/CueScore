@@ -1,0 +1,604 @@
+<!DOCTYPE html><html><head><title>eight_ball_game_spec.coffee</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="../../../docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="../../../index.html" class="source"><span class="file_name">README</span></a><a href="../../../app.coffee.html" class="source "><span class="base_path">. / </span><span class="file_name">app.coffee</span></a><a href="../../../cuescore/api.coffee.html" class="source "><span class="base_path">cuescore / </span><span class="file_name">api.coffee</span></a><a href="../../../cuescore/app.coffee.html" class="source "><span class="base_path">cuescore / </span><span class="file_name">app.coffee</span></a><a href="../../../cuescore/controllers/dashboard_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">dashboard_controller.coffee</span></a><a href="../../../cuescore/controllers/match_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">match_controller.coffee</span></a><a href="../../../cuescore/controllers/match_setup_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">match_setup_controller.coffee</span></a><a href="../../../cuescore/controllers/play.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">play.coffee</span></a><a href="../../../cuescore/controllers/posts_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">posts_controller.coffee</span></a><a href="../../../cuescore/helpers/application.coffee.html" class="source "><span class="base_path">cuescore / helpers / </span><span class="file_name">application.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_game.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_game.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_league.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_league.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_league_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_league_match.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_match.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_player.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_player.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_practice_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_practice_match.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_ranks.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_ranks.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_tournament_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_tournament_match.coffee</span></a><a href="../../../cuescore/models/game.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">game.coffee</span></a><a href="../../../cuescore/models/league.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">league.coffee</span></a><a href="../../../cuescore/models/leagues/double_jeopardy_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">double_jeopardy_league.coffee</span></a><a href="../../../cuescore/models/leagues/doubles_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">doubles_league.coffee</span></a><a href="../../../cuescore/models/leagues/masters_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">masters_league.coffee</span></a><a href="../../../cuescore/models/leagues/mixed_doubles_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">mixed_doubles_league.coffee</span></a><a href="../../../cuescore/models/leagues/womens_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">womens_league.coffee</span></a><a href="../../../cuescore/models/match.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">match.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_game.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_game.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_league.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_league.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_league_match.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_league_match.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_match.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_match.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_player.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_player.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_ranks.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_ranks.coffee</span></a><a href="../../../cuescore/models/player.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">player.coffee</span></a><a href="../../../cuescore/models/post_model.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">post_model.coffee</span></a><a href="../../../cuescore/models/rank.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">rank.coffee</span></a><a href="../../../cuescore/models/team.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">team.coffee</span></a><a href="../../../cuescore/utils/appsync.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">appsync.coffee</span></a><a href="../../../cuescore/utils/base_64.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">base_64.coffee</span></a><a href="../../../cuescore/utils/contains.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">contains.coffee</span></a><a href="../../../cuescore/utils/data_service.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">data_service.coffee</span></a><a href="../../../cuescore/utils/device_fix.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">device_fix.coffee</span></a><a href="../../../cuescore/utils/extras.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">extras.coffee</span></a><a href="../../../cuescore/utils/query_string_builder.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">query_string_builder.coffee</span></a><a href="../../../cuescore/utils/template.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">template.coffee</span></a><a href="../../../cuescore/utils/utilities.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">utilities.coffee</span></a><a href="../../../cuescore/views/dashboard/dashboard_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / </span><span class="file_name">dashboard_view.coffee</span></a><a href="../../../cuescore/views/dashboard/title_bar_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / </span><span class="file_name">title_bar_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/activity_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">activity_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/events_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">events_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/grid_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">grid_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/list_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">list_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/live_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">live_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/menu_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">menu_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/news_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">news_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/profile_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">profile_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/rules_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">rules_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/settings_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">settings_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/teams_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">teams_view.coffee</span></a><a href="../../../cuescore/views/login/main.coffee.html" class="source "><span class="base_path">cuescore / views / login / </span><span class="file_name">main.coffee</span></a><a href="../../../cuescore/views/posts/post_view_controller.coffee.html" class="source "><span class="base_path">cuescore / views / posts / </span><span class="file_name">post_view_controller.coffee</span></a><a href="../../../cuescore/views/posts/posts_view_controller.coffee.html" class="source "><span class="base_path">cuescore / views / posts / </span><span class="file_name">posts_view_controller.coffee</span></a><a href="../../../cuescore/views/sample/main.coffee.html" class="source "><span class="base_path">cuescore / views / sample / </span><span class="file_name">main.coffee</span></a><a href="../../../cuescore/views/settings/main.coffee.html" class="source "><span class="base_path">cuescore / views / settings / </span><span class="file_name">main.coffee</span></a><a href="../../../cuescore/window/main.coffee.html" class="source "><span class="base_path">cuescore / window / </span><span class="file_name">main.coffee</span></a><a href="../../../cuescore/window/second.coffee.html" class="source "><span class="base_path">cuescore / window / </span><span class="file_name">second.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_game_spec.coffee.html" class="source selected"><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_game_spec.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_league_match_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_league_match_spec.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_match_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_match_spec.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_player_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_player_spec.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_ranks_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_ranks_spec.coffee</span></a><a href="../../../spec/models/game_spec.coffee.html" class="source "><span class="base_path">spec / models / </span><span class="file_name">game_spec.coffee</span></a><a href="../../../spec/models/league_spec.coffee.html" class="source "><span class="base_path">spec / models / </span><span class="file_name">league_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_game_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_game_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_league_match_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_league_match_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_match_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_match_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_player_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_player_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_ranks_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_ranks_spec.coffee</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"><h1>eight_ball_game_spec.coffee</h1><div class="filepath">spec/models/eight_ball/</div></th><th class="code"></th></tr></thead><tbody><tr id="section-1"><td class="docs"><div class="pilwrap"><a href="#section-1" class="pilcrow">&#182;</a></div>
+</td><td class="code"><div class="highlight"><pre><span class="nx">describe</span> <span class="s">&quot;Eight Ball Game&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+  <span class="nv">game          = </span><span class="kc">undefined</span>
+  <span class="nv">player        = </span><span class="p">{}</span>
+  <span class="nv">player.one    = </span><span class="kc">undefined</span>
+  <span class="nv">player.two    = </span><span class="kc">undefined</span>
+  <span class="nv">matchCallback = </span><span class="kc">undefined</span>
+  
+  <span class="nx">beforeEach</span> <span class="o">-&gt;</span>
+    <span class="nv">matchCallback = </span><span class="nx">jasmine</span><span class="p">.</span><span class="nx">createSpy</span><span class="p">()</span>
+    
+    <span class="nv">player.one = </span><span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">EightBall</span><span class="p">.</span><span class="nx">Player</span><span class="p">(</span>
+      <span class="nv">options = </span>
+        <span class="nv">name: </span><span class="s">&quot;Isaac Wooten&quot;</span>
+        <span class="nv">rank: </span><span class="mi">1</span>
+        <span class="nv">playerNumber: </span><span class="s">&quot;123&quot;</span>
+        <span class="nv">teamNumber: </span><span class="s">&quot;123&quot;</span>
+    <span class="p">)</span>
+    <span class="nv">player.two = </span><span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">EightBall</span><span class="p">.</span><span class="nx">Player</span><span class="p">(</span>
+      <span class="nv">options = </span>
+        <span class="nv">name: </span><span class="s">&quot;James Armstead&quot;</span>
+        <span class="nv">rank: </span><span class="mi">1</span>
+        <span class="nv">playerNumber: </span><span class="s">&quot;1&quot;</span>
+        <span class="nv">teamNumber: </span><span class="s">&quot;1&quot;</span>
+    <span class="p">)</span>
+    <span class="nv">player.one.currentlyUp = </span><span class="kc">true</span>
+    
+    <span class="nv">game = </span><span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">EightBall</span><span class="p">.</span><span class="nx">Game</span><span class="p">(</span>
+      <span class="nv">options = </span>
+        <span class="nv">addToPlayerOne: </span><span class="o">-&gt;</span>
+          <span class="nx">player</span><span class="p">.</span><span class="nx">one</span>
+        <span class="nv">addToPlayerTwo: </span><span class="o">-&gt;</span>
+          <span class="nx">player</span><span class="p">.</span><span class="nx">two</span>
+        <span class="nv">callback: </span><span class="nx">matchCallback</span>
+    <span class="p">)</span>
+    
+  <span class="nx">afterEach</span> <span class="o">-&gt;</span>
+    <span class="nv">game.numberOfInnings = </span><span class="mi">0</span>
+    <span class="nv">game.player.one.eightOnSnap = </span><span class="kc">false</span>
+    <span class="nv">game.player.one.breakAndRun = </span><span class="kc">false</span>
+    <span class="nv">game.player.two.eightOnSnap = </span><span class="kc">false</span>
+    <span class="nv">game.player.two.breakAndRun = </span><span class="kc">false</span>
+    <span class="nv">game.player.one.ballType = </span><span class="kc">null</span>
+    <span class="nv">game.player.two.ballType = </span><span class="kc">null</span>
+    <span class="nv">game.player.one.eightBall = </span><span class="p">[]</span>
+    <span class="nv">game.player.two.eightBall = </span><span class="p">[]</span>
+    <span class="nv">game.playerOneWon = </span><span class="kc">false</span>
+    <span class="nv">game.playerTwoWon = </span><span class="kc">false</span>
+    <span class="nv">game.ended = </span><span class="kc">false</span>
+    <span class="nv">game.ballsHitIn.stripes = </span><span class="p">[]</span>
+    <span class="nv">game.ballsHitIn.solids = </span><span class="p">[]</span>
+    <span class="nv">game.lastBallHitIn = </span><span class="kc">null</span>
+    <span class="nv">game.onBreak = </span><span class="kc">true</span>
+    <span class="nv">game.breakingPlayerStillShooting = </span><span class="kc">true</span>
+    <span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">true</span>
+    <span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">false</span>
+   
+
+  <span class="nx">describe</span> <span class="s">&quot;Scoring&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+    <span class="nx">it</span> <span class="s">&quot;should be able to take a ball number 1-7 and 9-15 and score it correctly&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">null</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">).</span><span class="nx">toEqual</span> <span class="p">[]</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">).</span><span class="nx">toEqual</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">breakIsOver</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">9</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getBallsHitInByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">)).</span><span class="nx">toEqual</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getBallsHitInByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">)).</span><span class="nx">toEqual</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
+
+    <span class="nx">it</span> <span class="s">&quot;should be able to take ball number 8 and score it correctly&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">8</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ended</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+
+    <span class="nx">it</span> <span class="s">&quot;should only allow each ball to be scored one time&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getBallsHitIn</span><span class="p">().</span><span class="nx">length</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">0</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getBallsHitIn</span><span class="p">().</span><span class="nx">length</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getBallsHitIn</span><span class="p">().</span><span class="nx">length</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+
+    <span class="nx">it</span> <span class="s">&quot;should be able to get the number of balls types each player has hit in&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">breakIsOver</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">10</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getBallsHitInByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">length</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getBallsHitInByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="nx">length</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      
+    <span class="nx">it</span> <span class="s">&quot;should be able to set a game as Scratch On 8&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">scratchOnEight</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">hitScratchOnEight</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">scratchOnEight</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ended</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerTwoWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">currentlyUp</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      
+    <span class="nx">it</span> <span class="s">&quot;should be able to keep track if player one had 8 on snap&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnap</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to keep track if player one had break and run&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">breakAndRun</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to keep track if player two had 8 on snap&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightOnSnap</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to keep track if player one two break and run&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">breakAndRun</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should know if the 8 ball is pocketed on the break and give the current player a EightOnSnap&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnap</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnap</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnaps</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should know if the 8 ball is not pocketed on the break and not give the current player a EightOnSnap&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">breakIsOver</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnap</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnap</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnaps</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">0</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should know when a player has hit all the balls in and is still breaking and only give them a 8BR&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnap</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">7</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ended</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">breakAndRuns</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">breakAndRun</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to set player one to have a eight on snap and if not already true add one to that players total eight on snaps.&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnap</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setEightOnSnapByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnap</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnaps</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setEightOnSnapByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnaps</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to set player two to have a eight on snap and if not already true add one to that players total eight on snaps.&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightOnSnap</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setEightOnSnapByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightOnSnap</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightOnSnaps</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setEightOnSnapByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightOnSnaps</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to set player one to have a break and run and if not already true add one to that players total break and runs.&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">breakAndRun</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setBreakAndRunByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">breakAndRun</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">breakAndRuns</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setBreakAndRunByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">breakAndRuns</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      
+    <span class="nx">it</span> <span class="s">&quot;should be able to tell if the game is an early eight ball&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">shotMissed</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">earlyEight</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to set player two to have a break and run and if not already true add one to that players total break and runs.&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">breakAndRun</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setBreakAndRunByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">breakAndRun</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">breakAndRuns</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setBreakAndRunByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">breakAndRuns</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should know when the player breaks and then continues on to all the balls in without missing one&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">onBreak</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">onBreak</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">breakingPlayerStillShooting</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">breakAndRun</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">breakAndRuns</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should able to assign a ball type after the break if only one ball type has been hit in&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nv">game.onBreak = </span><span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">2</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should able to assign a ball type after the break if only one ball type has been hit in&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nv">game.onBreak = </span><span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">2</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to keep track of which solid balls have been hit in&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">0</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">4</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">[</span><span class="mi">1</span><span class="p">]).</span><span class="nx">toEqual</span> <span class="mi">2</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">[</span><span class="mi">2</span><span class="p">]).</span><span class="nx">toEqual</span> <span class="mi">3</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">[</span><span class="mi">3</span><span class="p">]).</span><span class="nx">toEqual</span> <span class="mi">4</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to keep track of which striped balls have been hit in&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">0</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">4</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toEqual</span> <span class="mi">9</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">[</span><span class="mi">1</span><span class="p">]).</span><span class="nx">toEqual</span> <span class="mi">10</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">[</span><span class="mi">2</span><span class="p">]).</span><span class="nx">toEqual</span> <span class="mi">11</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">[</span><span class="mi">3</span><span class="p">]).</span><span class="nx">toEqual</span> <span class="mi">12</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to set player one to striped balls&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">null</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setBallTypeByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;stripes&#39;</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="nx">game</span><span class="p">.</span><span class="nx">stripes</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="nx">game</span><span class="p">.</span><span class="nx">solids</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to set player one to solid balls&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">null</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setBallTypeByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;solids&#39;</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="nx">game</span><span class="p">.</span><span class="nx">solids</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="nx">game</span><span class="p">.</span><span class="nx">stripes</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to set player two to striped balls&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">null</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setBallTypeByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;stripes&#39;</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="nx">game</span><span class="p">.</span><span class="nx">stripes</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="nx">game</span><span class="p">.</span><span class="nx">solids</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to set player two to solid balls&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">null</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setBallTypeByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;solids&#39;</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="nx">game</span><span class="p">.</span><span class="nx">solids</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="nx">game</span><span class="p">.</span><span class="nx">stripes</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to find out if there is a winner if a player hits a BR and set that player to won&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">2</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">3</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">4</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerOneWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">5</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">6</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">7</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">8</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getBallsHitInByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">exists</span><span class="p">(</span><span class="mi">8</span><span class="p">)).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerOneWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to find out if there is a winner if player two wins and set that player to won&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">breakIsOver</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">checkForWinner</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerOneWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">9</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">10</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">11</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">12</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">13</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">14</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">15</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">8</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerTwoWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to find out if there is a winner after ball type has been selected and set that player to won&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">10</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">breakIsOver</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">checkForWinner</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerOneWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">9</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setBallTypeByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;solids&#39;</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">11</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">12</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">13</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">14</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">15</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">8</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerOneWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      
+    <span class="nx">it</span> <span class="s">&quot;should be able to return a list of all balls that have been hit in&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getBallsHitIn</span><span class="p">()).</span><span class="nx">toEqual</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">2</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">10</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getBallsHitIn</span><span class="p">()).</span><span class="nx">toEqual</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to hit a safety&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">hitSafety</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">safeties</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">hitSafety</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">safeties</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to return the game score with player one&#39;s score first (example 2-3)&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">4</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span> <span class="c1">#Ending the Break</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span> <span class="c1">#Misses all balls</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">10</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">11</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">12</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getGameScore</span><span class="p">()).</span><span class="nx">toEqual</span> <span class="s">&quot;2-3&quot;</span>
+      
+    <span class="nx">it</span> <span class="s">&quot;should be able to keep track of the last ball scored&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">lastBallHitIn</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">null</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">lastBallHitIn</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">3</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">lastBallHitIn</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">3</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span> <span class="c1">#Ending the break</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span> <span class="c1">#All balls are missed</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">4</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">lastBallHitIn</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">4</span>
+
+
+  <span class="nx">describe</span> <span class="s">&quot;Innings&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+    <span class="nx">it</span> <span class="s">&quot;should keep track of the number of innings&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">numberOfInnings</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">0</span>
+
+    <span class="nx">it</span> <span class="s">&quot;should be able to add 1 to the number of innings&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">addToNumberOfInnings</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">numberOfInnings</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+
+    <span class="nx">it</span> <span class="s">&quot;should be able to add 1 to the innings when player2&#39;s turn is over&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">numberOfInnings</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">0</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">numberOfInnings</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">0</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">currentlyUp</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">numberOfInnings</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      
+    <span class="nx">it</span> <span class="s">&quot;should be able to end the break if no balls were hit in&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">onBreak</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">breakingPlayerStillShooting</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to change who is currentlyUp&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">currentlyUp</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">currentlyUp</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to know if a player is still breaking(balls scored) when they use NextPlayerIsUp while breaking&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">onBreak</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">currentlyUp</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">currentlyUp</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to know if a players turn is over(no balls scored) when they use NextPlayerIsUp while breaking&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">onBreak</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">currentlyUp</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">currentlyUp</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      
+    <span class="nx">it</span> <span class="s">&quot;should end the current players turn when they hit a safety&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">hitSafety</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">safeties</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getCurrentlyUpPlayer</span><span class="p">().</span><span class="nx">name</span><span class="p">).</span><span class="nx">toEqual</span> <span class="s">&quot;James Armstead&quot;</span>
+      
+    <span class="nx">it</span> <span class="s">&quot;should be able to have a state of breaking&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">onBreak</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should be able to have change the breaking state to false&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">onBreak</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">breakIsOver</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">onBreak</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should know if the breaking player is still up&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">breakingPlayerStillShooting</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">2</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span> <span class="c1">#Ends Breaking</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">3</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">5</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">breakingPlayerStillShooting</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">breakingPlayerStillShooting</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+
+
+  <span class="nx">describe</span> <span class="s">&quot;Game Ending&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+    <span class="nx">it</span> <span class="s">&quot;should be able to be ended&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ended</span><span class="p">).</span><span class="nx">toBeFalsy</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ended</span><span class="p">).</span><span class="nx">toBeTruthy</span><span class="p">()</span>
+      
+    <span class="nx">it</span> <span class="s">&quot;should be able to make a player win and add one to games won&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setPlayerWon</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerOneWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerTwoWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">gamesWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">gamesWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">0</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">setPlayerWon</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerOneWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerTwoWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">gamesWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nx">gamesWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+  
+    <span class="nx">it</span> <span class="s">&quot;should end the game and give currently player up the win if they pocket the 8 ball on break&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerOneWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerOneWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerTwoWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+
+
+    <span class="nx">it</span> <span class="s">&quot;should know the match has completed when the 8 his hit in&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ended</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ended</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      
+    <span class="nx">it</span> <span class="s">&quot;should end the game if a player hits the 8 ball in when it is not their last ball or on break&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">12</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">8</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightBall</span><span class="p">).</span><span class="nx">toEqual</span> <span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ended</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerOneWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+
+
+  <span class="nx">describe</span> <span class="s">&quot;Player Timeouts&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+    <span class="nx">it</span> <span class="s">&quot;should allow the currentplayer to be able to take a timeout&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nv">game.player.one.timeoutsTaken = </span><span class="mi">0</span>
+      <span class="nv">game.player.two.timeoutsTaken = </span><span class="mi">0</span>
+      
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getCurrentPlayerRemainingTimeouts</span><span class="p">()).</span><span class="nx">toEqual</span> <span class="mi">2</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">takeTimeout</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getCurrentPlayerRemainingTimeouts</span><span class="p">()).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+
+    <span class="nx">it</span> <span class="s">&quot;should not allow the current player to take more time outs than given&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nv">game.player.one.timeoutsTaken = </span><span class="mi">0</span>
+      <span class="nv">game.player.two.timeoutsTaken = </span><span class="mi">0</span>
+    
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getCurrentPlayerRemainingTimeouts</span><span class="p">()).</span><span class="nx">toEqual</span> <span class="mi">2</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">takeTimeout</span><span class="p">()</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">takeTimeout</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getCurrentPlayerRemainingTimeouts</span><span class="p">()).</span><span class="nx">toEqual</span> <span class="mi">0</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">takeTimeout</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getCurrentPlayerRemainingTimeouts</span><span class="p">()).</span><span class="nx">toEqual</span> <span class="mi">0</span>
+
+    <span class="nx">it</span> <span class="s">&quot;should be able to return the current player&#39;s remaining number of timeouts&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nv">game.player.one.timeoutsTaken = </span><span class="mi">0</span>
+      <span class="nv">game.player.two.timeoutsTaken = </span><span class="mi">0</span>
+      
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getCurrentPlayerRemainingTimeouts</span><span class="p">()).</span><span class="nx">toEqual</span> <span class="mi">2</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">takeTimeout</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getCurrentPlayerRemainingTimeouts</span><span class="p">()).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">takeTimeout</span><span class="p">()</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getCurrentPlayerRemainingTimeouts</span><span class="p">()).</span><span class="nx">toEqual</span> <span class="mi">0</span>
+  
+  
+  <span class="nx">describe</span> <span class="s">&quot;Player Information&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+    <span class="nx">it</span> <span class="s">&quot;should return winning players name (player one)&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">1</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">2</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">3</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">4</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">5</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">6</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">7</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="mi">8</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">getWinningPlayerName</span><span class="p">()).</span><span class="nx">toEqual</span> <span class="s">&quot;Isaac W.&quot;</span>
+  
+
+  <span class="nx">describe</span> <span class="s">&quot;toJSON/fromJSON&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+    
+    <span class="nx">it</span> <span class="s">&quot;should be able to take a new Game and turn it into a JSON object&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()).</span><span class="nx">toEqual</span>
+        <span class="nv">playerOneTimeoutsTaken: </span><span class="mi">0</span>
+        <span class="nv">playerTwoTimeoutsTaken: </span><span class="mi">0</span>
+        <span class="nv">playerOneEightOnSnap: </span><span class="kc">false</span>
+        <span class="nv">playerOneBreakAndRun: </span><span class="kc">false</span>
+        <span class="nv">playerTwoEightOnSnap: </span><span class="kc">false</span>
+        <span class="nv">playerTwoBreakAndRun: </span><span class="kc">false</span>
+        <span class="nv">playerOneBallType: </span><span class="kc">null</span>
+        <span class="nv">playerTwoBallType: </span><span class="kc">null</span>
+        <span class="nv">playerOneEightBall: </span><span class="p">[]</span>
+        <span class="nv">playerTwoEightBall: </span><span class="p">[]</span>
+        <span class="nv">playerOneWon: </span><span class="kc">false</span>
+        <span class="nv">playerTwoWon: </span><span class="kc">false</span>
+        <span class="nv">numberOfInnings: </span><span class="mi">0</span>
+        <span class="nv">earlyEight: </span><span class="kc">false</span>
+        <span class="nv">scratchOnEight: </span><span class="kc">false</span>
+        <span class="nv">breakingPlayerStillShooting: </span><span class="kc">true</span>
+        <span class="nv">stripedBallsHitIn: </span><span class="p">[]</span>
+        <span class="nv">solidBallsHitIn: </span><span class="p">[]</span>
+        <span class="nv">lastBallHitIn: </span><span class="kc">null</span>
+        <span class="nv">onBreak: </span><span class="kc">true</span>
+        <span class="nv">ended: </span><span class="kc">false</span>
+
+    <span class="nx">it</span> <span class="s">&quot;should be able to take a filled up Game and turn it into a JSON object&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nv">game.numberOfInnings = </span><span class="mi">2</span>
+      <span class="nv">game.player.one.eightOnSnap = </span><span class="kc">true</span>
+      <span class="nv">game.player.one.breakAndRun = </span><span class="kc">false</span>
+      <span class="nv">game.player.two.eightOnSnap = </span><span class="kc">true</span>
+      <span class="nv">game.player.two.breakAndRun = </span><span class="kc">true</span>
+      <span class="nv">game.player.one.ballType = </span><span class="mi">1</span>
+      <span class="nv">game.player.two.ballType = </span><span class="mi">2</span>
+      <span class="nv">game.player.one.eightBall = </span><span class="p">[]</span>
+      <span class="nv">game.player.two.eightBall = </span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+      <span class="nv">game.playerOneWon = </span><span class="kc">true</span>
+      <span class="nv">game.playerTwoWon = </span><span class="kc">false</span>
+      <span class="nv">game.ended = </span><span class="kc">true</span>
+      <span class="nv">game.ballsHitIn.stripes = </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+      <span class="nv">game.ballsHitIn.solids = </span><span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+      <span class="nv">game.lastBallHitIn = </span><span class="mi">1</span>
+      <span class="nv">game.onBreak = </span><span class="kc">false</span>
+      <span class="nv">game.breakingPlayerStillShooting = </span><span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">callback</span><span class="p">().</span><span class="nv">currentlyUp = </span><span class="kc">true</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">takeTimeout</span><span class="p">()</span>
+      
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()).</span><span class="nx">toEqual</span>
+        <span class="nv">playerOneTimeoutsTaken: </span><span class="mi">1</span>
+        <span class="nv">playerTwoTimeoutsTaken: </span><span class="mi">0</span>
+        <span class="nv">playerOneEightOnSnap: </span><span class="kc">true</span>
+        <span class="nv">playerOneBreakAndRun: </span><span class="kc">false</span>
+        <span class="nv">playerTwoEightOnSnap: </span><span class="kc">true</span>
+        <span class="nv">playerTwoBreakAndRun: </span><span class="kc">true</span>
+        <span class="nv">playerOneBallType: </span><span class="mi">1</span>
+        <span class="nv">playerTwoBallType: </span><span class="mi">2</span>
+        <span class="nv">playerOneEightBall: </span><span class="p">[]</span>
+        <span class="nv">playerTwoEightBall: </span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+        <span class="nv">playerOneWon: </span><span class="kc">true</span>
+        <span class="nv">playerTwoWon: </span><span class="kc">false</span>
+        <span class="nv">numberOfInnings: </span><span class="mi">2</span>
+        <span class="nv">earlyEight: </span><span class="kc">false</span>
+        <span class="nv">scratchOnEight: </span><span class="kc">false</span>
+        <span class="nv">breakingPlayerStillShooting: </span><span class="kc">false</span>
+        <span class="nv">stripedBallsHitIn: </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="nv">solidBallsHitIn: </span><span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+        <span class="nv">lastBallHitIn: </span><span class="mi">1</span>
+        <span class="nv">onBreak: </span><span class="kc">false</span>
+        <span class="nv">ended: </span><span class="kc">true</span>
+
+
+    <span class="nx">it</span> <span class="s">&quot;should be able to take a Game JSON and fill a Game object with it&quot;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">fromJSON</span>
+        <span class="nv">breakingPlayerStillShooting: </span><span class="kc">false</span>
+        <span class="nv">earlyEight: </span><span class="kc">false</span>
+        <span class="nv">ended: </span><span class="kc">true</span>
+        <span class="nv">lastBallHitIn: </span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="nv">numberOfInnings: </span><span class="mi">2</span>
+        <span class="nv">onBreak: </span><span class="kc">false</span>
+        <span class="nv">playerOneBallType: </span><span class="mi">1</span>
+        <span class="nv">playerOneBreakAndRun: </span><span class="kc">false</span>
+        <span class="nv">playerOneEightBall: </span><span class="p">[]</span>
+        <span class="nv">playerOneEightOnSnap: </span><span class="kc">true</span>
+        <span class="nv">playerOneTimeoutsTaken: </span><span class="mi">1</span>
+        <span class="nv">playerOneWon: </span><span class="kc">true</span>
+        <span class="nv">playerTwoBallType: </span><span class="mi">2</span>
+        <span class="nv">playerTwoBreakAndRun: </span><span class="kc">true</span>
+        <span class="nv">playerTwoEightBall: </span><span class="p">[</span> <span class="mi">8</span> <span class="p">]</span>
+        <span class="nv">playerTwoEightOnSnap: </span><span class="kc">true</span>
+        <span class="nv">playerTwoTimeoutsTaken: </span><span class="mi">0</span>
+        <span class="nv">playerTwoWon: </span><span class="kc">false</span>
+        <span class="nv">scratchOnEight: </span><span class="kc">false</span>
+        <span class="nv">solidBallsHitIn: </span><span class="p">[</span> <span class="mi">10</span> <span class="p">]</span>
+        <span class="nv">stripedBallsHitIn: </span><span class="p">[</span> <span class="mi">2</span> <span class="p">]</span>
+    
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">numberOfInnings</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">2</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">timeoutsTaken</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">timeoutsTaken</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">0</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightOnSnap</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">breakAndRun</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightOnSnap</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">breakAndRun</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">1</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">ballType</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">2</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">eightBall</span><span class="p">).</span><span class="nx">toEqual</span> <span class="p">[]</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">eightBall</span><span class="p">).</span><span class="nx">toEqual</span> <span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerOneWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">playerTwoWon</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ended</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">true</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">stripes</span><span class="p">).</span><span class="nx">toEqual</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">ballsHitIn</span><span class="p">.</span><span class="nx">solids</span><span class="p">).</span><span class="nx">toEqual</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">lastBallHitIn</span><span class="p">).</span><span class="nx">toEqual</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">onBreak</span><span class="p">).</span><span class="nx">toEqual</span> <span class="kc">false</span>
+      <span class="nx">game</span><span class="p">.</span><span class="nx">addToNumberOfInnings</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nx">expect</span><span class="p">(</span><span class="nx">game</span><span class="p">.</span><span class="nx">numberOfInnings</span><span class="p">).</span><span class="nx">toEqual</span> <span class="mi">3</span>
+
+</pre></div></td></tr></tbody></table><div id="projectname"><a href="../../../index.html">CueScore Mobile</a></div></div></body></html>

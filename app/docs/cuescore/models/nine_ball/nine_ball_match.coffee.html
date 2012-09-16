@@ -1,0 +1,239 @@
+<!DOCTYPE html><html><head><title>nine_ball_match.coffee</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="../../../docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="../../../index.html" class="source"><span class="file_name">README</span></a><a href="../../../app.coffee.html" class="source "><span class="base_path">. / </span><span class="file_name">app.coffee</span></a><a href="../../../cuescore/api.coffee.html" class="source "><span class="base_path">cuescore / </span><span class="file_name">api.coffee</span></a><a href="../../../cuescore/app.coffee.html" class="source "><span class="base_path">cuescore / </span><span class="file_name">app.coffee</span></a><a href="../../../cuescore/controllers/dashboard_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">dashboard_controller.coffee</span></a><a href="../../../cuescore/controllers/match_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">match_controller.coffee</span></a><a href="../../../cuescore/controllers/match_setup_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">match_setup_controller.coffee</span></a><a href="../../../cuescore/controllers/play.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">play.coffee</span></a><a href="../../../cuescore/controllers/posts_controller.coffee.html" class="source "><span class="base_path">cuescore / controllers / </span><span class="file_name">posts_controller.coffee</span></a><a href="../../../cuescore/helpers/application.coffee.html" class="source "><span class="base_path">cuescore / helpers / </span><span class="file_name">application.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_game.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_game.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_league.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_league.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_league_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_league_match.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_match.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_player.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_player.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_practice_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_practice_match.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_ranks.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_ranks.coffee</span></a><a href="../../../cuescore/models/eight_ball/eight_ball_tournament_match.coffee.html" class="source "><span class="base_path">cuescore / models / eight_ball / </span><span class="file_name">eight_ball_tournament_match.coffee</span></a><a href="../../../cuescore/models/game.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">game.coffee</span></a><a href="../../../cuescore/models/league.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">league.coffee</span></a><a href="../../../cuescore/models/leagues/double_jeopardy_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">double_jeopardy_league.coffee</span></a><a href="../../../cuescore/models/leagues/doubles_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">doubles_league.coffee</span></a><a href="../../../cuescore/models/leagues/masters_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">masters_league.coffee</span></a><a href="../../../cuescore/models/leagues/mixed_doubles_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">mixed_doubles_league.coffee</span></a><a href="../../../cuescore/models/leagues/womens_league.coffee.html" class="source "><span class="base_path">cuescore / models / leagues / </span><span class="file_name">womens_league.coffee</span></a><a href="../../../cuescore/models/match.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">match.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_game.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_game.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_league.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_league.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_league_match.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_league_match.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_match.coffee.html" class="source selected"><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_match.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_player.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_player.coffee</span></a><a href="../../../cuescore/models/nine_ball/nine_ball_ranks.coffee.html" class="source "><span class="base_path">cuescore / models / nine_ball / </span><span class="file_name">nine_ball_ranks.coffee</span></a><a href="../../../cuescore/models/player.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">player.coffee</span></a><a href="../../../cuescore/models/post_model.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">post_model.coffee</span></a><a href="../../../cuescore/models/rank.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">rank.coffee</span></a><a href="../../../cuescore/models/team.coffee.html" class="source "><span class="base_path">cuescore / models / </span><span class="file_name">team.coffee</span></a><a href="../../../cuescore/utils/appsync.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">appsync.coffee</span></a><a href="../../../cuescore/utils/base_64.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">base_64.coffee</span></a><a href="../../../cuescore/utils/contains.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">contains.coffee</span></a><a href="../../../cuescore/utils/data_service.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">data_service.coffee</span></a><a href="../../../cuescore/utils/device_fix.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">device_fix.coffee</span></a><a href="../../../cuescore/utils/extras.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">extras.coffee</span></a><a href="../../../cuescore/utils/query_string_builder.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">query_string_builder.coffee</span></a><a href="../../../cuescore/utils/template.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">template.coffee</span></a><a href="../../../cuescore/utils/utilities.coffee.html" class="source "><span class="base_path">cuescore / utils / </span><span class="file_name">utilities.coffee</span></a><a href="../../../cuescore/views/dashboard/dashboard_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / </span><span class="file_name">dashboard_view.coffee</span></a><a href="../../../cuescore/views/dashboard/title_bar_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / </span><span class="file_name">title_bar_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/activity_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">activity_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/events_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">events_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/grid_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">grid_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/list_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">list_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/live_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">live_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/menu_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">menu_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/news_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">news_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/profile_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">profile_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/rules_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">rules_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/settings_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">settings_view.coffee</span></a><a href="../../../cuescore/views/dashboard/tools/teams_view.coffee.html" class="source "><span class="base_path">cuescore / views / dashboard / tools / </span><span class="file_name">teams_view.coffee</span></a><a href="../../../cuescore/views/login/main.coffee.html" class="source "><span class="base_path">cuescore / views / login / </span><span class="file_name">main.coffee</span></a><a href="../../../cuescore/views/posts/post_view_controller.coffee.html" class="source "><span class="base_path">cuescore / views / posts / </span><span class="file_name">post_view_controller.coffee</span></a><a href="../../../cuescore/views/posts/posts_view_controller.coffee.html" class="source "><span class="base_path">cuescore / views / posts / </span><span class="file_name">posts_view_controller.coffee</span></a><a href="../../../cuescore/views/sample/main.coffee.html" class="source "><span class="base_path">cuescore / views / sample / </span><span class="file_name">main.coffee</span></a><a href="../../../cuescore/views/settings/main.coffee.html" class="source "><span class="base_path">cuescore / views / settings / </span><span class="file_name">main.coffee</span></a><a href="../../../cuescore/window/main.coffee.html" class="source "><span class="base_path">cuescore / window / </span><span class="file_name">main.coffee</span></a><a href="../../../cuescore/window/second.coffee.html" class="source "><span class="base_path">cuescore / window / </span><span class="file_name">second.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_game_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_game_spec.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_league_match_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_league_match_spec.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_match_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_match_spec.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_player_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_player_spec.coffee</span></a><a href="../../../spec/models/eight_ball/eight_ball_ranks_spec.coffee.html" class="source "><span class="base_path">spec / models / eight_ball / </span><span class="file_name">eight_ball_ranks_spec.coffee</span></a><a href="../../../spec/models/game_spec.coffee.html" class="source "><span class="base_path">spec / models / </span><span class="file_name">game_spec.coffee</span></a><a href="../../../spec/models/league_spec.coffee.html" class="source "><span class="base_path">spec / models / </span><span class="file_name">league_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_game_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_game_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_league_match_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_league_match_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_match_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_match_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_player_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_player_spec.coffee</span></a><a href="../../../spec/models/nine_ball/nine_ball_ranks_spec.coffee.html" class="source "><span class="base_path">spec / models / nine_ball / </span><span class="file_name">nine_ball_ranks_spec.coffee</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"><h1>nine_ball_match.coffee</h1><div class="filepath">cuescore/models/nine_ball/</div></th><th class="code"></th></tr></thead><tbody><tr id="section-1"><td class="docs"><div class="pilwrap"><a href="#section-1" class="pilcrow">&#182;</a></div>
+</td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nx">Match</span> <span class="k">extends</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span>
+  <span class="nv">defaults:</span>
+    <span class="nv">player:</span>
+      <span class="nv">one: </span><span class="p">{}</span>
+      <span class="nv">two: </span><span class="p">{}</span>
+    <span class="nv">completedGames: </span><span class="p">[]</span>
+    <span class="nv">ended: </span><span class="kc">false</span>
+    <span class="nv">originalId: </span><span class="mi">0</span>
+    <span class="nv">leagueMatchId: </span><span class="mi">0</span>
+    <span class="nv">playerNumberWinning: </span><span class="mi">0</span>
+    <span class="nv">suddenDeath: </span><span class="kc">false</span>
+    <span class="nv">forfeit: </span><span class="kc">false</span> 
+    <span class="nv">currentGame: </span><span class="kc">null</span>
+
+  <span class="nv">constructor: </span><span class="nf">(options) -&gt;</span>
+    <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="nx">@</span><span class="p">,</span> <span class="nx">@defaults</span>
+    
+    <span class="nv">playerOneName         = </span><span class="nx">options</span><span class="p">.</span><span class="nx">playerOneName</span>
+    <span class="nv">playerTwoName         = </span><span class="nx">options</span><span class="p">.</span><span class="nx">playerTwoName</span>
+    <span class="nv">playerOneRank         = </span><span class="nx">options</span><span class="p">.</span><span class="nx">playerOneRank</span>
+    <span class="nv">playerTwoRank         = </span><span class="nx">options</span><span class="p">.</span><span class="nx">playerTwoRank</span>
+    <span class="nv">playerOneNumber       = </span><span class="nx">options</span><span class="p">.</span><span class="nx">playerOneNumber</span>
+    <span class="nv">playerTwoNumber       = </span><span class="nx">options</span><span class="p">.</span><span class="nx">playerTwoNumber</span>
+    <span class="nv">playerOneTeamNumber   = </span><span class="nx">options</span><span class="p">.</span><span class="nx">playerOneTeamNumber</span>
+    <span class="nv">playerTwoTeamNumber   = </span><span class="nx">options</span><span class="p">.</span><span class="nx">playerTwoTeamNumber</span>
+    
+    <span class="vi">@player.one = </span><span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Player</span><span class="p">(</span>
+      <span class="nv">options =</span>
+        <span class="nv">name: </span><span class="nx">playerOneName</span>
+        <span class="nv">rank: </span><span class="nx">playerOneRank</span>
+        <span class="nv">number: </span><span class="nx">playerOneNumber</span>
+        <span class="nv">teamNumber: </span><span class="nx">playerOneTeamNumber</span>
+    <span class="p">)</span>
+        
+    <span class="vi">@player.two = </span><span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Player</span><span class="p">(</span>
+      <span class="nv">options =</span>
+        <span class="nv">name: </span><span class="nx">playerTwoName</span>
+        <span class="nv">rank: </span><span class="nx">playerTwoRank</span>
+        <span class="nv">number: </span><span class="nx">playerTwoNumber</span>
+        <span class="nv">teamNumber: </span><span class="nx">playerTwoTeamNumber</span>
+    <span class="p">)</span>
+    
+    <span class="vi">@currentGame = </span><span class="nx">@getNewGame</span><span class="p">()</span>
+  </pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>Getters</p>
+</td><td class="code"><div class="highlight"><pre>  <span class="nv">getNewGame: </span><span class="o">-&gt;</span>
+    <span class="nv">newGame = </span><span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Game</span><span class="p">(</span>
+      <span class="nv">options = </span>
+        <span class="nv">addToPlayerOne: </span><span class="o">=&gt;</span>
+          <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span>
+        <span class="nv">addToPlayerTwo: </span><span class="o">=&gt;</span>
+          <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span>
+        <span class="nv">callback: </span><span class="o">=&gt;</span>
+          <span class="vi">@ended = </span><span class="kc">true</span>
+    <span class="p">)</span>
+    <span class="nx">newGame</span>
+    
+  <span class="nv">getPlayerScore: </span><span class="nf">(playerNum) -&gt;</span>
+    <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="k">return</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">score</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">2</span>
+      <span class="k">return</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">score</span>
+
+  <span class="nv">getLosingPlayer: </span><span class="o">-&gt;</span>
+    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nx">@isPlayerWinning</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">is</span> <span class="kc">true</span><span class="p">)</span> <span class="k">then</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span> <span class="k">else</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">)</span>
+
+  <span class="nv">getWinningPlayer: </span><span class="o">-&gt;</span>
+    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nx">@isPlayerWinning</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">is</span> <span class="kc">true</span><span class="p">)</span> <span class="k">then</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span> <span class="k">else</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">)</span>
+
+  <span class="nv">getLosingPlayersMatchPoints: </span><span class="o">-&gt;</span>
+    <span class="nv">losingScore = </span><span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Ranks</span><span class="p">().</span><span class="nx">getLosingPlayersMatchPoints</span><span class="p">(</span><span class="nx">@getLosingPlayer</span><span class="p">().</span><span class="nx">rank</span><span class="p">,</span> <span class="nx">@getLosingPlayer</span><span class="p">().</span><span class="nx">score</span><span class="p">)</span>
+    <span class="nx">losingScore</span>
+
+  <span class="nv">getWinningPlayersMatchPoints: </span><span class="o">-&gt;</span>
+    <span class="nv">winningScore = </span><span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Ranks</span><span class="p">().</span><span class="nx">getWinningPlayersMatchPoints</span><span class="p">(</span><span class="nx">@getLosingPlayer</span><span class="p">().</span><span class="nx">rank</span><span class="p">,</span> <span class="nx">@getLosingPlayer</span><span class="p">().</span><span class="nx">score</span><span class="p">)</span>
+    <span class="nx">winningScore</span>
+
+  <span class="nv">getMatchPointsByPlayer: </span><span class="nf">(playerNum) -&gt;</span>
+    <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="k">if</span> <span class="nx">@isPlayerWinning</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">is</span> <span class="kc">true</span> <span class="o">and</span> <span class="nx">@isPlayerWinning</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">is</span> <span class="kc">false</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Ranks</span><span class="p">().</span><span class="nx">getWinningPlayersMatchPoints</span><span class="p">(</span><span class="nx">@getLosingPlayer</span><span class="p">().</span><span class="nx">rank</span><span class="p">,</span> <span class="nx">@getLosingPlayer</span><span class="p">().</span><span class="nx">score</span><span class="p">)</span>  
+      <span class="k">else</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Ranks</span><span class="p">().</span><span class="nx">getLosingPlayersMatchPoints</span><span class="p">(</span><span class="nx">@getLosingPlayer</span><span class="p">().</span><span class="nx">rank</span><span class="p">,</span> <span class="nx">@getLosingPlayer</span><span class="p">().</span><span class="nx">score</span><span class="p">)</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">2</span>
+      <span class="k">if</span> <span class="nx">@isPlayerWinning</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">is</span> <span class="kc">false</span> <span class="o">and</span> <span class="nx">@isPlayerWinning</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">is</span> <span class="kc">true</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Ranks</span><span class="p">().</span><span class="nx">getWinningPlayersMatchPoints</span><span class="p">(</span><span class="nx">@getLosingPlayer</span><span class="p">().</span><span class="nx">rank</span><span class="p">,</span> <span class="nx">@getLosingPlayer</span><span class="p">().</span><span class="nx">score</span><span class="p">)</span>
+      <span class="k">else</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Ranks</span><span class="p">().</span><span class="nx">getLosingPlayersMatchPoints</span><span class="p">(</span><span class="nx">@getLosingPlayer</span><span class="p">().</span><span class="nx">rank</span><span class="p">,</span> <span class="nx">@getLosingPlayer</span><span class="p">().</span><span class="nx">score</span><span class="p">)</span>
+
+  <span class="nv">getMatchPoints: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">@isPlayerWinning</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="k">return</span> <span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Ranks</span><span class="p">().</span><span class="nx">getWinningPlayersMatchPoints</span><span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">rank</span><span class="p">,</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">score</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Ranks</span><span class="p">().</span><span class="nx">getLosingPlayersMatchPoints</span><span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">rank</span><span class="p">,</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">score</span><span class="p">)</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">@isPlayerWinning</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="k">return</span> <span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Ranks</span><span class="p">().</span><span class="nx">getLosingPlayersMatchPoints</span><span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">rank</span><span class="p">,</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">score</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Ranks</span><span class="p">().</span><span class="nx">getWinningPlayersMatchPoints</span><span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">rank</span><span class="p">,</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">score</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="k">return</span> <span class="s">&quot;Tied&quot;</span>
+    
+  <span class="nv">getMatchPointsByTeamNumber: </span><span class="nf">(teamNumber) -&gt;</span>
+    <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">teamNumber</span> <span class="o">is</span> <span class="nx">teamNumber</span>
+      <span class="k">return</span> <span class="nx">@getMatchPointsByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">teamNumber</span> <span class="o">is</span> <span class="nx">teamNumber</span>
+      <span class="k">return</span> <span class="nx">@getMatchPointsByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="k">return</span> <span class="mi">0</span>
+
+  <span class="nv">getTotalInnings: </span><span class="o">-&gt;</span>
+    <span class="nv">totalInnings = </span><span class="nx">@currentGame</span><span class="p">.</span><span class="nx">numberOfInnings</span>
+    <span class="k">if</span> <span class="nx">@completedGames</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+      <span class="nv">i = </span><span class="mi">0</span>
+      <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="nx">@completedGames</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="nx">totalInnings</span> <span class="o">+=</span> <span class="nx">@completedGames</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">numberOfInnings</span>
+        <span class="nx">i</span><span class="o">++</span>
+    <span class="nx">totalInnings</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
+
+  <span class="nv">getTotalDeadBalls: </span><span class="o">-&gt;</span>
+    <span class="nv">totalDeadBalls = </span><span class="nx">@currentGame</span><span class="p">.</span><span class="nx">getDeadBalls</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nx">@completedGames</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+      <span class="nv">i = </span><span class="mi">0</span>
+      <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="nx">@completedGames</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="nx">totalDeadBalls</span> <span class="o">+=</span> <span class="nx">@completedGames</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">getDeadBalls</span><span class="p">()</span>
+        <span class="nx">i</span><span class="o">++</span>
+    <span class="nx">totalDeadBalls</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
+
+  <span class="nv">getTotalSafeties: </span><span class="o">-&gt;</span>
+    <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">getSafeties</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot; to &quot;</span> <span class="o">+</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">getSafeties</span><span class="p">()</span>
+
+  <span class="nv">getCurrentGameNumber: </span><span class="o">-&gt;</span>
+    <span class="p">(</span><span class="nx">@completedGames</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">).</span><span class="nx">toString</span><span class="p">()</span>
+    </pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Setters</p>
+</td><td class="code"><div class="highlight"><pre>  
+  <span class="nv">setSuddenDeathMode: </span><span class="o">-&gt;</span>
+    <span class="vi">@suddenDeath = </span><span class="kc">true</span>
+    <span class="vi">@player.one.gamesNeededToWin = </span><span class="mi">1</span>
+    <span class="vi">@player.two.gamesNeededToWin = </span><span class="mi">1</span>
+  </pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Methods</p>
+</td><td class="code"><div class="highlight"><pre>  
+  <span class="nv">scoreNumberedBall: </span><span class="nf">(ballNumber) -&gt;</span>
+    <span class="nx">@currentGame</span><span class="p">.</span><span class="nx">scoreBall</span> <span class="nx">ballNumber</span>
+    <span class="k">if</span> <span class="nx">@isPlayerWinning</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="vi">@playerNumberWinning = </span><span class="mi">1</span>
+    <span class="k">else</span>
+      <span class="vi">@playerNumberWinning = </span><span class="mi">2</span>
+      
+    <span class="nx">@checkForWin</span><span class="p">()</span>
+
+  <span class="nv">shotMissed: </span><span class="o">-&gt;</span>
+    <span class="nx">@currentGame</span><span class="p">.</span><span class="nx">nextPlayerIsUp</span><span class="p">()</span>
+
+  <span class="nv">hitDeadBall: </span><span class="nf">(ballNumber) -&gt;</span>
+    <span class="nx">@currentGame</span><span class="p">.</span><span class="nx">hitDeadBall</span> <span class="nx">ballNumber</span>
+    <span class="nx">@checkForWin</span><span class="p">()</span>
+
+  <span class="nv">hitSafety: </span><span class="o">-&gt;</span>
+    <span class="nx">@currentGame</span><span class="p">.</span><span class="nx">hitSafety</span><span class="p">()</span>
+
+  <span class="nv">checkForWin: </span><span class="o">-&gt;</span>
+
+  <span class="nv">startNewGame: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">@currentGame</span><span class="p">.</span><span class="nx">ended</span> <span class="o">is</span> <span class="kc">true</span>
+      <span class="nx">@completedGames</span><span class="p">.</span><span class="nx">push</span> <span class="nx">@currentGame</span>
+      <span class="vi">@currentGame = </span><span class="nx">@getNewGame</span><span class="p">()</span>
+
+  <span class="nv">isPlayerWinning: </span><span class="nf">(playerNum) -&gt;</span>
+    <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">getRatioScore</span><span class="p">()</span> <span class="o">&gt;</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">getRatioScore</span><span class="p">())</span> <span class="o">or</span> <span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">getRatioScore</span><span class="p">()</span> <span class="o">is</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">getRatioScore</span><span class="p">()</span> <span class="o">and</span> <span class="nx">@playerNumberWinning</span> <span class="o">is</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">true</span>
+      <span class="k">else</span>
+        <span class="k">return</span> <span class="kc">false</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">playerNum</span> <span class="o">==</span> <span class="mi">2</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">getRatioScore</span><span class="p">()</span> <span class="o">&lt;</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">getRatioScore</span><span class="p">())</span> <span class="o">or</span> <span class="p">(</span><span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">getRatioScore</span><span class="p">()</span> <span class="o">is</span> <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">getRatioScore</span><span class="p">()</span> <span class="o">and</span> <span class="nx">@playerNumberWinning</span> <span class="o">is</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">true</span>
+      <span class="k">else</span>
+        <span class="k">return</span> <span class="kc">false</span>
+
+
+  <span class="nv">toJSON: </span><span class="o">-&gt;</span>
+    <span class="nv">player:</span>
+      <span class="nv">one: </span>                     <span class="nx">@player</span><span class="p">.</span><span class="nx">one</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()</span>
+      <span class="nv">two: </span>                     <span class="nx">@player</span><span class="p">.</span><span class="nx">two</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()</span>
+    <span class="nv">playerOneMatchPointsEarned: </span><span class="nx">@getMatchPointsByPlayer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nv">playerTwoMatchPointsEarned: </span><span class="nx">@getMatchPointsByPlayer</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nv">currentGame: </span>               <span class="nx">@currentGame</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()</span>
+    <span class="nv">completedGames: </span>            <span class="nx">@completedGamesToJSON</span><span class="p">()</span>
+    <span class="nv">suddenDeath: </span>               <span class="nx">@suddenDeath</span>
+    <span class="nv">forfeit: </span>                   <span class="nx">@forfeit</span>
+    <span class="nv">ended: </span>                     <span class="nx">@ended</span>
+    <span class="nv">originalId: </span>                <span class="nx">@originalId</span>
+    <span class="nv">leagueMatchId: </span>             <span class="nx">@leagueMatchId</span>
+
+  <span class="nv">completedGamesToJSON: </span><span class="o">-&gt;</span>
+    <span class="nv">arrayToReturn = </span><span class="p">[]</span>
+    <span class="nv">i = </span><span class="mi">0</span>
+
+    <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">@completedGames</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span>
+      <span class="nx">arrayToReturn</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">@completedGames</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">toJSON</span><span class="p">()</span>
+      <span class="nx">i</span><span class="o">++</span>
+    <span class="nx">arrayToReturn</span>
+
+  <span class="nv">fromJSON: </span><span class="nf">(json) -&gt;</span>
+    <span class="vi">@player.one                 = </span><span class="nx">@playerFromJSON</span><span class="p">(</span><span class="nx">json</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">one</span><span class="p">)</span>
+    <span class="vi">@player.two                 = </span><span class="nx">@playerFromJSON</span><span class="p">(</span><span class="nx">json</span><span class="p">.</span><span class="nx">player</span><span class="p">.</span><span class="nx">two</span><span class="p">)</span>
+    <span class="vi">@playerOneMatchPointsEarned = </span><span class="nx">json</span><span class="p">.</span><span class="nx">playerOneMatchPointsEarned</span>
+    <span class="vi">@playerTwoMatchPointsEarned = </span><span class="nx">json</span><span class="p">.</span><span class="nx">playerTwoMatchPointsEarned</span>
+    <span class="vi">@completedGames             = </span><span class="nx">@completedGamesFromJSON</span><span class="p">(</span><span class="nx">json</span><span class="p">.</span><span class="nx">completedGames</span><span class="p">)</span>
+    <span class="vi">@suddenDeath                = </span><span class="nx">json</span><span class="p">.</span><span class="nx">suddenDeath</span>
+    <span class="vi">@forfeit                    = </span><span class="nx">json</span><span class="p">.</span><span class="nx">forfeit</span>
+    <span class="vi">@ended                      = </span><span class="nx">json</span><span class="p">.</span><span class="nx">ended</span>
+    <span class="vi">@originalId                 = </span><span class="nx">json</span><span class="p">.</span><span class="nx">originalId</span>
+    <span class="vi">@leagueMatchId              = </span><span class="nx">json</span><span class="p">.</span><span class="nx">leagueMatchId</span>
+    
+    <span class="nv">currentGame = </span><span class="nx">@getNewGame</span><span class="p">()</span>
+    <span class="nx">currentGame</span><span class="p">.</span><span class="nx">fromJSON</span> <span class="p">(</span><span class="k">new</span> <span class="o">-&gt;</span>
+      <span class="nx">json</span><span class="p">.</span><span class="nx">currentGame</span>
+    <span class="p">)</span>
+    <span class="vi">@currentGame = </span><span class="nx">currentGame</span>
+
+  <span class="nv">playerFromJSON: </span><span class="nf">(json) -&gt;</span>
+    <span class="nv">player = </span><span class="k">new</span> <span class="nx">$CS</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">NineBall</span><span class="p">.</span><span class="nx">Player</span><span class="p">(</span><span class="nx">json</span><span class="p">)</span>
+    <span class="nx">player</span><span class="p">.</span><span class="nx">fromJSON</span> <span class="p">(</span><span class="k">new</span> <span class="o">-&gt;</span>
+      <span class="nx">json</span>
+    <span class="p">)</span>
+    <span class="nx">player</span>
+
+  <span class="nv">completedGamesFromJSON: </span><span class="nf">(json) -&gt;</span>
+    <span class="nv">arrayToReturn = </span><span class="p">[]</span>
+    <span class="nv">i = </span><span class="mi">0</span>
+
+    <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">json</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span>
+      <span class="nv">completedGame = </span><span class="nx">@getNewGame</span><span class="p">()</span>
+      <span class="nx">completedGame</span><span class="p">.</span><span class="nx">fromJSON</span> <span class="p">(</span><span class="k">new</span> <span class="o">-&gt;</span>
+        <span class="nx">json</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+      <span class="p">)</span>
+      <span class="nx">arrayToReturn</span><span class="p">.</span><span class="nx">push</span> <span class="nx">completedGame</span>
+      <span class="nx">i</span><span class="o">++</span>
+    <span class="nx">arrayToReturn</span>
+
+<span class="nv">$CS.Models.NineBall.Match = </span><span class="nx">Match</span>
+
+</pre></div></td></tr></tbody></table><div id="projectname"><a href="../../../index.html">CueScore Mobile</a></div></div></body></html>
