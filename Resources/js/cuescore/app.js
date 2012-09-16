@@ -3,8 +3,9 @@
 
   $CS.App = {
     init: function() {
-      var dashboardController, gameModel;
+      var Module, dashboardController, gameModel;
       gameModel = new $CS.Models.Game;
+      Module = require('ti.paint');
       dashboardController = new $CS.Controllers.DashboardController;
       return dashboardController.open();
     },

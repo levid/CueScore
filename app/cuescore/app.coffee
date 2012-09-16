@@ -3,6 +3,8 @@ $CS.App =
   init: ->
     gameModel = new $CS.Models.Game
     
+    Module = require('ti.paint')
+    
     dashboardController = new $CS.Controllers.DashboardController
     dashboardController.open()
     
