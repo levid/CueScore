@@ -69,3 +69,38 @@ rake jasmine
 ```
 
 > #### Go to: http://localhost:8888 to see test results
+
+----------------------------------
+Generate CoffeeScript documentation
+----------------------------------
+
+### Dependencies: 
+> docco
+> http://jashkenas.github.com/docco/
+
+> docco-husky
+> https://github.com/mbrevoort/docco-husky
+
+### from root project dir:
+
+```bash
+cd app
+```
+
+> ### Modify package.json and README.md as needed
+
+### To install via npm into your project:
+
+```bash
+npm install docco-husky
+```
+
+### Install globally:
+
+```bash
+[sudo] npm install -g docco-husky
+```
+
+### docco-husky will generate docs in a ./docs directory. It accepts multiple files (including wildcards) and directories for it to recurse.
+
+> #### go to: app/docs/index.html to see documentation
